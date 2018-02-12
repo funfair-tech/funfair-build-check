@@ -5,7 +5,6 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Xml;
-using BuildCheck.ProjectChecks;
 using BuildCheck.Services;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -111,8 +110,8 @@ namespace BuildCheck
             services.AddSingleton<IDiagnosticLogger>(logger);
             services.AddSingleton(typeof(ILogger<>), typeof(LoggerProxy<>));
 
-            services.AddSingleton<IProjectCheck, NoPreReleaseNuGetPackages>();
-            services.AddSingleton<IProjectCheck, ErrorPolicyWarningAsErrors>();
+            BuildCheck.Setup.SetupSolutionChecks(services);
+            BuildCheck.Setup.SetupProjectChecks(services);
 
             services.AddSingleton<ICheckConfiguration>(new CheckConfiguration {PreReleaseBuild = preReleaseBuild});
 

@@ -34,6 +34,21 @@ namespace BuildCheck.ProjectChecks
 
         public static void CheckValue(string projectName, XmlDocument project, string nodePresence, bool requiredValue, ILogger logger)
         {
+            CheckValueCommon(projectName, project, nodePresence, v => IsRequiredValue(requiredValue, v), requiredValue.ToString(), logger);
+        }
+
+        public static void CheckValue(string projectName, XmlDocument project, string nodePresence, string requiredValue, ILogger logger)
+        {
+            CheckValueCommon(projectName, project, nodePresence, v => IsRequiredValue(requiredValue, v), requiredValue, logger);
+        }
+
+        private static void CheckValueCommon(string projectName,
+                                             XmlDocument project,
+                                             string nodePresence,
+                                             Func<string, bool> isRequiredValue,
+                                             string requiredValueDisplayText,
+                                             ILogger logger)
+        {
             bool hasGlobalSetting = false;
             XmlNodeList nodes = project.SelectNodes("/Project/PropertyGroup[not(@Condition)]/" + nodePresence);
             foreach (XmlElement item in nodes)
@@ -43,7 +58,7 @@ namespace BuildCheck.ProjectChecks
                 if (string.IsNullOrWhiteSpace(condition))
                 {
                     string value = GetTextValue(item);
-                    if (IsRequiredValue(requiredValue, value)) hasGlobalSetting = true;
+                    if (isRequiredValue(value)) hasGlobalSetting = true;
                 }
             }
 
@@ -62,16 +77,16 @@ namespace BuildCheck.ProjectChecks
                 else
                 {
                     string value = GetTextValue(node);
-                    if (!IsRequiredValue(requiredValue, value))
+                    if (!isRequiredValue(value))
                         if (!hasGlobalSetting)
                         {
                             string configuration = propertyGroup.GetAttribute("Condition");
-                            logger.LogError($"{projectName}: Configuration {configuration} should specify {nodePresence} as {requiredValue}.");
+                            logger.LogError($"{projectName}: Configuration {configuration} should specify {nodePresence} as {requiredValueDisplayText}.");
                         }
                 }
             }
 
-            if (!hasGlobalSetting && configurationGroups.Count == 0) logger.LogError($"{projectName}: Should specify {nodePresence} as {requiredValue}.");
+            if (!hasGlobalSetting && configurationGroups.Count == 0) logger.LogError($"{projectName}: Should specify {nodePresence} as {requiredValueDisplayText}.");
         }
 
         private static string GetTextValue(XmlNode node)
@@ -81,7 +96,12 @@ namespace BuildCheck.ProjectChecks
 
         private static bool IsRequiredValue(bool requiredValue, string value)
         {
-            return !string.IsNullOrWhiteSpace(value) && StringComparer.InvariantCultureIgnoreCase.Equals(value, requiredValue.ToString());
+            return IsRequiredValue(requiredValue.ToString(), value);
+        }
+
+        private static bool IsRequiredValue(string requiredValue, string value)
+        {
+            return !string.IsNullOrWhiteSpace(value) && StringComparer.InvariantCultureIgnoreCase.Equals(value, requiredValue);
         }
     }
 }
