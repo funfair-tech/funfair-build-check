@@ -70,7 +70,16 @@ namespace BuildCheck
 
                 await PerformChecks(services, solutionFileName, logging, baseFolder);
 
-                return logging.Errors == 0 ? SUCCESS : ERROR;
+                if (logging.IsErrored)
+                {
+                    Console.WriteLine();
+                    Console.WriteLine(logging.Errors > 1 ? $"Found {logging.Errors} Errors" : $"Found {logging.Errors} Error");
+                    return ERROR;
+                }
+
+                Console.WriteLine();
+                Console.WriteLine("No errors found.");
+                return SUCCESS;
             }
             catch (Exception exception)
             {
