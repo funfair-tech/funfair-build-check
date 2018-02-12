@@ -22,7 +22,7 @@ namespace BuildCheck
         {
             Console.WriteLine();
             Console.WriteLine("Usage:");
-            Console.WriteLine($"{typeof(Program).Namespace} -Solution D:\\Source\\Solution.sln [-WarningAsErrors true|false]");
+            Console.WriteLine($"{typeof(Program).Namespace} -Solution D:\\Source\\Solution.sln [-WarningAsErrors true|false] [-PreReleaseBuild true|false]");
         }
 
         public static async Task<int> Main(string[] args)
@@ -32,7 +32,13 @@ namespace BuildCheck
                 Console.WriteLine($"{typeof(Program).Namespace} {ExecutableVersionInformation.ProgramVersion()}");
 
                 IConfigurationRoot configuration = new ConfigurationBuilder()
-                    .AddCommandLine(args, new Dictionary<string, string> {{@"-Solution", @"solution"}, {@"-WarningAsErrors", @"WarningAsErrors"}})
+                    .AddCommandLine(args,
+                                    new Dictionary<string, string>
+                                    {
+                                        {@"-Solution", @"solution"},
+                                        {@"-WarningAsErrors", @"WarningAsErrors"},
+                                        {@"-PreReleaseBuild", @"PreReleaseBuild"}
+                                    })
                     .Build();
 
                 string solutionFileName = configuration.GetValue<string>(@"solution");
@@ -52,9 +58,12 @@ namespace BuildCheck
                 }
 
                 bool warningsAsErrors = configuration.GetValue<bool>(@"WarningAsErrors");
-                Console.WriteLine($"{warningsAsErrors}");
+                if (warningsAsErrors) Console.WriteLine($"** Running with Warnings as Errors");
 
-                IServiceProvider services = Setup(warningsAsErrors);
+                bool preReleaseBuild = configuration.GetValue<bool>(@"PreReleaseBuild");
+                if (!warningsAsErrors) Console.WriteLine($"** Running with release build requirements");
+
+                IServiceProvider services = Setup(warningsAsErrors, preReleaseBuild);
 
                 string baseFolder = Path.GetDirectoryName(solutionFileName);
 
@@ -93,7 +102,7 @@ namespace BuildCheck
             }
         }
 
-        private static IServiceProvider Setup(bool warningsAsErrors)
+        private static IServiceProvider Setup(bool warningsAsErrors, bool preReleaseBuild)
         {
             IServiceCollection services = new ServiceCollection();
 
@@ -104,6 +113,8 @@ namespace BuildCheck
 
             services.AddSingleton<IProjectCheck, NoPreReleaseNuGetPackages>();
             services.AddSingleton<IProjectCheck, ErrorPolicyWarningAsErrors>();
+
+            services.AddSingleton<ICheckConfiguration>(new CheckConfiguration {PreReleaseBuild = preReleaseBuild});
 
             IServiceProviderFactory<IServiceCollection> spf = new DefaultServiceProviderFactory();
 

@@ -7,10 +7,12 @@ namespace BuildCheck.ProjectChecks
 {
     public class NoPreReleaseNuGetPackages : IProjectCheck
     {
+        private readonly ICheckConfiguration _configuration;
         private readonly ILogger<NoPreReleaseNuGetPackages> _logger;
 
-        public NoPreReleaseNuGetPackages(ILogger<NoPreReleaseNuGetPackages> logger)
+        public NoPreReleaseNuGetPackages(ICheckConfiguration configuration, ILogger<NoPreReleaseNuGetPackages> logger)
         {
+            this._configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));
             this._logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
@@ -36,7 +38,8 @@ namespace BuildCheck.ProjectChecks
                     continue;
                 }
 
-                if (nuGetVersion.IsPrerelease) this._logger.LogError($"{projectName}: Package {packageName} uses pre-release version {version}.");
+                if (nuGetVersion.IsPrerelease && !this._configuration.PreReleaseBuild)
+                    this._logger.LogError($"{projectName}: Package {packageName} uses pre-release version {version}.");
             }
         }
     }
