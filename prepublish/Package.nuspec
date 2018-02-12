@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>FunFair.BuildCheck</id>
+    <version>0.0.0.1-do-not-use</version>
+    <authors>FunFair</authors>
+    <description>FunFair Build check tool</description>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+  </metadata>
+</package>
