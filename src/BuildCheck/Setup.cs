@@ -15,6 +15,7 @@ namespace BuildCheck
             services.AddSingleton<IProjectCheck, NoPreReleaseNuGetPackages>();
             services.AddSingleton<IProjectCheck, ErrorPolicyWarningAsErrors>();
             services.AddSingleton<IProjectCheck, LanguagePolicyUseLatestVersion>();
+            services.AddSingleton<IProjectCheck, NuGetPolicyDisableImplicitNuGetFallbackFolder>();
         }
     }
 }

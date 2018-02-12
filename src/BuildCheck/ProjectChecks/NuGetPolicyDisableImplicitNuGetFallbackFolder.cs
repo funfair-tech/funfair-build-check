@@ -4,11 +4,11 @@ using Microsoft.Extensions.Logging;
 
 namespace BuildCheck.ProjectChecks
 {
-    public class ErrorPolicyWarningAsErrors : IProjectCheck
+    public class NuGetPolicyDisableImplicitNuGetFallbackFolder : IProjectCheck
     {
         private readonly ILogger<ErrorPolicyWarningAsErrors> _logger;
 
-        public ErrorPolicyWarningAsErrors(
+        public NuGetPolicyDisableImplicitNuGetFallbackFolder(
             ILogger<ErrorPolicyWarningAsErrors> logger)
         {
             this._logger = logger ?? throw new ArgumentNullException(nameof(logger));
@@ -16,9 +16,7 @@ namespace BuildCheck.ProjectChecks
 
         public void Check(string projectName, XmlDocument project)
         {
-            ProjectValueHelpers.CheckNode(projectName, project, @"WarningsAsErrors", this._logger);
-
-            ProjectValueHelpers.CheckValue(projectName, project, @"TreatWarningsAsErrors", true, this._logger);
+            ProjectValueHelpers.CheckValue(projectName, project, @"DisableImplicitNuGetFallbackFolder", "true", this._logger);
         }
     }
 }
