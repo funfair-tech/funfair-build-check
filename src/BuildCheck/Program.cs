@@ -103,6 +103,7 @@ namespace BuildCheck
             services.AddSingleton(typeof(ILogger<>), typeof(LoggerProxy<>));
 
             services.AddSingleton<IProjectCheck, NoPreReleaseNuGetPackages>();
+            services.AddSingleton<IProjectCheck, ErrorPolicyWarningAsErrors>();
 
             IServiceProviderFactory<IServiceCollection> spf = new DefaultServiceProviderFactory();
 
