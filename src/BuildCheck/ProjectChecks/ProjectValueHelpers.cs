@@ -43,7 +43,7 @@ namespace BuildCheck.ProjectChecks
                 if (string.IsNullOrWhiteSpace(condition))
                 {
                     string value = GetTextValue(item);
-                    if (!IsRequiredValue(requiredValue, value)) hasGlobalSetting = true;
+                    if (IsRequiredValue(requiredValue, value)) hasGlobalSetting = true;
                 }
             }
 
