@@ -8,8 +8,7 @@ namespace BuildCheck.ProjectChecks
     {
         private readonly ILogger<ErrorPolicyWarningAsErrors> _logger;
 
-        public ErrorPolicyWarningAsErrors(
-            ILogger<ErrorPolicyWarningAsErrors> logger)
+        public ErrorPolicyWarningAsErrors(ILogger<ErrorPolicyWarningAsErrors> logger)
         {
             this._logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
