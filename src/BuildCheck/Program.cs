@@ -68,7 +68,7 @@ namespace BuildCheck
 
                 IDiagnosticLogger logging = services.GetService<IDiagnosticLogger>();
 
-                await PerformChecks(services, solutionFileName, logging, baseFolder);
+                await PerformChecks(services, solutionFileName, logging, baseFolder).ConfigureAwait(false);
 
                 if (logging.IsErrored)
                 {
@@ -95,7 +95,7 @@ namespace BuildCheck
 
             foreach (ISolutionCheck check in solutionChecks) check.Check(solutionFileName);
 
-            Project[] projects = await LoadProjects(solutionFileName);
+            Project[] projects = await LoadProjects(solutionFileName).ConfigureAwait(false);
 
             foreach (Project project in projects)
             {
@@ -131,7 +131,7 @@ namespace BuildCheck
 
         private static async Task<Project[]> LoadProjects(string solution)
         {
-            string[] text = await File.ReadAllLinesAsync(solution);
+            string[] text = await File.ReadAllLinesAsync(solution).ConfigureAwait(false);
 
             List<Project> projects = new List<Project>();
 

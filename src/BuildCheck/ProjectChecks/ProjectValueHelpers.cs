@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using System.Xml;
 using Microsoft.Extensions.Logging;
 
@@ -34,7 +35,7 @@ namespace BuildCheck.ProjectChecks
 
         public static void CheckValue(string projectName, XmlDocument project, string nodePresence, bool requiredValue, ILogger logger)
         {
-            CheckValueCommon(projectName, project, nodePresence, v => IsRequiredValue(requiredValue, v), requiredValue.ToString(), logger);
+            CheckValueCommon(projectName, project, nodePresence, v => IsRequiredValue(requiredValue, v), requiredValue.ToString(CultureInfo.InvariantCulture), logger);
         }
 
         public static void CheckValue(string projectName, XmlDocument project, string nodePresence, string requiredValue, ILogger logger)
@@ -96,7 +97,7 @@ namespace BuildCheck.ProjectChecks
 
         private static bool IsRequiredValue(bool requiredValue, string value)
         {
-            return IsRequiredValue(requiredValue.ToString(), value);
+            return IsRequiredValue(requiredValue.ToString(CultureInfo.InvariantCulture), value);
         }
 
         private static bool IsRequiredValue(string requiredValue, string value)

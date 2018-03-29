@@ -1,4 +1,5 @@
 ﻿using BuildCheck.ProjectChecks;
+using BuildCheck.SolutionChecks;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace BuildCheck
@@ -7,7 +8,7 @@ namespace BuildCheck
     {
         public static void SetupSolutionChecks(IServiceCollection services)
         {
-
+            services.AddSingleton<ISolutionCheck, AllProjectsExist>();
         }
 
         public static void SetupProjectChecks(IServiceCollection services)
