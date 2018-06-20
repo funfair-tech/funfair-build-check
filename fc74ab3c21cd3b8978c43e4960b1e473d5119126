@@ -1,0 +1,9 @@
+[ver:1,total:180]
+src/BuildCheck/ProjectChecks/NuGetPolicyDisableImplicitNuGetFallbackFolder.cs:70,1529488800:70,m
+src/BuildCheck/BuildCheck.csproj:30,1529488800:30,r
+src/BuildCheck.sln.DotSettings:30,1529488800:30,r
+src/BuildCheck/Services/DiagnosticLogger.cs:10,1529488800:10,m
+src/BuildCheck/Services/LoggerProxy.cs:10,1529488800:10,r
+src/BuildCheck/SolutionChecks/AllProjectsExist.cs:10,1529488800:10,r
+src/BuildCheck/ExecutableVersionInformation.cs:10,1529488800:10,m
+src/BuildCheck/Program.cs:10,1529488800:10,m
