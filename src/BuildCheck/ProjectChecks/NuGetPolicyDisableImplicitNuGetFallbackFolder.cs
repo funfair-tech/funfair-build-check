@@ -8,15 +8,14 @@ namespace BuildCheck.ProjectChecks
     {
         private readonly ILogger<ErrorPolicyWarningAsErrors> _logger;
 
-        public NuGetPolicyDisableImplicitNuGetFallbackFolder(
-            ILogger<ErrorPolicyWarningAsErrors> logger)
+        public NuGetPolicyDisableImplicitNuGetFallbackFolder(ILogger<ErrorPolicyWarningAsErrors> logger)
         {
             this._logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
         public void Check(string projectName, XmlDocument project)
         {
-            ProjectValueHelpers.CheckValue(projectName, project, @"DisableImplicitNuGetFallbackFolder", "true", this._logger);
+            ProjectValueHelpers.CheckValue(projectName, project, nodePresence: @"DisableImplicitNuGetFallbackFolder", requiredValue: "true", this._logger);
         }
     }
 }

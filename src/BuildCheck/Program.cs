@@ -20,7 +20,7 @@ namespace BuildCheck
         private static void Usage()
         {
             Console.WriteLine();
-            Console.WriteLine("Usage:");
+            Console.WriteLine(value: "Usage:");
             Console.WriteLine($"{typeof(Program).Namespace} -Solution D:\\Source\\Solution.sln [-WarningAsErrors true|false] [-PreReleaseBuild true|false]");
         }
 
@@ -40,27 +40,38 @@ namespace BuildCheck
                                     })
                     .Build();
 
-                string solutionFileName = configuration.GetValue<string>(@"solution");
+                string solutionFileName = configuration.GetValue<string>(key: @"solution");
+
                 if (string.IsNullOrWhiteSpace(solutionFileName))
                 {
-                    Console.WriteLine("Missing Solution file.");
+                    Console.WriteLine(value: "Missing Solution file.");
 
                     Usage();
+
                     return ERROR;
                 }
 
                 if (!File.Exists(solutionFileName))
                 {
-                    Console.WriteLine("Missing Solution file.");
+                    Console.WriteLine(value: "Missing Solution file.");
                     Usage();
+
                     return ERROR;
                 }
 
-                bool warningsAsErrors = configuration.GetValue<bool>(@"WarningAsErrors");
-                if (warningsAsErrors) Console.WriteLine($"** Running with Warnings as Errors");
+                bool warningsAsErrors = configuration.GetValue<bool>(key: @"WarningAsErrors");
 
-                bool preReleaseBuild = configuration.GetValue<bool>(@"PreReleaseBuild");
-                if (!warningsAsErrors) Console.WriteLine($"** Running with release build requirements");
+                if (warningsAsErrors)
+                {
+                    Console.WriteLine($"** Running with Warnings as Errors");
+                }
+
+                bool preReleaseBuild = configuration.GetValue<bool>(key: @"PreReleaseBuild");
+
+                if (!warningsAsErrors)
+                {
+                    Console.WriteLine($"** Running with release build requirements");
+                }
 
                 IServiceProvider services = Setup(warningsAsErrors, preReleaseBuild);
 
@@ -68,22 +79,26 @@ namespace BuildCheck
 
                 IDiagnosticLogger logging = services.GetService<IDiagnosticLogger>();
 
-                await PerformChecks(services, solutionFileName, logging, baseFolder).ConfigureAwait(false);
+                await PerformChecks(services, solutionFileName, logging, baseFolder)
+                    .ConfigureAwait(continueOnCapturedContext: false);
 
                 if (logging.IsErrored)
                 {
                     Console.WriteLine();
                     Console.WriteLine(logging.Errors > 1 ? $"Found {logging.Errors} Errors" : $"Found {logging.Errors} Error");
+
                     return ERROR;
                 }
 
                 Console.WriteLine();
-                Console.WriteLine("No errors found.");
+                Console.WriteLine(value: "No errors found.");
+
                 return SUCCESS;
             }
             catch (Exception exception)
             {
                 Console.WriteLine($"ERROR: {exception.Message}");
+
                 return ERROR;
             }
         }
@@ -93,9 +108,13 @@ namespace BuildCheck
             ISolutionCheck[] solutionChecks = RegisteredSolutionChecks(services);
             IProjectCheck[] projectChecks = RegisteredProjectChecks(services);
 
-            foreach (ISolutionCheck check in solutionChecks) check.Check(solutionFileName);
+            foreach (ISolutionCheck check in solutionChecks)
+            {
+                check.Check(solutionFileName);
+            }
 
-            Project[] projects = await LoadProjects(solutionFileName).ConfigureAwait(false);
+            Project[] projects = await LoadProjects(solutionFileName)
+                .ConfigureAwait(continueOnCapturedContext: false);
 
             foreach (Project project in projects)
             {
@@ -106,7 +125,10 @@ namespace BuildCheck
                 XmlDocument doc = new XmlDocument();
                 doc.Load(projectPath);
 
-                foreach (IProjectCheck check in projectChecks) check.Check(project.DisplayName, doc);
+                foreach (IProjectCheck check in projectChecks)
+                {
+                    check.Check(project.DisplayName, doc);
+                }
             }
         }
 
@@ -131,22 +153,24 @@ namespace BuildCheck
 
         private static async Task<Project[]> LoadProjects(string solution)
         {
-            string[] text = await File.ReadAllLinesAsync(solution).ConfigureAwait(false);
+            string[] text = await File.ReadAllLinesAsync(solution)
+                .ConfigureAwait(continueOnCapturedContext: false);
 
             List<Project> projects = new List<Project>();
 
-            Console.WriteLine("Looking for projects...");
+            Console.WriteLine(value: "Looking for projects...");
 
             Regex regex = new Regex(
+                pattern:
                 "^Project\\(\"[{(]?[0-9A-F]{8}[-]?([0-9A-F]{4}[-]?){3}[0-9A-F]{12}[)}]\"\\)\\s*=\\s*\"(?<DisplayName>.*?)\",\\s*\"(?<FileName>.*?\\.csproj)\",\\s*\"[{(]?[0-9A-F]{8}[-]?([0-9A-F]{4}[-]?){3}[0-9A-F]{12}[)}]\"$",
                 RegexOptions.Compiled);
 
             foreach (string line in text)
             foreach (Match match in regex.Matches(line))
             {
-                string displayName = match.Groups[@"DisplayName"]
+                string displayName = match.Groups[groupname: @"DisplayName"]
                     .Value;
-                string fileName = match.Groups[@"FileName"]
+                string fileName = match.Groups[groupname: @"FileName"]
                     .Value;
 
                 Console.WriteLine($" * {displayName}");

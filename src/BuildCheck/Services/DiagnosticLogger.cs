@@ -24,12 +24,14 @@ namespace BuildCheck.Services
             {
                 // ReSharper disable once TailRecursiveCall - this is not tail recursive despite what R# thinks
                 this.Log(LogLevel.Error, eventId, state, exception, formatter);
+
                 return;
             }
 
             if (logLevel == LogLevel.Information)
             {
                 OutputInformationalMessage(state, exception, formatter);
+
                 return;
             }
 
@@ -48,7 +50,10 @@ namespace BuildCheck.Services
 
         private void OutputMessageWithStatus<TState>(LogLevel logLevel, TState state, Exception exception, Func<TState, Exception, string> formatter)
         {
-            if (!this.IsEnabled(logLevel)) return;
+            if (!this.IsEnabled(logLevel))
+            {
+                return;
+            }
 
             string msg = formatter(state, exception);
 
