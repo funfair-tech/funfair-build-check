@@ -1,0 +1,5 @@
+[ver:1,total:540]
+src/BuildCheck/SolutionChecks/AllProjectsExist.cs:245,1529496000:230,1529499600:15,r
+src/BuildCheck/ExecutableVersionInformation.cs:200,1529496000:200,r
+src/BuildCheck/Setup.cs:50,1529496000:50,r
+src/BuildCheck/BuildCheck.csproj:45,1529499600:45,m
