@@ -1,0 +1,6 @@
+[ver:1,total:1080]
+src/BuildCheck/ProjectChecks/DoesNotReferenceByDll.cs:563,1529917200:150,1529928000:270,1529935200:143,r
+src/BuildCheck/Setup.cs:285,1529917200:30,1529928000:210,1529935200:45,r
+src/BuildCheck/BuildCheck.csproj:129,1529935200:129,m
+src/BuildCheck/ca.ruleset:79,1529935200:79,r
+src/BuildCheck/ICheckConfiguration.cs:24,1529935200:24,r
