@@ -1,0 +1,8 @@
+[ver:1,total:780]
+src/BuildCheck/Setup.cs:225,1529600400:210,1529917200:15,m
+src/BuildCheck/ProjectChecks/DoesNotReferenceByDll.cs:190,1529917200:190,m
+src/BuildCheck/BuildCheck.csproj:185,1529600400:150,1529917200:35,r
+src/BuildCheck/Program.cs:65,1529917200:65,r
+src/BuildCheck/ProjectChecks/ProjectValueHelpers.cs:55,1529917200:55,r
+src/BuildCheck/ProjectChecks/NuGetPolicyDisableImplicitNuGetFallbackFolder.cs:50,1529917200:50,r
+src/BuildCheck/ProjectChecks/DotNetXUnitRunnerIsSameVersionAsPackage.cs:10,1529917200:10,r
