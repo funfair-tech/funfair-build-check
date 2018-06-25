@@ -18,6 +18,7 @@ namespace BuildCheck
             services.AddSingleton<IProjectCheck, LanguagePolicyUseLatestVersion>();
             services.AddSingleton<IProjectCheck, NuGetPolicyDisableImplicitNuGetFallbackFolder>();
             services.AddSingleton<IProjectCheck, DotNetXUnitRunnerIsSameVersionAsPackage>();
+            services.AddSingleton<IProjectCheck, DoesNotReferenceByDll>();
         }
     }
 }
