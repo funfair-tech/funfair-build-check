@@ -26,7 +26,7 @@ namespace BuildCheck.ProjectChecks
 
             if (reference == null)
             {
-                this._logger.LogWarning($"{projectName}: Does not reference {PACKAGE_ID} directly not using NuGet");
+                this._logger.LogInformation($"{projectName}: Does not reference {PACKAGE_ID} directly not using NuGet");
                 return;
             }
 
@@ -34,7 +34,7 @@ namespace BuildCheck.ProjectChecks
 
             if (string.IsNullOrWhiteSpace(assets) || assets != PACKAGE_PRIVATE_ASSETS)
             {
-                this._logger.LogWarning($"{projectName}: Does not reference {PACKAGE_ID} with a PrivateAssets=\"{PACKAGE_PRIVATE_ASSETS}\" attribute");
+                this._logger.LogInformation($"{projectName}: Does not reference {PACKAGE_ID} with a PrivateAssets=\"{PACKAGE_PRIVATE_ASSETS}\" attribute");
             }
         }
     }
