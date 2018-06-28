@@ -19,6 +19,7 @@ namespace BuildCheck
             services.AddSingleton<IProjectCheck, NuGetPolicyDisableImplicitNuGetFallbackFolder>();
             services.AddSingleton<IProjectCheck, DotNetXUnitRunnerIsSameVersionAsPackage>();
             services.AddSingleton<IProjectCheck, DoesNotReferenceByDll>();
+            services.AddSingleton<IProjectCheck, MustHaveSourceLinkPackage>();
         }
     }
 }
