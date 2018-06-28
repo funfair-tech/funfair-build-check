@@ -1,0 +1,12 @@
+[ver:1,total:360]
+src/BuildCheck/Setup.cs:156,1530194400:156,m
+src/BuildCheck/ProjectChecks/MustHaveSourceLinkPackage.cs:95,1530194400:95,m
+src/BuildCheck/ProjectChecks/DoesNotReferenceByDll.cs:23,1530194400:23,m
+src/BuildCheck/BuildCheck.csproj:20,1530194400:20,m
+src/BuildCheck/ProjectChecks/MustHaveFxCopAnalyzerPackate.cs:19,1530194400:19,m
+src/BuildCheck/ProjectChecks/LanguagePolicyUseLatestVersion.cs:15,1530194400:15,m
+src/BuildCheck/ProjectChecks/NuGetPolicyDisableImplicitNuGetFallbackFolder.cs:7,1530194400:7,m
+src/BuildCheck/ProjectChecks/NoPreReleaseNuGetPackages.cs:7,1530194400:7,m
+src/BuildCheck/ProjectChecks/ErrorPolicyWarningAsErrors.cs:6,1530194400:6,m
+src/BuildCheck/ProjectChecks/DotNetXUnitRunnerIsSameVersionAsPackage.cs:6,1530194400:6,m
+src/BuildCheck/IProjectCheck.cs:6,1530194400:6,r
