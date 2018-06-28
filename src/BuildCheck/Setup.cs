@@ -8,18 +8,31 @@ namespace BuildCheck
     {
         public static void SetupSolutionChecks(IServiceCollection services)
         {
-            services.AddSingleton<ISolutionCheck, AllProjectsExist>();
+            AddSolutionCheck<AllProjectsExist>(services);
         }
 
         public static void SetupProjectChecks(IServiceCollection services)
         {
-            services.AddSingleton<IProjectCheck, NoPreReleaseNuGetPackages>();
-            services.AddSingleton<IProjectCheck, ErrorPolicyWarningAsErrors>();
-            services.AddSingleton<IProjectCheck, LanguagePolicyUseLatestVersion>();
-            services.AddSingleton<IProjectCheck, NuGetPolicyDisableImplicitNuGetFallbackFolder>();
-            services.AddSingleton<IProjectCheck, DotNetXUnitRunnerIsSameVersionAsPackage>();
-            services.AddSingleton<IProjectCheck, DoesNotReferenceByDll>();
-            services.AddSingleton<IProjectCheck, MustHaveSourceLinkPackage>();
+            AddProjectCheck<NoPreReleaseNuGetPackages>(services);
+            AddProjectCheck<ErrorPolicyWarningAsErrors>(services);
+            AddProjectCheck<LanguagePolicyUseLatestVersion>(services);
+            AddProjectCheck<NuGetPolicyDisableImplicitNuGetFallbackFolder>(services);
+            AddProjectCheck<DotNetXUnitRunnerIsSameVersionAsPackage>(services);
+            AddProjectCheck<DoesNotReferenceByDll>(services);
+            AddProjectCheck<MustHaveSourceLinkPackage>(services);
+            AddProjectCheck<MustHaveFxCopAnalyzerPackate>(services);
+        }
+
+        private static void AddProjectCheck<T>(IServiceCollection services)
+            where T : class, IProjectCheck
+        {
+            services.AddSingleton<IProjectCheck, T>();
+        }
+
+        private static void AddSolutionCheck<T>(IServiceCollection services)
+            where T : class, ISolutionCheck
+        {
+            services.AddSingleton<ISolutionCheck, T>();
         }
     }
 }
