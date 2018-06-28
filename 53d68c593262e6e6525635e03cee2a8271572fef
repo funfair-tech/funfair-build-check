@@ -1,0 +1,4 @@
+[ver:1,total:360]
+src/BuildCheck/ProjectChecks/MustHaveSourceLinkPackage.cs:230,1530194400:230,r
+src/BuildCheck/BuildCheck.csproj:100,1530194400:100,m
+src/BuildCheck/Setup.cs:30,1530194400:30,r
