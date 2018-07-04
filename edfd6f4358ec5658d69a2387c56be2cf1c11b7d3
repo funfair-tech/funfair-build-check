@@ -1,0 +1,4 @@
+[ver:1,total:540]
+src/BuildCheck/BuildCheck.csproj:292,1530558000:180,1530723600:112,m
+src/BuildCheck/ProjectChecks/MustHaveFxCopAnalyzerPackate.cs:188,1530554400:180,1530723600:8,r
+src/BuildCheck/ProjectChecks/DoesNotReferenceByDll.cs:60,1530554400:60,r
