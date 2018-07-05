@@ -1,0 +1,4 @@
+[ver:1,total:480]
+src/BuildCheck/ProjectChecks/NoPreReleaseNuGetPackages.cs:372,1530799200:372,m
+src/BuildCheck/ProjectChecks/MustHaveFxCopAnalyzerPackage.cs:78,1530799200:78,r
+src/BuildCheck/Setup.cs:30,1530799200:30,m
