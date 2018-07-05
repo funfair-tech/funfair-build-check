@@ -1,0 +1,4 @@
+[ver:1,total:120]
+src/BuildCheck/ProjectChecks/NoPreReleaseNuGetPackages.cs:80,1530799200:80,m
+src/BuildCheck/ProjectChecks/HasConsistentNuGetPackages.cs:30,1530799200:30,m
+src/BuildCheck/BuildCheck.csproj:10,1530799200:10,r
