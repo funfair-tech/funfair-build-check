@@ -21,6 +21,7 @@ namespace BuildCheck
             AddProjectCheck<DoesNotReferenceByDll>(services);
             AddProjectCheck<MustHaveSourceLinkPackage>(services);
             AddProjectCheck<MustHaveFxCopAnalyzerPackage>(services);
+            AddProjectCheck<HasConsistentNuGetPackages>(services);
         }
 
         private static void AddProjectCheck<T>(IServiceCollection services)
