@@ -1,0 +1,4 @@
+[ver:1,total:720]
+src/BuildCheck/ProjectChecks/HasConsistentNuGetPackages.cs:510,1530799200:240,1530802800:210,1530806400:60,r
+src/BuildCheck/Setup.cs:180,1530799200:180,r
+src/BuildCheck/BuildCheck.csproj:30,1530802800:30,r
