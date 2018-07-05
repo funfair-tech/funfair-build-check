@@ -20,7 +20,7 @@ namespace BuildCheck
             AddProjectCheck<DotNetXUnitRunnerIsSameVersionAsPackage>(services);
             AddProjectCheck<DoesNotReferenceByDll>(services);
             AddProjectCheck<MustHaveSourceLinkPackage>(services);
-            AddProjectCheck<MustHaveFxCopAnalyzerPackate>(services);
+            AddProjectCheck<MustHaveFxCopAnalyzerPackage>(services);
         }
 
         private static void AddProjectCheck<T>(IServiceCollection services)
