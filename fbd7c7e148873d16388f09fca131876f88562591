@@ -1,0 +1,4 @@
+[ver:1,total:360]
+src/BuildCheck/ProjectChecks/MustHaveFxCopAnalyzerPackage.cs:230,1530799200:230,m
+src/BuildCheck/ProjectChecks/MustHaveFxCopAnalyzerPackate.cs:81,1530799200:81,d
+src/BuildCheck/BuildCheck.csproj:49,1530799200:49,r
