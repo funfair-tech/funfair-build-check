@@ -1,19 +1,22 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Xml;
 using Microsoft.Extensions.Logging;
 using NuGet.Versioning;
 
 namespace BuildCheck.ProjectChecks
 {
-    public class NoPreReleaseNuGetPackages : IProjectCheck
+    public class HasConsistentNuGetPackages : IProjectCheck
     {
-        private readonly ICheckConfiguration _configuration;
         private readonly ILogger<NoPreReleaseNuGetPackages> _logger;
 
-        public NoPreReleaseNuGetPackages(ICheckConfiguration configuration, ILogger<NoPreReleaseNuGetPackages> logger)
+        private readonly Dictionary<string, NuGetVersion> _packages;
+
+        public HasConsistentNuGetPackages(ILogger<NoPreReleaseNuGetPackages> logger)
         {
-            this._configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));
             this._logger = logger ?? throw new ArgumentNullException(nameof(logger));
+
+            this._packages = new Dictionary<string, NuGetVersion>();
         }
 
         /// <inheritdoc />
@@ -43,10 +46,20 @@ namespace BuildCheck.ProjectChecks
                     continue;
                 }
 
-                if (nuGetVersion.IsPrerelease && !this._configuration.PreReleaseBuild)
+                string packageAsKey = packageName.ToLowerInvariant();
+
+                if (!this._packages.TryGetValue(packageAsKey, out NuGetVersion currentVersion))
                 {
-                    this._logger.LogError($"{projectName}: Package {packageName} uses pre-release version {version}.");
+                    this._packages.Add(packageAsKey, nuGetVersion);
                 }
+                else if (currentVersion != nuGetVersion)
+                {
+                    this._logger.LogError($"{projectName}: Uses {packageName} version {nuGetVersion} when it should be using previously seen {currentVersion}.");
+
+                    continue;
+                }
+
+                this._logger.LogInformation($"{projectName}: Uses {packageName} version {nuGetVersion}.");
             }
         }
     }
