@@ -1,0 +1,5 @@
+[ver:1,total:840]
+src/BuildCheck/ProjectChecks/HasConsistentNuGetPackages.cs:600,1531137600:360,1532433600:180,1532448000:60,r
+src/BuildCheck/BuildCheck.csproj:120,1531137600:120,r
+src/BuildCheck/Setup.cs:90,1532448000:90,m
+src/BuildCheck/ProjectChecks/DotNetXUnitRunnerIsSameVersionAsPackage.cs:30,1532448000:30,r
