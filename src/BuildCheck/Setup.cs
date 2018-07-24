@@ -17,7 +17,7 @@ namespace BuildCheck
             AddProjectCheck<ErrorPolicyWarningAsErrors>(services);
             AddProjectCheck<LanguagePolicyUseLatestVersion>(services);
             AddProjectCheck<NuGetPolicyDisableImplicitNuGetFallbackFolder>(services);
-            AddProjectCheck<DotNetXUnitRunnerIsSameVersionAsPackage>(services);
+            //AddProjectCheck<DotNetXUnitRunnerIsSameVersionAsPackage>(services);
             AddProjectCheck<DoesNotReferenceByDll>(services);
             AddProjectCheck<MustHaveSourceLinkPackage>(services);
             AddProjectCheck<MustHaveFxCopAnalyzerPackage>(services);
