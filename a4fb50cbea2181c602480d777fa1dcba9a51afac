@@ -1,0 +1,6 @@
+[ver:1,total:540]
+src/BuildCheck/Setup.cs:385,1532448000:180,1532523600:160,1532948400:45,m
+src/BuildCheck/BuildCheck.csproj:75,1532948400:75,m
+src/BuildCheck/ProjectChecks/MustEnableStrictMode.cs:38,1532948400:38,m
+src/BuildCheck/ProjectChecks/NuGetPolicyDisableImplicitNuGetFallbackFolder.cs:22,1532948400:22,r
+src/BuildCheck/ProjectChecks/NoPreReleaseNuGetPackages.cs:20,1532523600:20,r
