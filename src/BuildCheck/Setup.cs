@@ -13,15 +13,17 @@ namespace BuildCheck
 
         public static void SetupProjectChecks(IServiceCollection services)
         {
+            //AddProjectCheck<DotNetXUnitRunnerIsSameVersionAsPackage>(services);
+
             AddProjectCheck<NoPreReleaseNuGetPackages>(services);
             AddProjectCheck<ErrorPolicyWarningAsErrors>(services);
             AddProjectCheck<LanguagePolicyUseLatestVersion>(services);
             AddProjectCheck<NuGetPolicyDisableImplicitNuGetFallbackFolder>(services);
-            //AddProjectCheck<DotNetXUnitRunnerIsSameVersionAsPackage>(services);
             AddProjectCheck<DoesNotReferenceByDll>(services);
             AddProjectCheck<MustHaveSourceLinkPackage>(services);
             AddProjectCheck<MustHaveFxCopAnalyzerPackage>(services);
             AddProjectCheck<HasConsistentNuGetPackages>(services);
+            AddProjectCheck<MustEnableStrictMode>(services);
         }
 
         private static void AddProjectCheck<T>(IServiceCollection services)
