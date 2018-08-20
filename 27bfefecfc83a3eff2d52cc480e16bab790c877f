@@ -1,0 +1,6 @@
+[ver:1,total:1740]
+src/BuildCheck/BuildCheck.csproj:1330,1534176000:180,1534330800:180,1534507200:200,1534518000:310,1534766400:30,1534773600:340,1534784400:90,r
+src/BuildCheck/Setup.cs:170,1534766400:150,1534773600:20,r
+src/BuildCheck/ProjectChecks/HasConsistentNuGetPackages.cs:170,1534507200:140,1534518000:30,r
+src/BuildCheck/ProjectChecks/MustEnableStrictMode.cs:50,1534518000:20,1534784400:30,r
+src/BuildCheck/ProjectChecks/MustHaveFxCopAnalyzerPackage.cs:20,1534507200:20,r
