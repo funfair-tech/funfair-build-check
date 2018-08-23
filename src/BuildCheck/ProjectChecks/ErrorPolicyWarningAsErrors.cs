@@ -16,9 +16,9 @@ namespace BuildCheck.ProjectChecks
         /// <inheritdoc />
         public void Check(string projectName, XmlDocument project)
         {
-            ProjectValueHelpers.CheckNode(projectName, project, @"WarningsAsErrors", this._logger);
+            ProjectValueHelpers.CheckNode(projectName, project, nodePresence: @"WarningsAsErrors", this._logger);
 
-            ProjectValueHelpers.CheckValue(projectName, project, @"TreatWarningsAsErrors", true, this._logger);
+            ProjectValueHelpers.CheckValue(projectName, project, nodePresence: @"TreatWarningsAsErrors", requiredValue: true, this._logger);
         }
     }
 }

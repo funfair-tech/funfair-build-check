@@ -8,8 +8,7 @@ namespace BuildCheck.ProjectChecks
     {
         private readonly ILogger<ErrorPolicyWarningAsErrors> _logger;
 
-        public LanguagePolicyUseLatestVersion(
-            ILogger<ErrorPolicyWarningAsErrors> logger)
+        public LanguagePolicyUseLatestVersion(ILogger<ErrorPolicyWarningAsErrors> logger)
         {
             this._logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
@@ -17,7 +16,7 @@ namespace BuildCheck.ProjectChecks
         /// <inheritdoc />
         public void Check(string projectName, XmlDocument project)
         {
-            ProjectValueHelpers.CheckValue(projectName, project, @"LangVersion", "latest", this._logger);
+            ProjectValueHelpers.CheckValue(projectName, project, nodePresence: @"LangVersion", requiredValue: "latest", this._logger);
         }
     }
 }

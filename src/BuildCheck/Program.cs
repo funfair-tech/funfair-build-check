@@ -31,13 +31,7 @@ namespace BuildCheck
                 Console.WriteLine($"{typeof(Program).Namespace} {ExecutableVersionInformation.ProgramVersion()}");
 
                 IConfigurationRoot configuration = new ConfigurationBuilder()
-                    .AddCommandLine(args,
-                                    new Dictionary<string, string>
-                                    {
-                                        {@"-Solution", @"solution"},
-                                        {@"-WarningAsErrors", @"WarningAsErrors"},
-                                        {@"-PreReleaseBuild", @"PreReleaseBuild"}
-                                    })
+                    .AddCommandLine(args, new Dictionary<string, string> {{@"-Solution", @"solution"}, {@"-WarningAsErrors", @"WarningAsErrors"}, {@"-PreReleaseBuild", @"PreReleaseBuild"}})
                     .Build();
 
                 string solutionFileName = configuration.GetValue<string>(key: @"solution");
@@ -63,14 +57,14 @@ namespace BuildCheck
 
                 if (warningsAsErrors)
                 {
-                    Console.WriteLine($"** Running with Warnings as Errors");
+                    Console.WriteLine(value: "** Running with Warnings as Errors");
                 }
 
                 bool preReleaseBuild = configuration.GetValue<bool>(key: @"PreReleaseBuild");
 
                 if (!warningsAsErrors)
                 {
-                    Console.WriteLine($"** Running with release build requirements");
+                    Console.WriteLine(value: "** Running with release build requirements");
                 }
 
                 IServiceProvider services = Setup(warningsAsErrors, preReleaseBuild);
