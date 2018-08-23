@@ -1,0 +1,6 @@
+[ver:1,total:960]
+src/BuildCheck/BuildCheck.csproj:780,1534928400:210,1535014800:180,1535043600:390,m
+src/BuildCheck/ProjectChecks/DotNetXUnitRunnerIsSameVersionAsPackage.cs:120,1535047200:120,m
+src/BuildCheck/ProjectChecks/MustHaveFxCopAnalyzerPackage.cs:30,1535043600:30,r
+src/BuildCheck/ProjectChecks/NuGetPolicyDisableImplicitNuGetFallbackFolder.cs:15,1534928400:15,r
+src/BuildCheck/ProjectChecks/NoPreReleaseNuGetPackages.cs:15,1534928400:15,r
