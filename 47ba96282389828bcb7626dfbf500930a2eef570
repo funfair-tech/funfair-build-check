@@ -1,0 +1,5 @@
+[ver:1,total:1860]
+src/BuildCheck/BuildCheck.csproj:1690,1535119200:220,1535450400:420,1535634000:240,1535731200:220,1536055200:200,1536073200:240,1536084000:150,r
+src/BuildCheck/ProjectChecks/MustEnableStrictMode.cs:95,1535119200:20,1535450400:60,1536084000:15,r
+src/BuildCheck/ProjectChecks/NuGetPolicyDisableImplicitNuGetFallbackFolder.cs:55,1535731200:20,1536055200:20,1536084000:15,r
+src/BuildCheck/ProjectChecks/MustHaveFxCopAnalyzerPackage.cs:20,1536055200:20,r
