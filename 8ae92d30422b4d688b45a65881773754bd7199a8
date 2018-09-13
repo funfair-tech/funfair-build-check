@@ -1,0 +1,4 @@
+[ver:1,total:1800]
+src/BuildCheck/BuildCheck.csproj:1710,1536328800:630,1536332400:150,1536660000:180,1536678000:150,1536760800:240,1536775200:240,1536829200:120,r
+src/BuildCheck/ProjectChecks/HasConsistentNuGetPackages.cs:60,1536328800:30,1536332400:30,r
+src/BuildCheck/ProjectChecks/MustEnableStrictMode.cs:30,1536678000:30,r
