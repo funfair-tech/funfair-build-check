@@ -1,0 +1,5 @@
+[ver:1,total:240]
+src/BuildCheck/ProjectChecks/MustHaveFxCopAnalyzerPackage.cs:172,1543244400:132,1543248000:40,r
+src/BuildCheck/ProjectChecks/NoPreReleaseNuGetPackages.cs:32,1543244400:12,1543248000:20,r
+src/BuildCheck/BuildCheck.csproj:24,1543244400:24,m
+src/BuildCheck/ProjectChecks/NuGetPolicyDisableImplicitNuGetFallbackFolder.cs:12,1543244400:12,r
