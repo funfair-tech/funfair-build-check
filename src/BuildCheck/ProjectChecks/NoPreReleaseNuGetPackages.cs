@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Xml;
 using Microsoft.Extensions.Logging;
 using NuGet.Versioning;
@@ -9,6 +9,7 @@ namespace BuildCheck.ProjectChecks
     {
         private readonly ICheckConfiguration _configuration;
         private readonly ILogger<NoPreReleaseNuGetPackages> _logger;
+        private const string PACKAGE_PRIVATE_ASSETS = @"All";
 
         public NoPreReleaseNuGetPackages(ICheckConfiguration configuration, ILogger<NoPreReleaseNuGetPackages> logger)
         {
@@ -29,6 +30,22 @@ namespace BuildCheck.ProjectChecks
                 {
                     this._logger.LogError($"{projectName}: Contains bad reference to packages.");
 
+                    continue;
+                }
+
+                // check for private asset (if it's private the build won't fail for a pre-release package)
+                string privateAssets = reference.GetAttribute("PrivateAssets");
+                if (string.IsNullOrEmpty(privateAssets))
+                {
+                    XmlElement privateAssetsElement = reference.SelectSingleNode("PrivateAssets") as XmlElement;
+                    if (privateAssetsElement != null)
+                    {
+                        privateAssets = privateAssetsElement.InnerText;
+                    }
+                }
+
+                if (!string.IsNullOrEmpty(privateAssets) && string.Compare(privateAssets, PACKAGE_PRIVATE_ASSETS, StringComparison.OrdinalIgnoreCase) == 0)
+                {
                     continue;
                 }
 
