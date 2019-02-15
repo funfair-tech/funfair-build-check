@@ -8,6 +8,11 @@ All notable changes to this project will be documented in this file.
 
 ### Changed
 
+## [1.1.0] 2019-02-15
+
+### Changed
+- Updated to .net core 2.2
+
 
 ## [1.0.0]
 ### Added
