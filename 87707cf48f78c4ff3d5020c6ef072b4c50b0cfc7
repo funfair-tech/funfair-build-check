@@ -1,0 +1,5 @@
+[ver:1,total:240]
+src/BuildCheck/ProjectChecks/DotNetXUnitRunnerIsSameVersionAsPackage.cs:140,1550250000:140,r
+src/BuildCheck/ProjectChecks/NuGetPolicyDisableImplicitNuGetFallbackFolder.cs:60,1550494800:60,r
+src/BuildCheck/ProjectChecks/NoPreReleaseNuGetPackages.cs:20,1550250000:20,r
+src/BuildCheck/Setup.cs:20,1550250000:20,r
