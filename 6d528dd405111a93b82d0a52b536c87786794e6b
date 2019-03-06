@@ -1,0 +1,5 @@
+[ver:1,total:120]
+src/BuildCheck/ProjectChecks/NuGetPolicyDisableImplicitNuGetFallbackFolder.cs:75,1551870000:60,1551873600:15,r
+src/BuildCheck/BuildCheck.csproj:15,1551873600:15,r
+src/BuildCheck/ProjectChecks/DotNetXUnitRunnerIsSameVersionAsPackage.cs:15,1551873600:15,r
+src/BuildCheck/ProjectChecks/HasConsistentNuGetPackages.cs:15,1551873600:15,r
