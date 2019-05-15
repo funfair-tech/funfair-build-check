@@ -16,7 +16,7 @@ namespace BuildCheck.ProjectChecks
         /// <inheritdoc />
         public void Check(string projectName, XmlDocument project)
         {
-            ProjectValueHelpers.CheckValue(projectName, project, nodePresence: @"Features", requiredValue: "strict", this._logger);
+            ProjectValueHelpers.CheckValue(projectName, project, nodePresence: @"Features", requiredValue: "strict;flow-analysis", this._logger);
         }
     }
 }
