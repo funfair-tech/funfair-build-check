@@ -1,0 +1,6 @@
+[ver:1,total:240]
+src/BuildCheck/BuildCheck.csproj:180,1562925600:180,r
+src/BuildCheck/ProjectChecks/MustHaveFxCopAnalyzerPackage.cs:15,1562925600:15,r
+src/BuildCheck/Program.cs:15,1562925600:15,r
+src/BuildCheck/ProjectChecks/NoPreReleaseNuGetPackages.cs:15,1562925600:15,r
+src/BuildCheck/ProjectChecks/HasConsistentNuGetPackages.cs:15,1562925600:15,r
