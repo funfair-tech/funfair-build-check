@@ -20,7 +20,7 @@ namespace BuildCheck.ProjectChecks
 
             foreach (XmlElement reference in references)
             {
-                string assembly = reference.GetAttribute(name: "Reference");
+                string assembly = reference.GetAttribute(name: "Include");
                 this._logger.LogError($"{projectName}: References {assembly} directly not using NuGet or a project reference.");
             }
         }
