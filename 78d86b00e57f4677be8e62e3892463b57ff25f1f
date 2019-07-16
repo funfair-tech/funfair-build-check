@@ -1,0 +1,8 @@
+[ver:1,total:720]
+src/BuildCheck/Setup.cs:180,1562947200:180,r
+src/BuildCheck/BuildCheck.csproj:167,1562947200:150,1563296400:17,r
+src/BuildCheck/ProjectChecks/NoPreReleaseNuGetPackages.cs:160,1562950800:160,r
+src/BuildCheck/ProjectChecks/DoesNotReferenceByDll.cs:86,1563296400:86,m
+src/BuildCheck/ProjectChecks/MustEnableStrictMode.cs:60,1562947200:60,r
+src/BuildCheck/ProjectChecks/MustHaveFxCopAnalyzerPackage.cs:37,1562950800:20,1563296400:17,r
+src/BuildCheck/Program.cs:30,1562947200:30,r
