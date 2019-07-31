@@ -1,0 +1,8 @@
+[ver:1,total:480]
+src/BuildCheck/Program.cs:180,1564588800:180,r
+src/BuildCheck/ProjectChecks/DoesNotReferenceByDll.cs:90,1564588800:90,r
+src/BuildCheck/BuildCheck.csproj:75,1564588800:75,m
+src/BuildCheck/ProjectChecks/DotNetXUnitRunnerIsSameVersionAsPackage.cs:60,1564588800:60,r
+src/BuildCheck/ProjectChecks/MustEnableStrictMode.cs:45,1564588800:45,r
+src/BuildCheck/ProjectChecks/NoPreReleaseNuGetPackages.cs:15,1564588800:15,r
+src/BuildCheck/ProjectChecks/MustHaveFxCopAnalyzerPackage.cs:15,1564588800:15,r
