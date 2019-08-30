@@ -1,25 +1,25 @@
 using System;
+using System.Collections.Generic;
 using System.Xml;
 using Microsoft.Extensions.Logging;
-using NuGet.Versioning;
 
 namespace BuildCheck.ProjectChecks
 {
-    public sealed class NoPreReleaseNuGetPackages : IProjectCheck
+    public class ReferencesNugetPackageOnlyOnce : IProjectCheck
     {
         private const string PACKAGE_PRIVATE_ASSETS = @"All";
-        private readonly ICheckConfiguration _configuration;
-        private readonly ILogger<NoPreReleaseNuGetPackages> _logger;
+        private readonly ILogger<ReferencesNugetPackageOnlyOnce> _logger;
 
-        public NoPreReleaseNuGetPackages(ICheckConfiguration configuration, ILogger<NoPreReleaseNuGetPackages> logger)
+        public ReferencesNugetPackageOnlyOnce(ILogger<ReferencesNugetPackageOnlyOnce> logger)
         {
-            this._configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));
             this._logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
         /// <inheritdoc />
         public void Check(string projectName, XmlDocument project)
         {
+            HashSet<string> packageReferences = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+
             XmlNodeList nodes = project.SelectNodes(xpath: "/Project/ItemGroup/PackageReference");
 
             foreach (XmlElement reference in nodes)
@@ -51,20 +51,9 @@ namespace BuildCheck.ProjectChecks
                     continue;
                 }
 
-                string version = reference.GetAttribute(name: @"Version");
-
-                this._logger.LogDebug($"{projectName}: Found: {packageName} ({version})");
-
-                if (!NuGetVersion.TryParse(version, out NuGetVersion nuGetVersion))
+                if (!packageReferences.Add(packageName))
                 {
-                    this._logger.LogError($"{projectName}: Package {packageName} could not parse version {version}.");
-
-                    continue;
-                }
-
-                if (nuGetVersion.IsPrerelease && !this._configuration.PreReleaseBuild)
-                {
-                    this._logger.LogError($"{projectName}: Package {packageName} uses pre-release version {version}.");
+                    this._logger.LogError($"{projectName}: Already references package {packageName}.");
                 }
             }
         }

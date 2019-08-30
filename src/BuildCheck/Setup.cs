@@ -26,6 +26,7 @@ namespace BuildCheck
             AddProjectCheck<MustEnableStrictMode>(services);
             AddProjectCheck<UsingNSubstituteMustIncludeAnalyzer>(services);
             AddProjectCheck<UsingXUnitMustIncludeAnalyzer>(services);
+            AddProjectCheck<ReferencesNugetPackageOnlyOnce>(services);
         }
 
         private static void AddProjectCheck<T>(IServiceCollection services)
