@@ -1,0 +1,11 @@
+[ver:1,total:960]
+src/BuildCheck/ProjectChecks/HasConsistentNuGetPackages.cs:390,1565013600:150,1565373600:240,r
+src/BuildCheck/ProjectChecks/DoesNotReferenceByDll.cs:220,1565013600:160,1565373600:60,r
+src/BuildCheck/BuildCheck.csproj:180,1565373600:180,r
+src/BuildCheck/ProjectChecks/NoPreReleaseNuGetPackages.cs:42,1565013600:30,1565373600:12,m
+src/BuildCheck/ProjectChecks/MustHaveFxCopAnalyzerPackage.cs:34,1565013600:10,1565373600:24,r
+src/BuildCheck/Setup.cs:30,1565013600:30,m
+src/BuildCheck/Program.cs:20,1565013600:20,r
+src/BuildCheck/ProjectChecks/NuGetPolicyDisableImplicitNuGetFallbackFolder.cs:20,1565013600:20,r
+src/BuildCheck/ProjectChecks/DotNetXUnitRunnerIsSameVersionAsPackage.cs:12,1565373600:12,r
+src/BuildCheck/ProjectChecks/MustEnableStrictMode.cs:12,1565373600:12,r
