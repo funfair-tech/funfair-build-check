@@ -10,6 +10,7 @@ namespace BuildCheck
         public static void SetupSolutionChecks(IServiceCollection services)
         {
             AddSolutionCheck<AllProjectsExist>(services);
+            AddSolutionCheck<GlobalJsonIsLatest>(services);
         }
 
         public static void SetupProjectChecks(IServiceCollection services)
