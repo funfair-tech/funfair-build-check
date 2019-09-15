@@ -14,8 +14,6 @@ namespace BuildCheck
 
         public static void SetupProjectChecks(IServiceCollection services)
         {
-            //AddProjectCheck<DotNetXUnitRunnerIsSameVersionAsPackage>(services);
-
             AddProjectCheck<NoPreReleaseNuGetPackages>(services);
             AddProjectCheck<ErrorPolicyWarningAsErrors>(services);
             AddProjectCheck<LanguagePolicyUseLatestVersion>(services);
