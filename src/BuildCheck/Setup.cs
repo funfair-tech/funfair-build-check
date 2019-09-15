@@ -1,4 +1,5 @@
-﻿using BuildCheck.ProjectChecks;
+﻿using System;
+using BuildCheck.ProjectChecks;
 using BuildCheck.SolutionChecks;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -31,12 +32,14 @@ namespace BuildCheck
         private static void AddProjectCheck<T>(IServiceCollection services)
             where T : class, IProjectCheck
         {
+            Console.WriteLine($"* Project Check: {typeof(T).Name}");
             services.AddSingleton<IProjectCheck, T>();
         }
 
         private static void AddSolutionCheck<T>(IServiceCollection services)
             where T : class, ISolutionCheck
         {
+            Console.WriteLine($"* Solution Check: {typeof(T).Name}");
             services.AddSingleton<ISolutionCheck, T>();
         }
     }
