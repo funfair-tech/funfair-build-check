@@ -4,7 +4,7 @@ using Microsoft.Extensions.Logging;
 
 namespace BuildCheck.ProjectChecks
 {
-    public class DotNetXUnitRunnerIsSameVersionAsPackage : IProjectCheck
+    public sealed class DotNetXUnitRunnerIsSameVersionAsPackage : IProjectCheck
     {
         private readonly ILogger<DotNetXUnitRunnerIsSameVersionAsPackage> _logger;
 

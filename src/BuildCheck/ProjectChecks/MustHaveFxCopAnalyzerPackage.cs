@@ -4,7 +4,7 @@ using Microsoft.Extensions.Logging;
 
 namespace BuildCheck.ProjectChecks
 {
-    public class MustHaveFxCopAnalyzerPackage : IProjectCheck
+    public sealed class MustHaveFxCopAnalyzerPackage : IProjectCheck
     {
         //<PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="2.6.1" PrivateAssets="All"/>
         private const string PACKAGE_ID = @"Microsoft.CodeAnalysis.FxCopAnalyzers";
@@ -57,7 +57,7 @@ namespace BuildCheck.ProjectChecks
 
             if (reference == null)
             {
-                this._logger.LogInformation($"{projectName}: Does not reference {PACKAGE_ID} directly not using NuGet");
+                this._logger.LogError($"{projectName}: Does not reference {PACKAGE_ID} directly not using NuGet");
 
                 return true;
             }

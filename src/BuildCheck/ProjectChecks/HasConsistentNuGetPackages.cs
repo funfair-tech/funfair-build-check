@@ -6,7 +6,7 @@ using NuGet.Versioning;
 
 namespace BuildCheck.ProjectChecks
 {
-    public class HasConsistentNuGetPackages : IProjectCheck
+    public sealed class HasConsistentNuGetPackages : IProjectCheck
     {
         private readonly ILogger<NoPreReleaseNuGetPackages> _logger;
 

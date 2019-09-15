@@ -3,7 +3,7 @@ using Microsoft.Extensions.Logging;
 
 namespace BuildCheck.SolutionChecks
 {
-    public class AllProjectsExist : ISolutionCheck
+    public sealed class AllProjectsExist : ISolutionCheck
     {
         private readonly ILogger<AllProjectsExist> _logger;
 

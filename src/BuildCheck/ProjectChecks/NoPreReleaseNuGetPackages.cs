@@ -5,7 +5,7 @@ using NuGet.Versioning;
 
 namespace BuildCheck.ProjectChecks
 {
-    public class NoPreReleaseNuGetPackages : IProjectCheck
+    public sealed class NoPreReleaseNuGetPackages : IProjectCheck
     {
         private readonly ICheckConfiguration _configuration;
         private readonly ILogger<NoPreReleaseNuGetPackages> _logger;

@@ -4,7 +4,7 @@ using Microsoft.Extensions.Logging;
 
 namespace BuildCheck.ProjectChecks
 {
-    public class DoesNotReferenceByDll : IProjectCheck
+    public sealed class DoesNotReferenceByDll : IProjectCheck
     {
         private readonly ILogger<ErrorPolicyWarningAsErrors> _logger;
 

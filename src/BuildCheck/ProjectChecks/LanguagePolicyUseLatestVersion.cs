@@ -4,7 +4,7 @@ using Microsoft.Extensions.Logging;
 
 namespace BuildCheck.ProjectChecks
 {
-    public class LanguagePolicyUseLatestVersion : IProjectCheck
+    public sealed class LanguagePolicyUseLatestVersion : IProjectCheck
     {
         private readonly ILogger<ErrorPolicyWarningAsErrors> _logger;
 

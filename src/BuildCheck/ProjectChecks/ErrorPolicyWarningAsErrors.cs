@@ -4,7 +4,7 @@ using Microsoft.Extensions.Logging;
 
 namespace BuildCheck.ProjectChecks
 {
-    public class ErrorPolicyWarningAsErrors : IProjectCheck
+    public sealed class ErrorPolicyWarningAsErrors : IProjectCheck
     {
         private readonly ILogger<ErrorPolicyWarningAsErrors> _logger;
 

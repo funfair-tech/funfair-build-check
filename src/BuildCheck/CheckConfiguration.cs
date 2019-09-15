@@ -1,6 +1,6 @@
 ﻿namespace BuildCheck
 {
-    public class CheckConfiguration : ICheckConfiguration
+    public sealed class CheckConfiguration : ICheckConfiguration
     {
         public bool PreReleaseBuild { get; set; }
     }

@@ -24,6 +24,8 @@ namespace BuildCheck
             AddProjectCheck<MustHaveFxCopAnalyzerPackage>(services);
             AddProjectCheck<HasConsistentNuGetPackages>(services);
             AddProjectCheck<MustEnableStrictMode>(services);
+            AddProjectCheck<UsingNSubstituteMustIncludeAnalyzer>(services);
+            AddProjectCheck<UsingXUnitMustIncludeAnalyzer>(services);
         }
 
         private static void AddProjectCheck<T>(IServiceCollection services)

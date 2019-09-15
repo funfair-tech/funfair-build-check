@@ -4,7 +4,7 @@ using Microsoft.Extensions.Logging;
 
 namespace BuildCheck.ProjectChecks
 {
-    public class MustHaveSourceLinkPackage : IProjectCheck
+    public sealed class MustHaveSourceLinkPackage : IProjectCheck
     {
         private const string HISTORICAL_PACKAGE_ID = @"SourceLink.Create.CommandLine";
         private const string PACKAGE_ID = @"Microsoft.SourceLink.GitHub";

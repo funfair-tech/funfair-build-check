@@ -4,7 +4,7 @@ using Microsoft.Extensions.Logging;
 
 namespace BuildCheck.ProjectChecks
 {
-    public class MustEnableStrictMode : IProjectCheck
+    public sealed class MustEnableStrictMode : IProjectCheck
     {
         private readonly ILogger<ErrorPolicyWarningAsErrors> _logger;
 
