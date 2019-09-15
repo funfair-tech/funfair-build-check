@@ -56,7 +56,7 @@ namespace BuildCheck.ProjectChecks
 
             if (reference == null)
             {
-                this._logger.LogError($"{projectName}: Does not reference {PACKAGE_ID} directly not using NuGet");
+                this._logger.LogError($"{projectName}: Does not reference {PACKAGE_ID} not using NuGet");
 
                 return true;
             }
