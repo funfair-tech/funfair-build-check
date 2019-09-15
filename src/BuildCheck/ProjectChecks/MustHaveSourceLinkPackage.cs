@@ -80,7 +80,7 @@ namespace BuildCheck.ProjectChecks
                 assets = privateAssets.InnerText;
             }
 
-            return !string.IsNullOrEmpty(assets) && string.Compare(assets, PACKAGE_PRIVATE_ASSETS, StringComparison.OrdinalIgnoreCase) == 0;
+            return !string.IsNullOrEmpty(assets) && StringComparer.InvariantCultureIgnoreCase.Equals(assets, PACKAGE_PRIVATE_ASSETS);
         }
     }
 }

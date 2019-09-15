@@ -6,6 +6,8 @@ namespace BuildCheck.ProjectChecks
 {
     public abstract class HasAppropriateAnalysisPackages : IProjectCheck
     {
+        private const string PACKAGE_PRIVATE_ASSETS = @"All";
+
         private readonly string _detectPackageId;
         private readonly ILogger<NoPreReleaseNuGetPackages> _logger;
         private readonly string _mustIncludePackageId;
@@ -44,6 +46,12 @@ namespace BuildCheck.ProjectChecks
                 if (StringComparer.InvariantCultureIgnoreCase.Equals(this._mustIncludePackageId, packageName))
                 {
                     foundAnalyzerPackage = true;
+                    string assets = reference.GetAttribute(name: "PrivateAssets");
+
+                    if (string.IsNullOrWhiteSpace(assets) || assets != PACKAGE_PRIVATE_ASSETS)
+                    {
+                        this._logger.LogError($"{projectName}: Does not reference {this._mustIncludePackageId} with a PrivateAssets=\"{PACKAGE_PRIVATE_ASSETS}\" attribute");
+                    }
                 }
             }
 

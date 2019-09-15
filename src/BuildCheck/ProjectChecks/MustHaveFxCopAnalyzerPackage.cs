@@ -9,7 +9,6 @@ namespace BuildCheck.ProjectChecks
         //<PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="2.6.1" PrivateAssets="All"/>
         private const string PACKAGE_ID = @"Microsoft.CodeAnalysis.FxCopAnalyzers";
 
-        //private const string PACKAGE_VERSION = @"2.8.3";
         private const string PACKAGE_PRIVATE_ASSETS = @"All";
 
         private const string RULESET_FILENAME = @"$(SolutionDir)\CodeAnalysis.ruleset";
@@ -66,7 +65,7 @@ namespace BuildCheck.ProjectChecks
 
             if (string.IsNullOrWhiteSpace(assets) || assets != PACKAGE_PRIVATE_ASSETS)
             {
-                this._logger.LogInformation($"{projectName}: Does not reference {PACKAGE_ID} with a PrivateAssets=\"{PACKAGE_PRIVATE_ASSETS}\" attribute");
+                this._logger.LogError($"{projectName}: Does not reference {PACKAGE_ID} with a PrivateAssets=\"{PACKAGE_PRIVATE_ASSETS}\" attribute");
             }
 
             return false;
