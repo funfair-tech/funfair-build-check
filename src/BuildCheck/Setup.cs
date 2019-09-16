@@ -27,6 +27,7 @@ namespace BuildCheck
             AddProjectCheck<UsingNSubstituteMustIncludeAnalyzer>(services);
             AddProjectCheck<UsingXUnitMustIncludeAnalyzer>(services);
             AddProjectCheck<ReferencesNugetPackageOnlyOnce>(services);
+            AddProjectCheck<MustHaveAsyncAnalyzerPackage>(services);
         }
 
         private static void AddProjectCheck<T>(IServiceCollection services)

@@ -21,7 +21,8 @@ namespace BuildCheck.ProjectChecks
         public void Check(string projectName, XmlDocument project)
         {
             // check for xunit reference
-            XmlElement xunitReference = project.SelectSingleNode("/Project/ItemGroup/PackageReference[@Include='xunit']") as XmlElement;
+            XmlElement xunitReference = project.SelectSingleNode(xpath: "/Project/ItemGroup/PackageReference[@Include='xunit']") as XmlElement;
+
             if (xunitReference != null)
             {
                 // has an xunit reference so is a unit test project, don't force sourcelink
@@ -33,7 +34,7 @@ namespace BuildCheck.ProjectChecks
 
             if (!packageExists && !historicalPackageExists)
             {
-                this._logger.LogError($"{projectName}: Does not reference {PACKAGE_ID} or {HISTORICAL_PACKAGE_ID} directly not using NuGet");
+                this._logger.LogError($"{projectName}: Does not reference {PACKAGE_ID} or {HISTORICAL_PACKAGE_ID} using NuGet");
             }
 
             if (packageExists && historicalPackageExists)
@@ -61,21 +62,31 @@ namespace BuildCheck.ProjectChecks
         private static bool CheckReference(string packageId, XmlDocument project)
         {
             XmlElement reference = project.SelectSingleNode("/Project/ItemGroup/PackageReference[@Include='" + packageId + "']") as XmlElement;
+
             return reference != null;
         }
 
         private static bool CheckPrivateAssets(string packageId, XmlDocument project)
         {
             XmlElement reference = project.SelectSingleNode("/Project/ItemGroup/PackageReference[@Include='" + packageId + "']") as XmlElement;
-            if (reference == null) return false;
+
+            if (reference == null)
+            {
+                return false;
+            }
 
             // check for an attribute
             string assets = reference.GetAttribute(name: "PrivateAssets");
+
             if (string.IsNullOrEmpty(assets))
             {
                 // no PrivateAssets attribute, check for an element
-                XmlElement privateAssets = reference.SelectSingleNode("PrivateAssets") as XmlElement;
-                if (privateAssets == null) return false;
+                XmlElement privateAssets = reference.SelectSingleNode(xpath: "PrivateAssets") as XmlElement;
+
+                if (privateAssets == null)
+                {
+                    return false;
+                }
 
                 assets = privateAssets.InnerText;
             }
