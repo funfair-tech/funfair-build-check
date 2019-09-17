@@ -6,7 +6,6 @@ namespace BuildCheck.ProjectChecks
 {
     public sealed class MustHaveFxCopAnalyzerPackage : IProjectCheck
     {
-        //<PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="2.6.1" PrivateAssets="All"/>
         private const string PACKAGE_ID = @"Microsoft.CodeAnalysis.FxCopAnalyzers";
 
         private const string PACKAGE_PRIVATE_ASSETS = @"All";

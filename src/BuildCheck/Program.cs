@@ -160,16 +160,18 @@ namespace BuildCheck
                 RegexOptions.Compiled);
 
             foreach (string line in text)
-            foreach (Match match in regex.Matches(line))
             {
-                string displayName = match.Groups[groupname: @"DisplayName"]
-                    .Value;
-                string fileName = match.Groups[groupname: @"FileName"]
-                    .Value;
+                foreach (Match match in regex.Matches(line))
+                {
+                    string displayName = match.Groups[groupname: @"DisplayName"]
+                        .Value;
+                    string fileName = match.Groups[groupname: @"FileName"]
+                        .Value;
 
-                Console.WriteLine($" * {displayName}");
+                    Console.WriteLine($" * {displayName}");
 
-                projects.Add(new Project(displayName: displayName, fileName: fileName));
+                    projects.Add(new Project(displayName: displayName, fileName: fileName));
+                }
             }
 
             return projects.ToArray();

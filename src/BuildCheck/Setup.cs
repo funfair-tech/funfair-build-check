@@ -28,6 +28,7 @@ namespace BuildCheck
             AddProjectCheck<UsingXUnitMustIncludeAnalyzer>(services);
             AddProjectCheck<ReferencesNugetPackageOnlyOnce>(services);
             AddProjectCheck<MustHaveAsyncAnalyzerPackage>(services);
+            AddProjectCheck<MustHaveSonarAnalyzerPackage>(services);
         }
 
         private static void AddProjectCheck<T>(IServiceCollection services)
