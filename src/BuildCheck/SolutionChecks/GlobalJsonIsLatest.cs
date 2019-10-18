@@ -23,6 +23,8 @@ namespace BuildCheck.SolutionChecks
             if (string.IsNullOrWhiteSpace(this._dotnetVersion))
             {
                 this._logger.LogWarning(message: "Not checking global.json as DOTNET_CORE_SDK_VERSION is not defined");
+
+                return;
             }
 
             string file = Path.Combine(Path.GetDirectoryName(solutionFileName), path2: @"global.json");
@@ -34,11 +36,19 @@ namespace BuildCheck.SolutionChecks
 
             string content = File.ReadAllText(file);
 
-            Packet p = JsonConvert.DeserializeObject<Packet>(content);
-
-            if (!StringComparer.InvariantCultureIgnoreCase.Equals(p.Sdk.Version, this._dotnetVersion))
+            try
             {
-                this._logger.LogError($"global.json is using {p.Sdk.Version} rather than {this._dotnetVersion}");
+                Packet p = JsonConvert.DeserializeObject<Packet>(content);
+
+                if (!StringComparer.InvariantCultureIgnoreCase.Equals(p.Sdk.Version, this._dotnetVersion))
+                {
+                    this._logger.LogError($"global.json is using {p.Sdk.Version} rather than {this._dotnetVersion}");
+                }
+
+            }
+            catch (Exception exception)
+            {
+                this._logger.LogError(new EventId(exception.HResult), exception, $"Failed to read {file} : {exception.Message}");
             }
         }
 
