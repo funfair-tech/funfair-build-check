@@ -35,7 +35,9 @@ namespace BuildCheck
             if (dotnetVersion != "2.2.401")
             {
                 AddProjectCheck<MustUseOpenApiAnalyzers>(services);
+#if CHECK_NULLABLE
                 AddProjectCheck<MustEnableNullable>(services);
+#endif
             }
         }
 
