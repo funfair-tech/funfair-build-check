@@ -16,11 +16,7 @@ namespace BuildCheck.ProjectChecks
         /// <inheritdoc />
         public void Check(string projectName, XmlDocument project)
         {
-            // Not ready for tests yet
-#if READY_FOR_CHECKS
-            // TODO: Enable when ready
             ProjectValueHelpers.CheckValue(projectName, project, nodePresence: @"Nullable", requiredValue: "enable", this._logger);
-#endif
         }
     }
 }

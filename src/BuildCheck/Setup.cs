@@ -29,8 +29,14 @@ namespace BuildCheck
             AddProjectCheck<ReferencesNugetPackageOnlyOnce>(services);
             AddProjectCheck<MustHaveAsyncAnalyzerPackage>(services);
             AddProjectCheck<MustHaveSonarAnalyzerPackage>(services);
-            AddProjectCheck<MustUseOpenApiAnalyzers>(services);
-            AddProjectCheck<MustEnableNullable>(services);
+
+            string dotnetVersion = Environment.GetEnvironmentVariable(variable: @"DOTNET_CORE_SDK_VERSION");
+
+            if (dotnetVersion != "2.2.401")
+            {
+                AddProjectCheck<MustUseOpenApiAnalyzers>(services);
+                AddProjectCheck<MustEnableNullable>(services);
+            }
         }
 
         private static void AddProjectCheck<T>(IServiceCollection services)
