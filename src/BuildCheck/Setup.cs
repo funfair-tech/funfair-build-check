@@ -29,6 +29,8 @@ namespace BuildCheck
             AddProjectCheck<ReferencesNugetPackageOnlyOnce>(services);
             AddProjectCheck<MustHaveAsyncAnalyzerPackage>(services);
             AddProjectCheck<MustHaveSonarAnalyzerPackage>(services);
+            AddProjectCheck<MustUseOpenApiAnalyzers>(services);
+            AddProjectCheck<MustEnableNullable>(services);
         }
 
         private static void AddProjectCheck<T>(IServiceCollection services)
