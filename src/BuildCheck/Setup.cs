@@ -32,13 +32,10 @@ namespace BuildCheck
 
             string dotnetVersion = Environment.GetEnvironmentVariable(variable: @"DOTNET_CORE_SDK_VERSION");
 
-            if (dotnetVersion != "2.2.401")
+            if (dotnetVersion != "2.2.402")
             {
-                // Look this is a comment!
-#if CHECK_NULLABLE
                 AddProjectCheck<MustUseOpenApiAnalyzers>(services);
                 AddProjectCheck<MustEnableNullable>(services);
-#endif
             }
         }
 
