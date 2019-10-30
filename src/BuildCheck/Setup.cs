@@ -35,7 +35,7 @@ namespace BuildCheck
             if (dotnetVersion != "2.2.402")
             {
                 AddProjectCheck<MustUseOpenApiAnalyzers>(services);
-                AddProjectCheck<MustEnableNullable>(services);
+//                AddProjectCheck<MustEnableNullable>(services);
             }
         }
 
