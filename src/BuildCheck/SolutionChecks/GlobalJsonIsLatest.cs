@@ -8,7 +8,7 @@ namespace BuildCheck.SolutionChecks
 {
     public sealed class GlobalJsonIsLatest : ISolutionCheck
     {
-        private readonly string _dotnetVersion;
+        private readonly string? _dotnetVersion;
         private readonly ILogger<GlobalJsonIsLatest> _logger;
 
         public GlobalJsonIsLatest(ILogger<GlobalJsonIsLatest> logger)
@@ -27,7 +27,17 @@ namespace BuildCheck.SolutionChecks
                 return;
             }
 
-            string file = Path.Combine(Path.GetDirectoryName(solutionFileName), path2: @"global.json");
+            string? solutionDir = Path.GetDirectoryName(solutionFileName);
+            if (solutionDir == null)
+            {
+                return;
+            }
+
+            string? file = Path.Combine(solutionDir, path2: @"global.json");
+            if (file == null)
+            {
+                return;
+            }
 
             if (!File.Exists(file))
             {
@@ -40,9 +50,16 @@ namespace BuildCheck.SolutionChecks
             {
                 Packet p = JsonConvert.DeserializeObject<Packet>(content);
 
-                if (!StringComparer.InvariantCultureIgnoreCase.Equals(p.Sdk.Version, this._dotnetVersion))
+                if (p?.Sdk?.Version != null)
                 {
-                    this._logger.LogError($"global.json is using {p.Sdk.Version} rather than {this._dotnetVersion}");
+                    if (!StringComparer.InvariantCultureIgnoreCase.Equals(p.Sdk.Version, this._dotnetVersion))
+                    {
+                        this._logger.LogError($"global.json is using {p.Sdk.Version} rather than {this._dotnetVersion}");
+                    }
+                }
+                else
+                {
+                    this._logger.LogError("global.json does not specify a version");
                 }
 
             }
@@ -55,13 +72,13 @@ namespace BuildCheck.SolutionChecks
         [SuppressMessage(category: "Microsoft.Performance", checkId: "CA1812:AvoidUninstantiatedInternalClasses", Justification = "Created through deserialization")]
         private sealed class Packet
         {
-            public Sdk Sdk { get; set; }
+            public Sdk? Sdk { get; set; }
         }
 
         [SuppressMessage(category: "Microsoft.Performance", checkId: "CA1812:AvoidUninstantiatedInternalClasses", Justification = "Created through deserialization")]
         private sealed class Sdk
         {
-            public string Version { get; set; }
+            public string? Version { get; set; }
         }
     }
 }

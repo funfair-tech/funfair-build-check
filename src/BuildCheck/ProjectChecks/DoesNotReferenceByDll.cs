@@ -18,8 +18,13 @@ namespace BuildCheck.ProjectChecks
         {
             XmlNodeList references = project.SelectNodes(xpath: "/Project/ItemGroup/Reference");
 
-            foreach (XmlElement reference in references)
+            foreach (XmlElement? reference in references)
             {
+                if (reference == null)
+                {
+                    continue;
+                }
+
                 string assembly = reference.GetAttribute(name: "Include");
                 this._logger.LogError($"{projectName}: References {assembly} directly not using NuGet or a project reference.");
             }

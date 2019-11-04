@@ -30,9 +30,9 @@ namespace BuildCheck
             AddProjectCheck<MustHaveAsyncAnalyzerPackage>(services);
             AddProjectCheck<MustHaveSonarAnalyzerPackage>(services);
 
-            string dotnetVersion = Environment.GetEnvironmentVariable(variable: @"DOTNET_CORE_SDK_VERSION");
+            string? dotnetVersion = Environment.GetEnvironmentVariable(variable: @"DOTNET_CORE_SDK_VERSION");
 
-            if (dotnetVersion != "2.2.402")
+            if (!string.IsNullOrWhiteSpace(dotnetVersion) && dotnetVersion != "2.2.402")
             {
                 AddProjectCheck<MustUseOpenApiAnalyzers>(services);
 #if NULLABLE_INSTALLED

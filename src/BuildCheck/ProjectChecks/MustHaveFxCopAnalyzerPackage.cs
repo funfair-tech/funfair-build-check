@@ -32,7 +32,7 @@ namespace BuildCheck.ProjectChecks
 
         private void CheckRuleSet(string projectName, XmlDocument project)
         {
-            XmlElement codeAnalysisRuleSet = project.SelectSingleNode(xpath: "/Project/PropertyGroup/CodeAnalysisRuleSet") as XmlElement;
+            XmlElement? codeAnalysisRuleSet = project.SelectSingleNode(xpath: "/Project/PropertyGroup/CodeAnalysisRuleSet") as XmlElement;
 
             if (codeAnalysisRuleSet == null)
             {
@@ -51,7 +51,7 @@ namespace BuildCheck.ProjectChecks
 
         private bool CheckPackageReference(string projectName, XmlDocument project)
         {
-            XmlElement reference = project.SelectSingleNode("/Project/ItemGroup/PackageReference[@Include='" + PACKAGE_ID + "']") as XmlElement;
+            XmlElement? reference = project.SelectSingleNode("/Project/ItemGroup/PackageReference[@Include='" + PACKAGE_ID + "']") as XmlElement;
 
             if (reference == null)
             {

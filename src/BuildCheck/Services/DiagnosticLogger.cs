@@ -43,7 +43,7 @@ namespace BuildCheck.Services
             return logLevel != LogLevel.Debug;
         }
 
-        public IDisposable BeginScope<TState>(TState state)
+        public IDisposable? BeginScope<TState>(TState state)
         {
             return null;
         }

@@ -36,14 +36,14 @@ namespace BuildCheck.ProjectChecks
 
         private static bool CheckReference(string packageId, XmlDocument project)
         {
-            XmlElement reference = project.SelectSingleNode("/Project/ItemGroup/PackageReference[@Include='" + packageId + "']") as XmlElement;
+            XmlElement? reference = project.SelectSingleNode("/Project/ItemGroup/PackageReference[@Include='" + packageId + "']") as XmlElement;
 
             return reference != null;
         }
 
         private static bool CheckPrivateAssets(string packageId, XmlDocument project)
         {
-            XmlElement reference = project.SelectSingleNode("/Project/ItemGroup/PackageReference[@Include='" + packageId + "']") as XmlElement;
+            XmlElement? reference = project.SelectSingleNode("/Project/ItemGroup/PackageReference[@Include='" + packageId + "']") as XmlElement;
 
             if (reference == null)
             {
@@ -56,7 +56,7 @@ namespace BuildCheck.ProjectChecks
             if (string.IsNullOrEmpty(assets))
             {
                 // no PrivateAssets attribute, check for an element
-                XmlElement privateAssets = reference.SelectSingleNode(xpath: "PrivateAssets") as XmlElement;
+                XmlElement? privateAssets = reference.SelectSingleNode(xpath: "PrivateAssets") as XmlElement;
 
                 if (privateAssets == null)
                 {

@@ -69,7 +69,16 @@ namespace BuildCheck
 
                 IServiceProvider services = Setup(warningsAsErrors, preReleaseBuild);
 
-                string baseFolder = Path.GetDirectoryName(solutionFileName);
+                string? baseFolder = Path.GetDirectoryName(solutionFileName);
+
+                if (string.IsNullOrWhiteSpace(baseFolder))
+                {
+                    Console.WriteLine(value: "Missing Solution file.");
+
+                    Usage();
+
+                    return ERROR;
+                }
 
                 IDiagnosticLogger logging = services.GetService<IDiagnosticLogger>();
 
@@ -161,8 +170,13 @@ namespace BuildCheck
 
             foreach (string line in text)
             {
-                foreach (Match match in regex.Matches(line))
+                foreach (Match? match in regex.Matches(line))
                 {
+                    if (match == null)
+                    {
+                        continue;
+                    }
+
                     string displayName = match.Groups[groupname: @"DisplayName"]
                         .Value;
                     string fileName = match.Groups[groupname: @"FileName"]

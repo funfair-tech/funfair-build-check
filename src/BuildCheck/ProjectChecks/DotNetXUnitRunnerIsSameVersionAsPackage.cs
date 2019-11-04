@@ -25,8 +25,13 @@ namespace BuildCheck.ProjectChecks
 
             string version = node.GetAttribute(name: "Version");
 
-            foreach (XmlElement projectReference in project.SelectNodes(xpath: "Project/ItemGroup/PackageReference"))
+            foreach (XmlElement? projectReference in project.SelectNodes(xpath: "Project/ItemGroup/PackageReference"))
             {
+                if (projectReference == null)
+                {
+                    continue;
+                }
+
                 string name = projectReference.GetAttribute(name: "Include");
 
                 if (StringComparer.InvariantCultureIgnoreCase.Equals(name, y: "xunit"))

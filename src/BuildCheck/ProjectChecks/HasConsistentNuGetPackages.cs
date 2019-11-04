@@ -24,8 +24,13 @@ namespace BuildCheck.ProjectChecks
         {
             XmlNodeList nodes = project.SelectNodes(xpath: "/Project/ItemGroup/PackageReference");
 
-            foreach (XmlElement reference in nodes)
+            foreach (XmlElement? reference in nodes)
             {
+                if (reference == null)
+                {
+                    continue;
+                }
+
                 string packageName = reference.GetAttribute(name: @"Include");
 
                 if (string.IsNullOrWhiteSpace(packageName))
@@ -48,7 +53,7 @@ namespace BuildCheck.ProjectChecks
 
                 string packageAsKey = packageName.ToLowerInvariant();
 
-                if (!this._packages.TryGetValue(packageAsKey, out NuGetVersion currentVersion))
+                if (!this._packages.TryGetValue(packageAsKey, out NuGetVersion? currentVersion))
                 {
                     this._packages.Add(packageAsKey, nuGetVersion);
                 }

@@ -22,8 +22,13 @@ namespace BuildCheck.ProjectChecks
 
             XmlNodeList nodes = project.SelectNodes(xpath: "/Project/ItemGroup/PackageReference");
 
-            foreach (XmlElement reference in nodes)
+            foreach (XmlElement? reference in nodes)
             {
+                if (reference == null)
+                {
+                    continue;
+                }
+
                 string packageName = reference.GetAttribute(name: @"Include");
 
                 if (string.IsNullOrWhiteSpace(packageName))
@@ -38,7 +43,7 @@ namespace BuildCheck.ProjectChecks
 
                 if (string.IsNullOrEmpty(privateAssets))
                 {
-                    XmlElement privateAssetsElement = reference.SelectSingleNode(xpath: "PrivateAssets") as XmlElement;
+                    XmlElement? privateAssetsElement = reference.SelectSingleNode(xpath: "PrivateAssets") as XmlElement;
 
                     if (privateAssetsElement != null)
                     {

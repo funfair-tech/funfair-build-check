@@ -12,8 +12,13 @@ namespace BuildCheck.ProjectChecks
             bool hasGlobalSetting = false;
             XmlNodeList nodes = project.SelectNodes("/Project/PropertyGroup[not(@Condition)]/" + nodePresence);
 
-            foreach (XmlElement item in nodes)
+            foreach (XmlElement? item in nodes)
             {
+                if (item == null)
+                {
+                    continue;
+                }
+
                 XmlElement propertyGroup = (XmlElement) item.ParentNode;
                 string condition = propertyGroup.GetAttribute(name: "Condition");
 
@@ -25,9 +30,14 @@ namespace BuildCheck.ProjectChecks
 
             XmlNodeList configurationGroups = project.SelectNodes(xpath: "/Project/PropertyGroup[@Condition]");
 
-            foreach (XmlElement propertyGroup in configurationGroups)
+            foreach (XmlElement? propertyGroup in configurationGroups)
             {
-                XmlNode node = propertyGroup.SelectSingleNode(nodePresence);
+                if (propertyGroup == null)
+                {
+                    continue;
+                }
+
+                XmlNode? node = propertyGroup.SelectSingleNode(nodePresence);
 
                 if (node == null)
                 {
@@ -60,8 +70,13 @@ namespace BuildCheck.ProjectChecks
             bool hasGlobalSetting = false;
             XmlNodeList nodes = project.SelectNodes("/Project/PropertyGroup[not(@Condition)]/" + nodePresence);
 
-            foreach (XmlElement item in nodes)
+            foreach (XmlElement? item in nodes)
             {
+                if (item == null)
+                {
+                    continue;
+                }
+
                 XmlElement propertyGroup = (XmlElement) item.ParentNode;
                 string condition = propertyGroup.GetAttribute(name: "Condition");
 
@@ -78,9 +93,14 @@ namespace BuildCheck.ProjectChecks
 
             XmlNodeList configurationGroups = project.SelectNodes(xpath: "/Project/PropertyGroup[@Condition]");
 
-            foreach (XmlElement propertyGroup in configurationGroups)
+            foreach (XmlElement? propertyGroup in configurationGroups)
             {
-                XmlNode node = propertyGroup.SelectSingleNode(nodePresence);
+                if (propertyGroup == null)
+                {
+                    continue;
+                }
+
+                XmlNode? node = propertyGroup.SelectSingleNode(nodePresence);
 
                 if (node == null)
                 {
