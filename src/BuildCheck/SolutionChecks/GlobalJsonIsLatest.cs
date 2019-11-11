@@ -22,7 +22,7 @@ namespace BuildCheck.SolutionChecks
         {
             if (string.IsNullOrWhiteSpace(this._dotnetVersion))
             {
-                this._logger.LogWarning(message: "Not checking global.json as DOTNET_CORE_SDK_VERSION is not defined");
+                this._logger.LogInformation(message: "Not checking global.json as DOTNET_CORE_SDK_VERSION is not defined");
 
                 return;
             }
