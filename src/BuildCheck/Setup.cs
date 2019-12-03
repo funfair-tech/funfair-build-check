@@ -29,6 +29,7 @@ namespace BuildCheck
             AddProjectCheck<ReferencesNugetPackageOnlyOnce>(services);
             AddProjectCheck<MustHaveAsyncAnalyzerPackage>(services);
             AddProjectCheck<MustHaveSonarAnalyzerPackage>(services);
+            AddProjectCheck<MustNotDisableUnexpectedWarnings>(services);
 
             string? dotnetVersion = Environment.GetEnvironmentVariable(variable: @"DOTNET_CORE_SDK_VERSION");
 
