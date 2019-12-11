@@ -30,6 +30,7 @@ namespace BuildCheck
             AddProjectCheck<MustHaveAsyncAnalyzerPackage>(services);
             AddProjectCheck<MustHaveSonarAnalyzerPackage>(services);
             AddProjectCheck<MustNotDisableUnexpectedWarnings>(services);
+            AddProjectCheck<MustHaveDisableDateTimeNowPackage>(services);
 
             string? dotnetVersion = Environment.GetEnvironmentVariable(variable: @"DOTNET_CORE_SDK_VERSION");
 
