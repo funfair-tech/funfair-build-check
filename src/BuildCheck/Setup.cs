@@ -30,7 +30,11 @@ namespace BuildCheck
             AddProjectCheck<MustHaveAsyncAnalyzerPackage>(services);
             AddProjectCheck<MustHaveSonarAnalyzerPackage>(services);
             AddProjectCheck<MustNotDisableUnexpectedWarnings>(services);
-            AddProjectCheck<MustHaveDisableDateTimeNowPackage>(services);
+
+            if (!IsCodeAnalysisSolution())
+            {
+                AddProjectCheck<MustHaveFunFairCodeAnalysisPackage>(services);
+            }
 
             string? dotnetVersion = Environment.GetEnvironmentVariable(variable: @"DOTNET_CORE_SDK_VERSION");
 
@@ -41,6 +45,13 @@ namespace BuildCheck
                 AddProjectCheck<MustEnableNullable>(services);
 #endif
             }
+        }
+
+        private static bool IsCodeAnalysisSolution()
+        {
+            string? codeAnalysis = Environment.GetEnvironmentVariable(variable: @"BUILD_CODEANALYSIS");
+
+            return !string.IsNullOrWhiteSpace(codeAnalysis) && StringComparer.InvariantCultureIgnoreCase.Equals(codeAnalysis, y: @"TRUE");
         }
 
         private static void AddProjectCheck<T>(IServiceCollection services)
