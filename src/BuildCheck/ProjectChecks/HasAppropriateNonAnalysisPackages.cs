@@ -6,8 +6,6 @@ namespace BuildCheck.ProjectChecks
 {
     public abstract class HasAppropriateNonAnalysisPackages : IProjectCheck
     {
-        private const string PACKAGE_PRIVATE_ASSETS = @"All";
-
         private readonly string _detectPackageId;
         private readonly ILogger<NoPreReleaseNuGetPackages> _logger;
         private readonly string _mustIncludePackageId;
@@ -56,7 +54,7 @@ namespace BuildCheck.ProjectChecks
 
             if (foundSourcePackage && !foundAnalyzerPackage)
             {
-                this._logger.LogError($"{projectName}: Found {this._detectPackageId} but did not find analyzer {this._mustIncludePackageId}.");
+                this._logger.LogError($"{projectName}: Found {this._detectPackageId} but did not find {this._mustIncludePackageId}.");
             }
         }
     }
