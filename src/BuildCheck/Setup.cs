@@ -31,6 +31,9 @@ namespace BuildCheck
             AddProjectCheck<MustHaveSonarAnalyzerPackage>(services);
             AddProjectCheck<MustNotDisableUnexpectedWarnings>(services);
 
+            AddProjectCheck<UsingXUnitMustIncludeVisualStudioTestPlatform>(services);
+            AddProjectCheck<UsingXUnitMustIncludeTeamCityTestAdapter>(services);
+
             if (!IsCodeAnalysisSolution())
             {
                 AddProjectCheck<MustHaveFunFairCodeAnalysisPackage>(services);
@@ -41,9 +44,11 @@ namespace BuildCheck
             if (!string.IsNullOrWhiteSpace(dotnetVersion) && dotnetVersion != "2.2.402")
             {
                 AddProjectCheck<MustUseOpenApiAnalyzers>(services);
-#if NULLABLE_INSTALLED
-                AddProjectCheck<MustEnableNullable>(services);
-#endif
+
+                if (IsNullableGloballyEnforced())
+                {
+                    AddProjectCheck<MustEnableNullable>(services);
+                }
             }
         }
 
@@ -52,6 +57,13 @@ namespace BuildCheck
             string? codeAnalysis = Environment.GetEnvironmentVariable(variable: @"BUILD_CODEANALYSIS");
 
             return !string.IsNullOrWhiteSpace(codeAnalysis) && StringComparer.InvariantCultureIgnoreCase.Equals(codeAnalysis, y: @"TRUE");
+        }
+
+        private static bool IsNullableGloballyEnforced()
+        {
+            string? codeAnalysis = Environment.GetEnvironmentVariable(variable: @"DISABLE_BUILD_NULLABLE_REFERENCE_TYPES");
+
+            return string.IsNullOrWhiteSpace(codeAnalysis) || !StringComparer.InvariantCultureIgnoreCase.Equals(codeAnalysis, y: @"TRUE");
         }
 
         private static void AddProjectCheck<T>(IServiceCollection services)
