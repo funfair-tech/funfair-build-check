@@ -23,7 +23,7 @@ namespace BuildCheck.ProjectChecks
             XmlNodeList nodes = project.SelectNodes(xpath: "/Project/ItemGroup/PackageReference");
 
             bool foundSourcePackage = false;
-            bool foundAnalyzerPackage = false;
+            bool foundRequiredPackage = false;
 
             foreach (XmlElement? reference in nodes)
             {
@@ -48,11 +48,11 @@ namespace BuildCheck.ProjectChecks
 
                 if (StringComparer.InvariantCultureIgnoreCase.Equals(this._mustIncludePackageId, packageName))
                 {
-                    foundAnalyzerPackage = true;
+                    foundRequiredPackage = true;
                 }
             }
 
-            if (foundSourcePackage && !foundAnalyzerPackage)
+            if (foundSourcePackage && !foundRequiredPackage)
             {
                 this._logger.LogError($"{projectName}: Found {this._detectPackageId} but did not find {this._mustIncludePackageId}.");
             }
