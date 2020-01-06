@@ -31,8 +31,11 @@ namespace BuildCheck
             AddProjectCheck<MustHaveSonarAnalyzerPackage>(services);
             AddProjectCheck<MustNotDisableUnexpectedWarnings>(services);
 
-            AddProjectCheck<UsingXUnitMustIncludeVisualStudioTestPlatform>(services);
-            AddProjectCheck<UsingXUnitMustIncludeTeamCityTestAdapter>(services);
+            if (!IsUnitTestBase())
+            {
+                AddProjectCheck<UsingXUnitMustIncludeVisualStudioTestPlatform>(services);
+                AddProjectCheck<UsingXUnitMustIncludeTeamCityTestAdapter>(services);
+            }
 
             if (!IsCodeAnalysisSolution())
             {
@@ -64,6 +67,13 @@ namespace BuildCheck
             string? codeAnalysis = Environment.GetEnvironmentVariable(variable: @"DISABLE_BUILD_NULLABLE_REFERENCE_TYPES");
 
             return string.IsNullOrWhiteSpace(codeAnalysis) || !StringComparer.InvariantCultureIgnoreCase.Equals(codeAnalysis, y: @"TRUE");
+        }
+
+        private static bool IsUnitTestBase()
+        {
+            string? codeAnalysis = Environment.GetEnvironmentVariable(variable: @"IS_UNITTEST_BASE");
+
+            return !string.IsNullOrWhiteSpace(codeAnalysis) || StringComparer.InvariantCultureIgnoreCase.Equals(codeAnalysis, y: @"TRUE");
         }
 
         private static void AddProjectCheck<T>(IServiceCollection services)
