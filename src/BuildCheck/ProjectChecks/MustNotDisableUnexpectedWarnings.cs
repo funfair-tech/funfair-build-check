@@ -28,9 +28,6 @@ namespace BuildCheck.ProjectChecks
             "8604",
 
             // Nullable Reference types - TODO: FIX THESE
-            "8616",
-
-            // Nullable Reference types - TODO: FIX THESE
             "8618",
 
             // Nullable Reference types - TODO: FIX THESE
