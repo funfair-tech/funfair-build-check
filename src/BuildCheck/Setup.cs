@@ -44,14 +44,16 @@ namespace BuildCheck
 
             string? dotnetVersion = Environment.GetEnvironmentVariable(variable: @"DOTNET_CORE_SDK_VERSION");
 
-            if (!string.IsNullOrWhiteSpace(dotnetVersion) && dotnetVersion != "2.2.402")
+            if (!string.IsNullOrWhiteSpace(dotnetVersion) && new Version(dotnetVersion) > new Version(major: 3, minor: 1, build: 101))
             {
-                AddProjectCheck<MustUseOpenApiAnalyzers>(services);
+                AddProjectCheck<MustHaveThreadingAnalyzerPackage>(services);
+            }
 
-                if (IsNullableGloballyEnforced())
-                {
-                    AddProjectCheck<MustEnableNullable>(services);
-                }
+            AddProjectCheck<MustUseOpenApiAnalyzers>(services);
+
+            if (IsNullableGloballyEnforced())
+            {
+                AddProjectCheck<MustEnableNullable>(services);
             }
         }
 
