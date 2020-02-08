@@ -31,8 +31,14 @@ namespace BuildCheck
                 Console.WriteLine($"{typeof(Program).Namespace} {ExecutableVersionInformation.ProgramVersion()}");
 
                 IConfigurationRoot configuration = new ConfigurationBuilder()
-                    .AddCommandLine(args, new Dictionary<string, string> {{@"-Solution", @"solution"}, {@"-WarningAsErrors", @"WarningAsErrors"}, {@"-PreReleaseBuild", @"PreReleaseBuild"}})
-                    .Build();
+                                                   .AddCommandLine(args,
+                                                                   new Dictionary<string, string>
+                                                                   {
+                                                                       {@"-Solution", @"solution"},
+                                                                       {@"-WarningAsErrors", @"WarningAsErrors"},
+                                                                       {@"-PreReleaseBuild", @"PreReleaseBuild"}
+                                                                   })
+                                                   .Build();
 
                 string solutionFileName = configuration.GetValue<string>(key: @"solution");
 
@@ -82,7 +88,7 @@ namespace BuildCheck
 
                 IDiagnosticLogger logging = services.GetService<IDiagnosticLogger>();
 
-                await PerformChecks(services, solutionFileName, logging, baseFolder)
+                await PerformChecksAsync(services, solutionFileName, logging, baseFolder)
                     .ConfigureAwait(continueOnCapturedContext: false);
 
                 if (logging.IsErrored)
@@ -106,7 +112,7 @@ namespace BuildCheck
             }
         }
 
-        private static async Task PerformChecks(IServiceProvider services, string solutionFileName, IDiagnosticLogger logging, string baseFolder)
+        private static async Task PerformChecksAsync(IServiceProvider services, string solutionFileName, IDiagnosticLogger logging, string baseFolder)
         {
             ISolutionCheck[] solutionChecks = RegisteredSolutionChecks(services);
             IProjectCheck[] projectChecks = RegisteredProjectChecks(services);
@@ -116,7 +122,7 @@ namespace BuildCheck
                 check.Check(solutionFileName);
             }
 
-            Project[] projects = await LoadProjects(solutionFileName)
+            Project[] projects = await LoadProjectsAsync(solutionFileName)
                 .ConfigureAwait(continueOnCapturedContext: false);
 
             foreach (Project project in projects)
@@ -154,10 +160,10 @@ namespace BuildCheck
             return spf.CreateServiceProvider(services);
         }
 
-        private static async Task<Project[]> LoadProjects(string solution)
+        private static async Task<Project[]> LoadProjectsAsync(string solution)
         {
             string[] text = await File.ReadAllLinesAsync(solution)
-                .ConfigureAwait(continueOnCapturedContext: false);
+                                      .ConfigureAwait(continueOnCapturedContext: false);
 
             List<Project> projects = new List<Project>();
 
@@ -178,9 +184,9 @@ namespace BuildCheck
                     }
 
                     string displayName = match.Groups[groupname: @"DisplayName"]
-                        .Value;
+                                              .Value;
                     string fileName = match.Groups[groupname: @"FileName"]
-                        .Value;
+                                           .Value;
 
                     Console.WriteLine($" * {displayName}");
 
@@ -194,13 +200,13 @@ namespace BuildCheck
         private static ISolutionCheck[] RegisteredSolutionChecks(IServiceProvider services)
         {
             return services.GetServices<ISolutionCheck>()
-                .ToArray();
+                           .ToArray();
         }
 
         private static IProjectCheck[] RegisteredProjectChecks(IServiceProvider services)
         {
             return services.GetServices<IProjectCheck>()
-                .ToArray();
+                           .ToArray();
         }
     }
 }
