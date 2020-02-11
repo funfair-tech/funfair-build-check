@@ -30,6 +30,8 @@ namespace BuildCheck
             AddProjectCheck<MustHaveAsyncAnalyzerPackage>(services);
             AddProjectCheck<MustHaveSonarAnalyzerPackage>(services);
             AddProjectCheck<MustNotDisableUnexpectedWarnings>(services);
+            AddProjectCheck<MustHaveThreadingAnalyzerPackage>(services);
+            AddProjectCheck<MustUseOpenApiAnalyzers>(services);
 
             if (!IsUnitTestBase())
             {
@@ -42,14 +44,14 @@ namespace BuildCheck
                 AddProjectCheck<MustHaveFunFairCodeAnalysisPackage>(services);
             }
 
+#if DOTNET_VERSION_SPECIFIC_TESTS
             string? dotnetVersion = Environment.GetEnvironmentVariable(variable: @"DOTNET_CORE_SDK_VERSION");
 
             if (!string.IsNullOrWhiteSpace(dotnetVersion) && new Version(dotnetVersion) > new Version(major: 3, minor: 1, build: 101))
             {
                 AddProjectCheck<MustHaveThreadingAnalyzerPackage>(services);
             }
-
-            AddProjectCheck<MustUseOpenApiAnalyzers>(services);
+#endif
 
             if (IsNullableGloballyEnforced())
             {
