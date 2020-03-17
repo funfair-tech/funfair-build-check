@@ -57,7 +57,12 @@ namespace BuildCheck.ProjectChecks
 
         public static void CheckValue(string projectName, XmlDocument project, string nodePresence, bool requiredValue, ILogger logger)
         {
-            CheckValueCommon(projectName, project, nodePresence, isRequiredValue: v => IsRequiredValue(requiredValue, v), requiredValue.ToString(CultureInfo.InvariantCulture), logger);
+            CheckValueCommon(projectName,
+                             project,
+                             nodePresence,
+                             isRequiredValue: v => IsRequiredValue(requiredValue, v),
+                             requiredValue.ToString(CultureInfo.InvariantCulture),
+                             logger);
         }
 
         public static void CheckValue(string projectName, XmlDocument project, string nodePresence, string requiredValue, ILogger logger)
@@ -65,7 +70,17 @@ namespace BuildCheck.ProjectChecks
             CheckValueCommon(projectName, project, nodePresence, isRequiredValue: v => IsRequiredValue(requiredValue, v), requiredValue, logger);
         }
 
-        private static void CheckValueCommon(string projectName, XmlDocument project, string nodePresence, Func<string, bool> isRequiredValue, string requiredValueDisplayText, ILogger logger)
+        public static void CheckValue(string projectName, XmlDocument project, string nodePresence, Func<string, bool> isRequiredValue, string msg, ILogger logger)
+        {
+            CheckValueCommon(projectName, project, nodePresence, isRequiredValue, msg, logger);
+        }
+
+        private static void CheckValueCommon(string projectName,
+                                             XmlDocument project,
+                                             string nodePresence,
+                                             Func<string, bool> isRequiredValue,
+                                             string requiredValueDisplayText,
+                                             ILogger logger)
         {
             bool hasGlobalSetting = false;
             XmlNodeList nodes = project.SelectNodes("/Project/PropertyGroup[not(@Condition)]/" + nodePresence);

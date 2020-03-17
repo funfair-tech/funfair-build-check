@@ -15,6 +15,7 @@ namespace BuildCheck
 
         public static void SetupProjectChecks(IServiceCollection services)
         {
+            AddProjectCheck<MustSpecifyOutputType>(services);
             AddProjectCheck<NoPreReleaseNuGetPackages>(services);
             AddProjectCheck<ErrorPolicyWarningAsErrors>(services);
             AddProjectCheck<LanguagePolicyUseLatestVersion>(services);
