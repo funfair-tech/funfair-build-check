@@ -14,10 +14,16 @@ Please ADD ALL Changes to the UNRELASED SECTION and not a specific release
 Releases that have at least been deployed to staging, BUT NOT necessarily released to live.  Changes should be moved from [Unreleased] into here as they are merged into the appropriate release branch
 -->
 
+## [1.9.0] 2020-03-17
+### Changed
+- Additional check for Output type - must be present and either Exe or Library
+
 ## [1.8.0] 2020-02-24
+### Changed
 - FF-1910 - updated to net core sdk 3.1.102
 
 ## [1.7.0] 2020-02-14
+### Changed
 - Enabled additional async validation checks
 
 ## [1.6.0] 2019-12-18
