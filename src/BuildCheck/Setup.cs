@@ -30,6 +30,7 @@ namespace BuildCheck
             AddProjectCheck<ReferencesNugetPackageOnlyOnce>(services);
             AddProjectCheck<MustHaveAsyncAnalyzerPackage>(services);
             AddProjectCheck<MustHaveSonarAnalyzerPackage>(services);
+            AddProjectCheck<MustHaveRoslynatorAnalyzersPackage>(services);
             AddProjectCheck<MustNotDisableUnexpectedWarnings>(services);
             AddProjectCheck<MustHaveThreadingAnalyzerPackage>(services);
             AddProjectCheck<MustUseOpenApiAnalyzers>(services);
