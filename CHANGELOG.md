@@ -7,6 +7,7 @@ Please ADD ALL Changes to the UNRELASED SECTION and not a specific release
 
 ## [Unreleased]
 ### Added
+* Explicit check for obsoleted packages (obsoleted between .net core 2.2 and .net net core 3.0)
 ### Fixed
 ### Changed
 
