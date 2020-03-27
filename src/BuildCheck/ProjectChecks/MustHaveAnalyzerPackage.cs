@@ -21,6 +21,7 @@ namespace BuildCheck.ProjectChecks
         public void Check(string projectName, XmlDocument project)
         {
             bool packageExists = CheckReference(this._packageId, project);
+
             if (packageExists)
             {
                 if (!CheckPrivateAssets(this._packageId, project))

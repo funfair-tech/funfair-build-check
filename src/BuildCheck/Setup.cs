@@ -34,6 +34,7 @@ namespace BuildCheck
             AddProjectCheck<MustNotDisableUnexpectedWarnings>(services);
             AddProjectCheck<MustHaveThreadingAnalyzerPackage>(services);
             AddProjectCheck<MustUseOpenApiAnalyzers>(services);
+            AddProjectCheck<MustNotReferenceObsoleteAspNetPackages>(services);
 
             if (!IsUnitTestBase())
             {
