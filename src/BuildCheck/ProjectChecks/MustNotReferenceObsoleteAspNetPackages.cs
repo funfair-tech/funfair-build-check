@@ -15,7 +15,8 @@ namespace BuildCheck.ProjectChecks
                                                                        "Microsoft.AspNetCore.Authentication.Abstractions",
                                                                        "Microsoft.AspNetCore.Authentication.Cookies",
                                                                        "Microsoft.AspNetCore.Authentication.Core",
-                                                                       "Microsoft.AspNetCore.Authentication.JwtBearer",
+
+                                                                       //"Microsoft.AspNetCore.Authentication.JwtBearer",
                                                                        "Microsoft.AspNetCore.Authentication.OAuth",
                                                                        "Microsoft.AspNetCore.Authentication.OpenIdConnect",
                                                                        "Microsoft.AspNetCore.Authorization",
