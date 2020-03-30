@@ -10,6 +10,7 @@ Please ADD ALL Changes to the UNRELASED SECTION and not a specific release
 * Explicit check for obsoleted packages (obsoleted between .net core 2.2 and .net net core 3.0)
 ### Fixed
 ### Changed
+- FF-2127 - upgrade dotnet core to 3.1.201
 
 <!-- 
 Releases that have at least been deployed to staging, BUT NOT necessarily released to live.  Changes should be moved from [Unreleased] into here as they are merged into the appropriate release branch
