@@ -11,6 +11,7 @@ namespace BuildCheck
         {
             AddSolutionCheck<AllProjectsExist>(services);
             AddSolutionCheck<GlobalJsonIsLatest>(services);
+            AddSolutionCheck<GlobalJsonMustSpecifyRollforwardDisable>(services);
         }
 
         public static void SetupProjectChecks(IServiceCollection services)
