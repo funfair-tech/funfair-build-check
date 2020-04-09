@@ -6,27 +6,19 @@ using Newtonsoft.Json;
 
 namespace BuildCheck.SolutionChecks
 {
-    public sealed class GlobalJsonIsLatest : ISolutionCheck
+    public sealed class GlobalJsonMustSpecifyRollforwardDisable : ISolutionCheck
     {
-        private readonly string? _dotnetVersion;
+        private const string ROLL_FORWARD_POLICY = @"disable";
         private readonly ILogger<GlobalJsonIsLatest> _logger;
 
-        public GlobalJsonIsLatest(ILogger<GlobalJsonIsLatest> logger)
+        public GlobalJsonMustSpecifyRollforwardDisable(ILogger<GlobalJsonIsLatest> logger)
         {
             this._logger = logger ?? throw new ArgumentNullException(nameof(logger));
-            this._dotnetVersion = Environment.GetEnvironmentVariable(variable: @"DOTNET_CORE_SDK_VERSION");
         }
 
         /// <inheritdoc />
         public void Check(string solutionFileName)
         {
-            if (string.IsNullOrWhiteSpace(this._dotnetVersion))
-            {
-                this._logger.LogInformation(message: "Not checking global.json as DOTNET_CORE_SDK_VERSION is not defined");
-
-                return;
-            }
-
             string? solutionDir = Path.GetDirectoryName(solutionFileName);
 
             if (solutionDir == null)
@@ -54,14 +46,14 @@ namespace BuildCheck.SolutionChecks
 
                 if (!string.IsNullOrWhiteSpace(p?.Sdk?.RollForward))
                 {
-                    if (!StringComparer.InvariantCultureIgnoreCase.Equals(p.Sdk.Version, this._dotnetVersion))
+                    if (!StringComparer.InvariantCulture.Equals(p.Sdk.Version, ROLL_FORWARD_POLICY))
                     {
-                        this._logger.LogError($"global.json is using SDK {p.Sdk.Version} rather than {this._dotnetVersion}");
+                        this._logger.LogError($"global.json is using SDK rollForward policy of {p.Sdk.RollForward} rather than {ROLL_FORWARD_POLICY}");
                     }
                 }
                 else
                 {
-                    this._logger.LogError(message: "global.json does not specify a SDK version");
+                    this._logger.LogError(message: "global.json does not specify a SDK rollForward policy");
                 }
             }
             catch (Exception exception)
