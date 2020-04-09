@@ -8,5 +8,7 @@ namespace BuildCheck.SolutionChecks.Models
         public string? Version { get; set; }
 
         public string? RollForward { get; set; }
+
+        public bool? AllowPrerelease { get; set; }
     }
 }
