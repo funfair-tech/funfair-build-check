@@ -46,7 +46,7 @@ namespace BuildCheck.SolutionChecks
 
                 if (!string.IsNullOrWhiteSpace(p?.Sdk?.RollForward))
                 {
-                    if (!StringComparer.InvariantCulture.Equals(p.Sdk.Version, ROLL_FORWARD_POLICY))
+                    if (!StringComparer.InvariantCulture.Equals(p.Sdk.RollForward, ROLL_FORWARD_POLICY))
                     {
                         this._logger.LogError($"global.json is using SDK rollForward policy of {p.Sdk.RollForward} rather than {ROLL_FORWARD_POLICY}");
                     }
