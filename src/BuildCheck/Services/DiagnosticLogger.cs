@@ -67,7 +67,7 @@ namespace BuildCheck.Services
             }
 
             string status = logLevel.ToString()
-                .ToUpperInvariant();
+                                    .ToUpperInvariant();
 
             output($"{status}: {msg}");
         }
