@@ -5,7 +5,7 @@ using Microsoft.Extensions.Logging;
 
 namespace BuildCheck.ProjectChecks
 {
-    public class ReferencesNugetPackageOnlyOnce : IProjectCheck
+    public sealed class ReferencesNugetPackageOnlyOnce : IProjectCheck
     {
         private const string PACKAGE_PRIVATE_ASSETS = @"All";
         private readonly ILogger<ReferencesNugetPackageOnlyOnce> _logger;
