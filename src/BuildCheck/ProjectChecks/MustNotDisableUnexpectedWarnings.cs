@@ -7,43 +7,10 @@ namespace BuildCheck.ProjectChecks
 {
     public sealed class MustNotDisableUnexpectedWarnings : IProjectCheck
     {
-        private static readonly string[] AllowedWarnigns =
+        private static readonly string[] AllowedWarnings =
         {
             // Xml Docs
-            "1591",
-
-            // Nullable Reference types - TODO: FIX THESE
-            "8600",
-
-            // Nullable Reference types - TODO: FIX THESE
-            "8601",
-
-            // Nullable Reference types - TODO: FIX THESE
-            "8602",
-
-            // Nullable Reference types - TODO: FIX THESE
-            "8603",
-
-            // Nullable Reference types - TODO: FIX THESE
-            "8604",
-
-            // Nullable Reference types - TODO: FIX THESE
-            "8618",
-
-            // Nullable Reference types - TODO: FIX THESE
-            "8619",
-
-            // Nullable Reference types - TODO: FIX THESE
-            "8620",
-
-            // Nullable Reference types - TODO: FIX THESE
-            "8622",
-
-            // Nullable Reference types - TODO: FIX THESE
-            "8625",
-
-            // Nullable Reference types - TODO: FIX THESE
-            "8653"
+            "1591"
         };
 
         private readonly ILogger<ErrorPolicyWarningAsErrors> _logger;
@@ -79,7 +46,7 @@ namespace BuildCheck.ProjectChecks
 
                         foreach (string warning in warnings)
                         {
-                            if (!AllowedWarnigns.Contains(warning))
+                            if (!AllowedWarnings.Contains(warning))
                             {
                                 this._logger.LogError($"{projectName}: Global Configuration hides warning {warning}.");
                             }
@@ -117,7 +84,7 @@ namespace BuildCheck.ProjectChecks
                                 continue;
                             }
 
-                            if (!AllowedWarnigns.Contains(warning))
+                            if (!AllowedWarnings.Contains(warning))
                             {
                                 this._logger.LogError($"{projectName}: Configuration {configuration} hides warning {warning}.");
                             }
