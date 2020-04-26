@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuildCheck", "BuildCheck\BuildCheck.csproj", "{A5DC8305-594C-4B52-B9E1-B61DD114CD0F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FunFair.BuildCheck", "FunFair.BuildCheck\FunFair.BuildCheck.csproj", "{A5DC8305-594C-4B52-B9E1-B61DD114CD0F}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Config", "Config", "{4C696EA2-D758-400E-89E0-5613F2C512E0}"
 ProjectSection(SolutionItems) = preProject
