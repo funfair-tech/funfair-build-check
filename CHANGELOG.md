@@ -18,6 +18,15 @@ Please ADD ALL Changes to the UNRELASED SECTION and not a specific release
 Releases that have at least been deployed to staging, BUT NOT necessarily released to live.  Changes should be moved from [Unreleased] into here as they are merged into the appropriate release branch
 -->
 
+## [1.10.0] 2020-04-27
+### Added
+- Explicit check for obsoleted packages (obsoleted between .net core 2.2 and .net net core 3.0)
+- Explicit check for global.json sdk rollForward policy
+- Switched from being a nuget tool to being a dotnet tool
+### Changed
+- FF-2127 - upgrade dotnet core to 3.1.201
+- List of explicitly allowed warnings in <NoWarn> section to remove all the nullable warning codes
+
 ## [1.9.0] 2020-03-17
 ### Changed
 - Additional check for Output type - must be present and either Exe or Library
