@@ -23,7 +23,7 @@ namespace FunFair.BuildCheck.ProjectChecks
         {
             foreach (string packageId in this._packageIds)
             {
-                bool packageExists = CheckReference(packageId, project);
+                bool packageExists = CheckReference(packageId: packageId, project: project);
 
                 if (packageExists)
                 {

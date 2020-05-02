@@ -44,7 +44,7 @@ namespace FunFair.BuildCheck.ProjectChecks
 
                 this._logger.LogDebug($"{projectName}: Found: {packageName} ({version})");
 
-                if (!NuGetVersion.TryParse(version, out NuGetVersion nuGetVersion))
+                if (!NuGetVersion.TryParse(value: version, out NuGetVersion nuGetVersion))
                 {
                     this._logger.LogError($"{projectName}: Package {packageName} could not parse version {version}.");
 
@@ -53,9 +53,9 @@ namespace FunFair.BuildCheck.ProjectChecks
 
                 string packageAsKey = packageName.ToLowerInvariant();
 
-                if (!this._packages.TryGetValue(packageAsKey, out NuGetVersion? currentVersion))
+                if (!this._packages.TryGetValue(key: packageAsKey, out NuGetVersion? currentVersion))
                 {
-                    this._packages.Add(packageAsKey, nuGetVersion);
+                    this._packages.Add(key: packageAsKey, value: nuGetVersion);
                 }
                 else if (currentVersion != nuGetVersion)
                 {

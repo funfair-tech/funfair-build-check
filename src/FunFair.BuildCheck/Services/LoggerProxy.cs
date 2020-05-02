@@ -14,7 +14,7 @@ namespace FunFair.BuildCheck.Services
 
         public void Log<TState>(LogLevel logLevel, EventId eventId, TState state, Exception exception, Func<TState, Exception, string> formatter)
         {
-            this._diagnosticLogger.Log(logLevel, eventId, state, exception, formatter);
+            this._diagnosticLogger.Log(logLevel: logLevel, eventId: eventId, state: state, exception: exception, formatter: formatter);
         }
 
         public bool IsEnabled(LogLevel logLevel)

@@ -27,7 +27,7 @@ namespace FunFair.BuildCheck.SolutionChecks
                 return;
             }
 
-            string? file = Path.Combine(solutionDir, path2: @"global.json");
+            string? file = Path.Combine(path1: solutionDir, path2: @"global.json");
 
             if (file == null)
             {
@@ -60,7 +60,7 @@ namespace FunFair.BuildCheck.SolutionChecks
             }
             catch (Exception exception)
             {
-                this._logger.LogError(new EventId(exception.HResult), exception, $"Failed to read {file} : {exception.Message}");
+                this._logger.LogError(new EventId(exception.HResult), exception: exception, $"Failed to read {file} : {exception.Message}");
             }
         }
 

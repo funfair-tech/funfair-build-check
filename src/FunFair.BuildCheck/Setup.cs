@@ -68,21 +68,21 @@ namespace FunFair.BuildCheck
         {
             string? codeAnalysis = Environment.GetEnvironmentVariable(variable: @"BUILD_CODEANALYSIS");
 
-            return !string.IsNullOrWhiteSpace(codeAnalysis) && StringComparer.InvariantCultureIgnoreCase.Equals(codeAnalysis, y: @"TRUE");
+            return !string.IsNullOrWhiteSpace(codeAnalysis) && StringComparer.InvariantCultureIgnoreCase.Equals(x: codeAnalysis, y: @"TRUE");
         }
 
         private static bool IsNullableGloballyEnforced()
         {
             string? codeAnalysis = Environment.GetEnvironmentVariable(variable: @"DISABLE_BUILD_NULLABLE_REFERENCE_TYPES");
 
-            return string.IsNullOrWhiteSpace(codeAnalysis) || !StringComparer.InvariantCultureIgnoreCase.Equals(codeAnalysis, y: @"TRUE");
+            return string.IsNullOrWhiteSpace(codeAnalysis) || !StringComparer.InvariantCultureIgnoreCase.Equals(x: codeAnalysis, y: @"TRUE");
         }
 
         private static bool IsUnitTestBase()
         {
             string? codeAnalysis = Environment.GetEnvironmentVariable(variable: @"IS_UNITTEST_BASE");
 
-            return !string.IsNullOrWhiteSpace(codeAnalysis) || StringComparer.InvariantCultureIgnoreCase.Equals(codeAnalysis, y: @"TRUE");
+            return !string.IsNullOrWhiteSpace(codeAnalysis) || StringComparer.InvariantCultureIgnoreCase.Equals(x: codeAnalysis, y: @"TRUE");
         }
 
         private static void AddProjectCheck<T>(IServiceCollection services)

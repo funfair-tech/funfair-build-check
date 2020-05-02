@@ -57,22 +57,32 @@ namespace FunFair.BuildCheck.ProjectChecks
 
         public static void CheckValue(string projectName, XmlDocument project, string nodePresence, bool requiredValue, ILogger logger)
         {
-            CheckValueCommon(projectName,
-                             project,
-                             nodePresence,
-                             isRequiredValue: v => IsRequiredValue(requiredValue, v),
+            CheckValueCommon(projectName: projectName,
+                             project: project,
+                             nodePresence: nodePresence,
+                             isRequiredValue: v => IsRequiredValue(requiredValue: requiredValue, value: v),
                              requiredValue.ToString(CultureInfo.InvariantCulture),
-                             logger);
+                             logger: logger);
         }
 
         public static void CheckValue(string projectName, XmlDocument project, string nodePresence, string requiredValue, ILogger logger)
         {
-            CheckValueCommon(projectName, project, nodePresence, isRequiredValue: v => IsRequiredValue(requiredValue, v), requiredValue, logger);
+            CheckValueCommon(projectName: projectName,
+                             project: project,
+                             nodePresence: nodePresence,
+                             isRequiredValue: v => IsRequiredValue(requiredValue: requiredValue, value: v),
+                             requiredValueDisplayText: requiredValue,
+                             logger: logger);
         }
 
         public static void CheckValue(string projectName, XmlDocument project, string nodePresence, Func<string, bool> isRequiredValue, string msg, ILogger logger)
         {
-            CheckValueCommon(projectName, project, nodePresence, isRequiredValue, msg, logger);
+            CheckValueCommon(projectName: projectName,
+                             project: project,
+                             nodePresence: nodePresence,
+                             isRequiredValue: isRequiredValue,
+                             requiredValueDisplayText: msg,
+                             logger: logger);
         }
 
         private static void CheckValueCommon(string projectName,
@@ -153,12 +163,12 @@ namespace FunFair.BuildCheck.ProjectChecks
 
         private static bool IsRequiredValue(bool requiredValue, string value)
         {
-            return IsRequiredValue(requiredValue.ToString(CultureInfo.InvariantCulture), value);
+            return IsRequiredValue(requiredValue.ToString(CultureInfo.InvariantCulture), value: value);
         }
 
         private static bool IsRequiredValue(string requiredValue, string value)
         {
-            return !string.IsNullOrWhiteSpace(value) && StringComparer.InvariantCultureIgnoreCase.Equals(value, requiredValue);
+            return !string.IsNullOrWhiteSpace(value) && StringComparer.InvariantCultureIgnoreCase.Equals(x: value, y: requiredValue);
         }
     }
 }

@@ -41,12 +41,12 @@ namespace FunFair.BuildCheck.ProjectChecks
                     continue;
                 }
 
-                if (StringComparer.InvariantCultureIgnoreCase.Equals(this._detectPackageId, packageName))
+                if (StringComparer.InvariantCultureIgnoreCase.Equals(x: this._detectPackageId, y: packageName))
                 {
                     foundSourcePackage = true;
                 }
 
-                if (StringComparer.InvariantCultureIgnoreCase.Equals(this._mustIncludePackageId, packageName))
+                if (StringComparer.InvariantCultureIgnoreCase.Equals(x: this._mustIncludePackageId, y: packageName))
                 {
                     foundRequiredPackage = true;
                 }

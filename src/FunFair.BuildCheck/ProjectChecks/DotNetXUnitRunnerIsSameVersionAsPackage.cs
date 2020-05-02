@@ -34,11 +34,11 @@ namespace FunFair.BuildCheck.ProjectChecks
 
                 string name = projectReference.GetAttribute(name: "Include");
 
-                if (StringComparer.InvariantCultureIgnoreCase.Equals(name, y: "xunit"))
+                if (StringComparer.InvariantCultureIgnoreCase.Equals(x: name, y: "xunit"))
                 {
                     string refVersion = projectReference.GetAttribute(name: "Version");
 
-                    if (!StringComparer.InvariantCultureIgnoreCase.Equals(version, refVersion))
+                    if (!StringComparer.InvariantCultureIgnoreCase.Equals(x: version, y: refVersion))
                     {
                         this._logger.LogError($"{projectName}: XUnit Reference ({name}) has version {refVersion} whereas DotNetCliToolReference has reference {version}.");
                     }

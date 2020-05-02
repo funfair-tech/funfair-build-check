@@ -29,8 +29,8 @@ namespace FunFair.BuildCheck.ProjectChecks
                 return;
             }
 
-            bool packageExists = CheckReference(PACKAGE_ID, project);
-            bool historicalPackageExists = CheckReference(HISTORICAL_PACKAGE_ID, project);
+            bool packageExists = CheckReference(packageId: PACKAGE_ID, project: project);
+            bool historicalPackageExists = CheckReference(packageId: HISTORICAL_PACKAGE_ID, project: project);
 
             if (!packageExists && !historicalPackageExists)
             {
@@ -44,7 +44,7 @@ namespace FunFair.BuildCheck.ProjectChecks
 
             if (packageExists)
             {
-                if (!CheckPrivateAssets(PACKAGE_ID, project))
+                if (!CheckPrivateAssets(packageId: PACKAGE_ID, project: project))
                 {
                     this._logger.LogError($"{projectName}: Does not reference {PACKAGE_ID} with a PrivateAssets=\"{PACKAGE_PRIVATE_ASSETS}\" attribute");
                 }
@@ -52,7 +52,7 @@ namespace FunFair.BuildCheck.ProjectChecks
 
             if (historicalPackageExists)
             {
-                if (!CheckPrivateAssets(HISTORICAL_PACKAGE_ID, project))
+                if (!CheckPrivateAssets(packageId: HISTORICAL_PACKAGE_ID, project: project))
                 {
                     this._logger.LogError($"{projectName}: Does not reference {HISTORICAL_PACKAGE_ID} with a PrivateAssets=\"{PACKAGE_PRIVATE_ASSETS}\" attribute");
                 }
@@ -91,7 +91,7 @@ namespace FunFair.BuildCheck.ProjectChecks
                 assets = privateAssets.InnerText;
             }
 
-            return !string.IsNullOrEmpty(assets) && StringComparer.InvariantCultureIgnoreCase.Equals(assets, PACKAGE_PRIVATE_ASSETS);
+            return !string.IsNullOrEmpty(assets) && StringComparer.InvariantCultureIgnoreCase.Equals(x: assets, y: PACKAGE_PRIVATE_ASSETS);
         }
     }
 }

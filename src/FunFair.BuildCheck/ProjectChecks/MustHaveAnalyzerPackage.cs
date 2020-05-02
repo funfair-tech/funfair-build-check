@@ -20,11 +20,11 @@ namespace FunFair.BuildCheck.ProjectChecks
         /// <inheritdoc />
         public void Check(string projectName, XmlDocument project)
         {
-            bool packageExists = CheckReference(this._packageId, project);
+            bool packageExists = CheckReference(packageId: this._packageId, project: project);
 
             if (packageExists)
             {
-                if (!CheckPrivateAssets(this._packageId, project))
+                if (!CheckPrivateAssets(packageId: this._packageId, project: project))
                 {
                     this._logger.LogError($"{projectName}: Does not reference {this._packageId} with a PrivateAssets=\"{PACKAGE_PRIVATE_ASSETS}\" attribute");
                 }
@@ -67,7 +67,7 @@ namespace FunFair.BuildCheck.ProjectChecks
                 assets = privateAssets.InnerText;
             }
 
-            return !string.IsNullOrEmpty(assets) && string.Compare(assets, PACKAGE_PRIVATE_ASSETS, StringComparison.OrdinalIgnoreCase) == 0;
+            return !string.IsNullOrEmpty(assets) && string.Compare(strA: assets, strB: PACKAGE_PRIVATE_ASSETS, comparisonType: StringComparison.OrdinalIgnoreCase) == 0;
         }
     }
 }
