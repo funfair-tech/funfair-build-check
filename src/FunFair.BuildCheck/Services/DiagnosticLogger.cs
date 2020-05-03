@@ -23,19 +23,19 @@ namespace FunFair.BuildCheck.Services
             if (this.IsWarningAsError(logLevel))
             {
                 // ReSharper disable once TailRecursiveCall - this is not tail recursive despite what R# thinks
-                this.Log(LogLevel.Error, eventId, state, exception, formatter);
+                this.Log(logLevel: LogLevel.Error, eventId: eventId, state: state, exception: exception, formatter: formatter);
 
                 return;
             }
 
             if (logLevel == LogLevel.Information)
             {
-                OutputInformationalMessage(state, exception, formatter);
+                OutputInformationalMessage(state: state, exception: exception, formatter: formatter);
 
                 return;
             }
 
-            this.OutputMessageWithStatus(logLevel, state, exception, formatter);
+            this.OutputMessageWithStatus(logLevel: logLevel, state: state, exception: exception, formatter: formatter);
         }
 
         public bool IsEnabled(LogLevel logLevel)
@@ -55,7 +55,7 @@ namespace FunFair.BuildCheck.Services
                 return;
             }
 
-            string msg = formatter(state, exception);
+            string msg = formatter(arg1: state, arg2: exception);
 
             Action<string> output = Console.WriteLine;
 
@@ -74,7 +74,7 @@ namespace FunFair.BuildCheck.Services
 
         private static void OutputInformationalMessage<TState>(TState state, Exception exception, Func<TState, Exception, string> formatter)
         {
-            string msg = formatter(state, exception);
+            string msg = formatter(arg1: state, arg2: exception);
             Console.WriteLine(msg);
         }
 

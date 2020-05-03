@@ -26,7 +26,7 @@ namespace FunFair.BuildCheck.SolutionChecks
                 return;
             }
 
-            string? file = Path.Combine(solutionDir, path2: @"global.json");
+            string? file = Path.Combine(path1: solutionDir, path2: @"global.json");
 
             if (file == null)
             {
@@ -46,7 +46,7 @@ namespace FunFair.BuildCheck.SolutionChecks
 
                 if (!string.IsNullOrWhiteSpace(p?.Sdk?.RollForward))
                 {
-                    if (!StringComparer.InvariantCulture.Equals(p.Sdk.RollForward, ROLL_FORWARD_POLICY))
+                    if (!StringComparer.InvariantCulture.Equals(x: p.Sdk.RollForward, y: ROLL_FORWARD_POLICY))
                     {
                         this._logger.LogError($"global.json is using SDK rollForward policy of {p.Sdk.RollForward} rather than {ROLL_FORWARD_POLICY}");
                     }
@@ -58,7 +58,7 @@ namespace FunFair.BuildCheck.SolutionChecks
             }
             catch (Exception exception)
             {
-                this._logger.LogError(new EventId(exception.HResult), exception, $"Failed to read {file} : {exception.Message}");
+                this._logger.LogError(new EventId(exception.HResult), exception: exception, $"Failed to read {file} : {exception.Message}");
             }
         }
     }

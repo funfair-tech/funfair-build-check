@@ -16,7 +16,7 @@ namespace FunFair.BuildCheck.ProjectChecks
         /// <inheritdoc />
         public void Check(string projectName, XmlDocument project)
         {
-            ProjectValueHelpers.CheckValue(projectName, project, nodePresence: @"IncludeOpenAPIAnalyzers", requiredValue: "true", this._logger);
+            ProjectValueHelpers.CheckValue(projectName: projectName, project: project, nodePresence: @"IncludeOpenAPIAnalyzers", requiredValue: "true", logger: this._logger);
         }
     }
 }

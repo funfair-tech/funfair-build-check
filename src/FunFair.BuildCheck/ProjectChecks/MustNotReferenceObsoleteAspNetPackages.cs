@@ -89,7 +89,7 @@ namespace FunFair.BuildCheck.ProjectChecks
                                                                    };
 
         public MustNotReferenceObsoleteAspNetPackages(ILogger<ErrorPolicyWarningAsErrors> logger)
-            : base(PackageIds, reason: "Obsoleted with .net core 3.1", logger)
+            : base(packageIds: PackageIds, reason: "Obsoleted with .net core 3.1", logger: logger)
         {
         }
     }

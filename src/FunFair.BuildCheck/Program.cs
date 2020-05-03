@@ -31,7 +31,7 @@ namespace FunFair.BuildCheck
                 Console.WriteLine($"{typeof(Program).Namespace} {ExecutableVersionInformation.ProgramVersion()}");
 
                 IConfigurationRoot configuration = new ConfigurationBuilder()
-                                                   .AddCommandLine(args,
+                                                   .AddCommandLine(args: args,
                                                                    new Dictionary<string, string>
                                                                    {
                                                                        {@"-Solution", @"solution"},
@@ -73,7 +73,7 @@ namespace FunFair.BuildCheck
                     Console.WriteLine(value: "** Running with release build requirements");
                 }
 
-                IServiceProvider services = Setup(warningsAsErrors, preReleaseBuild);
+                IServiceProvider services = Setup(warningsAsErrors: warningsAsErrors, preReleaseBuild: preReleaseBuild);
 
                 string? baseFolder = Path.GetDirectoryName(solutionFileName);
 
@@ -88,7 +88,7 @@ namespace FunFair.BuildCheck
 
                 IDiagnosticLogger logging = services.GetService<IDiagnosticLogger>();
 
-                await PerformChecksAsync(services, solutionFileName, logging, baseFolder)
+                await PerformChecksAsync(services: services, solutionFileName: solutionFileName, logging: logging, baseFolder: baseFolder)
                     .ConfigureAwait(continueOnCapturedContext: false);
 
                 if (logging.IsErrored)
@@ -129,14 +129,14 @@ namespace FunFair.BuildCheck
             {
                 logging.LogInformation($"Checking Project: {project.DisplayName}:");
 
-                string projectPath = Path.Combine(baseFolder, project.FileName);
+                string projectPath = Path.Combine(path1: baseFolder, path2: project.FileName);
 
                 XmlDocument doc = new XmlDocument();
                 doc.Load(projectPath);
 
                 foreach (IProjectCheck check in projectChecks)
                 {
-                    check.Check(project.DisplayName, doc);
+                    check.Check(projectName: project.DisplayName, project: doc);
                 }
             }
         }
@@ -172,7 +172,7 @@ namespace FunFair.BuildCheck
             Regex regex = new Regex(
                 pattern:
                 "^Project\\(\"[{(]?[0-9A-F]{8}[-]?([0-9A-F]{4}[-]?){3}[0-9A-F]{12}[)}]\"\\)\\s*=\\s*\"(?<DisplayName>.*?)\",\\s*\"(?<FileName>.*?\\.csproj)\",\\s*\"[{(]?[0-9A-F]{8}[-]?([0-9A-F]{4}[-]?){3}[0-9A-F]{12}[)}]\"$",
-                RegexOptions.Compiled);
+                options: RegexOptions.Compiled);
 
             foreach (string line in text)
             {

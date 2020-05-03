@@ -25,10 +25,15 @@ namespace FunFair.BuildCheck.ProjectChecks
                     return false;
                 }
 
-                return StringComparer.InvariantCultureIgnoreCase.Equals(value, y: "Exe") || StringComparer.InvariantCultureIgnoreCase.Equals(value, y: "Library");
+                return StringComparer.InvariantCultureIgnoreCase.Equals(x: value, y: "Exe") || StringComparer.InvariantCultureIgnoreCase.Equals(x: value, y: "Library");
             }
 
-            ProjectValueHelpers.CheckValue(projectName, project, nodePresence: @"OutputType", IsRequiredValue, msg, this._logger);
+            ProjectValueHelpers.CheckValue(projectName: projectName,
+                                           project: project,
+                                           nodePresence: @"OutputType",
+                                           isRequiredValue: IsRequiredValue,
+                                           msg: msg,
+                                           logger: this._logger);
         }
     }
 }

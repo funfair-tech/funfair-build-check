@@ -51,7 +51,8 @@ namespace FunFair.BuildCheck.ProjectChecks
                     }
                 }
 
-                if (!string.IsNullOrEmpty(privateAssets) && string.Compare(privateAssets, PACKAGE_PRIVATE_ASSETS, StringComparison.OrdinalIgnoreCase) == 0)
+                if (!string.IsNullOrEmpty(privateAssets) &&
+                    string.Compare(strA: privateAssets, strB: PACKAGE_PRIVATE_ASSETS, comparisonType: StringComparison.OrdinalIgnoreCase) == 0)
                 {
                     continue;
                 }
@@ -60,7 +61,7 @@ namespace FunFair.BuildCheck.ProjectChecks
 
                 this._logger.LogDebug($"{projectName}: Found: {packageName} ({version})");
 
-                if (!NuGetVersion.TryParse(version, out NuGetVersion nuGetVersion))
+                if (!NuGetVersion.TryParse(value: version, out NuGetVersion nuGetVersion))
                 {
                     this._logger.LogError($"{projectName}: Package {packageName} could not parse version {version}.");
 

@@ -22,12 +22,12 @@ namespace FunFair.BuildCheck.ProjectChecks
         /// <inheritdoc />
         public void Check(string projectName, XmlDocument project)
         {
-            if (this.CheckPackageReference(projectName, project))
+            if (this.CheckPackageReference(projectName: projectName, project: project))
             {
                 return;
             }
 
-            this.CheckRuleSet(projectName, project);
+            this.CheckRuleSet(projectName: projectName, project: project);
         }
 
         private void CheckRuleSet(string projectName, XmlDocument project)
@@ -43,7 +43,7 @@ namespace FunFair.BuildCheck.ProjectChecks
 
             string filename = codeAnalysisRuleSet.InnerText;
 
-            if (!StringComparer.InvariantCultureIgnoreCase.Equals(filename ?? string.Empty, RULESET_FILENAME))
+            if (!StringComparer.InvariantCultureIgnoreCase.Equals(filename ?? string.Empty, y: RULESET_FILENAME))
             {
                 this._logger.LogError($"{projectName}: Does not reference {RULESET_FILENAME} as the defined ruleset.");
             }
