@@ -7,12 +7,8 @@ Please ADD ALL Changes to the UNRELASED SECTION and not a specific release
 
 ## [Unreleased]
 ### Added
-* Explicit check for obsoleted packages (obsoleted between .net core 2.2 and .net net core 3.0)
-* Explicit check for global.json sdk rollForward policy
 ### Fixed
 ### Changed
-- FF-2127 - upgrade dotnet core to 3.1.201
-- List of explicitly allowed warnings in <NoWarn> section to remove all the nullable warning codes
 - FF-2386 - Update all the .NET components to .NET Core 3.1.202
 
 <!-- 
