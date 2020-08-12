@@ -9,19 +9,19 @@ Please ADD ALL Changes to the UNRELASED SECTION and not a specific release
 ### Added
 ### Fixed
 ### Changed
+
+<!--
+Releases that have at least been deployed to staging, BUT NOT necessarily released to live.  Changes should be moved from [Unreleased] into here as they are merged into the appropriate release branch
+-->
+## [1.13.0] 2020-08-12
+### Changed
 - FF-1429 - Updated SonarAnalyzer.CSharp to 8.11.0.20529
 - FF-1429 - Updated Microsoft.CodeAnalysis.FxCopAnalyzers to 3.3.0
 - FF-1429 - Updated Microsoft.VisualStudio.Threading.Analyzers to 16.7.54
 - FF-1429 - Updated SonarAnalyzer.CSharp to 8.10.0.19839
 - FF-2759 - Updated to .net core 3.1.401
 
-<!--
-Releases that have at least been deployed to staging, BUT NOT necessarily released to live.  Changes should be moved from [Unreleased] into here as they are merged into the appropriate release branch
--->
 ## [1.12.0] 2020-07-20
-## [Unreleased]
-### Added
-### Fixed
 ### Changed
 - FF-1429 - Updated FunFair.CodeAnalysis to 1.8.0.375
 - FF-1429 - Updated FunFair.CodeAnalysis to 1.7.2.364
@@ -32,7 +32,6 @@ Releases that have at least been deployed to staging, BUT NOT necessarily releas
 - FF-1429 - Updated SonarAnalyzer.CSharp to 8.9.0.19135
 - FF-1429 - Updated FunFair.CodeAnalysis to 1.5.0.314
 - FF-2652 - Update all the .NET components to .NET Core 3.1.302
-
 
 ## [1.11.0] 2020-06-18
 ### Changed
@@ -91,18 +90,3 @@ Releases that have at least been deployed to staging, BUT NOT necessarily releas
 ### Changed
 - Updated FxCop version to 2.6.2
 - Updated .net core 2.1 to latest LTS version
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
