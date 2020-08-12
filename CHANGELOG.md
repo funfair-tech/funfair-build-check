@@ -9,6 +9,7 @@ Please ADD ALL Changes to the UNRELASED SECTION and not a specific release
 ### Added
 ### Fixed
 ### Changed
+- FF-1429 - Updated FunFair.CodeAnalysis to 1.9.0.394
 
 <!--
 Releases that have at least been deployed to staging, BUT NOT necessarily released to live.  Changes should be moved from [Unreleased] into here as they are merged into the appropriate release branch
@@ -90,3 +91,4 @@ Releases that have at least been deployed to staging, BUT NOT necessarily releas
 ### Changed
 - Updated FxCop version to 2.6.2
 - Updated .net core 2.1 to latest LTS version
+
