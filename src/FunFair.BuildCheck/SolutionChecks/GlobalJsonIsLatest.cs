@@ -1,8 +1,8 @@
 ﻿using System;
 using System.IO;
+using System.Text.Json;
 using FunFair.BuildCheck.SolutionChecks.Models;
 using Microsoft.Extensions.Logging;
-using Newtonsoft.Json;
 
 namespace FunFair.BuildCheck.SolutionChecks
 {
@@ -34,12 +34,7 @@ namespace FunFair.BuildCheck.SolutionChecks
                 return;
             }
 
-            string? file = Path.Combine(path1: solutionDir, path2: @"global.json");
-
-            if (file == null)
-            {
-                return;
-            }
+            string file = Path.Combine(path1: solutionDir, path2: @"global.json");
 
             if (!File.Exists(file))
             {
@@ -50,7 +45,15 @@ namespace FunFair.BuildCheck.SolutionChecks
 
             try
             {
-                GlobalJsonPacket p = JsonConvert.DeserializeObject<GlobalJsonPacket>(content);
+                GlobalJsonPacket p = JsonSerializer.Deserialize<GlobalJsonPacket>(json: content,
+                                                                                  new JsonSerializerOptions
+                                                                                  {
+                                                                                      IgnoreNullValues = true,
+                                                                                      PropertyNameCaseInsensitive = false,
+                                                                                      PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+                                                                                      WriteIndented = false,
+                                                                                      AllowTrailingCommas = false
+                                                                                  });
 
                 if (!string.IsNullOrWhiteSpace(p?.Sdk?.RollForward))
                 {
