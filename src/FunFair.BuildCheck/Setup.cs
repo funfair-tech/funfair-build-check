@@ -49,7 +49,10 @@ namespace FunFair.BuildCheck
                 AddProjectCheck<MustHaveFunFairCodeAnalysisPackage>(services);
             }
 
+            AddProjectCheck<ShouldUseAbstractionsConfigurationPackage>(services);
             AddProjectCheck<ShouldUseAbstractionsDependencyInjectionPackage>(services);
+            AddProjectCheck<ShouldUseAbstractionsFileProvidersPackage>(services);
+            AddProjectCheck<ShouldUseAbstractionsLoggingPackage>(services);
 
 #if DOTNET_VERSION_SPECIFIC_TESTS
             string? dotnetVersion = Environment.GetEnvironmentVariable(variable: @"DOTNET_CORE_SDK_VERSION");
