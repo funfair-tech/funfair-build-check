@@ -2,7 +2,6 @@
 using System.IO;
 using System.Text.Json;
 using FunFair.BuildCheck.SolutionChecks.Models;
-using Microsoft.Extensions.Logging;
 
 namespace FunFair.BuildCheck.SolutionChecks
 {

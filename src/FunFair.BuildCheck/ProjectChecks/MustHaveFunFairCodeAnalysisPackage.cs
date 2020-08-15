@@ -1,5 +1,3 @@
-using Microsoft.Extensions.Logging;
-
 namespace FunFair.BuildCheck.ProjectChecks
 {
     public sealed class MustHaveFunFairCodeAnalysisPackage : MustHaveAnalyzerPackage

@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Xml;
-using Microsoft.Extensions.Logging;
-using NuGet.Versioning;
 
 namespace FunFair.BuildCheck.ProjectChecks
 {

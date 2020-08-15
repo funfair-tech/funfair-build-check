@@ -1,6 +1,4 @@
-﻿using Microsoft.Extensions.Logging;
-
-namespace FunFair.BuildCheck.ProjectChecks
+﻿namespace FunFair.BuildCheck.ProjectChecks
 {
     public sealed class ShouldUseAbstractionsConfigurationPackage : ShouldUseAbstractionsPackage
     {
