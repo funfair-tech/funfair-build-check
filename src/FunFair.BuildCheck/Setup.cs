@@ -38,6 +38,9 @@ namespace FunFair.BuildCheck
             AddProjectCheck<MustUseOpenApiAnalyzers>(services);
             AddProjectCheck<MustNotReferenceObsoleteAspNetPackages>(services);
 
+#if ANALYZER_PROJECT_INSTALLED_EVERYWHERE
+            AddProjectCheck<MustHaveToStringWithoutOverrideAnalyzerPackage>(services);
+#endif
             if (!IsUnitTestBase())
             {
                 AddProjectCheck<UsingXUnitMustIncludeVisualStudioTestPlatform>(services);
