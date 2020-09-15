@@ -7,14 +7,20 @@ Please ADD ALL Changes to the UNRELASED SECTION and not a specific release
 
 ## [Unreleased]
 ### Added
-- Checks for unexpected use of ToString where it would output the class name rather than a readable per instance value.
 ### Fixed
 ### Changed
-- FF-1429 - Updated SonarAnalyzer.CSharp to 8.13.0.21683
+### Removed
+### Deployment Changes
 
 <!--
 Releases that have at least been deployed to staging, BUT NOT necessarily released to live.  Changes should be moved from [Unreleased] into here as they are merged into the appropriate release branch
 -->
+## [1.15.0] 2020-09-15
+### Added
+- Checks for unexpected use of ToString where it would output the class name rather than a readable per instance value.
+### Changed
+- FF-1429 - Updated SonarAnalyzer.CSharp to 8.13.0.21683
+
 ## [1.14.0] 2020-09-09
 ### Changed
 - FF-2830 - Update all the .NET components to .NET Core 3.1.402
