@@ -6,9 +6,9 @@ namespace FunFair.BuildCheck.ProjectChecks
 {
     public sealed class LanguagePolicyUseLatestVersion : IProjectCheck
     {
-        private readonly ILogger<ErrorPolicyWarningAsErrors> _logger;
+        private readonly ILogger<LanguagePolicyUseLatestVersion> _logger;
 
-        public LanguagePolicyUseLatestVersion(ILogger<ErrorPolicyWarningAsErrors> logger)
+        public LanguagePolicyUseLatestVersion(ILogger<LanguagePolicyUseLatestVersion> logger)
         {
             this._logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }

@@ -38,6 +38,7 @@ namespace FunFair.BuildCheck
             AddProjectCheck<MustUseOpenApiAnalyzers>(services);
             AddProjectCheck<MustNotReferenceObsoleteAspNetPackages>(services);
             AddProjectCheck<MustHaveToStringWithoutOverrideAnalyzerPackage>(services);
+            AddProjectCheck<AnalysisLevelPolicyUseLatestVersion>(services);
 
             if (!IsUnitTestBase())
             {
