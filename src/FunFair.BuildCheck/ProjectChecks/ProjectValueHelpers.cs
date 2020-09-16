@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 using System.Xml;
 using Microsoft.Extensions.Logging;
 
@@ -7,6 +9,37 @@ namespace FunFair.BuildCheck.ProjectChecks
 {
     public static class ProjectValueHelpers
     {
+        private static readonly IReadOnlyList<string> PackagesForTestProjectDetection = new[] {"Xunit", "NSubstitute", "Microsoft.NET.Test.Sdk", "FunFair.Test.Common"};
+
+        public static bool IsTestProject(this XmlDocument project, string projectName, ILogger logger)
+        {
+            XmlNodeList nodes = project.SelectNodes(xpath: "/Project/ItemGroup/PackageReference");
+
+            foreach (XmlElement? reference in nodes)
+            {
+                if (reference == null)
+                {
+                    continue;
+                }
+
+                string packageName = reference.GetAttribute(name: @"Include");
+
+                if (string.IsNullOrWhiteSpace(packageName))
+                {
+                    logger.LogError($"{projectName}: Contains bad reference to packages.");
+
+                    continue;
+                }
+
+                if (PackagesForTestProjectDetection.Any(x => StringComparer.InvariantCultureIgnoreCase.Equals(x: x, y: packageName)))
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
         public static void CheckNode(string projectName, XmlDocument project, string nodePresence, ILogger logger)
         {
             bool hasGlobalSetting = false;
@@ -77,20 +110,10 @@ namespace FunFair.BuildCheck.ProjectChecks
 
         public static void CheckValue(string projectName, XmlDocument project, string nodePresence, Func<string, bool> isRequiredValue, string msg, ILogger logger)
         {
-            CheckValueCommon(projectName: projectName,
-                             project: project,
-                             nodePresence: nodePresence,
-                             isRequiredValue: isRequiredValue,
-                             requiredValueDisplayText: msg,
-                             logger: logger);
+            CheckValueCommon(projectName: projectName, project: project, nodePresence: nodePresence, isRequiredValue: isRequiredValue, requiredValueDisplayText: msg, logger: logger);
         }
 
-        private static void CheckValueCommon(string projectName,
-                                             XmlDocument project,
-                                             string nodePresence,
-                                             Func<string, bool> isRequiredValue,
-                                             string requiredValueDisplayText,
-                                             ILogger logger)
+        private static void CheckValueCommon(string projectName, XmlDocument project, string nodePresence, Func<string, bool> isRequiredValue, string requiredValueDisplayText, ILogger logger)
         {
             bool hasGlobalSetting = false;
             XmlNodeList nodes = project.SelectNodes("/Project/PropertyGroup[not(@Condition)]/" + nodePresence);
@@ -169,6 +192,20 @@ namespace FunFair.BuildCheck.ProjectChecks
         private static bool IsRequiredValue(string requiredValue, string value)
         {
             return !string.IsNullOrWhiteSpace(value) && StringComparer.InvariantCultureIgnoreCase.Equals(x: value, y: requiredValue);
+        }
+
+        public static string GetOutputType(this XmlDocument project)
+        {
+            const string defaultType = @"Library";
+
+            XmlNode? outputTypeNode = project.SelectSingleNode("/Project/PropertyGroup/OutputType");
+
+            if (outputTypeNode != null)
+            {
+                return outputTypeNode.InnerText ?? defaultType;
+            }
+
+            return defaultType;
         }
     }
 }
