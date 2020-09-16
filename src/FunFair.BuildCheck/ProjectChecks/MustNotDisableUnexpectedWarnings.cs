@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Xml;
 using Microsoft.Extensions.Logging;
@@ -7,11 +8,13 @@ namespace FunFair.BuildCheck.ProjectChecks
 {
     public sealed class MustNotDisableUnexpectedWarnings : IProjectCheck
     {
-        private static readonly string[] AllowedWarnings =
-        {
-            // Xml Docs
-            "1591"
-        };
+        private static readonly IReadOnlyList<string> AllowedWarnings = new[]
+                                                                        {
+                                                                            // Xml Docs
+                                                                            "1591"
+                                                                        };
+
+        private static readonly IReadOnlyList<string> AllowedTestProjectWarnings = Array.Empty<string>();
 
         private readonly ILogger<ErrorPolicyWarningAsErrors> _logger;
 
@@ -23,6 +26,10 @@ namespace FunFair.BuildCheck.ProjectChecks
         /// <inheritdoc />
         public void Check(string projectName, XmlDocument project)
         {
+            bool isTestProject = project.IsTestProject(projectName: projectName, logger: this._logger);
+
+            IReadOnlyList<string> allowedWarnings = isTestProject ? AllowedTestProjectWarnings : AllowedWarnings;
+
             const string nodePresence = @"NoWarn";
             XmlNodeList nodes = project.SelectNodes("/Project/PropertyGroup[not(@Condition)]/" + nodePresence);
 
@@ -46,7 +53,7 @@ namespace FunFair.BuildCheck.ProjectChecks
 
                         foreach (string warning in warnings)
                         {
-                            if (!AllowedWarnings.Contains(warning))
+                            if (!allowedWarnings.Contains(warning))
                             {
                                 this._logger.LogError($"{projectName}: Global Configuration hides warning {warning}.");
                             }
@@ -84,7 +91,7 @@ namespace FunFair.BuildCheck.ProjectChecks
                                 continue;
                             }
 
-                            if (!AllowedWarnings.Contains(warning))
+                            if (!allowedWarnings.Contains(warning))
                             {
                                 this._logger.LogError($"{projectName}: Configuration {configuration} hides warning {warning}.");
                             }
