@@ -20,7 +20,7 @@ namespace FunFair.BuildCheck.ProjectChecks
         /// <inheritdoc />
         public void Check(string projectName, XmlDocument project)
         {
-            string outputType = GetOutputType(project);
+            string outputType = project.GetOutputType();
 
             if (StringComparer.InvariantCultureIgnoreCase.Equals(x: outputType, y: "Exe"))
             {
@@ -44,20 +44,6 @@ namespace FunFair.BuildCheck.ProjectChecks
                     this._logger.LogError($"Should use package {this._usePackageId} rather than {this._matchPackageId}");
                 }
             }
-        }
-
-        private static string GetOutputType(XmlDocument project)
-        {
-            const string defaultType = @"Library";
-
-            XmlNode? outputTypeNode = project.SelectSingleNode("/Project/PropertyGroup/OutputType");
-
-            if (outputTypeNode != null)
-            {
-                return outputTypeNode.InnerText ?? defaultType;
-            }
-
-            return defaultType;
         }
     }
 }

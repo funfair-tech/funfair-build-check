@@ -193,5 +193,19 @@ namespace FunFair.BuildCheck.ProjectChecks
         {
             return !string.IsNullOrWhiteSpace(value) && StringComparer.InvariantCultureIgnoreCase.Equals(x: value, y: requiredValue);
         }
+
+        public static string GetOutputType(this XmlDocument project)
+        {
+            const string defaultType = @"Library";
+
+            XmlNode? outputTypeNode = project.SelectSingleNode("/Project/PropertyGroup/OutputType");
+
+            if (outputTypeNode != null)
+            {
+                return outputTypeNode.InnerText ?? defaultType;
+            }
+
+            return defaultType;
+        }
     }
 }

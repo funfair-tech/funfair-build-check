@@ -44,14 +44,15 @@ namespace FunFair.BuildCheck
             AddProjectCheck<EnableNetAnalyzersPolicy>(services);
             AddProjectCheck<CodeAnalysisTreatWarningsAsErrorsPolicy>(services);
             AddProjectCheck<EnforceCodeStyleInBuildPolicy>(services);
+            AddProjectCheck<LibrariesShouldBePackablePolicy>(services);
 
-            if (!IsUnitTestBase())
+            if (!Classifications.IsUnitTestBase())
             {
                 AddProjectCheck<UsingXUnitMustIncludeVisualStudioTestPlatform>(services);
                 AddProjectCheck<UsingXUnitMustIncludeTeamCityTestAdapter>(services);
             }
 
-            if (!IsCodeAnalysisSolution())
+            if (!Classifications.IsCodeAnalysisSolution())
             {
                 AddProjectCheck<MustHaveFunFairCodeAnalysisPackage>(services);
             }
@@ -71,31 +72,10 @@ namespace FunFair.BuildCheck
             }
 #endif
 
-            if (IsNullableGloballyEnforced())
+            if (Classifications.IsNullableGloballyEnforced())
             {
                 AddProjectCheck<MustEnableNullable>(services);
             }
-        }
-
-        private static bool IsCodeAnalysisSolution()
-        {
-            string? codeAnalysis = Environment.GetEnvironmentVariable(variable: @"BUILD_CODEANALYSIS");
-
-            return !string.IsNullOrWhiteSpace(codeAnalysis) && StringComparer.InvariantCultureIgnoreCase.Equals(x: codeAnalysis, y: @"TRUE");
-        }
-
-        private static bool IsNullableGloballyEnforced()
-        {
-            string? codeAnalysis = Environment.GetEnvironmentVariable(variable: @"DISABLE_BUILD_NULLABLE_REFERENCE_TYPES");
-
-            return string.IsNullOrWhiteSpace(codeAnalysis) || !StringComparer.InvariantCultureIgnoreCase.Equals(x: codeAnalysis, y: @"TRUE");
-        }
-
-        private static bool IsUnitTestBase()
-        {
-            string? codeAnalysis = Environment.GetEnvironmentVariable(variable: @"IS_UNITTEST_BASE");
-
-            return !string.IsNullOrWhiteSpace(codeAnalysis) || StringComparer.InvariantCultureIgnoreCase.Equals(x: codeAnalysis, y: @"TRUE");
         }
 
         private static void AddProjectCheck<T>(IServiceCollection services)
