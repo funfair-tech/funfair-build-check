@@ -15,6 +15,10 @@ Please ADD ALL Changes to the UNRELASED SECTION and not a specific release
 <!--
 Releases that have at least been deployed to staging, BUT NOT necessarily released to live.  Changes should be moved from [Unreleased] into here as they are merged into the appropriate release branch
 -->
+## [1.16.0] 2020-09-16
+### Added
+- Checks that DocumentationFile is defined in a ways that it doesn't contain things that change on a per .net core version basis.
+
 ## [1.15.0] 2020-09-15
 ### Added
 - Checks for unexpected use of ToString where it would output the class name rather than a readable per instance value.
