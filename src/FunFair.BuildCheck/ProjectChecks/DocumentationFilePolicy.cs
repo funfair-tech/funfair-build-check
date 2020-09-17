@@ -18,7 +18,14 @@ namespace FunFair.BuildCheck.ProjectChecks
         /// <inheritdoc />
         public void Check(string projectName, XmlDocument project)
         {
-            if (project.IsTestProject(projectName: projectName, logger: this._logger))
+            bool testProject = project.IsTestProject(projectName: projectName, logger: this._logger);
+
+            if (testProject && Classifications.IsUnitTestBase())
+            {
+                testProject = projectName.EndsWith(value: ".Tests", comparisonType: StringComparison.OrdinalIgnoreCase);
+            }
+
+            if (testProject)
             {
                 this.CheckTestProject(projectName: projectName, project: project);
 
