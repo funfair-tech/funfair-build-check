@@ -28,6 +28,14 @@ namespace FunFair.BuildCheck.ProjectChecks
                 return;
             }
 
+            string? awsProjectType = project.GetAwsProjectType();
+
+            if (awsProjectType != null && StringComparer.InvariantCultureIgnoreCase.Equals(x: awsProjectType, y: "Lambda"))
+            {
+                // Lambdas are effectively executables so can use whatever they want.
+                return;
+            }
+
             XmlNodeList? referenceNodes = project.SelectNodes("/Project/ItemGroup/PackageReference");
 
             foreach (XmlElement? referenceNode in referenceNodes)

@@ -207,5 +207,17 @@ namespace FunFair.BuildCheck.ProjectChecks
 
             return defaultType;
         }
+
+        public static string? GetAwsProjectType(this XmlDocument project)
+        {
+            XmlNode? outputTypeNode = project.SelectSingleNode("/Project/PropertyGroup/AWSProjectType");
+
+            if (outputTypeNode != null)
+            {
+                return outputTypeNode.InnerText;
+            }
+
+            return null;
+        }
     }
 }
