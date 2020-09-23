@@ -64,13 +64,8 @@ namespace FunFair.BuildCheck.ProjectChecks
 
             XmlNodeList configurationGroups = project.SelectNodes(xpath: "/Project/PropertyGroup[@Condition]");
 
-            foreach (XmlElement? propertyGroup in configurationGroups)
+            foreach (XmlElement propertyGroup in configurationGroups.OfType<XmlElement>())
             {
-                if (propertyGroup == null)
-                {
-                    continue;
-                }
-
                 XmlNode? node = propertyGroup.SelectSingleNode(nodePresence);
 
                 if (node != null)

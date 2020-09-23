@@ -110,20 +110,10 @@ namespace FunFair.BuildCheck.ProjectChecks
 
         public static void CheckValue(string projectName, XmlDocument project, string nodePresence, Func<string, bool> isRequiredValue, string msg, ILogger logger)
         {
-            CheckValueCommon(projectName: projectName,
-                             project: project,
-                             nodePresence: nodePresence,
-                             isRequiredValue: isRequiredValue,
-                             requiredValueDisplayText: msg,
-                             logger: logger);
+            CheckValueCommon(projectName: projectName, project: project, nodePresence: nodePresence, isRequiredValue: isRequiredValue, requiredValueDisplayText: msg, logger: logger);
         }
 
-        private static void CheckValueCommon(string projectName,
-                                             XmlDocument project,
-                                             string nodePresence,
-                                             Func<string, bool> isRequiredValue,
-                                             string requiredValueDisplayText,
-                                             ILogger logger)
+        private static void CheckValueCommon(string projectName, XmlDocument project, string nodePresence, Func<string, bool> isRequiredValue, string requiredValueDisplayText, ILogger logger)
         {
             bool hasGlobalSetting = false;
             XmlNodeList nodes = project.SelectNodes("/Project/PropertyGroup[not(@Condition)]/" + nodePresence);
@@ -222,12 +212,7 @@ namespace FunFair.BuildCheck.ProjectChecks
         {
             XmlNode? outputTypeNode = project.SelectSingleNode("/Project/PropertyGroup/AWSProjectType");
 
-            if (outputTypeNode != null)
-            {
-                return outputTypeNode.InnerText;
-            }
-
-            return null;
+            return outputTypeNode?.InnerText;
         }
     }
 }
