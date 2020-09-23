@@ -20,10 +20,7 @@ namespace FunFair.BuildCheck.ProjectChecks
         /// <inheritdoc />
         public void Check(string projectName, XmlDocument project)
         {
-            // check for xunit reference
-            XmlElement? xunitReference = project.SelectSingleNode(xpath: "/Project/ItemGroup/PackageReference[@Include='xunit']") as XmlElement;
-
-            if (xunitReference != null)
+            if (project.SelectSingleNode(xpath: "/Project/ItemGroup/PackageReference[@Include='xunit']") is XmlElement)
             {
                 // has an xunit reference so is a unit test project, don't force sourcelink
                 return;
@@ -81,9 +78,7 @@ namespace FunFair.BuildCheck.ProjectChecks
             if (string.IsNullOrEmpty(assets))
             {
                 // no PrivateAssets attribute, check for an element
-                XmlElement? privateAssets = reference.SelectSingleNode(xpath: "PrivateAssets") as XmlElement;
-
-                if (privateAssets == null)
+                if (!(reference.SelectSingleNode(xpath: "PrivateAssets") is XmlElement privateAssets))
                 {
                     return false;
                 }
