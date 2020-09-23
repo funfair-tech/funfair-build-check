@@ -6,6 +6,7 @@ using Microsoft.Extensions.Logging;
 
 namespace FunFair.BuildCheck.SolutionChecks
 {
+    // ReSharper disable once ClassNeverInstantiated.Global
     public sealed class GlobalJsonMustNotAllowPreRelease : ISolutionCheck
     {
         private const bool PRE_RELEASE_POLICY = false;

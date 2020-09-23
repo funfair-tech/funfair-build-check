@@ -6,6 +6,7 @@ using Microsoft.Extensions.Logging;
 
 namespace FunFair.BuildCheck.SolutionChecks
 {
+    // ReSharper disable once ClassNeverInstantiated.Global
     public sealed class GlobalJsonMustSpecifyRollforwardDisable : ISolutionCheck
     {
         private const string ROLL_FORWARD_POLICY = @"disable";

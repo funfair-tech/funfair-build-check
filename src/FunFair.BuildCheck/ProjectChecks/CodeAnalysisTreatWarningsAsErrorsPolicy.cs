@@ -4,6 +4,7 @@ using Microsoft.Extensions.Logging;
 
 namespace FunFair.BuildCheck.ProjectChecks
 {
+    // ReSharper disable once ClassNeverInstantiated.Global
     public sealed class CodeAnalysisTreatWarningsAsErrorsPolicy : IProjectCheck
     {
         private const string EXPECTED = @"true";
@@ -18,11 +19,7 @@ namespace FunFair.BuildCheck.ProjectChecks
         /// <inheritdoc />
         public void Check(string projectName, XmlDocument project)
         {
-            ProjectValueHelpers.CheckValue(projectName: projectName,
-                                           project: project,
-                                           nodePresence: @"CodeAnalysisTreatWarningsAsErrors",
-                                           requiredValue: EXPECTED,
-                                           logger: this._logger);
+            ProjectValueHelpers.CheckValue(projectName: projectName, project: project, nodePresence: @"CodeAnalysisTreatWarningsAsErrors", requiredValue: EXPECTED, logger: this._logger);
         }
     }
 }

@@ -2,6 +2,7 @@
 
 namespace FunFair.BuildCheck.ProjectChecks
 {
+    // ReSharper disable once ClassNeverInstantiated.Global
     public sealed class UsingNSubstituteMustIncludeAnalyzer : HasAppropriateAnalysisPackages
     {
         public UsingNSubstituteMustIncludeAnalyzer(ILogger<NoPreReleaseNuGetPackages> logger)

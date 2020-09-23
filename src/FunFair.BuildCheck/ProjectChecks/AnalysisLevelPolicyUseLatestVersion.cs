@@ -4,6 +4,7 @@ using Microsoft.Extensions.Logging;
 
 namespace FunFair.BuildCheck.ProjectChecks
 {
+    // ReSharper disable once ClassNeverInstantiated.Global
     public sealed class AnalysisLevelPolicyUseLatestVersion : IProjectCheck
     {
         private readonly ILogger<AnalysisLevelPolicyUseLatestVersion> _logger;

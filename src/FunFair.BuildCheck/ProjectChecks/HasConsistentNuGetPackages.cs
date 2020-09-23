@@ -6,6 +6,7 @@ using NuGet.Versioning;
 
 namespace FunFair.BuildCheck.ProjectChecks
 {
+    // ReSharper disable once ClassNeverInstantiated.Global
     public sealed class HasConsistentNuGetPackages : IProjectCheck
     {
         private readonly ILogger<NoPreReleaseNuGetPackages> _logger;

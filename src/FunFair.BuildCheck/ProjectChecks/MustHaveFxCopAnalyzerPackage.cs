@@ -4,6 +4,7 @@ using Microsoft.Extensions.Logging;
 
 namespace FunFair.BuildCheck.ProjectChecks
 {
+    // ReSharper disable once ClassNeverInstantiated.Global
     public sealed class MustHaveFxCopAnalyzerPackage : IProjectCheck
     {
         private const string PACKAGE_ID = @"Microsoft.CodeAnalysis.FxCopAnalyzers";

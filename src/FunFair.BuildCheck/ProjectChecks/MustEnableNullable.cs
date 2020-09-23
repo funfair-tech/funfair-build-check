@@ -4,6 +4,7 @@ using Microsoft.Extensions.Logging;
 
 namespace FunFair.BuildCheck.ProjectChecks
 {
+    // ReSharper disable once ClassNeverInstantiated.Global
     public sealed class MustEnableNullable : IProjectCheck
     {
         private readonly ILogger<ErrorPolicyWarningAsErrors> _logger;

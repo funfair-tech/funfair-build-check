@@ -3,6 +3,7 @@ using Microsoft.Extensions.Logging;
 
 namespace FunFair.BuildCheck.SolutionChecks
 {
+    // ReSharper disable once ClassNeverInstantiated.Global
     public sealed class AllProjectsExist : ISolutionCheck
     {
         private readonly ILogger<AllProjectsExist> _logger;

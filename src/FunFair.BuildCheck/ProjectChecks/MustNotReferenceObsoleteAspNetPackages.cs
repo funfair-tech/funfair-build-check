@@ -3,6 +3,7 @@ using Microsoft.Extensions.Logging;
 
 namespace FunFair.BuildCheck.ProjectChecks
 {
+    // ReSharper disable once ClassNeverInstantiated.Global
     public sealed class MustNotReferenceObsoleteAspNetPackages : MustNotReferencePackages
     {
         private static readonly IReadOnlyList<string> PackageIds = new[]

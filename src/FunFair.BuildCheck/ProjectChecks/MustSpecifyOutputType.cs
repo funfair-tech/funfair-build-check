@@ -4,6 +4,7 @@ using Microsoft.Extensions.Logging;
 
 namespace FunFair.BuildCheck.ProjectChecks
 {
+    // ReSharper disable once ClassNeverInstantiated.Global
     public sealed class MustSpecifyOutputType : IProjectCheck
     {
         private readonly ILogger<ErrorPolicyWarningAsErrors> _logger;
@@ -28,12 +29,7 @@ namespace FunFair.BuildCheck.ProjectChecks
                 return StringComparer.InvariantCultureIgnoreCase.Equals(x: value, y: "Exe") || StringComparer.InvariantCultureIgnoreCase.Equals(x: value, y: "Library");
             }
 
-            ProjectValueHelpers.CheckValue(projectName: projectName,
-                                           project: project,
-                                           nodePresence: @"OutputType",
-                                           isRequiredValue: IsRequiredValue,
-                                           msg: msg,
-                                           logger: this._logger);
+            ProjectValueHelpers.CheckValue(projectName: projectName, project: project, nodePresence: @"OutputType", isRequiredValue: IsRequiredValue, msg: msg, logger: this._logger);
         }
     }
 }
