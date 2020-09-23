@@ -37,9 +37,7 @@ namespace FunFair.BuildCheck.ProjectChecks
 
         private static bool CheckReference(string packageId, XmlDocument project)
         {
-            XmlElement? reference = project.SelectSingleNode("/Project/ItemGroup/PackageReference[@Include='" + packageId + "']") as XmlElement;
-
-            return reference != null;
+            return project.SelectSingleNode("/Project/ItemGroup/PackageReference[@Include='" + packageId + "']") is XmlElement;
         }
 
         private static bool CheckPrivateAssets(string packageId, XmlDocument project)
