@@ -43,16 +43,13 @@ namespace FunFair.BuildCheck.ProjectChecks
 
                 if (string.IsNullOrEmpty(privateAssets))
                 {
-                    XmlElement? privateAssetsElement = reference.SelectSingleNode(xpath: "PrivateAssets") as XmlElement;
-
-                    if (privateAssetsElement != null)
+                    if (reference.SelectSingleNode(xpath: "PrivateAssets") is XmlElement privateAssetsElement)
                     {
                         privateAssets = privateAssetsElement.InnerText;
                     }
                 }
 
-                if (!string.IsNullOrEmpty(privateAssets) &&
-                    string.Compare(strA: privateAssets, strB: PACKAGE_PRIVATE_ASSETS, comparisonType: StringComparison.OrdinalIgnoreCase) == 0)
+                if (!string.IsNullOrEmpty(privateAssets) && string.Compare(strA: privateAssets, strB: PACKAGE_PRIVATE_ASSETS, comparisonType: StringComparison.OrdinalIgnoreCase) == 0)
                 {
                     continue;
                 }
