@@ -1,9 +1,13 @@
 ﻿using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using Microsoft.Extensions.Logging;
 
 namespace FunFair.BuildCheck.ProjectChecks
 {
-    // ReSharper disable once ClassNeverInstantiated.Global
+    /// <summary>
+    ///     Checks that obsolete packages aren't referenced.
+    /// </summary>
+    [SuppressMessage(category: "ReSharper", checkId: "ClassNeverInstantiated.Global", Justification = "Created by DI")]
     public sealed class MustNotReferenceObsoleteAspNetPackages : MustNotReferencePackages
     {
         private static readonly IReadOnlyList<string> PackageIds = new[]
@@ -89,6 +93,10 @@ namespace FunFair.BuildCheck.ProjectChecks
                                                                        "Microsoft.Net.Http.Headers"
                                                                    };
 
+        /// <summary>
+        ///     Constructor.
+        /// </summary>
+        /// <param name="logger">Logging.</param>
         public MustNotReferenceObsoleteAspNetPackages(ILogger<ErrorPolicyWarningAsErrors> logger)
             : base(packageIds: PackageIds, reason: "Obsoleted with .net core 3.1", logger: logger)
         {

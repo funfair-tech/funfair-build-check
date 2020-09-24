@@ -34,9 +34,7 @@ namespace FunFair.BuildCheck
                                                    .AddCommandLine(args: args,
                                                                    new Dictionary<string, string>
                                                                    {
-                                                                       {@"-Solution", @"solution"},
-                                                                       {@"-WarningAsErrors", @"WarningAsErrors"},
-                                                                       {@"-PreReleaseBuild", @"PreReleaseBuild"}
+                                                                       {@"-Solution", @"solution"}, {@"-WarningAsErrors", @"WarningAsErrors"}, {@"-PreReleaseBuild", @"PreReleaseBuild"}
                                                                    })
                                                    .Build();
 
@@ -73,7 +71,8 @@ namespace FunFair.BuildCheck
                     Console.WriteLine(value: "** Running with release build requirements");
                 }
 
-                IServiceProvider services = Setup(warningsAsErrors: warningsAsErrors, preReleaseBuild: preReleaseBuild);
+                IReadOnlyList<Project> projects = await LoadProjectsAsync(solutionFileName);
+                IServiceProvider services = Setup(warningsAsErrors: warningsAsErrors, preReleaseBuild: preReleaseBuild, projects: projects);
 
                 string? baseFolder = Path.GetDirectoryName(solutionFileName);
 
@@ -88,8 +87,7 @@ namespace FunFair.BuildCheck
 
                 IDiagnosticLogger logging = services.GetService<IDiagnosticLogger>();
 
-                await PerformChecksAsync(services: services, solutionFileName: solutionFileName, logging: logging, baseFolder: baseFolder)
-                    .ConfigureAwait(continueOnCapturedContext: false);
+                PerformChecks(services: services, solutionFileName: solutionFileName, logging: logging, baseFolder: baseFolder);
 
                 if (logging.IsErrored)
                 {
@@ -112,18 +110,17 @@ namespace FunFair.BuildCheck
             }
         }
 
-        private static async Task PerformChecksAsync(IServiceProvider services, string solutionFileName, IDiagnosticLogger logging, string baseFolder)
+        private static void PerformChecks(IServiceProvider services, string solutionFileName, IDiagnosticLogger logging, string baseFolder)
         {
-            ISolutionCheck[] solutionChecks = RegisteredSolutionChecks(services);
-            IProjectCheck[] projectChecks = RegisteredProjectChecks(services);
+            IReadOnlyList<ISolutionCheck> solutionChecks = RegisteredSolutionChecks(services);
+            IReadOnlyList<IProjectCheck> projectChecks = RegisteredProjectChecks(services);
 
             foreach (ISolutionCheck check in solutionChecks)
             {
                 check.Check(solutionFileName);
             }
 
-            Project[] projects = await LoadProjectsAsync(solutionFileName)
-                .ConfigureAwait(continueOnCapturedContext: false);
+            IReadOnlyList<Project> projects = services.GetRequiredService<IReadOnlyList<Project>>();
 
             foreach (Project project in projects)
             {
@@ -141,7 +138,7 @@ namespace FunFair.BuildCheck
             }
         }
 
-        private static IServiceProvider Setup(bool warningsAsErrors, bool preReleaseBuild)
+        private static IServiceProvider Setup(bool warningsAsErrors, bool preReleaseBuild, IReadOnlyList<Project> projects)
         {
             IServiceCollection services = new ServiceCollection();
 
@@ -149,6 +146,7 @@ namespace FunFair.BuildCheck
             services.AddSingleton<ILogger>(logger);
             services.AddSingleton<IDiagnosticLogger>(logger);
             services.AddSingleton(typeof(ILogger<>), typeof(LoggerProxy<>));
+            services.AddSingleton(projects);
 
             BuildCheck.Setup.SetupSolutionChecks(services);
             BuildCheck.Setup.SetupProjectChecks(services);
@@ -160,10 +158,11 @@ namespace FunFair.BuildCheck
             return spf.CreateServiceProvider(services);
         }
 
-        private static async Task<Project[]> LoadProjectsAsync(string solution)
+        private static async Task<IReadOnlyList<Project>> LoadProjectsAsync(string solution)
         {
-            string[] text = await File.ReadAllLinesAsync(solution)
-                                      .ConfigureAwait(continueOnCapturedContext: false);
+            string[] text = await File.ReadAllLinesAsync(solution);
+
+            string basePath = Path.GetDirectoryName(solution)!;
 
             List<Project> projects = new List<Project>();
 
@@ -190,20 +189,22 @@ namespace FunFair.BuildCheck
 
                     Console.WriteLine($" * {displayName}");
 
-                    projects.Add(new Project(displayName: displayName, fileName: fileName));
+                    string fullPath = Path.Combine(path1: basePath, path2: fileName);
+
+                    projects.Add(new Project(displayName: displayName, fileName: fullPath));
                 }
             }
 
             return projects.ToArray();
         }
 
-        private static ISolutionCheck[] RegisteredSolutionChecks(IServiceProvider services)
+        private static IReadOnlyList<ISolutionCheck> RegisteredSolutionChecks(IServiceProvider services)
         {
             return services.GetServices<ISolutionCheck>()
                            .ToArray();
         }
 
-        private static IProjectCheck[] RegisteredProjectChecks(IServiceProvider services)
+        private static IReadOnlyList<IProjectCheck> RegisteredProjectChecks(IServiceProvider services)
         {
             return services.GetServices<IProjectCheck>()
                            .ToArray();

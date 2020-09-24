@@ -4,14 +4,22 @@ using Microsoft.Extensions.Logging;
 
 namespace FunFair.BuildCheck.ProjectChecks
 {
+    /// <summary>
+    ///     Checks that global analyzer packages are installed.
+    /// </summary>
     public abstract class MustHaveAnalyzerPackage : IProjectCheck
     {
         private const string PACKAGE_PRIVATE_ASSETS = @"All";
-        private readonly ILogger<ErrorPolicyWarningAsErrors> _logger;
+        private readonly ILogger _logger;
 
         private readonly string _packageId;
 
-        protected MustHaveAnalyzerPackage(string packageId, ILogger<ErrorPolicyWarningAsErrors> logger)
+        /// <summary>
+        ///     Constructor.
+        /// </summary>
+        /// <param name="packageId">The package that must be installed.</param>
+        /// <param name="logger">Logging.</param>
+        protected MustHaveAnalyzerPackage(string packageId, ILogger logger)
         {
             this._packageId = packageId ?? throw new ArgumentNullException(nameof(packageId));
             this._logger = logger ?? throw new ArgumentNullException(nameof(logger));

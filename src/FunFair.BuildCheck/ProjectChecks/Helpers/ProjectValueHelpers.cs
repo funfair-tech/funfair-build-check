@@ -5,9 +5,9 @@ using System.Linq;
 using System.Xml;
 using Microsoft.Extensions.Logging;
 
-namespace FunFair.BuildCheck.ProjectChecks
+namespace FunFair.BuildCheck.ProjectChecks.Helpers
 {
-    public static class ProjectValueHelpers
+    internal static class ProjectValueHelpers
     {
         private static readonly IReadOnlyList<string> PackagesForTestProjectDetection = new[] {"Xunit", "NSubstitute", "Microsoft.NET.Test.Sdk", "FunFair.Test.Common"};
 

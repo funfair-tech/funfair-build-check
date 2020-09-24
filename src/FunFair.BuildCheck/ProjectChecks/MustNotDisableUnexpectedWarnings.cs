@@ -1,12 +1,17 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Xml;
+using FunFair.BuildCheck.ProjectChecks.Helpers;
 using Microsoft.Extensions.Logging;
 
 namespace FunFair.BuildCheck.ProjectChecks
 {
-    // ReSharper disable once ClassNeverInstantiated.Global
+    /// <summary>
+    ///     Checks that only whitelisted warnings can be disabled.
+    /// </summary>
+    [SuppressMessage(category: "ReSharper", checkId: "ClassNeverInstantiated.Global", Justification = "Created by DI")]
     public sealed class MustNotDisableUnexpectedWarnings : IProjectCheck
     {
         private static readonly IReadOnlyList<string> AllowedWarnings = new[]
@@ -19,6 +24,10 @@ namespace FunFair.BuildCheck.ProjectChecks
 
         private readonly ILogger<ErrorPolicyWarningAsErrors> _logger;
 
+        /// <summary>
+        ///     Constructor.
+        /// </summary>
+        /// <param name="logger">Logging.</param>
         public MustNotDisableUnexpectedWarnings(ILogger<ErrorPolicyWarningAsErrors> logger)
         {
             this._logger = logger ?? throw new ArgumentNullException(nameof(logger));

@@ -2,15 +2,16 @@
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
+using System.Linq;
 using Microsoft.Extensions.Logging;
 
 namespace FunFair.BuildCheck.SolutionChecks
 {
     /// <summary>
-    ///     Checks to see if all projects in the solution exist.
+    ///     Checks to see if there are projects in the folder that aren't registered in the solution.
     /// </summary>
     [SuppressMessage(category: "ReSharper", checkId: "ClassNeverInstantiated.Global", Justification = "Created by DI")]
-    public sealed class AllProjectsExist : ISolutionCheck
+    public sealed class NoOrphanedProjectsExist : ISolutionCheck
     {
         private readonly ILogger<AllProjectsExist> _logger;
         private readonly IReadOnlyList<Project> _projects;
@@ -20,7 +21,7 @@ namespace FunFair.BuildCheck.SolutionChecks
         /// </summary>
         /// <param name="projects">The projects that are registered in the solution.</param>
         /// <param name="logger">Logging.</param>
-        public AllProjectsExist(IReadOnlyList<Project> projects, ILogger<AllProjectsExist> logger)
+        public NoOrphanedProjectsExist(IReadOnlyList<Project> projects, ILogger<AllProjectsExist> logger)
         {
             this._projects = projects ?? throw new ArgumentNullException(nameof(projects));
             this._logger = logger ?? throw new ArgumentNullException(nameof(logger));
@@ -29,15 +30,17 @@ namespace FunFair.BuildCheck.SolutionChecks
         /// <inheritdoc />
         public void Check(string solutionFileName)
         {
-            this._logger.LogInformation($"Checking Solution: {solutionFileName}");
+            string basePath = Path.GetDirectoryName(solutionFileName)!;
+            IReadOnlyList<string> projectFileNames = Directory.EnumerateFiles(path: basePath, searchPattern: "*.csproj", searchOption: SearchOption.AllDirectories)
+                                                              .OrderBy(x => x.ToLowerInvariant())
+                                                              .ToArray();
 
-            foreach (Project? project in this._projects)
+            foreach (string project in projectFileNames)
             {
-                bool exists = File.Exists(project.FileName);
-
-                if (!exists)
+                if (this._projects.All(x => x.FileName != project))
                 {
-                    this._logger.LogError($"Project {project.FileName} does not exist");
+                    string solutionRelative = Path.GetRelativePath(relativeTo: basePath, path: project)!;
+                    this._logger.LogError($"Project {solutionRelative} is not in solution, but in work folder");
                 }
             }
         }

@@ -5,16 +5,25 @@ using Microsoft.Extensions.Logging;
 
 namespace FunFair.BuildCheck.ProjectChecks
 {
+    /// <summary>
+    ///     Checks that the specified selection of packages are not referenced.
+    /// </summary>
     public abstract class MustNotReferencePackages : IProjectCheck
     {
-        private readonly ILogger<ErrorPolicyWarningAsErrors> _logger;
+        private readonly ILogger _logger;
         private readonly IReadOnlyList<string> _packageIds;
         private readonly string _reason;
 
-        protected MustNotReferencePackages(IReadOnlyList<string> packageIds, string reason, ILogger<ErrorPolicyWarningAsErrors> logger)
+        /// <summary>
+        ///     Constructor.
+        /// </summary>
+        /// <param name="packageIds">The package ids that shouldn't be referenced.</param>
+        /// <param name="reason">The reason they shouldn't be referenced.</param>
+        /// <param name="logger">Logging.</param>
+        protected MustNotReferencePackages(IReadOnlyList<string> packageIds, string reason, ILogger logger)
         {
-            this._packageIds = packageIds;
-            this._reason = reason;
+            this._packageIds = packageIds ?? throw new ArgumentNullException(nameof(packageIds));
+            this._reason = reason ?? throw new ArgumentNullException(nameof(reason));
             this._logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 

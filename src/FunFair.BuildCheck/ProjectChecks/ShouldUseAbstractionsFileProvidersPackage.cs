@@ -1,8 +1,12 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using System.Diagnostics.CodeAnalysis;
+using Microsoft.Extensions.Logging;
 
 namespace FunFair.BuildCheck.ProjectChecks
 {
-    // ReSharper disable once ClassNeverInstantiated.Global
+    /// <summary>
+    ///     Checks that the file providers abstractions package is used rather than the full version.
+    /// </summary>
+    [SuppressMessage(category: "ReSharper", checkId: "ClassNeverInstantiated.Global", Justification = "Created by DI")]
     public sealed class ShouldUseAbstractionsFileProvidersPackage : ShouldUseAbstractionsPackage
     {
         /// <summary>

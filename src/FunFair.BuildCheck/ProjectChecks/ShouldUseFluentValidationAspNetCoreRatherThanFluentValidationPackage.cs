@@ -1,8 +1,12 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using System.Diagnostics.CodeAnalysis;
+using Microsoft.Extensions.Logging;
 
 namespace FunFair.BuildCheck.ProjectChecks
 {
-    // ReSharper disable once ClassNeverInstantiated.Global
+    /// <summary>
+    ///     Checks that the correct version of FluentValidation is installed.
+    /// </summary>
+    [SuppressMessage(category: "ReSharper", checkId: "ClassNeverInstantiated.Global", Justification = "Created by DI")]
     public sealed class ShouldUseFluentValidationAspNetCoreRatherThanFluentValidationPackage : ShouldUseAbstractionsPackage
     {
         /// <summary>

@@ -1,15 +1,25 @@
 ﻿using System;
 using System.Xml;
+using FunFair.BuildCheck.ProjectChecks.Helpers;
 using Microsoft.Extensions.Logging;
 
 namespace FunFair.BuildCheck.ProjectChecks
 {
+    /// <summary>
+    ///     Checks to see if a non-'abstractions' package is used in a library rather than the slimmer, easier to update abstractions package.
+    /// </summary>
     public abstract class ShouldUseAbstractionsPackage : IProjectCheck
     {
         private readonly ILogger _logger;
         private readonly string _matchPackageId;
         private readonly string _usePackageId;
 
+        /// <summary>
+        ///     Constructor.
+        /// </summary>
+        /// <param name="matchPackageId">The non-abstractions package.</param>
+        /// <param name="usePackageId">The abstractions version of <paramref name="matchPackageId" />.</param>
+        /// <param name="logger">Logging.</param>
         protected ShouldUseAbstractionsPackage(string matchPackageId, string usePackageId, ILogger logger)
         {
             this._matchPackageId = matchPackageId ?? throw new ArgumentNullException(nameof(matchPackageId));

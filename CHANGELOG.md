@@ -7,6 +7,8 @@ Please ADD ALL Changes to the UNRELASED SECTION and not a specific release
 
 ## [Unreleased]
 ### Added
+- Check for missing projects in solution.
+- Check for extra projects that aren't in the solution.
 ### Fixed
 ### Changed
 - FF-1429 - Updated FunFair.CodeAnalysis to 1.12.0.445

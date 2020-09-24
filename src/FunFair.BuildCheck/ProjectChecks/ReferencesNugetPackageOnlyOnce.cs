@@ -1,16 +1,24 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Xml;
 using Microsoft.Extensions.Logging;
 
 namespace FunFair.BuildCheck.ProjectChecks
 {
-    // ReSharper disable once ClassNeverInstantiated.Global
+    /// <summary>
+    ///     Checks that a project only references a package once.
+    /// </summary>
+    [SuppressMessage(category: "ReSharper", checkId: "ClassNeverInstantiated.Global", Justification = "Created by DI")]
     public sealed class ReferencesNugetPackageOnlyOnce : IProjectCheck
     {
         private const string PACKAGE_PRIVATE_ASSETS = @"All";
         private readonly ILogger<ReferencesNugetPackageOnlyOnce> _logger;
 
+        /// <summary>
+        ///     Constructor.
+        /// </summary>
+        /// <param name="logger">Logging.</param>
         public ReferencesNugetPackageOnlyOnce(ILogger<ReferencesNugetPackageOnlyOnce> logger)
         {
             this._logger = logger ?? throw new ArgumentNullException(nameof(logger));

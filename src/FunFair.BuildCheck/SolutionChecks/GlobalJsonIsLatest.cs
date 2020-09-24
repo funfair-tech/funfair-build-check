@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Text.Json;
 using FunFair.BuildCheck.SolutionChecks.Models;
@@ -6,12 +7,19 @@ using Microsoft.Extensions.Logging;
 
 namespace FunFair.BuildCheck.SolutionChecks
 {
-    // ReSharper disable once ClassNeverInstantiated.Global
+    /// <summary>
+    ///     Checks to see if the global.json specifies the same version of the SDK as in the DOTNET_CORE_SDK_VERSION environment variable.
+    /// </summary>
+    [SuppressMessage(category: "Resharper", checkId: "ClassNeverInstantiated.Global", Justification = "Created by DI")]
     public sealed class GlobalJsonIsLatest : ISolutionCheck
     {
         private readonly string? _dotnetVersion;
         private readonly ILogger<GlobalJsonIsLatest> _logger;
 
+        /// <summary>
+        ///     Constructor.
+        /// </summary>
+        /// <param name="logger">Logging.</param>
         public GlobalJsonIsLatest(ILogger<GlobalJsonIsLatest> logger)
         {
             this._logger = logger ?? throw new ArgumentNullException(nameof(logger));

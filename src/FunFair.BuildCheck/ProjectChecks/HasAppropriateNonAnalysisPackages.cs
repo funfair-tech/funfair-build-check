@@ -4,13 +4,22 @@ using Microsoft.Extensions.Logging;
 
 namespace FunFair.BuildCheck.ProjectChecks
 {
+    /// <summary>
+    ///     Checks that appropriate packages (non-analysis) are enabled if the package that is being analyzed is installed.
+    /// </summary>
     public abstract class HasAppropriateNonAnalysisPackages : IProjectCheck
     {
         private readonly string _detectPackageId;
-        private readonly ILogger<NoPreReleaseNuGetPackages> _logger;
+        private readonly ILogger _logger;
         private readonly string _mustIncludePackageId;
 
-        protected HasAppropriateNonAnalysisPackages(string detectPackageId, string mustIncludePackageId, ILogger<NoPreReleaseNuGetPackages> logger)
+        /// <summary>
+        ///     Constructor.
+        /// </summary>
+        /// <param name="detectPackageId">The package id used for detection.</param>
+        /// <param name="mustIncludePackageId">The package id that must be included, if the <paramref name="detectPackageId" /> is installed.</param>
+        /// <param name="logger">Logging.</param>
+        protected HasAppropriateNonAnalysisPackages(string detectPackageId, string mustIncludePackageId, ILogger logger)
         {
             this._detectPackageId = detectPackageId ?? throw new ArgumentNullException(nameof(detectPackageId));
             this._mustIncludePackageId = mustIncludePackageId ?? throw new ArgumentNullException(nameof(mustIncludePackageId));

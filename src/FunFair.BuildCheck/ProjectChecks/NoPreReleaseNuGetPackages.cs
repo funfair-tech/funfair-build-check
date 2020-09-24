@@ -1,17 +1,26 @@
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Xml;
 using Microsoft.Extensions.Logging;
 using NuGet.Versioning;
 
 namespace FunFair.BuildCheck.ProjectChecks
 {
-    // ReSharper disable once ClassNeverInstantiated.Global
+    /// <summary>
+    ///     Checks that there are no pre-release packages referenced.
+    /// </summary>
+    [SuppressMessage(category: "ReSharper", checkId: "ClassNeverInstantiated.Global", Justification = "Created by DI")]
     public sealed class NoPreReleaseNuGetPackages : IProjectCheck
     {
         private const string PACKAGE_PRIVATE_ASSETS = @"All";
         private readonly ICheckConfiguration _configuration;
         private readonly ILogger<NoPreReleaseNuGetPackages> _logger;
 
+        /// <summary>
+        ///     Constructor.
+        /// </summary>
+        /// <param name="configuration">The configuration.</param>
+        /// <param name="logger">Logging.</param>
         public NoPreReleaseNuGetPackages(ICheckConfiguration configuration, ILogger<NoPreReleaseNuGetPackages> logger)
         {
             this._configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));

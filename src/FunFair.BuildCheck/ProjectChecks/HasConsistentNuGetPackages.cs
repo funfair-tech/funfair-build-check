@@ -1,18 +1,26 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Xml;
 using Microsoft.Extensions.Logging;
 using NuGet.Versioning;
 
 namespace FunFair.BuildCheck.ProjectChecks
 {
-    // ReSharper disable once ClassNeverInstantiated.Global
+    /// <summary>
+    ///     Checks that nuget packages are set to a consistent version across an entire solution.
+    /// </summary>
+    [SuppressMessage(category: "ReSharper", checkId: "ClassNeverInstantiated.Global", Justification = "Created by DI")]
     public sealed class HasConsistentNuGetPackages : IProjectCheck
     {
         private readonly ILogger<NoPreReleaseNuGetPackages> _logger;
 
         private readonly Dictionary<string, NuGetVersion> _packages;
 
+        /// <summary>
+        ///     Constructor.
+        /// </summary>
+        /// <param name="logger">Logging.</param>
         public HasConsistentNuGetPackages(ILogger<NoPreReleaseNuGetPackages> logger)
         {
             this._logger = logger ?? throw new ArgumentNullException(nameof(logger));

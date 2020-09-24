@@ -1,10 +1,14 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Xml;
 using Microsoft.Extensions.Logging;
 
 namespace FunFair.BuildCheck.ProjectChecks
 {
-    // ReSharper disable once ClassNeverInstantiated.Global
+    /// <summary>
+    ///     Checks that the FxCop analyzer is installed.
+    /// </summary>
+    [SuppressMessage(category: "ReSharper", checkId: "ClassNeverInstantiated.Global", Justification = "Created by DI")]
     public sealed class MustHaveFxCopAnalyzerPackage : IProjectCheck
     {
         private const string PACKAGE_ID = @"Microsoft.CodeAnalysis.FxCopAnalyzers";
@@ -15,6 +19,10 @@ namespace FunFair.BuildCheck.ProjectChecks
 
         private readonly ILogger<ErrorPolicyWarningAsErrors> _logger;
 
+        /// <summary>
+        ///     Constructor.
+        /// </summary>
+        /// <param name="logger">Logging.</param>
         public MustHaveFxCopAnalyzerPackage(ILogger<ErrorPolicyWarningAsErrors> logger)
         {
             this._logger = logger ?? throw new ArgumentNullException(nameof(logger));

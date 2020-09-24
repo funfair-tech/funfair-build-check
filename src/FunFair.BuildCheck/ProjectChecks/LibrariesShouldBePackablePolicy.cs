@@ -1,14 +1,23 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Xml;
+using FunFair.BuildCheck.ProjectChecks.Helpers;
 using Microsoft.Extensions.Logging;
 
 namespace FunFair.BuildCheck.ProjectChecks
 {
-    // ReSharper disable once ClassNeverInstantiated.Global
+    /// <summary>
+    ///     Checks that libraries are 'packable' except when they are test assemblies.
+    /// </summary>
+    [SuppressMessage(category: "ReSharper", checkId: "ClassNeverInstantiated.Global", Justification = "Created by DI")]
     public sealed class LibrariesShouldBePackablePolicy : IProjectCheck
     {
         private readonly ILogger<LibrariesShouldBePackablePolicy> _logger;
 
+        /// <summary>
+        ///     Constructor.
+        /// </summary>
+        /// <param name="logger">Logging.</param>
         public LibrariesShouldBePackablePolicy(ILogger<LibrariesShouldBePackablePolicy> logger)
         {
             this._logger = logger ?? throw new ArgumentNullException(nameof(logger));
