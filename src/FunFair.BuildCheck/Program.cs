@@ -87,7 +87,7 @@ namespace FunFair.BuildCheck
 
                 IDiagnosticLogger logging = services.GetService<IDiagnosticLogger>();
 
-                PerformChecks(services: services, solutionFileName: solutionFileName, logging: logging, baseFolder: baseFolder);
+                PerformChecks(services: services, solutionFileName: solutionFileName, logging: logging);
 
                 if (logging.IsErrored)
                 {
@@ -110,7 +110,7 @@ namespace FunFair.BuildCheck
             }
         }
 
-        private static void PerformChecks(IServiceProvider services, string solutionFileName, IDiagnosticLogger logging, string baseFolder)
+        private static void PerformChecks(IServiceProvider services, string solutionFileName, IDiagnosticLogger logging)
         {
             IReadOnlyList<ISolutionCheck> solutionChecks = RegisteredSolutionChecks(services);
             IReadOnlyList<IProjectCheck> projectChecks = RegisteredProjectChecks(services);
@@ -126,10 +126,8 @@ namespace FunFair.BuildCheck
             {
                 logging.LogInformation($"Checking Project: {project.DisplayName}:");
 
-                string projectPath = Path.Combine(path1: baseFolder, path2: project.FileName);
-
                 XmlDocument doc = new XmlDocument();
-                doc.Load(projectPath);
+                doc.Load(project.FileName);
 
                 foreach (IProjectCheck check in projectChecks)
                 {
