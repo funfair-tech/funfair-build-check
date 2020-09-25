@@ -13,7 +13,7 @@ namespace FunFair.BuildCheck.ProjectChecks
         ///     Constructor.
         /// </summary>
         /// <param name="logger">Logging.</param>
-        public UsingXUnitMustIncludeVisualStudioTestPlatform(ILogger<NoPreReleaseNuGetPackages> logger)
+        public UsingXUnitMustIncludeVisualStudioTestPlatform(ILogger<UsingXUnitMustIncludeVisualStudioTestPlatform> logger)
             : base(detectPackageId: @"xunit", mustIncludePackageId: @"Microsoft.NET.Test.Sdk", logger: logger)
         {
         }

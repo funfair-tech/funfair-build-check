@@ -13,7 +13,7 @@ namespace FunFair.BuildCheck.ProjectChecks
         ///     Constructor.
         /// </summary>
         /// <param name="logger">Logging.</param>
-        public MustHaveSonarAnalyzerPackage(ILogger<ErrorPolicyWarningAsErrors> logger)
+        public MustHaveSonarAnalyzerPackage(ILogger<MustHaveSonarAnalyzerPackage> logger)
             : base(packageId: @"SonarAnalyzer.CSharp", logger: logger)
         {
         }

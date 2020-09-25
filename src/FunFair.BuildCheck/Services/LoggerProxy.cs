@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using Microsoft.Extensions.Logging;
 
 namespace FunFair.BuildCheck.Services
@@ -14,8 +15,9 @@ namespace FunFair.BuildCheck.Services
         /// <summary>
         ///     Constructor.
         /// </summary>
-        /// <param name="logger"></param>
-        public LoggerProxy(ILogger logger)
+        /// <param name="logger">Logger.</param>
+        public LoggerProxy([SuppressMessage(category: "FunFair.CodeAnalysis", checkId: "FFS0024: Logger parameters should be ILogger<T>", Justification = "Not created through DI")]
+                           ILogger logger)
         {
             this._diagnosticLogger = logger ?? throw new ArgumentNullException(nameof(logger));
         }

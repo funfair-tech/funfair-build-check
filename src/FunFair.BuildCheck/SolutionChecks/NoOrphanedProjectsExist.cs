@@ -13,7 +13,7 @@ namespace FunFair.BuildCheck.SolutionChecks
     [SuppressMessage(category: "ReSharper", checkId: "ClassNeverInstantiated.Global", Justification = "Created by DI")]
     public sealed class NoOrphanedProjectsExist : ISolutionCheck
     {
-        private readonly ILogger<AllProjectsExist> _logger;
+        private readonly ILogger<NoOrphanedProjectsExist> _logger;
         private readonly IReadOnlyList<Project> _projects;
 
         /// <summary>
@@ -21,7 +21,7 @@ namespace FunFair.BuildCheck.SolutionChecks
         /// </summary>
         /// <param name="projects">The projects that are registered in the solution.</param>
         /// <param name="logger">Logging.</param>
-        public NoOrphanedProjectsExist(IReadOnlyList<Project> projects, ILogger<AllProjectsExist> logger)
+        public NoOrphanedProjectsExist(IReadOnlyList<Project> projects, ILogger<NoOrphanedProjectsExist> logger)
         {
             this._projects = projects ?? throw new ArgumentNullException(nameof(projects));
             this._logger = logger ?? throw new ArgumentNullException(nameof(logger));

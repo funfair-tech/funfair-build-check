@@ -13,7 +13,7 @@ namespace FunFair.BuildCheck.ProjectChecks
         ///     Constructor.
         /// </summary>
         /// <param name="logger">Logging.</param>
-        public MustHaveToStringWithoutOverrideAnalyzerPackage(ILogger<ErrorPolicyWarningAsErrors> logger)
+        public MustHaveToStringWithoutOverrideAnalyzerPackage(ILogger<MustHaveToStringWithoutOverrideAnalyzerPackage> logger)
             : base(packageId: @"ToStringWithoutOverrideAnalyzer", logger: logger)
         {
         }

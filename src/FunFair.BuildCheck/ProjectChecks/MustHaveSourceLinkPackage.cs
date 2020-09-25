@@ -15,13 +15,13 @@ namespace FunFair.BuildCheck.ProjectChecks
         private const string PACKAGE_ID = @"Microsoft.SourceLink.GitHub";
         private const string PACKAGE_PRIVATE_ASSETS = @"All";
 
-        private readonly ILogger<ErrorPolicyWarningAsErrors> _logger;
+        private readonly ILogger<MustHaveSourceLinkPackage> _logger;
 
         /// <summary>
         ///     Constructor.
         /// </summary>
         /// <param name="logger">Logging.</param>
-        public MustHaveSourceLinkPackage(ILogger<ErrorPolicyWarningAsErrors> logger)
+        public MustHaveSourceLinkPackage(ILogger<MustHaveSourceLinkPackage> logger)
         {
             this._logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }

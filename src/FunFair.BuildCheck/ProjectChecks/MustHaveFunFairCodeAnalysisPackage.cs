@@ -13,7 +13,7 @@ namespace FunFair.BuildCheck.ProjectChecks
         ///     Constructor.
         /// </summary>
         /// <param name="logger">Logging.</param>
-        public MustHaveFunFairCodeAnalysisPackage(ILogger<ErrorPolicyWarningAsErrors> logger)
+        public MustHaveFunFairCodeAnalysisPackage(ILogger<MustHaveFunFairCodeAnalysisPackage> logger)
             : base(packageId: @"FunFair.CodeAnalysis", logger: logger)
         {
         }

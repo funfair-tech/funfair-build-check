@@ -13,7 +13,7 @@ namespace FunFair.BuildCheck.ProjectChecks
         ///     Constructor.
         /// </summary>
         /// <param name="logger">Logging.</param>
-        public MustHaveAsyncAnalyzerPackage(ILogger<ErrorPolicyWarningAsErrors> logger)
+        public MustHaveAsyncAnalyzerPackage(ILogger<MustHaveAsyncAnalyzerPackage> logger)
             : base(packageId: @"AsyncFixer", logger: logger)
         {
         }

@@ -14,13 +14,13 @@ namespace FunFair.BuildCheck.SolutionChecks
     public sealed class GlobalJsonMustSpecifyRollforwardDisable : ISolutionCheck
     {
         private const string ROLL_FORWARD_POLICY = @"disable";
-        private readonly ILogger<GlobalJsonIsLatest> _logger;
+        private readonly ILogger<GlobalJsonMustSpecifyRollforwardDisable> _logger;
 
         /// <summary>
         ///     Constructor.
         /// </summary>
         /// <param name="logger">Logging.</param>
-        public GlobalJsonMustSpecifyRollforwardDisable(ILogger<GlobalJsonIsLatest> logger)
+        public GlobalJsonMustSpecifyRollforwardDisable(ILogger<GlobalJsonMustSpecifyRollforwardDisable> logger)
         {
             this._logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }

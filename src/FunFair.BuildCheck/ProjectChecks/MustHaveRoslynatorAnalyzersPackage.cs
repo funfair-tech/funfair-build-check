@@ -13,7 +13,7 @@ namespace FunFair.BuildCheck.ProjectChecks
         ///     Constructor.
         /// </summary>
         /// <param name="logger">Logging.</param>
-        public MustHaveRoslynatorAnalyzersPackage(ILogger<ErrorPolicyWarningAsErrors> logger)
+        public MustHaveRoslynatorAnalyzersPackage(ILogger<MustHaveRoslynatorAnalyzersPackage> logger)
             : base(packageId: @"Roslynator.Analyzers", logger: logger)
         {
         }

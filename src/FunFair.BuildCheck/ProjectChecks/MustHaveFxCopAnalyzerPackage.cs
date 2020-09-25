@@ -17,13 +17,13 @@ namespace FunFair.BuildCheck.ProjectChecks
 
         private const string RULESET_FILENAME = @"$(SolutionDir)\CodeAnalysis.ruleset";
 
-        private readonly ILogger<ErrorPolicyWarningAsErrors> _logger;
+        private readonly ILogger<MustHaveFxCopAnalyzerPackage> _logger;
 
         /// <summary>
         ///     Constructor.
         /// </summary>
         /// <param name="logger">Logging.</param>
-        public MustHaveFxCopAnalyzerPackage(ILogger<ErrorPolicyWarningAsErrors> logger)
+        public MustHaveFxCopAnalyzerPackage(ILogger<MustHaveFxCopAnalyzerPackage> logger)
         {
             this._logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }

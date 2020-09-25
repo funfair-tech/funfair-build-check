@@ -13,7 +13,7 @@ namespace FunFair.BuildCheck.ProjectChecks
         ///     Constructor.
         /// </summary>
         /// <param name="logger">Logging.</param>
-        public UsingXUnitMustIncludeAnalyzer(ILogger<NoPreReleaseNuGetPackages> logger)
+        public UsingXUnitMustIncludeAnalyzer(ILogger<UsingXUnitMustIncludeAnalyzer> logger)
             : base(detectPackageId: @"xunit", mustIncludePackageId: @"xunit.analyzers", logger: logger)
         {
         }
