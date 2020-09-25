@@ -22,7 +22,7 @@ namespace FunFair.BuildCheck
         {
             string? codeAnalysis = Environment.GetEnvironmentVariable(variable: @"IS_UNITTEST_BASE");
 
-            return !string.IsNullOrWhiteSpace(codeAnalysis) || StringComparer.InvariantCultureIgnoreCase.Equals(x: codeAnalysis, y: @"TRUE");
+            return !string.IsNullOrWhiteSpace(codeAnalysis) && StringComparer.InvariantCultureIgnoreCase.Equals(x: codeAnalysis, y: @"TRUE");
         }
     }
 }

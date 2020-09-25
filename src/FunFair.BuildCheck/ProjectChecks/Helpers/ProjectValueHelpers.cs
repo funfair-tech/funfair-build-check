@@ -9,7 +9,8 @@ namespace FunFair.BuildCheck.ProjectChecks.Helpers
 {
     internal static class ProjectValueHelpers
     {
-        private static readonly IReadOnlyList<string> PackagesForTestProjectDetection = new[] {"Xunit", "NSubstitute", "Microsoft.NET.Test.Sdk", "FunFair.Test.Common"};
+        private static readonly IReadOnlyList<string> PackagesForTestProjectDetection =
+            new[] {"xunit", "xunit.runner.visualstudio", "NSubstitute", "Microsoft.NET.Test.Sdk", "TeamCity.VSTest.TestAdapter", "FunFair.Test.Common"};
 
         public static bool IsTestProject(this XmlDocument project, string projectName, ILogger logger)
         {
@@ -110,20 +111,10 @@ namespace FunFair.BuildCheck.ProjectChecks.Helpers
 
         public static void CheckValue(string projectName, XmlDocument project, string nodePresence, Func<string, bool> isRequiredValue, string msg, ILogger logger)
         {
-            CheckValueCommon(projectName: projectName,
-                             project: project,
-                             nodePresence: nodePresence,
-                             isRequiredValue: isRequiredValue,
-                             requiredValueDisplayText: msg,
-                             logger: logger);
+            CheckValueCommon(projectName: projectName, project: project, nodePresence: nodePresence, isRequiredValue: isRequiredValue, requiredValueDisplayText: msg, logger: logger);
         }
 
-        private static void CheckValueCommon(string projectName,
-                                             XmlDocument project,
-                                             string nodePresence,
-                                             Func<string, bool> isRequiredValue,
-                                             string requiredValueDisplayText,
-                                             ILogger logger)
+        private static void CheckValueCommon(string projectName, XmlDocument project, string nodePresence, Func<string, bool> isRequiredValue, string requiredValueDisplayText, ILogger logger)
         {
             bool hasGlobalSetting = false;
             XmlNodeList nodes = project.SelectNodes("/Project/PropertyGroup[not(@Condition)]/" + nodePresence);
