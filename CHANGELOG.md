@@ -7,18 +7,22 @@ Please ADD ALL Changes to the UNRELASED SECTION and not a specific release
 
 ## [Unreleased]
 ### Added
-- Check for missing projects in solution.
-- Check for extra projects that aren't in the solution.
 ### Fixed
 ### Changed
-- FF-1429 - Updated FunFair.CodeAnalysis to 1.12.0.445
-- FF-1429 - Updated SonarAnalyzer.CSharp to 8.13.1.21947
 ### Removed
 ### Deployment Changes
 
 <!--
 Releases that have at least been deployed to staging, BUT NOT necessarily released to live.  Changes should be moved from [Unreleased] into here as they are merged into the appropriate release branch
 -->
+## [1.17.0] 2020-09-25
+### Added
+- Check for missing projects in solution.
+- Check for extra projects that aren't in the solution.
+### Changed
+- FF-1429 - Updated FunFair.CodeAnalysis to 1.12.0.445
+- FF-1429 - Updated SonarAnalyzer.CSharp to 8.13.1.21947
+
 ## [1.16.0] 2020-09-16
 ### Added
 - Checks that DocumentationFile is defined in a ways that it doesn't contain things that change on a per .net core version basis.
