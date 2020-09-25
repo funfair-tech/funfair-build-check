@@ -34,9 +34,7 @@ namespace FunFair.BuildCheck
                                                    .AddCommandLine(args: args,
                                                                    new Dictionary<string, string>
                                                                    {
-                                                                       {@"-Solution", @"solution"},
-                                                                       {@"-WarningAsErrors", @"WarningAsErrors"},
-                                                                       {@"-PreReleaseBuild", @"PreReleaseBuild"}
+                                                                       {@"-Solution", @"solution"}, {@"-WarningAsErrors", @"WarningAsErrors"}, {@"-PreReleaseBuild", @"PreReleaseBuild"}
                                                                    })
                                                    .Build();
 
@@ -165,6 +163,7 @@ namespace FunFair.BuildCheck
             string[] text = await File.ReadAllLinesAsync(solution);
 
             string basePath = Path.GetDirectoryName(solution)!;
+            Console.WriteLine($"Solution base path: {basePath}");
 
             List<Project> projects = new List<Project>();
 
@@ -189,9 +188,10 @@ namespace FunFair.BuildCheck
                     string fileName = match.Groups[groupname: @"FileName"]
                                            .Value;
 
-                    Console.WriteLine($" * {displayName}");
+                    Console.WriteLine($" * {displayName} = {fileName}");
 
                     string fullPath = Path.Combine(path1: basePath, path2: fileName);
+                    Console.WriteLine($"    - {fullPath}");
 
                     projects.Add(new Project(displayName: displayName, fileName: fullPath));
                 }
