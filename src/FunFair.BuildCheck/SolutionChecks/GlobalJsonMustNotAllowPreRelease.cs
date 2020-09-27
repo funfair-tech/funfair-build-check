@@ -15,13 +15,13 @@ namespace FunFair.BuildCheck.SolutionChecks
     {
         private const bool PRE_RELEASE_POLICY = false;
 
-        private readonly ILogger<GlobalJsonIsLatest> _logger;
+        private readonly ILogger<GlobalJsonMustNotAllowPreRelease> _logger;
 
         /// <summary>
         ///     Constructor.
         /// </summary>
         /// <param name="logger">Logging.</param>
-        public GlobalJsonMustNotAllowPreRelease(ILogger<GlobalJsonIsLatest> logger)
+        public GlobalJsonMustNotAllowPreRelease(ILogger<GlobalJsonMustNotAllowPreRelease> logger)
         {
             this._logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }

@@ -11,13 +11,13 @@ namespace FunFair.BuildCheck.ProjectChecks
     [SuppressMessage(category: "ReSharper", checkId: "ClassNeverInstantiated.Global", Justification = "Created by DI")]
     public sealed class DoesNotReferenceByDll : IProjectCheck
     {
-        private readonly ILogger<ErrorPolicyWarningAsErrors> _logger;
+        private readonly ILogger<DoesNotReferenceByDll> _logger;
 
         /// <summary>
         ///     Constructor.
         /// </summary>
         /// <param name="logger">Logging.</param>
-        public DoesNotReferenceByDll(ILogger<ErrorPolicyWarningAsErrors> logger)
+        public DoesNotReferenceByDll(ILogger<DoesNotReferenceByDll> logger)
         {
             this._logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }

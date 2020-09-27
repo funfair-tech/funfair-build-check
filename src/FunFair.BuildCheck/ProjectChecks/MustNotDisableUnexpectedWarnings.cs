@@ -22,13 +22,13 @@ namespace FunFair.BuildCheck.ProjectChecks
 
         private static readonly IReadOnlyList<string> AllowedTestProjectWarnings = Array.Empty<string>();
 
-        private readonly ILogger<ErrorPolicyWarningAsErrors> _logger;
+        private readonly ILogger<MustNotDisableUnexpectedWarnings> _logger;
 
         /// <summary>
         ///     Constructor.
         /// </summary>
         /// <param name="logger">Logging.</param>
-        public MustNotDisableUnexpectedWarnings(ILogger<ErrorPolicyWarningAsErrors> logger)
+        public MustNotDisableUnexpectedWarnings(ILogger<MustNotDisableUnexpectedWarnings> logger)
         {
             this._logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }

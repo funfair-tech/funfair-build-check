@@ -13,7 +13,7 @@ namespace FunFair.BuildCheck.ProjectChecks
         ///     Constructor.
         /// </summary>
         /// <param name="logger">Logging.</param>
-        public MustHaveThreadingAnalyzerPackage(ILogger<ErrorPolicyWarningAsErrors> logger)
+        public MustHaveThreadingAnalyzerPackage(ILogger<MustHaveThreadingAnalyzerPackage> logger)
             : base(packageId: @"Microsoft.VisualStudio.Threading.Analyzers", logger: logger)
         {
         }

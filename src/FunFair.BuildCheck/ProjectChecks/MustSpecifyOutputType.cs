@@ -12,13 +12,13 @@ namespace FunFair.BuildCheck.ProjectChecks
     [SuppressMessage(category: "ReSharper", checkId: "ClassNeverInstantiated.Global", Justification = "Created by DI")]
     public sealed class MustSpecifyOutputType : IProjectCheck
     {
-        private readonly ILogger<ErrorPolicyWarningAsErrors> _logger;
+        private readonly ILogger<MustSpecifyOutputType> _logger;
 
         /// <summary>
         ///     Constructor.
         /// </summary>
         /// <param name="logger">Logging.</param>
-        public MustSpecifyOutputType(ILogger<ErrorPolicyWarningAsErrors> logger)
+        public MustSpecifyOutputType(ILogger<MustSpecifyOutputType> logger)
         {
             this._logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
@@ -38,12 +38,7 @@ namespace FunFair.BuildCheck.ProjectChecks
                 return StringComparer.InvariantCultureIgnoreCase.Equals(x: value, y: "Exe") || StringComparer.InvariantCultureIgnoreCase.Equals(x: value, y: "Library");
             }
 
-            ProjectValueHelpers.CheckValue(projectName: projectName,
-                                           project: project,
-                                           nodePresence: @"OutputType",
-                                           isRequiredValue: IsRequiredValue,
-                                           msg: msg,
-                                           logger: this._logger);
+            ProjectValueHelpers.CheckValue(projectName: projectName, project: project, nodePresence: @"OutputType", isRequiredValue: IsRequiredValue, msg: msg, logger: this._logger);
         }
     }
 }

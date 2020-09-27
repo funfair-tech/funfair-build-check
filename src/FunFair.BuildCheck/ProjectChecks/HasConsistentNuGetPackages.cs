@@ -13,7 +13,7 @@ namespace FunFair.BuildCheck.ProjectChecks
     [SuppressMessage(category: "ReSharper", checkId: "ClassNeverInstantiated.Global", Justification = "Created by DI")]
     public sealed class HasConsistentNuGetPackages : IProjectCheck
     {
-        private readonly ILogger<NoPreReleaseNuGetPackages> _logger;
+        private readonly ILogger<HasConsistentNuGetPackages> _logger;
 
         private readonly Dictionary<string, NuGetVersion> _packages;
 
@@ -21,7 +21,7 @@ namespace FunFair.BuildCheck.ProjectChecks
         ///     Constructor.
         /// </summary>
         /// <param name="logger">Logging.</param>
-        public HasConsistentNuGetPackages(ILogger<NoPreReleaseNuGetPackages> logger)
+        public HasConsistentNuGetPackages(ILogger<HasConsistentNuGetPackages> logger)
         {
             this._logger = logger ?? throw new ArgumentNullException(nameof(logger));
 

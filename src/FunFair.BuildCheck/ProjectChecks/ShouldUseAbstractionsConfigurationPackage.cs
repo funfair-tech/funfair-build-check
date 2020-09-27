@@ -13,7 +13,7 @@ namespace FunFair.BuildCheck.ProjectChecks
         ///     Constructor.
         /// </summary>
         /// <param name="logger">Logging.</param>
-        public ShouldUseAbstractionsConfigurationPackage(ILogger<ShouldUseAbstractionsLoggingPackage> logger)
+        public ShouldUseAbstractionsConfigurationPackage(ILogger<ShouldUseAbstractionsConfigurationPackage> logger)
             : base(matchPackageId: @"Microsoft.Extensions.Configuration", usePackageId: @"Microsoft.Extensions.Configuration.Abstractions", logger: logger)
         {
         }

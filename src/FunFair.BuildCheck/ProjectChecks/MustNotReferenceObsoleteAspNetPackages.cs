@@ -97,7 +97,7 @@ namespace FunFair.BuildCheck.ProjectChecks
         ///     Constructor.
         /// </summary>
         /// <param name="logger">Logging.</param>
-        public MustNotReferenceObsoleteAspNetPackages(ILogger<ErrorPolicyWarningAsErrors> logger)
+        public MustNotReferenceObsoleteAspNetPackages(ILogger<MustNotReferenceObsoleteAspNetPackages> logger)
             : base(packageIds: PackageIds, reason: "Obsoleted with .net core 3.1", logger: logger)
         {
         }

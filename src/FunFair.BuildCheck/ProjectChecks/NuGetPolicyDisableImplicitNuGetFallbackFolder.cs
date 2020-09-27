@@ -12,13 +12,13 @@ namespace FunFair.BuildCheck.ProjectChecks
     [SuppressMessage(category: "ReSharper", checkId: "ClassNeverInstantiated.Global", Justification = "Created by DI")]
     public sealed class NuGetPolicyDisableImplicitNuGetFallbackFolder : IProjectCheck
     {
-        private readonly ILogger<ErrorPolicyWarningAsErrors> _logger;
+        private readonly ILogger<NuGetPolicyDisableImplicitNuGetFallbackFolder> _logger;
 
         /// <summary>
         ///     Constructor.
         /// </summary>
         /// <param name="logger">Logging.</param>
-        public NuGetPolicyDisableImplicitNuGetFallbackFolder(ILogger<ErrorPolicyWarningAsErrors> logger)
+        public NuGetPolicyDisableImplicitNuGetFallbackFolder(ILogger<NuGetPolicyDisableImplicitNuGetFallbackFolder> logger)
         {
             this._logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
@@ -26,11 +26,7 @@ namespace FunFair.BuildCheck.ProjectChecks
         /// <inheritdoc />
         public void Check(string projectName, XmlDocument project)
         {
-            ProjectValueHelpers.CheckValue(projectName: projectName,
-                                           project: project,
-                                           nodePresence: @"DisableImplicitNuGetFallbackFolder",
-                                           requiredValue: "true",
-                                           logger: this._logger);
+            ProjectValueHelpers.CheckValue(projectName: projectName, project: project, nodePresence: @"DisableImplicitNuGetFallbackFolder", requiredValue: "true", logger: this._logger);
         }
     }
 }

@@ -14,13 +14,13 @@ namespace FunFair.BuildCheck.ProjectChecks
     {
         private const string EXPECTED = @"bin\$(Configuration)\$(TargetFramework)\$(MSBuildProjectName).xml";
 
-        private readonly ILogger<AnalysisLevelPolicyUseLatestVersion> _logger;
+        private readonly ILogger<DocumentationFilePolicy> _logger;
 
         /// <summary>
         ///     Constructor.
         /// </summary>
         /// <param name="logger">Logging.</param>
-        public DocumentationFilePolicy(ILogger<AnalysisLevelPolicyUseLatestVersion> logger)
+        public DocumentationFilePolicy(ILogger<DocumentationFilePolicy> logger)
         {
             this._logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }

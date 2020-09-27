@@ -12,13 +12,13 @@ namespace FunFair.BuildCheck.ProjectChecks
     [SuppressMessage(category: "ReSharper", checkId: "ClassNeverInstantiated.Global", Justification = "Created by DI")]
     public sealed class MustUseOpenApiAnalyzers : IProjectCheck
     {
-        private readonly ILogger<ErrorPolicyWarningAsErrors> _logger;
+        private readonly ILogger<MustUseOpenApiAnalyzers> _logger;
 
         /// <summary>
         ///     Constructor.
         /// </summary>
         /// <param name="logger">Logging.</param>
-        public MustUseOpenApiAnalyzers(ILogger<ErrorPolicyWarningAsErrors> logger)
+        public MustUseOpenApiAnalyzers(ILogger<MustUseOpenApiAnalyzers> logger)
         {
             this._logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
