@@ -2,8 +2,8 @@
 
 Build checking tool
 
-## Current Version
+## Changelog
 
-0.2.1
+View [changelog](CHANGELOG.md)
 
-
+[CHANGELOG]: ./CHANGELOG.md
