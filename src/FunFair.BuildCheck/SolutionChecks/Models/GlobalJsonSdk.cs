@@ -1,4 +1,4 @@
-﻿using System.Diagnostics.CodeAnalysis;
+using System.Diagnostics.CodeAnalysis;
 
 namespace FunFair.BuildCheck.SolutionChecks.Models
 {
@@ -6,13 +6,13 @@ namespace FunFair.BuildCheck.SolutionChecks.Models
     [SuppressMessage(category: "Microsoft.Performance", checkId: "CA1812:AvoidUninstantiatedInternalClasses", Justification = "Created through deserialization")]
     internal sealed class GlobalJsonSdk
     {
-        // ReSharper disable once UnusedAutoPropertyAccessor.Global
+        [SuppressMessage(category: "ReSharper", checkId: "UnusedAutoPropertyAccessor.Global", Justification = "TODO: Review")]
         public string? Version { get; set; }
 
-        // ReSharper disable once UnusedAutoPropertyAccessor.Global
+        [SuppressMessage(category: "ReSharper", checkId: "UnusedAutoPropertyAccessor.Global", Justification = "TODO: Review")]
         public string? RollForward { get; set; }
 
-        // ReSharper disable once UnusedAutoPropertyAccessor.Global
+        [SuppressMessage(category: "ReSharper", checkId: "UnusedAutoPropertyAccessor.Global", Justification = "TODO: Review")]
         public bool? AllowPrerelease { get; set; }
     }
 }
