@@ -46,6 +46,7 @@ namespace FunFair.BuildCheck
             AddProjectCheck<CodeAnalysisTreatWarningsAsErrorsPolicy>(services);
             AddProjectCheck<EnforceCodeStyleInBuildPolicy>(services);
             AddProjectCheck<LibrariesShouldBePackablePolicy>(services);
+            AddProjectCheck<DoesNotUseDotNetCliToolReference>(services);
 
             if (!Classifications.IsUnitTestBase())
             {

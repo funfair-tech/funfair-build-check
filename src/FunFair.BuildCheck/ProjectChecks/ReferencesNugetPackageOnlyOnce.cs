@@ -58,8 +58,7 @@ namespace FunFair.BuildCheck.ProjectChecks
                     }
                 }
 
-                if (!string.IsNullOrEmpty(privateAssets) &&
-                    string.Compare(strA: privateAssets, strB: PACKAGE_PRIVATE_ASSETS, comparisonType: StringComparison.OrdinalIgnoreCase) == 0)
+                if (!string.IsNullOrEmpty(privateAssets) && StringComparer.OrdinalIgnoreCase.Equals(x: privateAssets, y: PACKAGE_PRIVATE_ASSETS))
                 {
                     continue;
                 }
