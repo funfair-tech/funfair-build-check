@@ -18,6 +18,7 @@ namespace FunFair.BuildCheck
 
         public static void SetupProjectChecks(IServiceCollection services)
         {
+            AddProjectCheck<ReferencedProjectsMustExist>(services);
             AddProjectCheck<MustSpecifyOutputType>(services);
             AddProjectCheck<NoPreReleaseNuGetPackages>(services);
             AddProjectCheck<ErrorPolicyWarningAsErrors>(services);
@@ -47,6 +48,7 @@ namespace FunFair.BuildCheck
             AddProjectCheck<EnforceCodeStyleInBuildPolicy>(services);
             AddProjectCheck<LibrariesShouldBePackablePolicy>(services);
             AddProjectCheck<DoesNotUseDotNetCliToolReference>(services);
+            AddProjectCheck<LibrariesShouldNotDependOnExecutables>(services);
 
             if (!Classifications.IsUnitTestBase())
             {

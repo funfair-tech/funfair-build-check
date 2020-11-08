@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using System.Xml;
 using Microsoft.Extensions.Logging;
 
@@ -23,17 +24,12 @@ namespace FunFair.BuildCheck.ProjectChecks
         }
 
         /// <inheritdoc />
-        public void Check(string projectName, XmlDocument project)
+        public void Check(string projectName, string projectFolder, XmlDocument project)
         {
             XmlNodeList references = project.SelectNodes(xpath: "/Project/ItemGroup/Reference");
 
-            foreach (XmlElement? reference in references)
+            foreach (XmlElement reference in references.OfType<XmlElement>())
             {
-                if (reference == null)
-                {
-                    continue;
-                }
-
                 string assembly = reference.GetAttribute(name: "Include");
                 this._logger.LogError($"{projectName}: References {assembly} directly not using NuGet or a project reference.");
             }

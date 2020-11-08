@@ -7,6 +7,8 @@ Please ADD ALL Changes to the UNRELASED SECTION and not a specific release
 
 ## [Unreleased]
 ### Added
+- Check that project exists when using project references.
+- Check that a library does not depend on an executable.
 ### Fixed
 ### Changed
 - FF-1429 - Updated Microsoft.VisualStudio.Threading.Analyzers to 16.8.55

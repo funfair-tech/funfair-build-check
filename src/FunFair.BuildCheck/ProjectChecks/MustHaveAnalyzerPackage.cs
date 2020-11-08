@@ -26,7 +26,7 @@ namespace FunFair.BuildCheck.ProjectChecks
         }
 
         /// <inheritdoc />
-        public void Check(string projectName, XmlDocument project)
+        public void Check(string projectName, string projectFolder, XmlDocument project)
         {
             bool packageExists = CheckReference(packageId: this._packageId, project: project);
 

@@ -26,7 +26,7 @@ namespace FunFair.BuildCheck.ProjectChecks
         }
 
         /// <inheritdoc />
-        public void Check(string projectName, XmlDocument project)
+        public void Check(string projectName, string projectFolder, XmlDocument project)
         {
             bool testProject = project.IsTestProject(projectName: projectName, logger: this._logger);
 

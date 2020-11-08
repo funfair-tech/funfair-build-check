@@ -11,7 +11,8 @@ namespace FunFair.BuildCheck
         ///     Checks the project for issues.
         /// </summary>
         /// <param name="projectName">The project to check.</param>
+        /// <param name="projectFolder">The folder the project file is found in.</param>
         /// <param name="project">the loaded XML dom of the project file.</param>
-        void Check(string projectName, XmlDocument project);
+        void Check(string projectName, string projectFolder, XmlDocument project);
     }
 }

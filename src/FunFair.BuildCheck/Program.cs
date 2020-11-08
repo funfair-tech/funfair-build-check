@@ -34,9 +34,7 @@ namespace FunFair.BuildCheck
                                                    .AddCommandLine(args: args,
                                                                    new Dictionary<string, string>
                                                                    {
-                                                                       {@"-Solution", @"solution"},
-                                                                       {@"-WarningAsErrors", @"WarningAsErrors"},
-                                                                       {@"-PreReleaseBuild", @"PreReleaseBuild"}
+                                                                       {@"-Solution", @"solution"}, {@"-WarningAsErrors", @"WarningAsErrors"}, {@"-PreReleaseBuild", @"PreReleaseBuild"}
                                                                    })
                                                    .Build();
 
@@ -114,6 +112,7 @@ namespace FunFair.BuildCheck
 
         private static void PerformChecks(IServiceProvider services, string solutionFileName, IDiagnosticLogger logging)
         {
+            IProjectLoader projectLoader = services.GetRequiredService<IProjectLoader>();
             IReadOnlyList<ISolutionCheck> solutionChecks = RegisteredSolutionChecks(services);
             IReadOnlyList<IProjectCheck> projectChecks = RegisteredProjectChecks(services);
 
@@ -128,12 +127,12 @@ namespace FunFair.BuildCheck
             {
                 logging.LogInformation($"Checking Project: {project.DisplayName}:");
 
-                XmlDocument doc = new XmlDocument();
-                doc.Load(project.FileName);
+                XmlDocument doc = projectLoader.Load(project.FileName);
 
                 foreach (IProjectCheck check in projectChecks)
                 {
-                    check.Check(projectName: project.DisplayName, project: doc);
+                    string projectFolder = Path.GetDirectoryName(project.FileName)!;
+                    check.Check(projectName: project.DisplayName, projectFolder: projectFolder, project: doc);
                 }
             }
         }
@@ -147,6 +146,7 @@ namespace FunFair.BuildCheck
             services.AddSingleton<IDiagnosticLogger>(logger);
             services.AddSingleton(typeof(ILogger<>), typeof(LoggerProxy<>));
             services.AddSingleton(projects);
+            services.AddSingleton<IProjectLoader, ProjectLoader>();
 
             BuildCheck.Setup.SetupSolutionChecks(services);
             BuildCheck.Setup.SetupProjectChecks(services);
