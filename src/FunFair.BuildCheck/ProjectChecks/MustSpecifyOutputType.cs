@@ -38,7 +38,12 @@ namespace FunFair.BuildCheck.ProjectChecks
                 return StringComparer.InvariantCultureIgnoreCase.Equals(x: value, y: "Exe") || StringComparer.InvariantCultureIgnoreCase.Equals(x: value, y: "Library");
             }
 
-            ProjectValueHelpers.CheckValue(projectName: projectName, project: project, nodePresence: @"OutputType", isRequiredValue: IsRequiredValue, msg: msg, logger: this._logger);
+            ProjectValueHelpers.CheckValue(projectName: projectName,
+                                           project: project,
+                                           nodePresence: @"OutputType",
+                                           isRequiredValue: IsRequiredValue,
+                                           msg: msg,
+                                           logger: this._logger);
         }
     }
 }
