@@ -26,7 +26,6 @@ namespace FunFair.BuildCheck
             AddProjectCheck<NuGetPolicyDisableImplicitNuGetFallbackFolder>(services);
             AddProjectCheck<DoesNotReferenceByDll>(services);
             AddProjectCheck<MustHaveSourceLinkPackage>(services);
-            AddProjectCheck<MustHaveFxCopAnalyzerPackage>(services);
             AddProjectCheck<HasConsistentNuGetPackages>(services);
             AddProjectCheck<MustEnableStrictMode>(services);
             AddProjectCheck<UsingNSubstituteMustIncludeAnalyzer>(services);
