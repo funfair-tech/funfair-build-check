@@ -25,6 +25,19 @@ Please ADD ALL Changes to the UNRELASED SECTION and not a specific release
 Releases that have at least been deployed to staging, BUT NOT necessarily released to live.  Changes should be moved from [Unreleased] into here as they are merged into the appropriate release branch
 -->
 
+## [1.19.0] 2020-11-10
+### Added
+- Check that project exists when using project references.
+- Check that a library does not depend on an executable.
+- Check that Microsoft.CodeAnalysis.FxCopAnalyzers is not enabled for .net 5.0 targets
+### Changed
+- FF-1429 - Updated Microsoft.VisualStudio.Threading.Analyzers to 16.8.55
+- FF-1429 - Updated FunFair.CodeAnalysis to 1.15.0.542
+- FF-1429 - Updated Microsoft.CodeAnalysis.FxCopAnalyzers to 3.3.1
+- FF-1429 - Updated Microsoft.VisualStudio.Threading.Analyzers to 16.8.51
+- FF-1429 - Updated Microsoft.VisualStudio.Threading.Analyzers to 16.8.50
+- FF-1429 - Updated FunFair.CodeAnalysis to 1.15.0.518
+
 ## [1.18.0] 2020-10-14
 ### Changed
 - FF-1429 - Updated SonarAnalyzer.CSharp to 8.14.0.22654
