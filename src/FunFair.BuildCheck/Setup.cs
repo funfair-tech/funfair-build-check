@@ -67,14 +67,16 @@ namespace FunFair.BuildCheck
             AddProjectCheck<ShouldUseAbstractionsLoggingPackage>(services);
             AddProjectCheck<ShouldUseFluentValidationAspNetCoreRatherThanFluentValidationPackage>(services);
 
-#if DOTNET_VERSION_SPECIFIC_TESTS
             string? dotnetVersion = Environment.GetEnvironmentVariable(variable: @"DOTNET_CORE_SDK_VERSION");
 
-            if (!string.IsNullOrWhiteSpace(dotnetVersion) && new Version(dotnetVersion) > new Version(major: 3, minor: 1, build: 101))
+            if (!string.IsNullOrWhiteSpace(dotnetVersion) && new Version(dotnetVersion) >= new Version(major: 5, minor: 0, build: 100))
             {
-                AddProjectCheck<MustHaveThreadingAnalyzerPackage>(services);
+                AddProjectCheck<MustNotHaveFxCopAnalyzerPackage>(services);
             }
-#endif
+            else
+            {
+                AddProjectCheck<MustHaveFxCopAnalyzerPackage>(services);
+            }
 
             if (Classifications.IsNullableGloballyEnforced())
             {
