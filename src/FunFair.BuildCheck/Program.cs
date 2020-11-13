@@ -34,9 +34,7 @@ namespace FunFair.BuildCheck
                                                    .AddCommandLine(args: args,
                                                                    new Dictionary<string, string>
                                                                    {
-                                                                       {@"-Solution", @"solution"},
-                                                                       {@"-WarningAsErrors", @"WarningAsErrors"},
-                                                                       {@"-PreReleaseBuild", @"PreReleaseBuild"}
+                                                                       {@"-Solution", @"solution"}, {@"-WarningAsErrors", @"WarningAsErrors"}, {@"-PreReleaseBuild", @"PreReleaseBuild"}
                                                                    })
                                                    .Build();
 
@@ -87,7 +85,7 @@ namespace FunFair.BuildCheck
                     return ERROR;
                 }
 
-                IDiagnosticLogger logging = services.GetService<IDiagnosticLogger>();
+                IDiagnosticLogger logging = services.GetRequiredService<IDiagnosticLogger>();
 
                 PerformChecks(services: services, solutionFileName: solutionFileName, logging: logging);
 
