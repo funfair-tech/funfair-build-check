@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using System.Xml;
 using Microsoft.Extensions.Logging;
 using NuGet.Versioning;
@@ -33,13 +34,8 @@ namespace FunFair.BuildCheck.ProjectChecks
         {
             XmlNodeList nodes = project.SelectNodes(xpath: "/Project/ItemGroup/PackageReference");
 
-            foreach (XmlElement? reference in nodes)
+            foreach (XmlElement reference in nodes.OfType<XmlElement>())
             {
-                if (reference == null)
-                {
-                    continue;
-                }
-
                 string packageName = reference.GetAttribute(name: @"Include");
 
                 if (string.IsNullOrWhiteSpace(packageName))

@@ -16,13 +16,8 @@ namespace FunFair.BuildCheck.ProjectChecks.Helpers
         {
             XmlNodeList nodes = project.SelectNodes(xpath: "/Project/ItemGroup/PackageReference");
 
-            foreach (XmlElement? reference in nodes)
+            foreach (XmlElement reference in nodes.OfType<XmlElement>())
             {
-                if (reference == null)
-                {
-                    continue;
-                }
-
                 string packageName = reference.GetAttribute(name: @"Include");
 
                 if (string.IsNullOrWhiteSpace(packageName))
@@ -46,13 +41,8 @@ namespace FunFair.BuildCheck.ProjectChecks.Helpers
             bool hasGlobalSetting = false;
             XmlNodeList nodes = project.SelectNodes("/Project/PropertyGroup[not(@Condition)]/" + nodePresence);
 
-            foreach (XmlElement? item in nodes)
+            foreach (XmlElement item in nodes.OfType<XmlElement>())
             {
-                if (item == null)
-                {
-                    continue;
-                }
-
                 XmlElement propertyGroup = (XmlElement) item.ParentNode;
                 string condition = propertyGroup.GetAttribute(name: "Condition");
 
@@ -64,13 +54,8 @@ namespace FunFair.BuildCheck.ProjectChecks.Helpers
 
             XmlNodeList configurationGroups = project.SelectNodes(xpath: "/Project/PropertyGroup[@Condition]");
 
-            foreach (XmlElement? propertyGroup in configurationGroups)
+            foreach (XmlElement propertyGroup in nodes.OfType<XmlElement>())
             {
-                if (propertyGroup == null)
-                {
-                    continue;
-                }
-
                 XmlNode? node = propertyGroup.SelectSingleNode(nodePresence);
 
                 if (node == null)
@@ -111,31 +96,16 @@ namespace FunFair.BuildCheck.ProjectChecks.Helpers
 
         public static void CheckValue(string projectName, XmlDocument project, string nodePresence, Func<string, bool> isRequiredValue, string msg, ILogger logger)
         {
-            CheckValueCommon(projectName: projectName,
-                             project: project,
-                             nodePresence: nodePresence,
-                             isRequiredValue: isRequiredValue,
-                             requiredValueDisplayText: msg,
-                             logger: logger);
+            CheckValueCommon(projectName: projectName, project: project, nodePresence: nodePresence, isRequiredValue: isRequiredValue, requiredValueDisplayText: msg, logger: logger);
         }
 
-        private static void CheckValueCommon(string projectName,
-                                             XmlDocument project,
-                                             string nodePresence,
-                                             Func<string, bool> isRequiredValue,
-                                             string requiredValueDisplayText,
-                                             ILogger logger)
+        private static void CheckValueCommon(string projectName, XmlDocument project, string nodePresence, Func<string, bool> isRequiredValue, string requiredValueDisplayText, ILogger logger)
         {
             bool hasGlobalSetting = false;
             XmlNodeList nodes = project.SelectNodes("/Project/PropertyGroup[not(@Condition)]/" + nodePresence);
 
-            foreach (XmlElement? item in nodes)
+            foreach (XmlElement item in nodes.OfType<XmlElement>())
             {
-                if (item == null)
-                {
-                    continue;
-                }
-
                 XmlElement propertyGroup = (XmlElement) item.ParentNode;
                 string condition = propertyGroup.GetAttribute(name: "Condition");
 
@@ -152,13 +122,8 @@ namespace FunFair.BuildCheck.ProjectChecks.Helpers
 
             XmlNodeList configurationGroups = project.SelectNodes(xpath: "/Project/PropertyGroup[@Condition]");
 
-            foreach (XmlElement? propertyGroup in configurationGroups)
+            foreach (XmlElement propertyGroup in nodes.OfType<XmlElement>())
             {
-                if (propertyGroup == null)
-                {
-                    continue;
-                }
-
                 XmlNode? node = propertyGroup.SelectSingleNode(nodePresence);
 
                 if (node == null)

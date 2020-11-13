@@ -43,13 +43,8 @@ namespace FunFair.BuildCheck.ProjectChecks
             const string nodePresence = @"NoWarn";
             XmlNodeList nodes = project.SelectNodes("/Project/PropertyGroup[not(@Condition)]/" + nodePresence);
 
-            foreach (XmlElement? item in nodes)
+            foreach (XmlElement item in nodes.OfType<XmlElement>())
             {
-                if (item == null)
-                {
-                    continue;
-                }
-
                 XmlElement propertyGroup = (XmlElement) item.ParentNode;
                 string condition = propertyGroup.GetAttribute(name: "Condition");
 

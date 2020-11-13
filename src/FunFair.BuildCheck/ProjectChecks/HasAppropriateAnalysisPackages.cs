@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Xml;
 using Microsoft.Extensions.Logging;
 
@@ -36,13 +37,8 @@ namespace FunFair.BuildCheck.ProjectChecks
             bool foundSourcePackage = false;
             bool foundAnalyzerPackage = false;
 
-            foreach (XmlElement? reference in nodes)
+            foreach (XmlElement reference in nodes.OfType<XmlElement>())
             {
-                if (reference == null)
-                {
-                    continue;
-                }
-
                 string packageName = reference.GetAttribute(name: @"Include");
 
                 if (string.IsNullOrWhiteSpace(packageName))

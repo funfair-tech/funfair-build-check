@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Xml;
 using FunFair.BuildCheck.ProjectChecks.Helpers;
 using Microsoft.Extensions.Logging;
@@ -48,13 +49,8 @@ namespace FunFair.BuildCheck.ProjectChecks
 
             XmlNodeList? referenceNodes = project.SelectNodes("/Project/ItemGroup/PackageReference");
 
-            foreach (XmlElement? referenceNode in referenceNodes)
+            foreach (XmlElement referenceNode in referenceNodes.OfType<XmlElement>())
             {
-                if (referenceNode == null)
-                {
-                    continue;
-                }
-
                 string packageId = referenceNode.GetAttribute(@"Include");
 
                 if (StringComparer.InvariantCultureIgnoreCase.Equals(x: packageId, y: this._matchPackageId))
