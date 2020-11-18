@@ -41,59 +41,69 @@ namespace FunFair.BuildCheck.ProjectChecks
             IReadOnlyList<string> allowedWarnings = isTestProject ? AllowedTestProjectWarnings : AllowedWarnings;
 
             const string nodePresence = @"NoWarn";
-            XmlNodeList nodes = project.SelectNodes("/Project/PropertyGroup[not(@Condition)]/" + nodePresence);
+            XmlNodeList? nodes = project.SelectNodes("/Project/PropertyGroup[not(@Condition)]/" + nodePresence);
 
-            foreach (XmlElement item in nodes.OfType<XmlElement>())
+            if (nodes != null)
             {
-                XmlElement propertyGroup = (XmlElement) item.ParentNode;
-                string condition = propertyGroup.GetAttribute(name: "Condition");
-
-                if (string.IsNullOrWhiteSpace(condition))
+                foreach (XmlElement item in nodes.OfType<XmlElement>())
                 {
-                    string value = GetTextValue(item);
+                    XmlElement? propertyGroup = item.ParentNode as XmlElement;
 
-                    if (!string.IsNullOrWhiteSpace(value))
+                    if (propertyGroup != null)
                     {
-                        string[] warnings = ExtractWarnings(value);
+                        string condition = propertyGroup.GetAttribute(name: "Condition");
 
-                        foreach (string warning in warnings)
+                        if (string.IsNullOrWhiteSpace(condition))
                         {
-                            if (!allowedWarnings.Contains(warning))
+                            string value = GetTextValue(item);
+
+                            if (!string.IsNullOrWhiteSpace(value))
                             {
-                                this._logger.LogError($"{projectName}: Global Configuration hides warning {warning}.");
+                                string[] warnings = ExtractWarnings(value);
+
+                                foreach (string warning in warnings)
+                                {
+                                    if (!allowedWarnings.Contains(warning))
+                                    {
+                                        this._logger.LogError($"{projectName}: Global Configuration hides warning {warning}.");
+                                    }
+                                }
                             }
                         }
                     }
                 }
             }
 
-            XmlNodeList configurationGroups = project.SelectNodes(xpath: "/Project/PropertyGroup[@Condition]");
+            XmlNodeList? configurationGroups = project.SelectNodes(xpath: "/Project/PropertyGroup[@Condition]");
 
-            foreach (XmlElement propertyGroup in configurationGroups.OfType<XmlElement>())
+            if (configurationGroups != null)
             {
-                XmlNode? node = propertyGroup.SelectSingleNode(nodePresence);
-
-                if (node != null)
+                foreach (XmlElement propertyGroup in configurationGroups.OfType<XmlElement>())
                 {
-                    string value = GetTextValue(node);
+                    XmlNode? node = propertyGroup.SelectSingleNode(nodePresence);
 
-                    if (!string.IsNullOrWhiteSpace(value))
+                    if (node != null)
                     {
-                        string configuration = propertyGroup.GetAttribute(name: "Condition");
+                        string value = GetTextValue(node);
 
-                        string[] warnings = ExtractWarnings(value);
-
-                        foreach (string warning in warnings)
+                        if (!string.IsNullOrWhiteSpace(value))
                         {
-                            if (warning == "$(NoWarn)")
-                            {
-                                // skip references to global configs
-                                continue;
-                            }
+                            string configuration = propertyGroup.GetAttribute(name: "Condition");
 
-                            if (!allowedWarnings.Contains(warning))
+                            string[] warnings = ExtractWarnings(value);
+
+                            foreach (string warning in warnings)
                             {
-                                this._logger.LogError($"{projectName}: Configuration {configuration} hides warning {warning}.");
+                                if (warning == "$(NoWarn)")
+                                {
+                                    // skip references to global configs
+                                    continue;
+                                }
+
+                                if (!allowedWarnings.Contains(warning))
+                                {
+                                    this._logger.LogError($"{projectName}: Configuration {configuration} hides warning {warning}.");
+                                }
                             }
                         }
                     }
@@ -114,7 +124,7 @@ namespace FunFair.BuildCheck.ProjectChecks
 
         private static string GetTextValue(XmlNode node)
         {
-            return node.InnerText ?? string.Empty;
+            return node.InnerText;
         }
     }
 }

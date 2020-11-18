@@ -10,6 +10,7 @@ Please ADD ALL Changes to the UNRELASED SECTION and not a specific release
 - Check that project exists when using project references.
 - Check that a library does not depend on an executable.
 - Check that Microsoft.CodeAnalysis.FxCopAnalyzers is not enabled for .net 5.0 targets
+- Check that Microsoft.Extensions.Hosting is referenced as an abstractions package rather than a full package
 ### Fixed
 ### Changed
 - FF-1429 - Updated Microsoft.Extensions to 5.0.0
