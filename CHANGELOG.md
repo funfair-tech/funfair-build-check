@@ -7,11 +7,20 @@ Please ADD ALL Changes to the UNRELASED SECTION and not a specific release
 
 ## [Unreleased]
 ### Added
+### Fixed
+### Changed
+### Removed
+### Deployment Changes
+
+<!--
+Releases that have at least been deployed to staging, BUT NOT necessarily released to live.  Changes should be moved from [Unreleased] into here as they are merged into the appropriate release branch
+-->
+## [2.0.0] 2020-11-20
+### Added
 - Check that project exists when using project references.
 - Check that a library does not depend on an executable.
 - Check that Microsoft.CodeAnalysis.FxCopAnalyzers is not enabled for .net 5.0 targets
 - Check that Microsoft.Extensions.Hosting is referenced as an abstractions package rather than a full package
-### Fixed
 ### Changed
 - FF-1429 - Updated Microsoft.Extensions to 5.0.0
 - FF-1429 - Updated Microsoft.VisualStudio.Threading.Analyzers to 16.8.55
@@ -21,12 +30,6 @@ Please ADD ALL Changes to the UNRELASED SECTION and not a specific release
 - FF-1429 - Updated Microsoft.VisualStudio.Threading.Analyzers to 16.8.50
 - FF-1429 - Updated FunFair.CodeAnalysis to 1.15.0.518
 - Converted to .NET 5.0
-### Removed
-### Deployment Changes
-
-<!--
-Releases that have at least been deployed to staging, BUT NOT necessarily released to live.  Changes should be moved from [Unreleased] into here as they are merged into the appropriate release branch
--->
 
 ## [1.19.0] 2020-11-10
 ### Added
