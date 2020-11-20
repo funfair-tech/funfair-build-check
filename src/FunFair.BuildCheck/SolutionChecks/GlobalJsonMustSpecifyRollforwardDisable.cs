@@ -46,15 +46,15 @@ namespace FunFair.BuildCheck.SolutionChecks
 
             try
             {
-                GlobalJsonPacket p = JsonSerializer.Deserialize<GlobalJsonPacket>(json: content,
-                                                                                  new JsonSerializerOptions
-                                                                                  {
-                                                                                      IgnoreNullValues = true,
-                                                                                      PropertyNameCaseInsensitive = false,
-                                                                                      PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
-                                                                                      WriteIndented = false,
-                                                                                      AllowTrailingCommas = false
-                                                                                  });
+                GlobalJsonPacket? p = JsonSerializer.Deserialize<GlobalJsonPacket>(json: content,
+                                                                                   new JsonSerializerOptions
+                                                                                   {
+                                                                                       IgnoreNullValues = true,
+                                                                                       PropertyNameCaseInsensitive = false,
+                                                                                       PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+                                                                                       WriteIndented = false,
+                                                                                       AllowTrailingCommas = false
+                                                                                   });
 
                 if (!string.IsNullOrWhiteSpace(p?.Sdk?.RollForward))
                 {

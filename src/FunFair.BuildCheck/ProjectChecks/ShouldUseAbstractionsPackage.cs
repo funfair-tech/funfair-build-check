@@ -49,6 +49,11 @@ namespace FunFair.BuildCheck.ProjectChecks
 
             XmlNodeList? referenceNodes = project.SelectNodes("/Project/ItemGroup/PackageReference");
 
+            if (referenceNodes == null)
+            {
+                return;
+            }
+
             foreach (XmlElement referenceNode in referenceNodes.OfType<XmlElement>())
             {
                 string packageId = referenceNode.GetAttribute(@"Include");

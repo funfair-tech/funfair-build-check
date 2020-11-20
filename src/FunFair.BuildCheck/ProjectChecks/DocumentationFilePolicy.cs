@@ -47,9 +47,9 @@ namespace FunFair.BuildCheck.ProjectChecks
 
         private void CheckTestProject(string projectName, XmlDocument project)
         {
-            XmlNodeList nodes = project.SelectNodes("/Project/PropertyGroup/DocumentationFile");
+            XmlNodeList? nodes = project.SelectNodes("/Project/PropertyGroup/DocumentationFile");
 
-            if (nodes.Count != 0)
+            if (nodes != null && nodes.Count != 0)
             {
                 this._logger.LogError($"{projectName}: Test projects should not have XML Documentation");
             }
