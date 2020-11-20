@@ -27,13 +27,19 @@ namespace FunFair.BuildCheck.ProjectChecks
         /// <inheritdoc />
         public void Check(string projectName, string projectFolder, XmlDocument project)
         {
-            foreach (XmlElement reference in project.SelectNodes("/Project/ItemGroup/ProjectReference")
-                                                    .OfType<XmlElement>())
+            XmlNodeList? nodes = project.SelectNodes("/Project/ItemGroup/ProjectReference");
+
+            if (nodes == null)
+            {
+                return;
+            }
+
+            foreach (XmlElement reference in nodes.OfType<XmlElement>())
             {
                 string projectReference = reference.GetAttribute(name: "Include");
 
                 string referencedProject = Path.Combine(path1: projectFolder, path2: projectReference);
-                FileInfo i = new FileInfo(referencedProject);
+                FileInfo i = new(referencedProject);
 
                 if (!i.Exists)
                 {

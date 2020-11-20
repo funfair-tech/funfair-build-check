@@ -32,7 +32,12 @@ namespace FunFair.BuildCheck.ProjectChecks
         /// <inheritdoc />
         public void Check(string projectName, string projectFolder, XmlDocument project)
         {
-            XmlNodeList nodes = project.SelectNodes(xpath: "/Project/ItemGroup/PackageReference");
+            XmlNodeList? nodes = project.SelectNodes(xpath: "/Project/ItemGroup/PackageReference");
+
+            if (nodes == null)
+            {
+                return;
+            }
 
             foreach (XmlElement reference in nodes.OfType<XmlElement>())
             {

@@ -52,7 +52,7 @@ namespace FunFair.BuildCheck.ProjectChecks
 
             string filename = codeAnalysisRuleSet.InnerText;
 
-            if (!StringComparer.InvariantCultureIgnoreCase.Equals(filename ?? string.Empty, y: RULESET_FILENAME))
+            if (!StringComparer.InvariantCultureIgnoreCase.Equals(x: filename, y: RULESET_FILENAME))
             {
                 this._logger.LogError($"{projectName}: Does not reference {RULESET_FILENAME} as the defined ruleset.");
             }

@@ -25,9 +25,9 @@ namespace FunFair.BuildCheck.ProjectChecks
         /// <inheritdoc />
         public void Check(string projectName, string projectFolder, XmlDocument project)
         {
-            XmlNodeList nodes = project.SelectNodes(xpath: "/Project/ItemGroup/DotNetCliToolReference");
+            XmlNodeList? nodes = project.SelectNodes(xpath: "/Project/ItemGroup/DotNetCliToolReference");
 
-            if (nodes.Count != 0)
+            if (nodes != null && nodes.Count != 0)
             {
                 this._logger.LogError($"{projectName}: Contains DotNetCliToolReference.");
             }

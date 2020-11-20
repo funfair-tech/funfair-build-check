@@ -31,7 +31,12 @@ namespace FunFair.BuildCheck.ProjectChecks
         /// <inheritdoc />
         public void Check(string projectName, string projectFolder, XmlDocument project)
         {
-            XmlNodeList nodes = project.SelectNodes(xpath: "/Project/ItemGroup/PackageReference");
+            XmlNodeList? nodes = project.SelectNodes(xpath: "/Project/ItemGroup/PackageReference");
+
+            if (nodes == null)
+            {
+                return;
+            }
 
             foreach (XmlElement reference in nodes.OfType<XmlElement>())
             {
@@ -55,8 +60,7 @@ namespace FunFair.BuildCheck.ProjectChecks
                     }
                 }
 
-                if (!string.IsNullOrEmpty(privateAssets) &&
-                    string.Compare(strA: privateAssets, strB: PACKAGE_PRIVATE_ASSETS, comparisonType: StringComparison.OrdinalIgnoreCase) == 0)
+                if (!string.IsNullOrEmpty(privateAssets) && string.Compare(strA: privateAssets, strB: PACKAGE_PRIVATE_ASSETS, comparisonType: StringComparison.OrdinalIgnoreCase) == 0)
                 {
                     continue;
                 }

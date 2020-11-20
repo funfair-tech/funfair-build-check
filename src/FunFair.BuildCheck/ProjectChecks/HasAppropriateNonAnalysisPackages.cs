@@ -30,30 +30,33 @@ namespace FunFair.BuildCheck.ProjectChecks
         /// <inheritdoc />
         public void Check(string projectName, string projectFolder, XmlDocument project)
         {
-            XmlNodeList nodes = project.SelectNodes(xpath: "/Project/ItemGroup/PackageReference");
+            XmlNodeList? nodes = project.SelectNodes(xpath: "/Project/ItemGroup/PackageReference");
 
             bool foundSourcePackage = false;
             bool foundRequiredPackage = false;
 
-            foreach (XmlElement reference in nodes.OfType<XmlElement>())
+            if (nodes != null)
             {
-                string packageName = reference.GetAttribute(name: @"Include");
-
-                if (string.IsNullOrWhiteSpace(packageName))
+                foreach (XmlElement reference in nodes.OfType<XmlElement>())
                 {
-                    this._logger.LogError($"{projectName}: Contains bad reference to packages.");
+                    string packageName = reference.GetAttribute(name: @"Include");
 
-                    continue;
-                }
+                    if (string.IsNullOrWhiteSpace(packageName))
+                    {
+                        this._logger.LogError($"{projectName}: Contains bad reference to packages.");
 
-                if (StringComparer.InvariantCultureIgnoreCase.Equals(x: this._detectPackageId, y: packageName))
-                {
-                    foundSourcePackage = true;
-                }
+                        continue;
+                    }
 
-                if (StringComparer.InvariantCultureIgnoreCase.Equals(x: this._mustIncludePackageId, y: packageName))
-                {
-                    foundRequiredPackage = true;
+                    if (StringComparer.InvariantCultureIgnoreCase.Equals(x: this._detectPackageId, y: packageName))
+                    {
+                        foundSourcePackage = true;
+                    }
+
+                    if (StringComparer.InvariantCultureIgnoreCase.Equals(x: this._mustIncludePackageId, y: packageName))
+                    {
+                        foundRequiredPackage = true;
+                    }
                 }
             }
 

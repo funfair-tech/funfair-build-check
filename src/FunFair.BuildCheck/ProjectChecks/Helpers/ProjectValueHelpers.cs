@@ -14,7 +14,12 @@ namespace FunFair.BuildCheck.ProjectChecks.Helpers
 
         public static bool IsTestProject(this XmlDocument project, string projectName, ILogger logger)
         {
-            XmlNodeList nodes = project.SelectNodes(xpath: "/Project/ItemGroup/PackageReference");
+            XmlNodeList? nodes = project.SelectNodes(xpath: "/Project/ItemGroup/PackageReference");
+
+            if (nodes == null)
+            {
+                return false;
+            }
 
             foreach (XmlElement reference in nodes.OfType<XmlElement>())
             {
@@ -39,36 +44,48 @@ namespace FunFair.BuildCheck.ProjectChecks.Helpers
         public static void CheckNode(string projectName, XmlDocument project, string nodePresence, ILogger logger)
         {
             bool hasGlobalSetting = false;
-            XmlNodeList nodes = project.SelectNodes("/Project/PropertyGroup[not(@Condition)]/" + nodePresence);
+            XmlNodeList? nodes = project.SelectNodes("/Project/PropertyGroup[not(@Condition)]/" + nodePresence);
 
-            foreach (XmlElement item in nodes.OfType<XmlElement>())
+            if (nodes != null)
             {
-                XmlElement propertyGroup = (XmlElement) item.ParentNode;
-                string condition = propertyGroup.GetAttribute(name: "Condition");
-
-                if (string.IsNullOrWhiteSpace(condition))
+                foreach (XmlElement item in nodes.OfType<XmlElement>())
                 {
-                    hasGlobalSetting = true;
-                }
-            }
+                    XmlElement? propertyGroup = item.ParentNode as XmlElement;
 
-            XmlNodeList configurationGroups = project.SelectNodes(xpath: "/Project/PropertyGroup[@Condition]");
-
-            foreach (XmlElement propertyGroup in nodes.OfType<XmlElement>())
-            {
-                XmlNode? node = propertyGroup.SelectSingleNode(nodePresence);
-
-                if (node == null)
-                {
-                    if (!hasGlobalSetting)
+                    if (propertyGroup == null)
                     {
-                        string configuration = propertyGroup.GetAttribute(name: "Condition");
-                        logger.LogError($"{projectName}: Configuration {configuration} should specify {nodePresence}");
+                        continue;
+                    }
+
+                    string condition = propertyGroup.GetAttribute(name: "Condition");
+
+                    if (string.IsNullOrWhiteSpace(condition))
+                    {
+                        hasGlobalSetting = true;
                     }
                 }
             }
 
-            if (!hasGlobalSetting && configurationGroups.Count == 0)
+            XmlNodeList? configurationGroups = project.SelectNodes(xpath: "/Project/PropertyGroup[@Condition]");
+
+            if (configurationGroups != null)
+            {
+                foreach (XmlElement propertyGroup in configurationGroups.OfType<XmlElement>())
+                {
+                    XmlNode? node = propertyGroup.SelectSingleNode(nodePresence);
+
+                    if (node == null)
+                    {
+                        if (!hasGlobalSetting)
+                        {
+                            string configuration = propertyGroup.GetAttribute(name: "Condition");
+                            logger.LogError($"{projectName}: Configuration {configuration} should specify {nodePresence}");
+                        }
+                    }
+                }
+            }
+
+            if (!hasGlobalSetting && configurationGroups != null && configurationGroups.Count == 0)
             {
                 logger.LogError($"{projectName}: Should specify {nodePresence}.");
             }
@@ -96,70 +113,72 @@ namespace FunFair.BuildCheck.ProjectChecks.Helpers
 
         public static void CheckValue(string projectName, XmlDocument project, string nodePresence, Func<string, bool> isRequiredValue, string msg, ILogger logger)
         {
-            CheckValueCommon(projectName: projectName,
-                             project: project,
-                             nodePresence: nodePresence,
-                             isRequiredValue: isRequiredValue,
-                             requiredValueDisplayText: msg,
-                             logger: logger);
+            CheckValueCommon(projectName: projectName, project: project, nodePresence: nodePresence, isRequiredValue: isRequiredValue, requiredValueDisplayText: msg, logger: logger);
         }
 
-        private static void CheckValueCommon(string projectName,
-                                             XmlDocument project,
-                                             string nodePresence,
-                                             Func<string, bool> isRequiredValue,
-                                             string requiredValueDisplayText,
-                                             ILogger logger)
+        private static void CheckValueCommon(string projectName, XmlDocument project, string nodePresence, Func<string, bool> isRequiredValue, string requiredValueDisplayText, ILogger logger)
         {
             bool hasGlobalSetting = false;
-            XmlNodeList nodes = project.SelectNodes("/Project/PropertyGroup[not(@Condition)]/" + nodePresence);
+            XmlNodeList? nodes = project.SelectNodes("/Project/PropertyGroup[not(@Condition)]/" + nodePresence);
 
-            foreach (XmlElement item in nodes.OfType<XmlElement>())
+            if (nodes != null)
             {
-                XmlElement propertyGroup = (XmlElement) item.ParentNode;
-                string condition = propertyGroup.GetAttribute(name: "Condition");
-
-                if (string.IsNullOrWhiteSpace(condition))
+                foreach (XmlElement item in nodes.OfType<XmlElement>())
                 {
-                    string value = GetTextValue(item);
+                    XmlElement? propertyGroup = item.ParentNode as XmlElement;
 
-                    if (isRequiredValue(value))
+                    if (propertyGroup == null)
                     {
-                        hasGlobalSetting = true;
+                        continue;
                     }
-                }
-            }
 
-            XmlNodeList configurationGroups = project.SelectNodes(xpath: "/Project/PropertyGroup[@Condition]");
+                    string condition = propertyGroup.GetAttribute(name: "Condition");
 
-            foreach (XmlElement propertyGroup in nodes.OfType<XmlElement>())
-            {
-                XmlNode? node = propertyGroup.SelectSingleNode(nodePresence);
-
-                if (node == null)
-                {
-                    if (!hasGlobalSetting)
+                    if (string.IsNullOrWhiteSpace(condition))
                     {
-                        string configuration = propertyGroup.GetAttribute(name: "Condition");
-                        logger.LogError($"{projectName}: Configuration {configuration} should specify {nodePresence}.");
-                    }
-                }
-                else
-                {
-                    string value = GetTextValue(node);
+                        string value = GetTextValue(item);
 
-                    if (!isRequiredValue(value))
-                    {
-                        if (!hasGlobalSetting)
+                        if (isRequiredValue(value))
                         {
-                            string configuration = propertyGroup.GetAttribute(name: "Condition");
-                            logger.LogError($"{projectName}: Configuration {configuration} should specify {nodePresence} as {requiredValueDisplayText}.");
+                            hasGlobalSetting = true;
                         }
                     }
                 }
             }
 
-            if (!hasGlobalSetting && configurationGroups.Count == 0)
+            XmlNodeList? configurationGroups = project.SelectNodes(xpath: "/Project/PropertyGroup[@Condition]");
+
+            if (configurationGroups != null)
+            {
+                foreach (XmlElement propertyGroup in configurationGroups.OfType<XmlElement>())
+                {
+                    XmlNode? node = propertyGroup.SelectSingleNode(nodePresence);
+
+                    if (node == null)
+                    {
+                        if (!hasGlobalSetting)
+                        {
+                            string configuration = propertyGroup.GetAttribute(name: "Condition");
+                            logger.LogError($"{projectName}: Configuration {configuration} should specify {nodePresence}.");
+                        }
+                    }
+                    else
+                    {
+                        string value = GetTextValue(node);
+
+                        if (!isRequiredValue(value))
+                        {
+                            if (!hasGlobalSetting)
+                            {
+                                string configuration = propertyGroup.GetAttribute(name: "Condition");
+                                logger.LogError($"{projectName}: Configuration {configuration} should specify {nodePresence} as {requiredValueDisplayText}.");
+                            }
+                        }
+                    }
+                }
+            }
+
+            if (!hasGlobalSetting && configurationGroups != null && configurationGroups.Count == 0)
             {
                 logger.LogError($"{projectName}: Should specify {nodePresence} as {requiredValueDisplayText}.");
             }
@@ -167,7 +186,7 @@ namespace FunFair.BuildCheck.ProjectChecks.Helpers
 
         private static string GetTextValue(XmlNode node)
         {
-            return node.InnerText ?? string.Empty;
+            return node.InnerText;
         }
 
         private static bool IsRequiredValue(bool requiredValue, string value)
@@ -188,7 +207,7 @@ namespace FunFair.BuildCheck.ProjectChecks.Helpers
 
             if (outputTypeNode != null)
             {
-                return outputTypeNode.InnerText ?? defaultType;
+                return string.IsNullOrWhiteSpace(outputTypeNode.InnerText) ? defaultType : outputTypeNode.InnerText;
             }
 
             return defaultType;

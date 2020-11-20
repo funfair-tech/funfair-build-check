@@ -14,7 +14,7 @@ namespace FunFair.BuildCheck
         {
             FileVersionInfo fileVersionInfo = FileVersionInfo.GetVersionInfo(type.Assembly.Location);
 
-            return fileVersionInfo.ProductVersion;
+            return fileVersionInfo.ProductVersion!;
         }
     }
 }

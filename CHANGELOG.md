@@ -20,6 +20,7 @@ Please ADD ALL Changes to the UNRELASED SECTION and not a specific release
 - FF-1429 - Updated Microsoft.VisualStudio.Threading.Analyzers to 16.8.51
 - FF-1429 - Updated Microsoft.VisualStudio.Threading.Analyzers to 16.8.50
 - FF-1429 - Updated FunFair.CodeAnalysis to 1.15.0.518
+- Converted to .NET 5.0
 ### Removed
 ### Deployment Changes
 
