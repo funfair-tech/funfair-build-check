@@ -26,7 +26,7 @@ namespace FunFair.BuildCheck.Services
 
         private static XmlDocument LoadProject(string path)
         {
-            XmlDocument document = new XmlDocument();
+            XmlDocument document = new();
             document.Load(path);
 
             return document;

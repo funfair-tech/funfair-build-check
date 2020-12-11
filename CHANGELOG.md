@@ -7,6 +7,7 @@ Please ADD ALL Changes to the UNRELASED SECTION and not a specific release
 
 ## [Unreleased]
 ### Added
+- Force use of abstrations package for Microsoft.Extensions.Caching.Memory in non-exe's
 ### Fixed
 ### Changed
 - FF-1429 - Updated SonarAnalyzer.CSharp to 8.15.0.24505

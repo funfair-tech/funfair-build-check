@@ -65,6 +65,7 @@ namespace FunFair.BuildCheck
             AddProjectCheck<ShouldUseAbstractionsFileProvidersPackage>(services);
             AddProjectCheck<ShouldUseAbstractionsLoggingPackage>(services);
             AddProjectCheck<ShouldUseAbstractionsExtensionHostingPackage>(services);
+            AddProjectCheck<ShouldUseAbstractionsCachingPackage>(services);
             AddProjectCheck<ShouldUseFluentValidationAspNetCoreRatherThanFluentValidationPackage>(services);
 
             string? dotnetVersion = Environment.GetEnvironmentVariable(variable: @"DOTNET_CORE_SDK_VERSION");

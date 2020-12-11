@@ -34,9 +34,7 @@ namespace FunFair.BuildCheck
                                                    .AddCommandLine(args: args,
                                                                    new Dictionary<string, string>
                                                                    {
-                                                                       {@"-Solution", @"solution"},
-                                                                       {@"-WarningAsErrors", @"WarningAsErrors"},
-                                                                       {@"-PreReleaseBuild", @"PreReleaseBuild"}
+                                                                       {@"-Solution", @"solution"}, {@"-WarningAsErrors", @"WarningAsErrors"}, {@"-PreReleaseBuild", @"PreReleaseBuild"}
                                                                    })
                                                    .Build();
 
@@ -143,7 +141,7 @@ namespace FunFair.BuildCheck
         {
             IServiceCollection services = new ServiceCollection();
 
-            DiagnosticLogger logger = new DiagnosticLogger(warningsAsErrors);
+            DiagnosticLogger logger = new(warningsAsErrors);
             services.AddSingleton<ILogger>(logger);
             services.AddSingleton<IDiagnosticLogger>(logger);
             services.AddSingleton(typeof(ILogger<>), typeof(LoggerProxy<>));
@@ -167,11 +165,11 @@ namespace FunFair.BuildCheck
             string basePath = Path.GetDirectoryName(solution)!;
             Console.WriteLine($"Solution base path: {basePath}");
 
-            List<Project> projects = new List<Project>();
+            List<Project> projects = new();
 
             Console.WriteLine(value: "Looking for projects...");
 
-            Regex regex = new Regex(
+            Regex regex = new(
                 pattern:
                 "^Project\\(\"[{(]?[0-9A-F]{8}[-]?([0-9A-F]{4}[-]?){3}[0-9A-F]{12}[)}]\"\\)\\s*=\\s*\"(?<DisplayName>.*?)\",\\s*\"(?<FileName>.*?\\.csproj)\",\\s*\"[{(]?[0-9A-F]{8}[-]?([0-9A-F]{4}[-]?){3}[0-9A-F]{12}[)}]\"$",
                 options: RegexOptions.Compiled);
