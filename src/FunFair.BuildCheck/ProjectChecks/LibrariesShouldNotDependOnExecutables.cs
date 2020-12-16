@@ -48,7 +48,7 @@ namespace FunFair.BuildCheck.ProjectChecks
                 string projectReference = reference.GetAttribute(name: "Include");
 
                 string referencedProject = Path.Combine(path1: projectFolder, path2: projectReference);
-                FileInfo i = new (referencedProject);
+                FileInfo i = new(referencedProject);
 
                 if (!i.Exists)
                 {
