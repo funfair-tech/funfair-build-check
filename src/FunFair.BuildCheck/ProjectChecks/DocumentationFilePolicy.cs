@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Xml;
 using FunFair.BuildCheck.ProjectChecks.Helpers;
