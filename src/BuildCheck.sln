@@ -8,6 +8,8 @@ ProjectSection(SolutionItems) = preProject
 	global.json = global.json
 EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FunFair.BuildCheck.Tests", "FunFair.BuildCheck.Tests\FunFair.BuildCheck.Tests.csproj", "{6D6E75A7-5520-4B6C-94A4-82988B73F3A3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -18,5 +20,9 @@ Global
 		{A5DC8305-594C-4B52-B9E1-B61DD114CD0F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A5DC8305-594C-4B52-B9E1-B61DD114CD0F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A5DC8305-594C-4B52-B9E1-B61DD114CD0F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6D6E75A7-5520-4B6C-94A4-82988B73F3A3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6D6E75A7-5520-4B6C-94A4-82988B73F3A3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6D6E75A7-5520-4B6C-94A4-82988B73F3A3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6D6E75A7-5520-4B6C-94A4-82988B73F3A3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
