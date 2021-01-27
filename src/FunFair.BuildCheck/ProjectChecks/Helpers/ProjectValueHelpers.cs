@@ -85,7 +85,7 @@ namespace FunFair.BuildCheck.ProjectChecks.Helpers
                 }
             }
 
-            if (!hasGlobalSetting && configurationGroups != null && configurationGroups.Count == 0)
+            if (!hasGlobalSetting && configurationGroups?.Count == 0)
             {
                 logger.LogError($"{projectName}: Should specify {nodePresence}.");
             }
@@ -113,20 +113,10 @@ namespace FunFair.BuildCheck.ProjectChecks.Helpers
 
         public static void CheckValue(string projectName, XmlDocument project, string nodePresence, Func<string, bool> isRequiredValue, string msg, ILogger logger)
         {
-            CheckValueCommon(projectName: projectName,
-                             project: project,
-                             nodePresence: nodePresence,
-                             isRequiredValue: isRequiredValue,
-                             requiredValueDisplayText: msg,
-                             logger: logger);
+            CheckValueCommon(projectName: projectName, project: project, nodePresence: nodePresence, isRequiredValue: isRequiredValue, requiredValueDisplayText: msg, logger: logger);
         }
 
-        private static void CheckValueCommon(string projectName,
-                                             XmlDocument project,
-                                             string nodePresence,
-                                             Func<string, bool> isRequiredValue,
-                                             string requiredValueDisplayText,
-                                             ILogger logger)
+        private static void CheckValueCommon(string projectName, XmlDocument project, string nodePresence, Func<string, bool> isRequiredValue, string requiredValueDisplayText, ILogger logger)
         {
             bool hasGlobalSetting = false;
             XmlNodeList? nodes = project.SelectNodes("/Project/PropertyGroup[not(@Condition)]/" + nodePresence);
@@ -188,7 +178,7 @@ namespace FunFair.BuildCheck.ProjectChecks.Helpers
                 }
             }
 
-            if (!hasGlobalSetting && configurationGroups != null && configurationGroups.Count == 0)
+            if (!hasGlobalSetting && configurationGroups?.Count == 0)
             {
                 logger.LogError($"{projectName}: Should specify {nodePresence} as {requiredValueDisplayText}.");
             }
