@@ -8,6 +8,7 @@ Please ADD ALL Changes to the UNRELASED SECTION and not a specific release
 ## [Unreleased]
 ### Added
 - Force use of abstrations package for Microsoft.Extensions.Caching.Memory in non-exe's
+- Added new Setting DOTNET_PACKABLE with options for NONE, LIBRARIES, LIBRARY_TOOL, TOOLS or a comma separated list of project names
 ### Fixed
 ### Changed
 - FF-1429 - Updated SonarAnalyzer.CSharp to 8.15.0.24505

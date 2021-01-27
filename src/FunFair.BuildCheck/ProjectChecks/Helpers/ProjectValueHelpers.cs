@@ -12,6 +12,18 @@ namespace FunFair.BuildCheck.ProjectChecks.Helpers
         private static readonly IReadOnlyList<string> PackagesForTestProjectDetection =
             new[] {"xunit", "xunit.runner.visualstudio", "NSubstitute", "Microsoft.NET.Test.Sdk", "TeamCity.VSTest.TestAdapter", "FunFair.Test.Common"};
 
+        public static bool IsDotNetTool(this XmlDocument project)
+        {
+            XmlNode? outputTypeNode = project.SelectSingleNode("/Project/PropertyGroup/PackAsTool");
+
+            if (outputTypeNode != null)
+            {
+                return !string.IsNullOrWhiteSpace(outputTypeNode.InnerText) && StringComparer.InvariantCultureIgnoreCase.Equals(x: outputTypeNode.InnerText, y: "True");
+            }
+
+            return false;
+        }
+
         public static bool IsTestProject(this XmlDocument project, string projectName, ILogger logger)
         {
             XmlNodeList? nodes = project.SelectNodes(xpath: "/Project/ItemGroup/PackageReference");
