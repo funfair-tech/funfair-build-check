@@ -40,11 +40,11 @@ namespace FunFair.BuildCheck.ProjectChecks
             }
             else if (StringComparer.InvariantCultureIgnoreCase.Equals(x: packable, y: "LIBRARY_TOOL"))
             {
-                this._packablePolicy = (isDotNetTool, isLibrary, isTestProject, _) => isLibrary && !isTestProject && !isDotNetTool;
+                this._packablePolicy = (isDotNetTool, isLibrary, isTestProject, _) => (isLibrary || isDotNetTool) && !isTestProject;
             }
             else if (StringComparer.InvariantCultureIgnoreCase.Equals(x: packable, y: "TOOLS"))
             {
-                this._packablePolicy = (isDotNetTool, isLibrary, isTestProject, _) => isLibrary && !isTestProject && !isDotNetTool;
+                this._packablePolicy = (isDotNetTool, isLibrary, isTestProject, _) => !isLibrary && !isTestProject && isDotNetTool;
             }
             else
             {
