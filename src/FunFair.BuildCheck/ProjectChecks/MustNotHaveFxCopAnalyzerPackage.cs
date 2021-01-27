@@ -1,10 +1,12 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using System.Diagnostics.CodeAnalysis;
+using Microsoft.Extensions.Logging;
 
 namespace FunFair.BuildCheck.ProjectChecks
 {
     /// <summary>
     ///     Checks that FX-Cop is not referenced for .net core 5.0 targets.
     /// </summary>
+    [SuppressMessage(category: "ReSharper", checkId: "ClassNeverInstantiated.Global", Justification = "Created by DI")]
     public sealed class MustNotHaveFxCopAnalyzerPackage : MustNotReferencePackages
     {
         /// <summary>

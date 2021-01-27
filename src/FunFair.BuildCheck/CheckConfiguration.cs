@@ -6,6 +6,6 @@
     public sealed class CheckConfiguration : ICheckConfiguration
     {
         /// <inheritdoc />
-        public bool PreReleaseBuild { get; set; }
+        public bool PreReleaseBuild { get; init; }
     }
 }

@@ -10,7 +10,7 @@ namespace FunFair.BuildCheck.SolutionChecks
     /// <summary>
     ///     Checks the global.json .net core roll-forward policy.
     /// </summary>
-    [SuppressMessage(category: "Resharper", checkId: "ClassNeverInstantiated.Global", Justification = "Created by DI")]
+    [SuppressMessage(category: "ReSharper", checkId: "ClassNeverInstantiated.Global", Justification = "Created by DI")]
     public sealed class GlobalJsonMustSpecifyRollforwardDisable : ISolutionCheck
     {
         private const string ROLL_FORWARD_POLICY = @"disable";
