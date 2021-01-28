@@ -15,7 +15,7 @@ Please ADD ALL Changes to the UNRELASED SECTION and not a specific release
 <!--
 Releases that have at least been deployed to staging, BUT NOT necessarily released to live.  Changes should be moved from [Unreleased] into here as they are merged into the appropriate release branch
 -->
-## [2.1.0] - TBD
+## [2.1.0] - 2021-01-27
 ### Added
 - Force use of abstrations package for Microsoft.Extensions.Caching.Memory in non-exe's
 - Added new Setting DOTNET_PACKABLE with options for NONE, LIBRARIES, LIBRARY_TOOL, TOOLS or a comma separated list of project names
