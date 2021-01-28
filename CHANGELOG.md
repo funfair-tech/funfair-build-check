@@ -18,7 +18,7 @@ Releases that have at least been deployed to staging, BUT NOT necessarily releas
 ## [2.1.0] - 2021-01-27
 ### Added
 - Force use of abstrations package for Microsoft.Extensions.Caching.Memory in non-exe's
-- Added new Setting DOTNET_PACKABLE with options for NONE, LIBRARIES, LIBRARY_TOOL, TOOLS or a comma separated list of project names
+- Added new Setting DOTNET_PACKABLE with options for NONE, ALL, LIBRARIES, LIBRARY_TOOL, TOOLS or a comma separated list of project names
 ### Changed
 - FF-1429 - Updated SonarAnalyzer.CSharp to 8.15.0.24505
 - FF-1429 - Updated Microsoft.Extensions to 5.0.1

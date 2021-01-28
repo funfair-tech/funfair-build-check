@@ -34,6 +34,10 @@ namespace FunFair.BuildCheck.ProjectChecks
             {
                 this._packablePolicy = (_, _, _, _) => false;
             }
+            else if (StringComparer.InvariantCultureIgnoreCase.Equals(x: packable, y: "ALL"))
+            {
+                this._packablePolicy = (_, _, isTestProject, _) => !isTestProject;
+            }
             else if (StringComparer.InvariantCultureIgnoreCase.Equals(x: packable, y: "LIBRARIES"))
             {
                 this._packablePolicy = (isDotNetTool, isLibrary, isTestProject, _) => isLibrary && !isTestProject && !isDotNetTool;
