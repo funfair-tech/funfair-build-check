@@ -8,8 +8,7 @@ namespace FunFair.BuildCheck.ProjectChecks
 {
     /// <summary>
     ///     The checks analysis mode policy is set appropriately.
-    /// </summary>
-    [SuppressMessage(category: "ReSharper", checkId: "ClassNeverInstantiated.Global", Justification = "Created by DI")]
+    /// </summary>    [SuppressMessage(category: "ReSharper", checkId: "ClassNeverInstantiated.Global", Justification = "Created by DI")]
     public sealed class AnalysisModePolicy : IProjectCheck
     {
         private const string EXPECTED = @"AllEnabledByDefault";

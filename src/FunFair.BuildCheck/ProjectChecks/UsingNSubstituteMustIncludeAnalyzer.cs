@@ -5,8 +5,7 @@ namespace FunFair.BuildCheck.ProjectChecks
 {
     /// <summary>
     ///     Checks that the NSubstitute analyzer is installed for test projects.
-    /// </summary>
-    [SuppressMessage(category: "ReSharper", checkId: "ClassNeverInstantiated.Global", Justification = "Created by DI")]
+    /// </summary>    [SuppressMessage(category: "ReSharper", checkId: "ClassNeverInstantiated.Global", Justification = "Created by DI")]
     public sealed class UsingNSubstituteMustIncludeAnalyzer : HasAppropriateAnalysisPackages
     {
         /// <summary>
