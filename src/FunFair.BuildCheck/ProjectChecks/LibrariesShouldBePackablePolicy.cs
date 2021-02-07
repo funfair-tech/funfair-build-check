@@ -10,8 +10,7 @@ namespace FunFair.BuildCheck.ProjectChecks
 {
     /// <summary>
     ///     Checks that libraries are 'packable' except when they are test assemblies.
-    /// </summary>
-    [SuppressMessage(category: "ReSharper", checkId: "ClassNeverInstantiated.Global", Justification = "Created by DI")]
+    /// </summary>    [SuppressMessage(category: "ReSharper", checkId: "ClassNeverInstantiated.Global", Justification = "Created by DI")]
     public sealed class LibrariesShouldBePackablePolicy : IProjectCheck
     {
         private readonly bool _isUnitTestBase;

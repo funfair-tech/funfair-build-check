@@ -8,8 +8,7 @@ namespace FunFair.BuildCheck.ProjectChecks
 {
     /// <summary>
     ///     Checks that the implicit fallback folder for nuget is turned off.
-    /// </summary>
-    [SuppressMessage(category: "ReSharper", checkId: "ClassNeverInstantiated.Global", Justification = "Created by DI")]
+    /// </summary>    [SuppressMessage(category: "ReSharper", checkId: "ClassNeverInstantiated.Global", Justification = "Created by DI")]
     public sealed class NuGetPolicyDisableImplicitNuGetFallbackFolder : IProjectCheck
     {
         private readonly ILogger<NuGetPolicyDisableImplicitNuGetFallbackFolder> _logger;

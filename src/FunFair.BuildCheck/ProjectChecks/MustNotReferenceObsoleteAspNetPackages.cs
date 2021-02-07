@@ -6,8 +6,7 @@ namespace FunFair.BuildCheck.ProjectChecks
 {
     /// <summary>
     ///     Checks that obsolete packages aren't referenced.
-    /// </summary>
-    [SuppressMessage(category: "ReSharper", checkId: "ClassNeverInstantiated.Global", Justification = "Created by DI")]
+    /// </summary>    [SuppressMessage(category: "ReSharper", checkId: "ClassNeverInstantiated.Global", Justification = "Created by DI")]
     public sealed class MustNotReferenceObsoleteAspNetPackages : MustNotReferencePackages
     {
         private static readonly IReadOnlyList<string> PackageIds = new[]
