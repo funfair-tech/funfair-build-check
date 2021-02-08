@@ -48,6 +48,7 @@ namespace FunFair.BuildCheck
             AddProjectCheck<LibrariesShouldBePackablePolicy>(services);
             AddProjectCheck<DoesNotUseDotNetCliToolReference>(services);
             AddProjectCheck<LibrariesShouldNotDependOnExecutables>(services);
+            AddProjectCheck<DoesNotUseRootNamespace>(services);
 
             if (!Classifications.IsUnitTestBase())
             {
