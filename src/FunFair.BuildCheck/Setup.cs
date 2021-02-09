@@ -69,21 +69,39 @@ namespace FunFair.BuildCheck
             AddProjectCheck<ShouldUseAbstractionsCachingPackage>(services);
             AddProjectCheck<ShouldUseFluentValidationAspNetCoreRatherThanFluentValidationPackage>(services);
 
-            string? dotnetVersion = Environment.GetEnvironmentVariable(variable: @"DOTNET_CORE_SDK_VERSION");
+            bool earlierThanDotNet5 = IsEarlierThanDotNet5();
 
-            if (!string.IsNullOrWhiteSpace(dotnetVersion) && new Version(dotnetVersion) >= new Version(major: 5, minor: 0, build: 100))
+            if (earlierThanDotNet5)
             {
-                AddProjectCheck<MustNotHaveFxCopAnalyzerPackage>(services);
+                AddProjectCheck<MustHaveFxCopAnalyzerPackage>(services);
             }
             else
             {
-                AddProjectCheck<MustHaveFxCopAnalyzerPackage>(services);
+                AddProjectCheck<MustNotHaveFxCopAnalyzerPackage>(services);
             }
 
             if (Classifications.IsNullableGloballyEnforced())
             {
                 AddProjectCheck<MustEnableNullable>(services);
             }
+        }
+
+        private static bool IsEarlierThanDotNet5()
+        {
+            string? dotnetVersion = Environment.GetEnvironmentVariable(variable: @"DOTNET_CORE_SDK_VERSION");
+
+            if (string.IsNullOrWhiteSpace(dotnetVersion))
+            {
+                Console.WriteLine("No .NET version configured");
+
+                return false;
+            }
+
+            Console.WriteLine($"Expected .NET Version: {dotnetVersion}");
+
+            Version version = new(dotnetVersion);
+
+            return version < new Version(major: 5, minor: 0, build: 0);
         }
 
         private static void AddProjectCheck<T>(IServiceCollection services)
