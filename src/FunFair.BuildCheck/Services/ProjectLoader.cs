@@ -1,5 +1,6 @@
 ﻿using System.Collections.Concurrent;
 using System.Xml;
+using FunFair.BuildCheck.Interfaces;
 
 namespace FunFair.BuildCheck.Services
 {

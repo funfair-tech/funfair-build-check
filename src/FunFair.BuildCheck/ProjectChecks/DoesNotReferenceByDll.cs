@@ -2,13 +2,15 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Xml;
+using FunFair.BuildCheck.Interfaces;
 using Microsoft.Extensions.Logging;
 
 namespace FunFair.BuildCheck.ProjectChecks
 {
     /// <summary>
     ///     Checks that there are no direct dll references.
-    /// </summary>    [SuppressMessage(category: "ReSharper", checkId: "ClassNeverInstantiated.Global", Justification = "Created by DI")]
+    /// </summary>
+    [SuppressMessage(category: "ReSharper", checkId: "ClassNeverInstantiated.Global", Justification = "Created by DI")]
     public sealed class DoesNotReferenceByDll : IProjectCheck
     {
         private readonly ILogger<DoesNotReferenceByDll> _logger;

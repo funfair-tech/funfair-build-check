@@ -2,6 +2,7 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Text.Json;
+using FunFair.BuildCheck.Interfaces;
 using FunFair.BuildCheck.SolutionChecks.Models;
 using Microsoft.Extensions.Logging;
 
@@ -9,7 +10,8 @@ namespace FunFair.BuildCheck.SolutionChecks
 {
     /// <summary>
     ///     Checks the global.json pre-release settings.
-    /// </summary>    [SuppressMessage(category: "ReSharper", checkId: "ClassNeverInstantiated.Global", Justification = "Created by DI")]
+    /// </summary>
+    [SuppressMessage(category: "ReSharper", checkId: "ClassNeverInstantiated.Global", Justification = "Created by DI")]
     public sealed class GlobalJsonMustNotAllowPreRelease : ISolutionCheck
     {
         private const bool PRE_RELEASE_POLICY = false;

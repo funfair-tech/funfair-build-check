@@ -1,13 +1,15 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Xml;
+using FunFair.BuildCheck.Interfaces;
 using Microsoft.Extensions.Logging;
 
 namespace FunFair.BuildCheck.ProjectChecks
 {
     /// <summary>
     ///     Checks that the SourceLink package is installed.
-    /// </summary>    [SuppressMessage(category: "ReSharper", checkId: "ClassNeverInstantiated.Global", Justification = "Created by DI")]
+    /// </summary>
+    [SuppressMessage(category: "ReSharper", checkId: "ClassNeverInstantiated.Global", Justification = "Created by DI")]
     public sealed class MustHaveSourceLinkPackage : IProjectCheck
     {
         private const string HISTORICAL_PACKAGE_ID = @"SourceLink.Create.CommandLine";

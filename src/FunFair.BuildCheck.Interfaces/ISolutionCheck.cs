@@ -1,4 +1,4 @@
-﻿namespace FunFair.BuildCheck
+﻿namespace FunFair.BuildCheck.Interfaces
 {
     /// <summary>
     ///     A Solution Check.

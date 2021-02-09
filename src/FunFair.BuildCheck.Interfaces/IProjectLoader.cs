@@ -1,6 +1,6 @@
 ﻿using System.Xml;
 
-namespace FunFair.BuildCheck
+namespace FunFair.BuildCheck.Interfaces
 {
     /// <summary>
     ///     Loads projects.

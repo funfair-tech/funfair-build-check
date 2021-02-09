@@ -1,4 +1,5 @@
 ﻿using System;
+using FunFair.BuildCheck.Interfaces;
 using FunFair.BuildCheck.ProjectChecks;
 using FunFair.BuildCheck.SolutionChecks;
 using Microsoft.Extensions.DependencyInjection;
