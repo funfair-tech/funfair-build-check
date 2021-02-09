@@ -49,6 +49,9 @@
 "FunFair.BuildCheck":
  - src/FunFair.BuildCheck/**/*
 
+"FunFair.BuildCheck.Interfaces":
+ - src/FunFair.BuildCheck.Interfaces/**/*
+
 "FunFair.BuildCheck.Tests":
  - src/FunFair.BuildCheck.Tests/**/*
 
