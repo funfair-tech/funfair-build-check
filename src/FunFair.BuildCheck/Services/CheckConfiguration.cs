@@ -1,4 +1,6 @@
-﻿namespace FunFair.BuildCheck
+﻿using FunFair.BuildCheck.Interfaces;
+
+namespace FunFair.BuildCheck.Services
 {
     /// <summary>
     ///     Check configuration.

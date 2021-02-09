@@ -17,8 +17,9 @@ namespace FunFair.BuildCheck
             AddSolutionCheck<GlobalJsonMustNotAllowPreRelease>(services);
         }
 
-        public static void SetupProjectChecks(IServiceCollection services)
+        public static void SetupProjectChecks(IRepositorySettings repositorySettings, IServiceCollection services)
         {
+            // TODO: Remove Repository settings dependency here.
             AddProjectCheck<ReferencedProjectsMustExist>(services);
             AddProjectCheck<MustSpecifyOutputType>(services);
             AddProjectCheck<NoPreReleaseNuGetPackages>(services);
@@ -51,13 +52,13 @@ namespace FunFair.BuildCheck
             AddProjectCheck<LibrariesShouldNotDependOnExecutables>(services);
             AddProjectCheck<DoesNotUseRootNamespace>(services);
 
-            if (!Classifications.IsUnitTestBase())
+            if (!repositorySettings.IsUnitTestBase)
             {
                 AddProjectCheck<UsingXUnitMustIncludeVisualStudioTestPlatform>(services);
                 AddProjectCheck<UsingXUnitMustIncludeTeamCityTestAdapter>(services);
             }
 
-            if (!Classifications.IsCodeAnalysisSolution())
+            if (!repositorySettings.IsCodeAnalysisSolution)
             {
                 AddProjectCheck<MustHaveFunFairCodeAnalysisPackage>(services);
             }
@@ -81,10 +82,7 @@ namespace FunFair.BuildCheck
                 AddProjectCheck<MustNotHaveFxCopAnalyzerPackage>(services);
             }
 
-            if (Classifications.IsNullableGloballyEnforced())
-            {
-                AddProjectCheck<MustEnableNullable>(services);
-            }
+            AddProjectCheck<MustEnableNullable>(services);
         }
 
         private static bool IsEarlierThanDotNet5()

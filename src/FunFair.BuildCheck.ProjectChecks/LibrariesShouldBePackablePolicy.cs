@@ -23,11 +23,12 @@ namespace FunFair.BuildCheck.ProjectChecks
         /// <summary>
         ///     Constructor.
         /// </summary>
+        /// <param name="repositorySettings">Repository settings.</param>
         /// <param name="logger">Logging.</param>
-        public LibrariesShouldBePackablePolicy(ILogger<LibrariesShouldBePackablePolicy> logger)
+        public LibrariesShouldBePackablePolicy(IRepositorySettings repositorySettings, ILogger<LibrariesShouldBePackablePolicy> logger)
         {
             this._logger = logger ?? throw new ArgumentNullException(nameof(logger));
-            this._isUnitTestBase = Classifications.IsUnitTestBase();
+            this._isUnitTestBase = repositorySettings.IsUnitTestBase;
 
             string packable = Environment.GetEnvironmentVariable(variable: @"DOTNET_PACKABLE") ?? "NONE";
 

@@ -11,7 +11,7 @@
     <Features>strict;flow-analysis</Features>
     <Nullable>enable</Nullable>
     <IncludeOpenAPIAnalyzers>true</IncludeOpenAPIAnalyzers>
-    <IsPackable>false</IsPackable>
+    <IsPackable>true</IsPackable>
     <ToolCommandName>buildcheck</ToolCommandName>
     <PackAsTool>true</PackAsTool>
     <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(MSBuildProjectName).xml</DocumentationFile>
@@ -35,7 +35,6 @@
     <PackageReference Include="Microsoft.Extensions.Configuration.CommandLine" Version="5.0.0" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="5.0.1" />
     <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="5.0.0" />
-    <PackageReference Include="NuGet.Versioning" Version="5.8.1" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="AsyncFixer" Version="1.5.1" PrivateAssets="All"/>
@@ -50,8 +49,5 @@
     <ProjectReference Include="..\FunFair.BuildCheck.Interfaces\FunFair.BuildCheck.Interfaces.csproj"/>
     <ProjectReference Include="..\FunFair.BuildCheck.ProjectChecks\FunFair.BuildCheck.ProjectChecks.csproj"/>
     <ProjectReference Include="..\FunFair.BuildCheck.SolutionChecks\FunFair.BuildCheck.SolutionChecks.csproj"/>
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="SolutionChecks"/>
   </ItemGroup>
 </Project>

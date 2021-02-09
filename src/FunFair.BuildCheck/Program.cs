@@ -142,7 +142,9 @@ namespace FunFair.BuildCheck
         {
             IServiceCollection services = new ServiceCollection();
 
+            IRepositorySettings repositorySettings = new RepositorySettings();
             DiagnosticLogger logger = new(warningsAsErrors);
+            services.AddSingleton(repositorySettings);
             services.AddSingleton<ILogger>(logger);
             services.AddSingleton<IDiagnosticLogger>(logger);
             services.AddSingleton(typeof(ILogger<>), typeof(LoggerProxy<>));
@@ -150,7 +152,7 @@ namespace FunFair.BuildCheck
             services.AddSingleton<IProjectLoader, ProjectLoader>();
 
             BuildCheck.Setup.SetupSolutionChecks(services);
-            BuildCheck.Setup.SetupProjectChecks(services);
+            BuildCheck.Setup.SetupProjectChecks(repositorySettings: repositorySettings, services: services);
 
             services.AddSingleton<ICheckConfiguration>(new CheckConfiguration {PreReleaseBuild = preReleaseBuild});
 

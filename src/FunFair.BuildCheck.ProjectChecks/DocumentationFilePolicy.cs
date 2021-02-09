@@ -14,15 +14,18 @@ namespace FunFair.BuildCheck.ProjectChecks
     public sealed class DocumentationFilePolicy : IProjectCheck
     {
         private const string EXPECTED = @"bin\$(Configuration)\$(TargetFramework)\$(MSBuildProjectName).xml";
-
         private readonly ILogger<DocumentationFilePolicy> _logger;
+
+        private readonly IRepositorySettings _repositorySettings;
 
         /// <summary>
         ///     Constructor.
         /// </summary>
+        /// <param name="repositorySettings">Repository settings.</param>
         /// <param name="logger">Logging.</param>
-        public DocumentationFilePolicy(ILogger<DocumentationFilePolicy> logger)
+        public DocumentationFilePolicy(IRepositorySettings repositorySettings, ILogger<DocumentationFilePolicy> logger)
         {
+            this._repositorySettings = repositorySettings ?? throw new ArgumentNullException(nameof(repositorySettings));
             this._logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
@@ -31,7 +34,7 @@ namespace FunFair.BuildCheck.ProjectChecks
         {
             bool testProject = project.IsTestProject(projectName: projectName, logger: this._logger);
 
-            if (testProject && Classifications.IsUnitTestBase())
+            if (testProject && this._repositorySettings.IsUnitTestBase)
             {
                 testProject = projectName.EndsWith(value: ".Tests", comparisonType: StringComparison.OrdinalIgnoreCase);
             }
