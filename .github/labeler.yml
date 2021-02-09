@@ -52,6 +52,12 @@
 "FunFair.BuildCheck.Interfaces":
  - src/FunFair.BuildCheck.Interfaces/**/*
 
+"FunFair.BuildCheck.ProjectChecks":
+ - src/FunFair.BuildCheck.ProjectChecks/**/*
+
+"FunFair.BuildCheck.SolutionChecks":
+ - src/FunFair.BuildCheck.SolutionChecks/**/*
+
 "FunFair.BuildCheck.Tests":
  - src/FunFair.BuildCheck.Tests/**/*
 
