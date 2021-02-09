@@ -1,6 +1,6 @@
 using System.Diagnostics;
 
-namespace FunFair.BuildCheck
+namespace FunFair.BuildCheck.Interfaces
 {
     /// <summary>
     ///     A Project
