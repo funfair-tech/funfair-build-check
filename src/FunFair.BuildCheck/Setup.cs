@@ -1,6 +1,6 @@
 ﻿using System;
 using FunFair.BuildCheck.Interfaces;
-using FunFair.BuildCheck.ProjectChecks.Packages;
+using FunFair.BuildCheck.ProjectChecks.ReferencedPackages;
 using FunFair.BuildCheck.ProjectChecks.References;
 using FunFair.BuildCheck.ProjectChecks.Settings;
 using FunFair.BuildCheck.SolutionChecks;
