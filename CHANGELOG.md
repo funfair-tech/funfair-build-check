@@ -7,6 +7,7 @@ Please ADD ALL Changes to the UNRELASED SECTION and not a specific release
 
 ## [Unreleased]
 ### Added
+- Changed global.json rollForward policy
 ### Fixed
 ### Changed
 - FF-1429 - Updated Roslynator.Analyzers to 3.1.0
