@@ -7,18 +7,22 @@ Please ADD ALL Changes to the UNRELASED SECTION and not a specific release
 
 ## [Unreleased]
 ### Added
-- Changed global.json rollForward policy
 ### Fixed
 ### Changed
-- FF-1429 - Updated Roslynator.Analyzers to 3.1.0
-- FF-1429 - Updated SonarAnalyzer.CSharp to 8.18.0.27296
-- FF-1429 - Updated FunFair.CodeAnalysis to 5.1.0.658
 ### Removed
 ### Deployment Changes
 
 <!--
 Releases that have at least been deployed to staging, BUT NOT necessarily released to live.  Changes should be moved from [Unreleased] into here as they are merged into the appropriate release branch
 -->
+## [2.2.0] - 2021-02-12
+### Added
+- Changed global.json rollForward policy
+### Changed
+- FF-1429 - Updated Roslynator.Analyzers to 3.1.0
+- FF-1429 - Updated SonarAnalyzer.CSharp to 8.18.0.27296
+- FF-1429 - Updated FunFair.CodeAnalysis to 5.1.0.658
+
 ## [2.1.0] - 2021-01-27
 ### Added
 - Force use of abstrations package for Microsoft.Extensions.Caching.Memory in non-exe's
