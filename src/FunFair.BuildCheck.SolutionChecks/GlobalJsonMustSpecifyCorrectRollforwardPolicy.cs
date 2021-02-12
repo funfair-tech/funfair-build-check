@@ -12,16 +12,16 @@ namespace FunFair.BuildCheck.SolutionChecks
     ///     Checks the global.json .net core roll-forward policy.
     /// </summary>
     [SuppressMessage(category: "ReSharper", checkId: "ClassNeverInstantiated.Global", Justification = "Created by DI")]
-    public sealed class GlobalJsonMustSpecifyRollforwardDisable : ISolutionCheck
+    public sealed class GlobalJsonMustSpecifyCorrectRollforwardPolicy : ISolutionCheck
     {
-        private const string ROLL_FORWARD_POLICY = @"disable";
-        private readonly ILogger<GlobalJsonMustSpecifyRollforwardDisable> _logger;
+        private const string ROLL_FORWARD_POLICY = @"latestPatch";
+        private readonly ILogger<GlobalJsonMustSpecifyCorrectRollforwardPolicy> _logger;
 
         /// <summary>
         ///     Constructor.
         /// </summary>
         /// <param name="logger">Logging.</param>
-        public GlobalJsonMustSpecifyRollforwardDisable(ILogger<GlobalJsonMustSpecifyRollforwardDisable> logger)
+        public GlobalJsonMustSpecifyCorrectRollforwardPolicy(ILogger<GlobalJsonMustSpecifyCorrectRollforwardPolicy> logger)
         {
             this._logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }

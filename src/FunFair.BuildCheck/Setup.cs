@@ -15,7 +15,7 @@ namespace FunFair.BuildCheck
             AddSolutionCheck<AllProjectsExist>(services);
             AddSolutionCheck<NoOrphanedProjectsExist>(services);
             AddSolutionCheck<GlobalJsonIsLatest>(services);
-            AddSolutionCheck<GlobalJsonMustSpecifyRollforwardDisable>(services);
+            AddSolutionCheck<GlobalJsonMustSpecifyCorrectRollforwardPolicy>(services);
             AddSolutionCheck<GlobalJsonMustNotAllowPreRelease>(services);
         }
 
