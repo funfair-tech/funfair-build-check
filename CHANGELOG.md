@@ -7,16 +7,20 @@ Please ADD ALL Changes to the UNRELASED SECTION and not a specific release
 
 ## [Unreleased]
 ### Added
-- Checks to see that projects that are packed to nuget packages do not reference *.All packages
 ### Fixed
 ### Changed
-- FF-1429 - Updated TeamCity.VSTest.TestAdapter to 1.0.25
 ### Removed
 ### Deployment Changes
 
 <!--
 Releases that have at least been deployed to staging, BUT NOT necessarily released to live.  Changes should be moved from [Unreleased] into here as they are merged into the appropriate release branch
 -->
+## [2.3.0] - 2021-02-17
+### Added
+- Checks to see that projects that are packed to nuget packages do not reference *.All packages
+### Changed
+- FF-1429 - Updated TeamCity.VSTest.TestAdapter to 1.0.25
+
 ## [2.2.0] - 2021-02-12
 ### Added
 - Changed global.json rollForward policy
