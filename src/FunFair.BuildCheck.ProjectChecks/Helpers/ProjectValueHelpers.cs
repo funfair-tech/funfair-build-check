@@ -225,6 +225,18 @@ namespace FunFair.BuildCheck.ProjectChecks.Helpers
             return defaultType;
         }
 
+        public static bool IsPackable(this XmlDocument project)
+        {
+            XmlNode? outputTypeNode = project.SelectSingleNode("/Project/PropertyGroup/IsPackable");
+
+            if (outputTypeNode != null)
+            {
+                return string.IsNullOrWhiteSpace(outputTypeNode.InnerText) || StringComparer.InvariantCultureIgnoreCase.Equals(outputTypeNode.InnerText, "true");
+            }
+
+            return true;
+        }
+
         public static string? GetAwsProjectType(this XmlDocument project)
         {
             XmlNode? outputTypeNode = project.SelectSingleNode("/Project/PropertyGroup/AWSProjectType");

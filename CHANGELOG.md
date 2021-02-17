@@ -7,6 +7,7 @@ Please ADD ALL Changes to the UNRELASED SECTION and not a specific release
 
 ## [Unreleased]
 ### Added
+- Checks to see that projects that are packed to nuget packages do not reference *.All packages
 ### Fixed
 ### Changed
 - FF-1429 - Updated TeamCity.VSTest.TestAdapter to 1.0.25

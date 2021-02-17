@@ -72,6 +72,7 @@ namespace FunFair.BuildCheck
             AddProjectCheck<ShouldUseAbstractionsExtensionHostingPackage>(services);
             AddProjectCheck<ShouldUseAbstractionsCachingPackage>(services);
             AddProjectCheck<ShouldUseFluentValidationAspNetCoreRatherThanFluentValidationPackage>(services);
+            AddProjectCheck<ShouldNotReferenceAllMetaPackagesInPackableProjects>(services);
 
             bool earlierThanDotNet5 = IsEarlierThanDotNet5();
 
