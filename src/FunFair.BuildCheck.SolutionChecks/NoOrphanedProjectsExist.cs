@@ -11,6 +11,7 @@ namespace FunFair.BuildCheck.SolutionChecks
     /// <summary>
     ///     Checks to see if there are projects in the folder that aren't registered in the solution.
     /// </summary>
+
     [SuppressMessage(category: "ReSharper", checkId: "ClassNeverInstantiated.Global", Justification = "Created by DI")]
     public sealed class NoOrphanedProjectsExist : ISolutionCheck
     {

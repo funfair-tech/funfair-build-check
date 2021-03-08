@@ -11,6 +11,7 @@ namespace FunFair.BuildCheck.ProjectChecks.Settings
     /// <summary>
     ///     Checks that there are no pre-release packages referenced.
     /// </summary>
+
     [SuppressMessage(category: "ReSharper", checkId: "ClassNeverInstantiated.Global", Justification = "Created by DI")]
     public sealed class NoPreReleaseNuGetPackages : IProjectCheck
     {
