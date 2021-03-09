@@ -12,6 +12,7 @@ namespace FunFair.BuildCheck.ProjectChecks.ReferencedPackages
     ///     Checks that a project only references a package once.
     /// </summary>
 
+
     [SuppressMessage(category: "ReSharper", checkId: "ClassNeverInstantiated.Global", Justification = "Created by DI")]
     public sealed class ReferencesNugetPackageOnlyOnce : IProjectCheck
     {
@@ -74,3 +75,4 @@ namespace FunFair.BuildCheck.ProjectChecks.ReferencedPackages
         }
     }
 }
+

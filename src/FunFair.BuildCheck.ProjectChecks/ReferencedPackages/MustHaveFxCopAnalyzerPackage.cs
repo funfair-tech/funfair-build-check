@@ -10,6 +10,7 @@ namespace FunFair.BuildCheck.ProjectChecks.ReferencedPackages
     ///     Checks that the FxCop analyzer is installed.
     /// </summary>
 
+
     [SuppressMessage(category: "ReSharper", checkId: "ClassNeverInstantiated.Global", Justification = "Created by DI")]
     public sealed class MustHaveFxCopAnalyzerPackage : IProjectCheck
     {
@@ -82,3 +83,4 @@ namespace FunFair.BuildCheck.ProjectChecks.ReferencedPackages
         }
     }
 }
+

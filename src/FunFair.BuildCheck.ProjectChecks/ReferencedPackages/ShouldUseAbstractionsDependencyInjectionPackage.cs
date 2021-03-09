@@ -7,6 +7,7 @@ namespace FunFair.BuildCheck.ProjectChecks.ReferencedPackages
     ///     Checks that the dependency injection abstractions package is used rather than the full version.
     /// </summary>
 
+
     [SuppressMessage(category: "ReSharper", checkId: "ClassNeverInstantiated.Global", Justification = "Created by DI")]
     public sealed class ShouldUseAbstractionsDependencyInjectionPackage : ShouldUseAbstractionsPackage
     {
@@ -20,3 +21,4 @@ namespace FunFair.BuildCheck.ProjectChecks.ReferencedPackages
         }
     }
 }
+

@@ -11,6 +11,7 @@ namespace FunFair.BuildCheck.ProjectChecks.Settings
     ///     Checks that Nullable is turned on.
     /// </summary>
 
+
     [SuppressMessage(category: "ReSharper", checkId: "ClassNeverInstantiated.Global", Justification = "Created by DI")]
     public sealed class MustEnableNullable : IProjectCheck
     {
@@ -40,3 +41,4 @@ namespace FunFair.BuildCheck.ProjectChecks.Settings
         }
     }
 }
+

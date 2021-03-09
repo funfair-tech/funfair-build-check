@@ -12,6 +12,7 @@ namespace FunFair.BuildCheck.SolutionChecks
     ///     Checks to see if the global.json specifies the same version of the SDK as in the DOTNET_CORE_SDK_VERSION environment variable.
     /// </summary>
 
+
     [SuppressMessage(category: "ReSharper", checkId: "ClassNeverInstantiated.Global", Justification = "Created by DI")]
     public sealed class GlobalJsonIsLatest : ISolutionCheck
     {
@@ -85,3 +86,4 @@ namespace FunFair.BuildCheck.SolutionChecks
         }
     }
 }
+
