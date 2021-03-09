@@ -13,6 +13,7 @@ namespace FunFair.BuildCheck.ProjectChecks.ReferencedPackages
     ///     Checks that nuget packages are set to a consistent version across an entire solution.
     /// </summary>
 
+
     [SuppressMessage(category: "ReSharper", checkId: "ClassNeverInstantiated.Global", Justification = "Created by DI")]
     public sealed class HasConsistentNuGetPackages : IProjectCheck
     {
@@ -81,3 +82,4 @@ namespace FunFair.BuildCheck.ProjectChecks.ReferencedPackages
         }
     }
 }
+

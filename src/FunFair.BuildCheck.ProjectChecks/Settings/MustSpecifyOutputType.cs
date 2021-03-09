@@ -11,6 +11,7 @@ namespace FunFair.BuildCheck.ProjectChecks.Settings
     ///     Checks that output type is explicitly specified.
     /// </summary>
 
+
     [SuppressMessage(category: "ReSharper", checkId: "ClassNeverInstantiated.Global", Justification = "Created by DI")]
     public sealed class MustSpecifyOutputType : IProjectCheck
     {
@@ -44,3 +45,4 @@ namespace FunFair.BuildCheck.ProjectChecks.Settings
         }
     }
 }
+
