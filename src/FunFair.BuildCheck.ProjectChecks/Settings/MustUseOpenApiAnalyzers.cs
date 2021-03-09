@@ -11,6 +11,7 @@ namespace FunFair.BuildCheck.ProjectChecks.Settings
     ///     Checks that Open Api Analyzers are enabled.
     /// </summary>
 
+
     [SuppressMessage(category: "ReSharper", checkId: "ClassNeverInstantiated.Global", Justification = "Created by DI")]
     public sealed class MustUseOpenApiAnalyzers : IProjectCheck
     {
@@ -32,3 +33,4 @@ namespace FunFair.BuildCheck.ProjectChecks.Settings
         }
     }
 }
+

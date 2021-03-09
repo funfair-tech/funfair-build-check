@@ -7,6 +7,7 @@ namespace FunFair.BuildCheck.ProjectChecks.ReferencedPackages
     ///     Checks that the Roslynator analyzer is installed.
     /// </summary>
 
+
     [SuppressMessage(category: "ReSharper", checkId: "ClassNeverInstantiated.Global", Justification = "Created by DI")]
     public sealed class MustHaveRoslynatorAnalyzersPackage : MustHaveAnalyzerPackage
     {
@@ -20,3 +21,4 @@ namespace FunFair.BuildCheck.ProjectChecks.ReferencedPackages
         }
     }
 }
+

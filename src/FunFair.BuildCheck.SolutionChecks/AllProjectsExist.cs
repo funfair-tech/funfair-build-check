@@ -11,6 +11,7 @@ namespace FunFair.BuildCheck.SolutionChecks
     ///     Checks to see if all projects in the solution exist.
     /// </summary>
 
+
     [SuppressMessage(category: "ReSharper", checkId: "ClassNeverInstantiated.Global", Justification = "Created by DI")]
     public sealed class AllProjectsExist : ISolutionCheck
     {
@@ -45,3 +46,4 @@ namespace FunFair.BuildCheck.SolutionChecks
         }
     }
 }
+
