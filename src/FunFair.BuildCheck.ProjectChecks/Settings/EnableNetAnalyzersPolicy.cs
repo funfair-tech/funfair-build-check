@@ -10,8 +10,6 @@ namespace FunFair.BuildCheck.ProjectChecks.Settings
     /// <summary>
     ///     Checks that the .net analyzers are enabled appropriately.
     /// </summary>
-
-
     [SuppressMessage(category: "ReSharper", checkId: "ClassNeverInstantiated.Global", Justification = "Created by DI")]
     public sealed class EnableNetAnalyzersPolicy : IProjectCheck
     {
@@ -35,4 +33,5 @@ namespace FunFair.BuildCheck.ProjectChecks.Settings
         }
     }
 }
+
 

@@ -9,8 +9,6 @@ namespace FunFair.BuildCheck.ProjectChecks.Settings
     /// <summary>
     ///     Checks that the project does not include a RootNamespace setting.
     /// </summary>
-
-
     [SuppressMessage(category: "ReSharper", checkId: "ClassNeverInstantiated.Global", Justification = "Created by DI")]
     public sealed class DoesNotUseRootNamespace : IProjectCheck
     {
@@ -44,4 +42,5 @@ namespace FunFair.BuildCheck.ProjectChecks.Settings
         }
     }
 }
+
 

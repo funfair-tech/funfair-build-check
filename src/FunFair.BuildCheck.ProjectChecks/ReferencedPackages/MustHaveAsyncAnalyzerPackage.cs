@@ -6,8 +6,6 @@ namespace FunFair.BuildCheck.ProjectChecks.ReferencedPackages
     /// <summary>
     ///     Checks that the async issues analyzer is installed.
     /// </summary>
-
-
     [SuppressMessage(category: "ReSharper", checkId: "ClassNeverInstantiated.Global", Justification = "Created by DI")]
     public sealed class MustHaveAsyncAnalyzerPackage : MustHaveAnalyzerPackage
     {
@@ -21,4 +19,5 @@ namespace FunFair.BuildCheck.ProjectChecks.ReferencedPackages
         }
     }
 }
+
 

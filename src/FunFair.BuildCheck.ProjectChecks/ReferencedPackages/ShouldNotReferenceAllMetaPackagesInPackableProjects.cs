@@ -11,8 +11,6 @@ namespace FunFair.BuildCheck.ProjectChecks.ReferencedPackages
     /// <summary>
     ///     Checks that nuget *.All packages are not referenced in a packable project.
     /// </summary>
-
-
     [SuppressMessage(category: "ReSharper", checkId: "ClassNeverInstantiated.Global", Justification = "Created by DI")]
     public sealed class ShouldNotReferenceAllMetaPackagesInPackableProjects : IProjectCheck
     {
@@ -60,4 +58,5 @@ namespace FunFair.BuildCheck.ProjectChecks.ReferencedPackages
         }
     }
 }
+
 

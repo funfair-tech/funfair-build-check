@@ -10,8 +10,6 @@ namespace FunFair.BuildCheck.ProjectChecks.Settings
     /// <summary>
     ///     Checks that all warnings are treated as errors.
     /// </summary>
-
-
     [SuppressMessage(category: "ReSharper", checkId: "ClassNeverInstantiated.Global", Justification = "Created by DI")]
     public sealed class ErrorPolicyWarningAsErrors : IProjectCheck
     {
@@ -35,4 +33,5 @@ namespace FunFair.BuildCheck.ProjectChecks.Settings
         }
     }
 }
+
 

@@ -10,8 +10,6 @@ namespace FunFair.BuildCheck.ProjectChecks.References
     /// <summary>
     ///     Checks that there are no direct dll references.
     /// </summary>
-
-
     [SuppressMessage(category: "ReSharper", checkId: "ClassNeverInstantiated.Global", Justification = "Created by DI")]
     public sealed class DoesNotReferenceByDll : IProjectCheck
     {
@@ -44,4 +42,5 @@ namespace FunFair.BuildCheck.ProjectChecks.References
         }
     }
 }
+
 

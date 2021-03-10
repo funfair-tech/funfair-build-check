@@ -10,8 +10,6 @@ namespace FunFair.BuildCheck.ProjectChecks.Settings
     /// <summary>
     ///     Checks the feature policy that 'strict' and 'flow-analysis' are enabled.
     /// </summary>
-
-
     [SuppressMessage(category: "ReSharper", checkId: "ClassNeverInstantiated.Global", Justification = "Created by DI")]
     public sealed class MustEnableStrictMode : IProjectCheck
     {
@@ -33,4 +31,5 @@ namespace FunFair.BuildCheck.ProjectChecks.Settings
         }
     }
 }
+
 
