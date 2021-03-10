@@ -9,8 +9,6 @@ namespace FunFair.BuildCheck.ProjectChecks.ReferencedPackages
     /// <summary>
     ///     Checks that the SourceLink package is installed.
     /// </summary>
-
-
     [SuppressMessage(category: "ReSharper", checkId: "ClassNeverInstantiated.Global", Justification = "Created by DI")]
     public sealed class MustHaveSourceLinkPackage : IProjectCheck
     {
@@ -102,4 +100,5 @@ namespace FunFair.BuildCheck.ProjectChecks.ReferencedPackages
         }
     }
 }
+
 

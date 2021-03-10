@@ -10,8 +10,6 @@ namespace FunFair.BuildCheck.ProjectChecks.Settings
     /// <summary>
     ///     The checks analysis mode policy is set appropriately.
     /// </summary>
-
-
     [SuppressMessage(category: "ReSharper", checkId: "ClassNeverInstantiated.Global", Justification = "Created by DI")]
     public sealed class AnalysisModePolicy : IProjectCheck
     {
@@ -35,4 +33,5 @@ namespace FunFair.BuildCheck.ProjectChecks.Settings
         }
     }
 }
+
 

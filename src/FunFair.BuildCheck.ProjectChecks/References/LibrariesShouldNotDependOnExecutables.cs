@@ -12,8 +12,6 @@ namespace FunFair.BuildCheck.ProjectChecks.References
     /// <summary>
     ///     Checks that libraries do not depend on executables.
     /// </summary>
-
-
     [SuppressMessage(category: "ReSharper", checkId: "ClassNeverInstantiated.Global", Justification = "Created by DI")]
     public sealed class LibrariesShouldNotDependOnExecutables : IProjectCheck
     {
@@ -72,4 +70,5 @@ namespace FunFair.BuildCheck.ProjectChecks.References
         }
     }
 }
+
 

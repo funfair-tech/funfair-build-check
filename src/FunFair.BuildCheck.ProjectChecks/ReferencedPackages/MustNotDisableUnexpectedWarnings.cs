@@ -12,8 +12,6 @@ namespace FunFair.BuildCheck.ProjectChecks.ReferencedPackages
     /// <summary>
     ///     Checks that only whitelisted warnings can be disabled.
     /// </summary>
-
-
     [SuppressMessage(category: "ReSharper", checkId: "ClassNeverInstantiated.Global", Justification = "Created by DI")]
     public sealed class MustNotDisableUnexpectedWarnings : IProjectCheck
     {
@@ -131,4 +129,5 @@ namespace FunFair.BuildCheck.ProjectChecks.ReferencedPackages
         }
     }
 }
+
 

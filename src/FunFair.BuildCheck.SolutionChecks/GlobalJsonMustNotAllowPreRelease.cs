@@ -11,8 +11,6 @@ namespace FunFair.BuildCheck.SolutionChecks
     /// <summary>
     ///     Checks the global.json pre-release settings.
     /// </summary>
-
-
     [SuppressMessage(category: "ReSharper", checkId: "ClassNeverInstantiated.Global", Justification = "Created by DI")]
     public sealed class GlobalJsonMustNotAllowPreRelease : ISolutionCheck
     {
@@ -85,4 +83,5 @@ namespace FunFair.BuildCheck.SolutionChecks
         }
     }
 }
+
 
