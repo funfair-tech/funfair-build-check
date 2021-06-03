@@ -9,6 +9,14 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 ### Added
 ### Fixed
 ### Changed
+### Removed
+### Deployment Changes
+
+<!--
+Releases that have at least been deployed to staging, BUT NOT necessarily released to live.  Changes should be moved from [Unreleased] into here as they are merged into the appropriate release branch
+-->
+## [3.1.0] - 2021-06-03
+### Changed
 - FF-1429 - Updated coverlet to 3.0.3
 - FF-1429 - Updated Microsoft.NET.Test.Sdk to 16.9.1
 - FF-1429 - Updated SonarAnalyzer.CSharp to 8.19.0.28253
@@ -27,12 +35,7 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 - FF-1429 - Updated SonarAnalyzer.CSharp to 8.23.0.32424
 - FF-1429 - Updated Microsoft.NET.Test.Sdk to 16.10.0
 - FF-1429 - Updated Microsoft.VisualStudio.Threading.Analyzers to 16.10.56
-### Removed
-### Deployment Changes
 
-<!--
-Releases that have at least been deployed to staging, BUT NOT necessarily released to live.  Changes should be moved from [Unreleased] into here as they are merged into the appropriate release branch
--->
 ## [2.3.0] - 2021-02-17
 ### Added
 - Checks to see that projects that are packed to nuget packages do not reference *.All packages
