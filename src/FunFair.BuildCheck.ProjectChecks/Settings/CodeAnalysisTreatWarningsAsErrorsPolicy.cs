@@ -29,9 +29,11 @@ namespace FunFair.BuildCheck.ProjectChecks.Settings
         /// <inheritdoc />
         public void Check(string projectName, string projectFolder, XmlDocument project)
         {
-            ProjectValueHelpers.CheckValue(projectName: projectName, project: project, nodePresence: @"CodeAnalysisTreatWarningsAsErrors", requiredValue: EXPECTED, logger: this._logger);
+            ProjectValueHelpers.CheckValue(projectName: projectName,
+                                           project: project,
+                                           nodePresence: @"CodeAnalysisTreatWarningsAsErrors",
+                                           requiredValue: EXPECTED,
+                                           logger: this._logger);
         }
     }
 }
-
-
