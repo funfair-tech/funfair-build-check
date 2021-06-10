@@ -42,5 +42,3 @@ namespace FunFair.BuildCheck.ProjectChecks.References
         }
     }
 }
-
-

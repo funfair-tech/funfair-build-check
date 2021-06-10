@@ -39,5 +39,3 @@ namespace FunFair.BuildCheck.ProjectChecks.Settings
         }
     }
 }
-
-

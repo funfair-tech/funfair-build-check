@@ -84,5 +84,3 @@ namespace FunFair.BuildCheck.SolutionChecks
         }
     }
 }
-
-
