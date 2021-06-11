@@ -118,6 +118,10 @@
    color: "96f7d2"
    description: "Changes in FunFair.BuildCheck project"
 
+ - name: "FunFair.BuildCheck.Helpers"
+   color: "96f7d2"
+   description: "Changes in FunFair.BuildCheck.Helpers project"
+
  - name: "FunFair.BuildCheck.Interfaces"
    color: "96f7d2"
    description: "Changes in FunFair.BuildCheck.Interfaces project"
