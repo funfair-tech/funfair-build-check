@@ -41,7 +41,7 @@
         <PackageReference Include="ToStringWithoutOverrideAnalyzer" Version="0.6.0" PrivateAssets="All" />
     </ItemGroup>
     <ItemGroup>
-        <ProjectReference Include="..\FunFair.BuildCheck.Helpers\FunFair.BuildCheck.Helpers.csproj"/>
+        <ProjectReference Include="..\FunFair.BuildCheck.Helpers\FunFair.BuildCheck.Helpers.csproj" />
         <ProjectReference Include="..\FunFair.BuildCheck.Interfaces\FunFair.BuildCheck.Interfaces.csproj" />
     </ItemGroup>
 </Project>
