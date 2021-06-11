@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
+using FunFair.BuildCheck.Helpers;
 using FunFair.BuildCheck.Interfaces;
 using Microsoft.Extensions.Logging;
 
@@ -34,7 +35,7 @@ namespace FunFair.BuildCheck.SolutionChecks
 
             foreach (Project? project in this._projects)
             {
-                bool exists = File.Exists(project.FileName);
+                bool exists = File.Exists(PathHelpers.ConvertToNative(project.FileName));
 
                 if (!exists)
                 {
