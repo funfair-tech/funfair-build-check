@@ -18,6 +18,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FunFair.BuildCheck.Solution
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FunFair.BuildCheck.ProjectChecks", "FunFair.BuildCheck.ProjectChecks\FunFair.BuildCheck.ProjectChecks.csproj", "{C041C414-17DE-41DB-B865-F51F375BE889}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FunFair.BuildCheck.Helpers", "FunFair.BuildCheck.Helpers\FunFair.BuildCheck.Helpers.csproj", "{52D0D078-805E-4CCD-BD5A-D06E9CBFC2D1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -44,5 +46,9 @@ Global
 		{C041C414-17DE-41DB-B865-F51F375BE889}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C041C414-17DE-41DB-B865-F51F375BE889}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C041C414-17DE-41DB-B865-F51F375BE889}.Release|Any CPU.Build.0 = Release|Any CPU
+		{52D0D078-805E-4CCD-BD5A-D06E9CBFC2D1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{52D0D078-805E-4CCD-BD5A-D06E9CBFC2D1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{52D0D078-805E-4CCD-BD5A-D06E9CBFC2D1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{52D0D078-805E-4CCD-BD5A-D06E9CBFC2D1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

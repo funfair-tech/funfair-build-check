@@ -11,6 +11,7 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 ### Changed
 - FF-1429 - Updated SonarAnalyzer.CSharp to 8.24.0.32949
 - Corrected paths on linux
+- SET SOLUTION_FILENAME environment variable when running under Teamcity
 ### Removed
 ### Deployment Changes
 

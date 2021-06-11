@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Xml;
+using FunFair.BuildCheck.Helpers;
 using FunFair.BuildCheck.Interfaces;
 using FunFair.BuildCheck.Services;
 using Microsoft.Extensions.Configuration;
@@ -35,9 +36,7 @@ namespace FunFair.BuildCheck
                                                    .AddCommandLine(args: args,
                                                                    new Dictionary<string, string>
                                                                    {
-                                                                       {@"-Solution", @"solution"},
-                                                                       {@"-WarningAsErrors", @"WarningAsErrors"},
-                                                                       {@"-PreReleaseBuild", @"PreReleaseBuild"}
+                                                                       {@"-Solution", @"solution"}, {@"-WarningAsErrors", @"WarningAsErrors"}, {@"-PreReleaseBuild", @"PreReleaseBuild"}
                                                                    })
                                                    .Build();
 
@@ -51,6 +50,8 @@ namespace FunFair.BuildCheck
 
                     return ERROR;
                 }
+
+                solutionFileName = PathHelpers.ConvertToNative(solutionFileName);
 
                 if (!File.Exists(solutionFileName))
                 {
@@ -100,6 +101,8 @@ namespace FunFair.BuildCheck
                     return ERROR;
                 }
 
+                OutputSolutionFileName(solutionFileName);
+
                 Console.WriteLine();
                 Console.WriteLine(value: "No errors found.");
 
@@ -110,6 +113,16 @@ namespace FunFair.BuildCheck
                 Console.WriteLine($"ERROR: {exception.Message}");
 
                 return ERROR;
+            }
+        }
+
+        private static void OutputSolutionFileName(string solutionFileName)
+        {
+            string? env = Environment.GetEnvironmentVariable("TEAMCITY_VERSION");
+
+            if (!string.IsNullOrWhiteSpace(env))
+            {
+                Console.WriteLine($"##teamcity[setParameter name='env.SOLUTION_FILENAME' value='{solutionFileName}']");
             }
         }
 

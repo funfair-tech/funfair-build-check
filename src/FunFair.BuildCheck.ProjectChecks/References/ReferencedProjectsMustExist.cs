@@ -3,6 +3,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using System.Xml;
+using FunFair.BuildCheck.Helpers;
 using FunFair.BuildCheck.Interfaces;
 using Microsoft.Extensions.Logging;
 
@@ -39,7 +40,7 @@ namespace FunFair.BuildCheck.ProjectChecks.References
             {
                 string projectReference = reference.GetAttribute(name: "Include");
 
-                string referencedProject = Path.Combine(path1: projectFolder, path2: ConvertToNative(projectReference));
+                string referencedProject = Path.Combine(path1: projectFolder, PathHelpers.ConvertToNative(projectReference));
                 FileInfo i = new(referencedProject);
 
                 if (!i.Exists)
@@ -47,16 +48,6 @@ namespace FunFair.BuildCheck.ProjectChecks.References
                     this._logger.LogError($"Project {projectName} references {referencedProject} that does not exist.");
                 }
             }
-        }
-
-        private static string ConvertToNative(string filename)
-        {
-            if (Path.PathSeparator == '\\')
-            {
-                return filename.Replace(oldChar: '/', newChar: Path.PathSeparator);
-            }
-
-            return filename.Replace(oldChar: '\\', newChar: Path.PathSeparator);
         }
     }
 }
