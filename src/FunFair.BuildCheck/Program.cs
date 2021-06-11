@@ -36,9 +36,7 @@ namespace FunFair.BuildCheck
                                                    .AddCommandLine(args: args,
                                                                    new Dictionary<string, string>
                                                                    {
-                                                                       {@"-Solution", @"solution"},
-                                                                       {@"-WarningAsErrors", @"WarningAsErrors"},
-                                                                       {@"-PreReleaseBuild", @"PreReleaseBuild"}
+                                                                       {@"-Solution", @"solution"}, {@"-WarningAsErrors", @"WarningAsErrors"}, {@"-PreReleaseBuild", @"PreReleaseBuild"}
                                                                    })
                                                    .Build();
 
@@ -57,7 +55,7 @@ namespace FunFair.BuildCheck
 
                 if (!File.Exists(solutionFileName))
                 {
-                    Console.WriteLine(value: "Missing Solution file.");
+                    Console.WriteLine(value: $"Could not find solution file {solutionFileName}");
                     Usage();
 
                     return ERROR;
