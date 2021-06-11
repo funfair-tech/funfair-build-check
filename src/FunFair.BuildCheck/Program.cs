@@ -208,7 +208,7 @@ namespace FunFair.BuildCheck
 
                     Console.WriteLine($" * {displayName} = {fileName}");
 
-                    string fullPath = Path.Combine(path1: basePath, path2: fileName);
+                    string fullPath = Path.Combine(path1: basePath, PathHelpers.ConvertToNative(fileName));
                     Console.WriteLine($"    - {fullPath}");
 
                     projects.Add(new Project(displayName: displayName, fileName: fullPath));
