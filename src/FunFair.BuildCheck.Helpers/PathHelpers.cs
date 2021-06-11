@@ -14,12 +14,12 @@ namespace FunFair.BuildCheck.Helpers
         /// <returns>The native format path.</returns>
         public static string ConvertToNative(string path)
         {
-            if (Path.PathSeparator == '\\')
+            if (Path.DirectorySeparatorChar == '\\')
             {
-                return path.Replace(oldChar: '/', newChar: Path.PathSeparator);
+                return path.Replace(oldChar: '/', newChar: Path.DirectorySeparatorChar);
             }
 
-            return path.Replace(oldChar: '\\', newChar: Path.PathSeparator);
+            return path.Replace(oldChar: '\\', newChar: Path.DirectorySeparatorChar);
         }
     }
 }
