@@ -39,14 +39,24 @@ namespace FunFair.BuildCheck.ProjectChecks.References
             {
                 string projectReference = reference.GetAttribute(name: "Include");
 
-                string referencedProject = Path.Combine(path1: projectFolder, path2: projectReference);
+                string referencedProject = Path.Combine(path1: projectFolder, path2: ConvertToNative(projectReference));
                 FileInfo i = new(referencedProject);
 
                 if (!i.Exists)
                 {
-                    this._logger.LogError($"Projecy {projectName} references {referencedProject} that does not exist.");
+                    this._logger.LogError($"Project {projectName} references {referencedProject} that does not exist.");
                 }
             }
+        }
+
+        private static string ConvertToNative(string filename)
+        {
+            if (Path.PathSeparator == '\\')
+            {
+                return filename.Replace(oldChar: '/', newChar: Path.PathSeparator);
+            }
+
+            return filename.Replace(oldChar: '\\', newChar: Path.PathSeparator);
         }
     }
 }
