@@ -19,7 +19,7 @@
     </PropertyGroup>
     <PropertyGroup>
         <NeutralLanguage>en</NeutralLanguage>
-        <Description>Dot net core Build checking tool.</Description>
+        <Description>Dot net core build checking tool.</Description>
         <PackageTags>FunFair BuildCheck, CSharp, Project Analyzer, analyzers, dotnet tool, tool</PackageTags>
         <RepositoryUrl>https://github.com/funfair-tech/funfair-build-check</RepositoryUrl>
     </PropertyGroup>
