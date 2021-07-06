@@ -7,21 +7,25 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 
 ## [Unreleased]
 ### Added
-- Checks for metadata on packable projects - Description, RepositoryUrl, PackageTags
-- Checks for common metadata import on packable projects via DOTNET_PACK_PROJECT_METADATA_IMPORT environment variable
 ### Fixed
 ### Changed
-- FF-1429 - Updated Roslynator.Analyzers to 3.2.0
-- FF-1429 - Updated NuGet to 5.10.0
-- FF-1429 - Updated SonarAnalyzer.CSharp to 8.25.0.33663
-- FF-1429 - Updated FunFair.Test.Common to 5.4.0.1031
-- FF-1429 - Updated FunFair.CodeAnalysis to 5.2.1.809
 ### Removed
 ### Deployment Changes
 
 <!--
 Releases that have at least been deployed to staging, BUT NOT necessarily released to live.  Changes should be moved from [Unreleased] into here as they are merged into the appropriate release branch
 -->
+## [3.2.1] - 2021-07-07
+### Added
+- Checks for metadata on packable projects - Description, RepositoryUrl, PackageTags
+- Checks for common metadata import on packable projects via DOTNET_PACK_PROJECT_METADATA_IMPORT environment variable
+### Changed
+- FF-1429 - Updated Roslynator.Analyzers to 3.2.0
+- FF-1429 - Updated NuGet to 5.10.0
+- FF-1429 - Updated SonarAnalyzer.CSharp to 8.25.0.33663
+- FF-1429 - Updated FunFair.Test.Common to 5.4.0.1031
+- FF-1429 - Updated FunFair.CodeAnalysis to 5.2.1.809
+
 ## [3.2.0] - 2021-06-11
 ### Changed
 - FF-1429 - Updated SonarAnalyzer.CSharp to 8.24.0.32949
