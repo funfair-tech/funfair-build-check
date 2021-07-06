@@ -15,6 +15,10 @@ namespace FunFair.BuildCheck.ProjectChecks.Settings
         private readonly ILogger<ImportCommonProps> _logger;
         private readonly string _projectImport;
 
+        /// <summary>
+        ///     Constructor.
+        /// </summary>
+        /// <param name="logger">Logging.</param>
         public ImportCommonProps(ILogger<ImportCommonProps> logger)
         {
             this._logger = logger ?? throw new ArgumentNullException(nameof(logger));

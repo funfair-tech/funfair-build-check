@@ -14,6 +14,11 @@ namespace FunFair.BuildCheck.ProjectChecks.Settings
         private readonly ILogger _logger;
         private readonly string _property;
 
+        /// <summary>
+        ///     Constructor.
+        /// </summary>
+        /// <param name="property">The property that needs to be set.</param>
+        /// <param name="logger">Logging.</param>
         protected PackableMetadataBase(string property, ILogger logger)
         {
             this._property = property ?? throw new ArgumentNullException(nameof(property));
