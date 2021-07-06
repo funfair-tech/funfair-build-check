@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Xml;
 using FunFair.BuildCheck.Interfaces;
@@ -10,6 +11,7 @@ namespace FunFair.BuildCheck.ProjectChecks.Settings
     /// <summary>
     ///     Looks for common properties project import.
     /// </summary>
+    [SuppressMessage(category: "ReSharper", checkId: "ClassNeverInstantiated.Global", Justification = "Created by DI")]
     public sealed class ImportCommonProps : IProjectCheck
     {
         private readonly ILogger<ImportCommonProps> _logger;
