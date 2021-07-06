@@ -19,10 +19,11 @@
     </PropertyGroup>
     <PropertyGroup>
         <NeutralLanguage>en</NeutralLanguage>
-        <Company>FunFair</Company>
-        <Authors>$(Company)</Authors>
         <Description>Dot net core Build checking tool.</Description>
+        <PackageTags>FunFair BuildCheck, CSharp, Project Analyzer, analyzers, dotnet tool, tool</PackageTags>
+        <RepositoryUrl>https://github.com/funfair-tech/funfair-build-check</RepositoryUrl>
     </PropertyGroup>
+    <Import Project="$(SolutionDir)FunFair.props"/>
     <PropertyGroup>
         <AnalysisLevel>latest</AnalysisLevel>
         <AnalysisMode>AllEnabledByDefault</AnalysisMode>

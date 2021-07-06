@@ -86,6 +86,12 @@ namespace FunFair.BuildCheck
             }
 
             AddProjectCheck<MustEnableNullable>(services);
+
+            AddProjectCheck<PackageTagsMetadata>(services);
+            AddProjectCheck<DescriptionMetadata>(services);
+            AddProjectCheck<RepositoryUrlMetadata>(services);
+
+            AddProjectCheck<ImportCommonProps>(services);
         }
 
         private static bool IsEarlierThanDotNet5()

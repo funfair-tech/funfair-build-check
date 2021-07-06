@@ -7,6 +7,8 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 
 ## [Unreleased]
 ### Added
+- Checks for metadata on packable projects - Description, RepositoryUrl, PackageTags
+- Checks for common metadata import on packable projects via DOTNET_PACK_PROJECT_METADATA_IMPORT environment variable
 ### Fixed
 ### Changed
 - FF-1429 - Updated Roslynator.Analyzers to 3.2.0

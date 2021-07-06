@@ -253,5 +253,17 @@ namespace FunFair.BuildCheck.ProjectChecks.Helpers
 
             return outputTypeNode?.InnerText;
         }
+
+        public static bool HasProperty(this XmlDocument project, string property)
+        {
+            XmlNode? outputTypeNode = project.SelectSingleNode("/Project/PropertyGroup/" + property);
+
+            if (outputTypeNode != null)
+            {
+                return !string.IsNullOrWhiteSpace(outputTypeNode.InnerText);
+            }
+
+            return false;
+        }
     }
 }
