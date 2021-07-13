@@ -1,4 +1,4 @@
-﻿using System.Collections.Concurrent;
+﻿using NonBlocking;
 using System.Xml;
 using FunFair.BuildCheck.Interfaces;
 
