@@ -7,20 +7,24 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 
 ## [Unreleased]
 ### Added
-- Tests for IsPublishable
-- Checks that test projects reference coverlet.collector and coverlet.msbuild
 ### Fixed
 ### Changed
-- FF-1429 - Updated SonarAnalyzer.CSharp to 8.26.0.34506
-- FF-1429 - Updated FunFair.CodeAnalysis to 5.2.3.837
-- FF-1429 - Updated Microsoft.Extensions to 5.0.2
-- FF-1429 - Updated TeamCity.VSTest.TestAdapter to 1.0.26
 ### Removed
 ### Deployment Changes
 
 <!--
 Releases that have at least been deployed to staging, BUT NOT necessarily released to live.  Changes should be moved from [Unreleased] into here as they are merged into the appropriate release branch
 -->
+## [3.3.0] - 2021-07-15
+### Added
+- Tests for IsPublishable
+- Checks that test projects reference coverlet.collector and coverlet.msbuild
+### Changed
+- FF-1429 - Updated SonarAnalyzer.CSharp to 8.26.0.34506
+- FF-1429 - Updated FunFair.CodeAnalysis to 5.2.3.837
+- FF-1429 - Updated Microsoft.Extensions to 5.0.2
+- FF-1429 - Updated TeamCity.VSTest.TestAdapter to 1.0.26
+
 ## [3.2.1] - 2021-07-07
 ### Added
 - Checks for metadata on packable projects - Description, RepositoryUrl, PackageTags
