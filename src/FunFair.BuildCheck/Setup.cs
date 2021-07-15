@@ -50,6 +50,7 @@ namespace FunFair.BuildCheck
             AddProjectCheck<CodeAnalysisTreatWarningsAsErrorsPolicy>(services);
             AddProjectCheck<EnforceCodeStyleInBuildPolicy>(services);
             AddProjectCheck<LibrariesShouldBePackablePolicy>(services);
+            AddProjectCheck<OnlyExesShouldBePublishablePolicy>(services);
             AddProjectCheck<DoesNotUseDotNetCliToolReference>(services);
             AddProjectCheck<LibrariesShouldNotDependOnExecutables>(services);
             AddProjectCheck<DoesNotUseRootNamespace>(services);
@@ -58,6 +59,8 @@ namespace FunFair.BuildCheck
             {
                 AddProjectCheck<UsingXUnitMustIncludeVisualStudioTestPlatform>(services);
                 AddProjectCheck<UsingXUnitMustIncludeTeamCityTestAdapter>(services);
+                AddProjectCheck<UsingXUnitMustIncludeCoverletCollector>(services);
+                AddProjectCheck<UsingXUnitMustIncludeCoverletMsBuild>(services);
             }
 
             if (!repositorySettings.IsCodeAnalysisSolution)

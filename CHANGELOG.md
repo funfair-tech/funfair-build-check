@@ -7,6 +7,8 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 
 ## [Unreleased]
 ### Added
+- Tests for IsPublishable
+- Checks that test projects reference coverlet.collector and coverlet.msbuild
 ### Fixed
 ### Changed
 - FF-1429 - Updated SonarAnalyzer.CSharp to 8.26.0.34506
