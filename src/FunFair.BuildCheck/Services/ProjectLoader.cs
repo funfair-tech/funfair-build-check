@@ -1,6 +1,6 @@
-﻿using NonBlocking;
-using System.Xml;
+﻿using System.Xml;
 using FunFair.BuildCheck.Interfaces;
+using NonBlocking;
 
 namespace FunFair.BuildCheck.Services
 {
