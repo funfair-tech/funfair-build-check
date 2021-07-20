@@ -22,6 +22,11 @@ namespace FunFair.BuildCheck.Services
         /// <inheritdoc />
         public XmlDocument Load(string path)
         {
+            if (this._projects.TryGetValue(key: path, out XmlDocument doc))
+            {
+                return doc;
+            }
+
             return this._projects.GetOrAdd(key: path, LoadProject(path));
         }
 
