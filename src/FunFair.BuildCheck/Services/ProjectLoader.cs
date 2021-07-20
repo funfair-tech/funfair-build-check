@@ -22,7 +22,7 @@ namespace FunFair.BuildCheck.Services
         /// <inheritdoc />
         public XmlDocument Load(string path)
         {
-            return this._projects.GetOrAdd(key: path, valueFactory: LoadProject);
+            return this._projects.GetOrAdd(key: path, LoadProject(path));
         }
 
         private static XmlDocument LoadProject(string path)
