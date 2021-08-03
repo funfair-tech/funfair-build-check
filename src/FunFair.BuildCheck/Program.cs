@@ -36,9 +36,9 @@ namespace FunFair.BuildCheck
                                                    .AddCommandLine(args: args,
                                                                    new Dictionary<string, string>
                                                                    {
-                                                                       {@"-Solution", @"solution"},
-                                                                       {@"-WarningAsErrors", @"WarningAsErrors"},
-                                                                       {@"-PreReleaseBuild", @"PreReleaseBuild"}
+                                                                       { @"-Solution", @"solution" },
+                                                                       { @"-WarningAsErrors", @"WarningAsErrors" },
+                                                                       { @"-PreReleaseBuild", @"PreReleaseBuild" }
                                                                    })
                                                    .Build();
 
@@ -171,7 +171,7 @@ namespace FunFair.BuildCheck
             BuildCheck.Setup.SetupSolutionChecks(services);
             BuildCheck.Setup.SetupProjectChecks(repositorySettings: repositorySettings, services: services);
 
-            services.AddSingleton<ICheckConfiguration>(new CheckConfiguration {PreReleaseBuild = preReleaseBuild});
+            services.AddSingleton<ICheckConfiguration>(new CheckConfiguration { PreReleaseBuild = preReleaseBuild });
 
             IServiceProviderFactory<IServiceCollection> spf = new DefaultServiceProviderFactory();
 
@@ -189,10 +189,10 @@ namespace FunFair.BuildCheck
 
             Console.WriteLine(value: "Looking for projects...");
 
-            Regex regex =
-                new(pattern:
-                    "^Project\\(\"[{(]?[0-9A-F]{8}[-]?([0-9A-F]{4}[-]?){3}[0-9A-F]{12}[)}]\"\\)\\s*=\\s*\"(?<DisplayName>.*?)\",\\s*\"(?<FileName>.*?\\.csproj)\",\\s*\"[{(]?[0-9A-F]{8}[-]?([0-9A-F]{4}[-]?){3}[0-9A-F]{12}[)}]\"$"
-                    , options: RegexOptions.Compiled);
+            Regex regex = new(
+                pattern:
+                "^Project\\(\"[{(]?[0-9A-F]{8}[-]?([0-9A-F]{4}[-]?){3}[0-9A-F]{12}[)}]\"\\)\\s*=\\s*\"(?<DisplayName>.*?)\",\\s*\"(?<FileName>.*?\\.csproj)\",\\s*\"[{(]?[0-9A-F]{8}[-]?([0-9A-F]{4}[-]?){3}[0-9A-F]{12}[)}]\"$",
+                options: RegexOptions.Compiled);
 
             foreach (string line in text)
             {
