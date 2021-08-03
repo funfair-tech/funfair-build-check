@@ -10,7 +10,7 @@ namespace FunFair.BuildCheck.ProjectChecks.Helpers
     internal static class ProjectValueHelpers
     {
         private static readonly IReadOnlyList<string> PackagesForTestProjectDetection =
-            new[] {"xunit", "xunit.runner.visualstudio", "NSubstitute", "Microsoft.NET.Test.Sdk", "TeamCity.VSTest.TestAdapter", "FunFair.Test.Common"};
+            new[] { "xunit", "xunit.runner.visualstudio", "NSubstitute", "Microsoft.NET.Test.Sdk", "TeamCity.VSTest.TestAdapter", "FunFair.Test.Common" };
 
         public static bool IsDotNetTool(this XmlDocument project)
         {
