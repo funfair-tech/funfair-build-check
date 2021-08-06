@@ -40,7 +40,7 @@ namespace FunFair.BuildCheck.SolutionChecks
             {
                 if (this._projects.All(x => x.FileName != project))
                 {
-                    string solutionRelative = Path.GetRelativePath(relativeTo: basePath, path: project)!;
+                    string solutionRelative = Path.GetRelativePath(relativeTo: basePath, path: project);
                     this._logger.LogError($"Project {solutionRelative} is not in solution, but in work folder");
                 }
             }
