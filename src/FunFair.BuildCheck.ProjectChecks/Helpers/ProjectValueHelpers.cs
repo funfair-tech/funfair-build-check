@@ -86,14 +86,18 @@ namespace FunFair.BuildCheck.ProjectChecks.Helpers
                 {
                     XmlNode? node = propertyGroup.SelectSingleNode(nodePresence);
 
-                    if (node == null)
+                    if (node != null)
                     {
-                        if (!hasGlobalSetting)
-                        {
-                            string configuration = propertyGroup.GetAttribute(name: "Condition");
-                            logger.LogError($"{projectName}: Configuration {configuration} should specify {nodePresence}");
-                        }
+                        continue;
                     }
+
+                    if (hasGlobalSetting)
+                    {
+                        continue;
+                    }
+
+                    string configuration = propertyGroup.GetAttribute(name: "Condition");
+                    logger.LogError($"{projectName}: Configuration {configuration} should specify {nodePresence}");
                 }
             }
 
@@ -125,20 +129,10 @@ namespace FunFair.BuildCheck.ProjectChecks.Helpers
 
         public static void CheckValue(string projectName, XmlDocument project, string nodePresence, Func<string, bool> isRequiredValue, string msg, ILogger logger)
         {
-            CheckValueCommon(projectName: projectName,
-                             project: project,
-                             nodePresence: nodePresence,
-                             isRequiredValue: isRequiredValue,
-                             requiredValueDisplayText: msg,
-                             logger: logger);
+            CheckValueCommon(projectName: projectName, project: project, nodePresence: nodePresence, isRequiredValue: isRequiredValue, requiredValueDisplayText: msg, logger: logger);
         }
 
-        private static void CheckValueCommon(string projectName,
-                                             XmlDocument project,
-                                             string nodePresence,
-                                             Func<string, bool> isRequiredValue,
-                                             string requiredValueDisplayText,
-                                             ILogger logger)
+        private static void CheckValueCommon(string projectName, XmlDocument project, string nodePresence, Func<string, bool> isRequiredValue, string requiredValueDisplayText, ILogger logger)
         {
             bool hasGlobalSetting = false;
             XmlNodeList? nodes = project.SelectNodes("/Project/PropertyGroup[not(@Condition)]/" + nodePresence);
@@ -225,7 +219,12 @@ namespace FunFair.BuildCheck.ProjectChecks.Helpers
         {
             const string defaultType = @"Library";
 
-            XmlNode? outputTypeNode = project.SelectSingleNode("/Project/PropertyGroup/OutputType");
+            return GetStringProperty(project: project, path: "/Project/PropertyGroup/OutputType", defaultType: defaultType);
+        }
+
+        private static string GetStringProperty(XmlDocument project, string path, string defaultType)
+        {
+            XmlNode? outputTypeNode = project.SelectSingleNode(path);
 
             if (outputTypeNode != null)
             {
@@ -235,16 +234,25 @@ namespace FunFair.BuildCheck.ProjectChecks.Helpers
             return defaultType;
         }
 
+        public static string GetRuntimeIdentifiers(this XmlDocument project)
+        {
+            const string defaultType = @"";
+
+            return GetStringProperty(project: project, path: "/Project/PropertyGroup/RuntimeIdentifiers", defaultType: defaultType);
+        }
+
         public static bool IsPackable(this XmlDocument project)
         {
-            XmlNode? outputTypeNode = project.SelectSingleNode("/Project/PropertyGroup/IsPackable");
+            string value = GetStringProperty(project: project, path: "/Project/PropertyGroup/IsPackable", defaultType: "true");
 
-            if (outputTypeNode != null)
-            {
-                return string.IsNullOrWhiteSpace(outputTypeNode.InnerText) || StringComparer.InvariantCultureIgnoreCase.Equals(x: outputTypeNode.InnerText, y: "true");
-            }
+            return StringComparer.InvariantCultureIgnoreCase.Equals(x: value, y: "true");
+        }
 
-            return true;
+        public static bool IsPublishable(this XmlDocument project)
+        {
+            string value = GetStringProperty(project: project, path: "/Project/PropertyGroup/IsPublishable", defaultType: "true");
+
+            return StringComparer.InvariantCultureIgnoreCase.Equals(x: value, y: "true");
         }
 
         public static string? GetAwsProjectType(this XmlDocument project)

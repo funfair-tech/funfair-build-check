@@ -95,6 +95,7 @@ namespace FunFair.BuildCheck
             AddProjectCheck<RepositoryUrlMetadata>(services);
 
             AddProjectCheck<ImportCommonProps>(services);
+            AddProjectCheck<PublishableExesMustHaveRuntimeIdentifiers>(services);
         }
 
         private static bool IsEarlierThanDotNet5()

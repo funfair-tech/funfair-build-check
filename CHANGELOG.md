@@ -7,6 +7,7 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 
 ## [Unreleased]
 ### Added
+- Check for RuntimeIdentifiers being set on anything that is publishable.
 ### Fixed
 ### Changed
 - FF-1429 - Updated coverlet to 3.1.0
