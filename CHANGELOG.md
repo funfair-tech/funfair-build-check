@@ -7,8 +7,17 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 
 ## [Unreleased]
 ### Added
-- Check for RuntimeIdentifiers being set on anything that is publishable.
 ### Fixed
+### Changed
+### Removed
+### Deployment Changes
+
+<!--
+Releases that have at least been deployed to staging, BUT NOT necessarily released to live.  Changes should be moved from [Unreleased] into here as they are merged into the appropriate release branch
+-->
+## [3.4.0] - 2021-08-12
+### Added
+- Check for RuntimeIdentifiers being set on anything that is publishable.
 ### Changed
 - FF-1429 - Updated coverlet to 3.1.0
 - FF-1429 - Updated FunFair.CodeAnalysis to 5.2.4.854
@@ -17,12 +26,7 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 - FF-1429 - Updated FunFair.CodeAnalysis to 5.2.5.870
 - FF-1429 - Updated FunFair.CodeAnalysis to 5.3.0.879
 - FF-1429 - Updated SonarAnalyzer.CSharp to 8.27.0.35380
-### Removed
-### Deployment Changes
 
-<!--
-Releases that have at least been deployed to staging, BUT NOT necessarily released to live.  Changes should be moved from [Unreleased] into here as they are merged into the appropriate release branch
--->
 ## [3.3.0] - 2021-07-15
 ### Added
 - Tests for IsPublishable
