@@ -7,8 +7,17 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 
 ## [Unreleased]
 ### Added
-- Check that Microsoft.VisualStudio.Threading is not used.
 ### Fixed
+### Changed
+### Removed
+### Deployment Changes
+
+<!--
+Releases that have at least been deployed to staging, BUT NOT necessarily released to live.  Changes should be moved from [Unreleased] into here as they are merged into the appropriate release branch
+-->
+## [3.5.0] - 2021-09-24
+### Added
+- Check that Microsoft.VisualStudio.Threading is not used.
 ### Changed
 - FF-1429 - Updated Microsoft.NET.Test.Sdk to 16.11.0
 - FF-1429 - Updated NuGet to 5.11.0
@@ -19,12 +28,7 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 - FF-1429 - Updated FunFair.CodeAnalysis to 5.5.0.926
 - FF-1429 - Updated TeamCity.VSTest.TestAdapter to 1.0.27
 - FF-1429 - Updated Microsoft.VisualStudio.Threading.Analyzers to 17.0.63
-### Removed
-### Deployment Changes
 
-<!--
-Releases that have at least been deployed to staging, BUT NOT necessarily released to live.  Changes should be moved from [Unreleased] into here as they are merged into the appropriate release branch
--->
 ## [3.4.0] - 2021-08-12
 ### Added
 - Check for RuntimeIdentifiers being set on anything that is publishable.
