@@ -88,7 +88,7 @@ namespace FunFair.BuildCheck.ProjectChecks.ReferencedPackages
             if (string.IsNullOrEmpty(assets))
             {
                 // no PrivateAssets attribute, check for an element
-                if (!(reference.SelectSingleNode(xpath: "PrivateAssets") is XmlElement privateAssets))
+                if (reference.SelectSingleNode(xpath: "PrivateAssets") is not XmlElement privateAssets)
                 {
                     return false;
                 }
