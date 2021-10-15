@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
+using System.Linq;
 using FunFair.BuildCheck.Helpers;
 using FunFair.BuildCheck.Interfaces;
 using Microsoft.Extensions.Logging;
@@ -33,14 +34,10 @@ namespace FunFair.BuildCheck.SolutionChecks
         {
             this._logger.LogInformation($"Checking Solution: {solutionFileName}");
 
-            foreach (Project? project in this._projects)
+            foreach (string projectFileName in this._projects.Select(project => project.FileName)
+                                                   .Where(projectFileName => !File.Exists(PathHelpers.ConvertToNative(projectFileName))))
             {
-                bool exists = File.Exists(PathHelpers.ConvertToNative(project.FileName));
-
-                if (!exists)
-                {
-                    this._logger.LogError($"Project {project.FileName} does not exist");
-                }
+                this._logger.LogError($"Project {projectFileName} does not exist");
             }
         }
     }

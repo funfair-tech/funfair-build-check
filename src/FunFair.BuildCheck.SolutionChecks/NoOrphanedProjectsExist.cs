@@ -36,13 +36,10 @@ namespace FunFair.BuildCheck.SolutionChecks
                                                               .OrderBy(x => x.ToLowerInvariant())
                                                               .ToArray();
 
-            foreach (string project in projectFileNames)
+            foreach (string project in projectFileNames.Where(project => this._projects.All(x => x.FileName != project)))
             {
-                if (this._projects.All(x => x.FileName != project))
-                {
-                    string solutionRelative = Path.GetRelativePath(relativeTo: basePath, path: project);
-                    this._logger.LogError($"Project {solutionRelative} is not in solution, but in work folder");
-                }
+                string solutionRelative = Path.GetRelativePath(relativeTo: basePath, path: project);
+                this._logger.LogError($"Project {solutionRelative} is not in solution, but in work folder");
             }
         }
     }
