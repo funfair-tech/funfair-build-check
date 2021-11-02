@@ -77,6 +77,7 @@ namespace FunFair.BuildCheck
             AddProjectCheck<ShouldUseFluentValidationAspNetCoreRatherThanFluentValidationPackage>(services);
             AddProjectCheck<ShouldNotReferenceAllMetaPackagesInPackableProjects>(services);
             AddProjectCheck<MustNotReferenceMicrosoftVisualStudioThreading>(services);
+            AddProjectCheck<ShouldUseNSubstituteRatherThanMoqPackage>(services);
 
             bool earlierThanDotNet5 = IsEarlierThanDotNet5();
 

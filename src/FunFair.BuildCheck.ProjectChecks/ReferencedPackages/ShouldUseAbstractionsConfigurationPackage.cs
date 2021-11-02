@@ -7,7 +7,7 @@ namespace FunFair.BuildCheck.ProjectChecks.ReferencedPackages
     ///     Checks that the configuration abstractions package is used rather than the full version.
     /// </summary>
     [SuppressMessage(category: "ReSharper", checkId: "ClassNeverInstantiated.Global", Justification = "Created by DI")]
-    public sealed class ShouldUseAbstractionsConfigurationPackage : ShouldUseAbstractionsPackage
+    public sealed class ShouldUseAbstractionsConfigurationPackage : ShouldUseAlternatePackage
     {
         /// <summary>
         ///     Constructor.
