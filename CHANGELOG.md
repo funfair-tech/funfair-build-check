@@ -7,18 +7,22 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 
 ## [Unreleased]
 ### Added
-- Check that NSubstitute is used not Moq
 ### Fixed
 ### Changed
-- FF-1429 - Updated SonarAnalyzer.CSharp to 8.30.0.37606
-- FF-1429 - Updated Microsoft.NET.Test.Sdk to 17.0.0
-- FF-1429 - Updated FunFair.CodeAnalysis to 5.6.0.956
 ### Removed
 ### Deployment Changes
 
 <!--
 Releases that have at least been deployed to staging, BUT NOT necessarily released to live.  Changes should be moved from [Unreleased] into here as they are merged into the appropriate release branch
 -->
+## [3.6.0] - 2021-11-02
+### Added
+- Check that NSubstitute is used not Moq
+### Changed
+- FF-1429 - Updated SonarAnalyzer.CSharp to 8.30.0.37606
+- FF-1429 - Updated Microsoft.NET.Test.Sdk to 17.0.0
+- FF-1429 - Updated FunFair.CodeAnalysis to 5.6.0.956
+
 ## [3.5.0] - 2021-09-24
 ### Added
 - Check that Microsoft.VisualStudio.Threading is not used.
