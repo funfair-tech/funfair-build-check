@@ -34,7 +34,6 @@
         <CodeAnalysisRuleSet>$(SolutionDir)\CodeAnalysis.ruleset</CodeAnalysisRuleSet>
     </PropertyGroup>
     <ItemGroup>
-        <ProjectReference Include="..\FunFair.BuildCheck.Interfaces\FunFair.BuildCheck.Interfaces.csproj" />
         <ProjectReference Include="..\FunFair.BuildCheck.ProjectChecks\FunFair.BuildCheck.ProjectChecks.csproj" />
         <ProjectReference Include="..\FunFair.BuildCheck.SolutionChecks\FunFair.BuildCheck.SolutionChecks.csproj" />
     </ItemGroup>
