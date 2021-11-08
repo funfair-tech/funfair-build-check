@@ -92,7 +92,7 @@ namespace FunFair.BuildCheck.Services
 
         private static bool IsError(LogLevel logLevel)
         {
-            return logLevel == LogLevel.Critical || logLevel == LogLevel.Error;
+            return logLevel is LogLevel.Critical or LogLevel.Error;
         }
 
         private bool IsWarningAsError(LogLevel logLevel)
