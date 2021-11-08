@@ -7,17 +7,21 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 
 ## [Unreleased]
 ### Added
-- Check for explicitly removed classes from project
 ### Fixed
 ### Changed
-- FF-1429 - Updated FunFair.CodeAnalysis to 5.6.1.965
-- FF-1429 - Updated FunFair.Test.Common to 5.6.3.1339
 ### Removed
 ### Deployment Changes
 
 <!--
 Releases that have at least been deployed to staging, BUT NOT necessarily released to live.  Changes should be moved from [Unreleased] into here as they are merged into the appropriate release branch
 -->
+## [3.7.0] - 2021-11-08
+### Added
+- Check for explicitly removed classes from project
+### Changed
+- FF-1429 - Updated FunFair.CodeAnalysis to 5.6.1.965
+- FF-1429 - Updated FunFair.Test.Common to 5.6.3.1339
+
 ## [3.6.0] - 2021-11-02
 ### Added
 - Check that NSubstitute is used not Moq
