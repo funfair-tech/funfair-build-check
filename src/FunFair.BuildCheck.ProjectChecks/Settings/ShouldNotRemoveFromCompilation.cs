@@ -16,7 +16,8 @@ namespace FunFair.BuildCheck.ProjectChecks.Settings
         private readonly ILogger<ShouldNotRemoveFromCompilation> _logger;
 #if FALSE
     <ItemGroup>
-        <Compile Remove = "Models\BlockRangeDto.cs" />
+        <Compile Remove
+ = "Models\BlockRangeDto.cs" />
     </ItemGroup>
 #endif
         public ShouldNotRemoveFromCompilation(ILogger<ShouldNotRemoveFromCompilation> logger)
