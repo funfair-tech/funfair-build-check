@@ -7,10 +7,12 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 
 ## [Unreleased]
 ### Added
+- Check to see if web.config transforms are enabled for web library projects
 ### Fixed
 ### Changed
+
 - FF-1429 - Updated Microsoft.VisualStudio.Threading.Analyzers to 17.0.64
-- FF-1429 - -
+- FF-1429 - Updated to Dotnet SDK 5.0.403
 ### Removed
 ### Deployment Changes
 

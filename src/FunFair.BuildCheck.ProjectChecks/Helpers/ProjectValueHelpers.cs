@@ -24,6 +24,18 @@ namespace FunFair.BuildCheck.ProjectChecks.Helpers
             return false;
         }
 
+        public static string GetSdk(this XmlDocument project)
+        {
+            XmlElement? projectElement = project.SelectSingleNode("/Project") as XmlElement;
+
+            if (projectElement != null)
+            {
+                return projectElement.GetAttribute("Sdk");
+            }
+
+            return string.Empty;
+        }
+
         public static bool IsTestProject(this XmlDocument project, string projectName, ILogger logger)
         {
             XmlNodeList? nodes = project.SelectNodes(xpath: "/Project/ItemGroup/PackageReference");
