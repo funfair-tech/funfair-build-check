@@ -17,6 +17,7 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 - FF-1429 - Updated NuGet to 6.0.0
 - FF-1429 - Updated FunFair.CodeAnalysis to 5.7.0.995
 - FF-1429 - Updated NSubstitute.Analyzers.CSharp to 1.0.15
+- FF-1429 - Updated SonarAnalyzer.CSharp to 8.32.0.39516
 ### Removed
 ### Deployment Changes
 
