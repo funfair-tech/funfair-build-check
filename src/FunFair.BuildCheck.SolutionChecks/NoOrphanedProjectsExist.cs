@@ -32,15 +32,40 @@ namespace FunFair.BuildCheck.SolutionChecks
         public void Check(string solutionFileName)
         {
             string basePath = Path.GetDirectoryName(solutionFileName)!;
-            IReadOnlyList<string> projectFileNames = Directory.EnumerateFiles(path: basePath, searchPattern: "*.csproj", searchOption: SearchOption.AllDirectories)
-                                                              .OrderBy(x => x.ToLowerInvariant())
-                                                              .ToArray();
+            IReadOnlyList<string> projectFileNames = GetOrderedProjects(basePath);
 
-            foreach (string project in projectFileNames.Where(project => this._projects.All(x => x.FileName != project)))
+            foreach (string project in projectFileNames.Where(this.ProjectIsInSolution))
             {
-                string solutionRelative = Path.GetRelativePath(relativeTo: basePath, path: project);
+                string solutionRelative = GetPathRelativeToSolution(basePath: basePath, project: project);
                 this._logger.LogError($"Project {solutionRelative} is not in solution, but in work folder");
             }
+        }
+
+        private static string GetPathRelativeToSolution(string basePath, string project)
+        {
+            return Path.GetRelativePath(relativeTo: basePath, path: project);
+        }
+
+        private bool ProjectIsInSolution(string project)
+        {
+            return this._projects.All(x => x.FileName != project);
+        }
+
+        private static IReadOnlyList<string> GetOrderedProjects(string basePath)
+        {
+            return GetProjects(basePath)
+                   .OrderBy(Ordering)
+                   .ToArray();
+        }
+
+        private static IEnumerable<string> GetProjects(string basePath)
+        {
+            return Directory.EnumerateFiles(path: basePath, searchPattern: "*.csproj", searchOption: SearchOption.AllDirectories);
+        }
+
+        private static string Ordering(string name)
+        {
+            return name.ToLowerInvariant();
         }
     }
 }

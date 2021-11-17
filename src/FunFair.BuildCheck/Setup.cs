@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using FunFair.BuildCheck.Interfaces;
 using FunFair.BuildCheck.ProjectChecks.ReferencedPackages;
 using FunFair.BuildCheck.ProjectChecks.References;
@@ -100,6 +101,7 @@ namespace FunFair.BuildCheck
             AddProjectCheck<PublishableExesMustHaveRuntimeIdentifiers>(services);
             AddProjectCheck<ShouldNotRemoveFromCompilation>(services);
             AddProjectCheck<IsTransformWebConfigDisabledShouldBeTrueForWebLibraryProjects>(services);
+            AddProjectCheck<TargetFrameworkIsSetCorrectlyPolicy>(services);
         }
 
         private static bool IsEarlierThanDotNet5()
@@ -120,14 +122,14 @@ namespace FunFair.BuildCheck
             return version < new Version(major: 5, minor: 0, build: 0);
         }
 
-        private static void AddProjectCheck<T>(IServiceCollection services)
+        private static void AddProjectCheck<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)] T>(IServiceCollection services)
             where T : class, IProjectCheck
         {
             Console.WriteLine($"* Project Check: {typeof(T).Name}");
             services.AddSingleton<IProjectCheck, T>();
         }
 
-        private static void AddSolutionCheck<T>(IServiceCollection services)
+        private static void AddSolutionCheck<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)] T>(IServiceCollection services)
             where T : class, ISolutionCheck
         {
             Console.WriteLine($"* Solution Check: {typeof(T).Name}");
