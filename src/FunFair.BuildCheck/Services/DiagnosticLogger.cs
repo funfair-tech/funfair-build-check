@@ -28,7 +28,7 @@ namespace FunFair.BuildCheck.Services
         public bool IsErrored => this.Errors > 0;
 
         /// <inheritdoc />
-        public void Log<TState>(LogLevel logLevel, EventId eventId, TState state, Exception exception, Func<TState, Exception, string> formatter)
+        public void Log<TState>(LogLevel logLevel, EventId eventId, TState state, Exception? exception, Func<TState, Exception?, string> formatter)
         {
             if (this.IsWarningAsError(logLevel))
             {
@@ -55,12 +55,12 @@ namespace FunFair.BuildCheck.Services
         }
 
         /// <inheritdoc />
-        public IDisposable? BeginScope<TState>(TState state)
+        public IDisposable BeginScope<TState>(TState state)
         {
-            return null;
+            return new DisposableScope();
         }
 
-        private void OutputMessageWithStatus<TState>(LogLevel logLevel, TState state, Exception exception, Func<TState, Exception, string> formatter)
+        private void OutputMessageWithStatus<TState>(LogLevel logLevel, TState state, Exception? exception, Func<TState, Exception?, string> formatter)
         {
             if (!this.IsEnabled(logLevel))
             {
@@ -84,7 +84,7 @@ namespace FunFair.BuildCheck.Services
             output($"{status}: {msg}");
         }
 
-        private static void OutputInformationalMessage<TState>(TState state, Exception exception, Func<TState, Exception, string> formatter)
+        private static void OutputInformationalMessage<TState>(TState state, Exception? exception, Func<TState, Exception?, string> formatter)
         {
             string msg = formatter(arg1: state, arg2: exception);
             Console.WriteLine(msg);
@@ -98,6 +98,15 @@ namespace FunFair.BuildCheck.Services
         private bool IsWarningAsError(LogLevel logLevel)
         {
             return this._warningsAsErrors && logLevel == LogLevel.Warning;
+        }
+
+        private sealed class DisposableScope : IDisposable
+        {
+            /// <inheritdoc />
+            public void Dispose()
+            {
+                // Nothing to do here.
+            }
         }
     }
 }
