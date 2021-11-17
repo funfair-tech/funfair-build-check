@@ -33,7 +33,7 @@ namespace FunFair.BuildCheck.SolutionChecks
         {
             string basePath = Path.GetDirectoryName(solutionFileName)!;
             IReadOnlyList<string> projectFileNames = Directory.EnumerateFiles(path: basePath, searchPattern: "*.csproj", searchOption: SearchOption.AllDirectories)
-                                                              .OrderBy(x => x.ToLowerInvariant())
+                                                              .OrderBy(Ordering)
                                                               .ToArray();
 
             foreach (string project in projectFileNames.Where(project => this._projects.All(x => x.FileName != project)))
@@ -41,6 +41,11 @@ namespace FunFair.BuildCheck.SolutionChecks
                 string solutionRelative = Path.GetRelativePath(relativeTo: basePath, path: project);
                 this._logger.LogError($"Project {solutionRelative} is not in solution, but in work folder");
             }
+        }
+
+        private static string Ordering(string name)
+        {
+            return name.ToLowerInvariant();
         }
     }
 }
