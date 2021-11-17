@@ -2,6 +2,7 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using FunFair.BuildCheck.Interfaces;
 using FunFair.BuildCheck.SolutionChecks.Models;
 using Microsoft.Extensions.Logging;
@@ -50,7 +51,7 @@ namespace FunFair.BuildCheck.SolutionChecks
                 GlobalJsonPacket? p = JsonSerializer.Deserialize<GlobalJsonPacket>(json: content,
                                                                                    new JsonSerializerOptions
                                                                                    {
-                                                                                       IgnoreNullValues = true,
+                                                                                       DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
                                                                                        PropertyNameCaseInsensitive = false,
                                                                                        PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
                                                                                        WriteIndented = false,

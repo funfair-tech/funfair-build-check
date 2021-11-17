@@ -74,7 +74,7 @@ namespace FunFair.BuildCheck.ProjectChecks.ReferencedPackages
                 assets = privateAssets.InnerText;
             }
 
-            return !string.IsNullOrEmpty(assets) && string.Compare(strA: assets, strB: PACKAGE_PRIVATE_ASSETS, comparisonType: StringComparison.OrdinalIgnoreCase) == 0;
+            return !string.IsNullOrEmpty(assets) && StringComparer.OrdinalIgnoreCase.Equals(x: assets, y: PACKAGE_PRIVATE_ASSETS);
         }
     }
 }

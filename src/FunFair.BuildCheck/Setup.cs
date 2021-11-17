@@ -100,6 +100,7 @@ namespace FunFair.BuildCheck
             AddProjectCheck<PublishableExesMustHaveRuntimeIdentifiers>(services);
             AddProjectCheck<ShouldNotRemoveFromCompilation>(services);
             AddProjectCheck<IsTransformWebConfigDisabledShouldBeTrueForWebLibraryProjects>(services);
+            AddProjectCheck<TargetFrameworkIsSetCorrectlyPolicy>(services);
         }
 
         private static bool IsEarlierThanDotNet5()
