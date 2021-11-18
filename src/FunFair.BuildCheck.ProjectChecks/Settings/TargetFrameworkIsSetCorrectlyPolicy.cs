@@ -41,6 +41,20 @@ namespace FunFair.BuildCheck.ProjectChecks.Settings
                 return;
             }
 
+            string sdk = project.GetSdk();
+
+            if (string.IsNullOrWhiteSpace(sdk))
+            {
+                // no SDK don't know what do do.
+                return;
+            }
+
+            if (!sdk.StartsWith(value: "Microsoft.NET.", comparisonType: StringComparison.OrdinalIgnoreCase))
+            {
+                // not a dotnet SDK so don't process this
+                return;
+            }
+
             if (string.IsNullOrEmpty(this._expected))
             {
                 // no frameworks defined - allow any
