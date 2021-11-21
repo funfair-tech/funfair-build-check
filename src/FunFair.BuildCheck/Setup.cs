@@ -103,13 +103,11 @@ namespace FunFair.BuildCheck
             AddProjectCheck<IsTransformWebConfigDisabledShouldBeTrueForWebLibraryProjects>(services);
             AddProjectCheck<TargetFrameworkIsSetCorrectlyPolicy>(services);
 
-            // TODO: Add GenerateNeutralResourcesLanguageAttribute : true
-            // TODO: Add EnablePackageValidation for IsPackable: true
-            // TODO: Add AnalysisMode : All?  (opt out)
-            // TODO: Add EnforceCodeStyleInBuild: true ?
-            // TODO: Add TieredCompilation: true?
-            // TODO: Add ValidateExecutableReferencesMatchSelfContained: true for publishable exes
-            // TODO: Add ImplicitUsings: enable/disable?
+            AddProjectCheck<GenerateNeutralResourcesLanguageAttributePolicy>(services);
+            AddProjectCheck<EnablePackageValidationPolicy>(services);
+            AddProjectCheck<ValidateExecutableReferencesMatchSelfContainedPolicy>(services);
+            AddProjectCheck<TieredCompilationPolicy>(services);
+            AddProjectCheck<ImplicitUsingsPolicy>(services);
         }
 
         private static bool IsEarlierThanDotNet5()
