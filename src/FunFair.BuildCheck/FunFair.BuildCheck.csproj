@@ -19,8 +19,6 @@
       <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(MSBuildProjectName).xml</DocumentationFile>
       <GenerateNeutralResourcesLanguageAttribute>true</GenerateNeutralResourcesLanguageAttribute>
       <EnablePackageValidation>true</EnablePackageValidation>
-      <AnalysisMode>all</AnalysisMode>
-      <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
       <TieredCompilation>true</TieredCompilation>
       <ValidateExecutableReferencesMatchSelfContained>true</ValidateExecutableReferencesMatchSelfContained>
       <ImplicitUsings>disable</ImplicitUsings>
