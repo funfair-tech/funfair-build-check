@@ -102,6 +102,12 @@ namespace FunFair.BuildCheck
             AddProjectCheck<ShouldNotRemoveFromCompilation>(services);
             AddProjectCheck<IsTransformWebConfigDisabledShouldBeTrueForWebLibraryProjects>(services);
             AddProjectCheck<TargetFrameworkIsSetCorrectlyPolicy>(services);
+
+            AddProjectCheck<GenerateNeutralResourcesLanguageAttributePolicy>(services);
+            AddProjectCheck<EnablePackageValidationPolicy>(services);
+            AddProjectCheck<ValidateExecutableReferencesMatchSelfContainedPolicy>(services);
+            AddProjectCheck<TieredCompilationPolicy>(services);
+            AddProjectCheck<ImplicitUsingsPolicy>(services);
         }
 
         private static bool IsEarlierThanDotNet5()

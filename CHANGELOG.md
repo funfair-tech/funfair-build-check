@@ -8,6 +8,10 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 ## [Unreleased]
 ### Added
 - Check to see if web.config transforms are enabled for web library projects
+- Check to see if Neutral Resources Language is set properly
+- Check to see if Package Validation is set properly on packable projects
+- Checks to see if the Validate executable references match property is set on publishable projects.
+- Checks to see if the implicit usings property is set on publishable projects.
 ### Fixed
 ### Changed
 
