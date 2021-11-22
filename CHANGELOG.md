@@ -7,14 +7,22 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 
 ## [Unreleased]
 ### Added
+### Fixed
+### Changed
+### Removed
+### Deployment Changes
+
+<!--
+Releases that have at least been deployed to staging, BUT NOT necessarily released to live.  Changes should be moved from [Unreleased] into here as they are merged into the appropriate release branch
+-->
+## [3.8.0] - 2021-11-22
+### Added
 - Check to see if web.config transforms are enabled for web library projects
 - Check to see if Neutral Resources Language is set properly
 - Check to see if Package Validation is set properly on packable projects
 - Checks to see if the Validate executable references match property is set on publishable projects.
 - Checks to see if the implicit usings property is set on publishable projects.
-### Fixed
 ### Changed
-
 - FF-1429 - Updated Microsoft.VisualStudio.Threading.Analyzers to 17.0.64
 - FF-1429 - Updated to Dotnet SDK 5.0.403
 - FF-1429 - Updated FunFair.Test.Common to 5.6.4.1351
@@ -22,13 +30,8 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 - FF-1429 - Updated FunFair.CodeAnalysis to 5.7.0.995
 - FF-1429 - Updated NSubstitute.Analyzers.CSharp to 1.0.15
 - FF-1429 - Updated SonarAnalyzer.CSharp to 8.32.0.39516
-- Updated to DotNet 6.0 with DotNet 5.0 fallback
-### Removed
-### Deployment Changes
+- FF-3856 - Updated to DotNet 6.0 with DotNet 5.0 fallback
 
-<!--
-Releases that have at least been deployed to staging, BUT NOT necessarily released to live.  Changes should be moved from [Unreleased] into here as they are merged into the appropriate release branch
--->
 ## [3.7.0] - 2021-11-08
 ### Added
 - Check for explicitly removed classes from project
