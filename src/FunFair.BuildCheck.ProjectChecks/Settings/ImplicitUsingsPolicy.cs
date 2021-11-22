@@ -13,7 +13,7 @@ namespace FunFair.BuildCheck.ProjectChecks.Settings
     [SuppressMessage(category: "ReSharper", checkId: "ClassNeverInstantiated.Global", Justification = "Created by DI")]
     public sealed class ImplicitUsingsPolicy : IProjectCheck
     {
-        private const string EXPECTED = @"disabled";
+        private const string EXPECTED = @"disable";
 
         private readonly ILogger<ImplicitUsingsPolicy> _logger;
 
