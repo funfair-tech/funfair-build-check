@@ -17,7 +17,7 @@
       <EnablePackageValidation>true</EnablePackageValidation>
       <TieredCompilation>true</TieredCompilation>
       <ValidateExecutableReferencesMatchSelfContained>true</ValidateExecutableReferencesMatchSelfContained>
-      <ImplicitUsings>disabled</ImplicitUsings>
+      <ImplicitUsings>disable</ImplicitUsings>
     </PropertyGroup>
     <PropertyGroup>
         <AnalysisLevel>latest</AnalysisLevel>
