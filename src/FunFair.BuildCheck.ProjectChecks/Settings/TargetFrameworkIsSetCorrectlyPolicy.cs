@@ -14,9 +14,9 @@ namespace FunFair.BuildCheck.ProjectChecks.Settings
     [SuppressMessage(category: "ReSharper", checkId: "UnusedType.Global", Justification = "Created by DI")]
     public sealed class TargetFrameworkIsSetCorrectlyPolicy : IProjectCheck
     {
-        private readonly IRepositorySettings _repositorySettings;
-        private readonly ILogger<TargetFrameworkIsSetCorrectlyPolicy> _logger;
         private readonly string? _expected;
+        private readonly ILogger<TargetFrameworkIsSetCorrectlyPolicy> _logger;
+        private readonly IRepositorySettings _repositorySettings;
 
         /// <summary>
         ///     Constructor.
@@ -71,7 +71,11 @@ namespace FunFair.BuildCheck.ProjectChecks.Settings
 
                     break;
                 default:
-                    ProjectValueHelpers.CheckValue(projectName: projectName, project: project, nodePresence: @"TargetFrameworks", requiredValue: this._expected, logger: this._logger);
+                    ProjectValueHelpers.CheckValue(projectName: projectName,
+                                                   project: project,
+                                                   nodePresence: @"TargetFrameworks",
+                                                   requiredValue: this._expected,
+                                                   logger: this._logger);
 
                     break;
             }
