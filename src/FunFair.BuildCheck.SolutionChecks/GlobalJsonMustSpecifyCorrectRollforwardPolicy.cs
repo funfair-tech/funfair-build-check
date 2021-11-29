@@ -49,7 +49,7 @@ namespace FunFair.BuildCheck.SolutionChecks
             try
             {
                 GlobalJsonPacket? p = JsonSerializer.Deserialize<GlobalJsonPacket>(json: content,
-                                                                                   new JsonSerializerOptions
+                                                                                   new()
                                                                                    {
                                                                                        DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
                                                                                        PropertyNameCaseInsensitive = false,
@@ -72,7 +72,7 @@ namespace FunFair.BuildCheck.SolutionChecks
             }
             catch (Exception exception)
             {
-                this._logger.LogError(new EventId(exception.HResult), exception: exception, $"Failed to read {file} : {exception.Message}");
+                this._logger.LogError(new(exception.HResult), exception: exception, $"Failed to read {file} : {exception.Message}");
             }
         }
     }
