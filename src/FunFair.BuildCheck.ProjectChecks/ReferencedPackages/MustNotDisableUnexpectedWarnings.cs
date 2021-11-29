@@ -39,7 +39,9 @@ namespace FunFair.BuildCheck.ProjectChecks.ReferencedPackages
         {
             bool isTestProject = project.IsTestProject(projectName: projectName, logger: this._logger);
 
-            IReadOnlyList<string> allowedWarnings = isTestProject ? AllowedTestProjectWarnings : AllowedWarnings;
+            IReadOnlyList<string> allowedWarnings = isTestProject
+                ? AllowedTestProjectWarnings
+                : AllowedWarnings;
 
             const string nodePresence = @"NoWarn";
             XmlNodeList? nodes = project.SelectNodes("/Project/PropertyGroup[not(@Condition)]/" + nodePresence);

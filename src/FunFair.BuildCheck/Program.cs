@@ -98,7 +98,9 @@ namespace FunFair.BuildCheck
                 if (logging.IsErrored)
                 {
                     Console.WriteLine();
-                    Console.WriteLine(logging.Errors > 1 ? $"Found {logging.Errors} Errors" : $"Found {logging.Errors} Error");
+                    Console.WriteLine(logging.Errors > 1
+                                          ? $"Found {logging.Errors} Errors"
+                                          : $"Found {logging.Errors} Error");
 
                     return ERROR;
                 }
