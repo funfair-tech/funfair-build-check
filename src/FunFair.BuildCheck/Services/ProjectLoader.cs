@@ -16,7 +16,7 @@ namespace FunFair.BuildCheck.Services
         /// </summary>
         public ProjectLoader()
         {
-            this._projects = new ConcurrentDictionary<string, XmlDocument>();
+            this._projects = new();
         }
 
         /// <inheritdoc />

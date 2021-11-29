@@ -27,7 +27,7 @@ namespace FunFair.BuildCheck.ProjectChecks.ReferencedPackages
         {
             this._logger = logger ?? throw new ArgumentNullException(nameof(logger));
 
-            this._packages = new Dictionary<string, NuGetVersion>();
+            this._packages = new();
         }
 
         /// <inheritdoc />
