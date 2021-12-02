@@ -102,7 +102,7 @@ namespace FunFair.BuildCheck
                                           ? $"Found {logging.Errors} Errors"
                                           : $"Found {logging.Errors} Error");
 
-                    return ERROR;
+                    return (int)logging.Errors;
                 }
 
                 OutputSolutionFileName(solutionFileName);
