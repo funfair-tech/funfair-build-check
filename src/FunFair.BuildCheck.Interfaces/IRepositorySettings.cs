@@ -1,12 +1,11 @@
-﻿namespace FunFair.BuildCheck.Interfaces
+﻿namespace FunFair.BuildCheck.Interfaces;
+
+public interface IRepositorySettings
 {
-    public interface IRepositorySettings
-    {
-        // TODO: can this be merged with ICheckConfiguration?
-        public bool IsCodeAnalysisSolution { get; }
+    // TODO: can this be merged with ICheckConfiguration?
+    public bool IsCodeAnalysisSolution { get; }
 
-        public bool IsNullableGloballyEnforced { get; }
+    public bool IsNullableGloballyEnforced { get; }
 
-        public bool IsUnitTestBase { get; }
-    }
+    public bool IsUnitTestBase { get; }
 }

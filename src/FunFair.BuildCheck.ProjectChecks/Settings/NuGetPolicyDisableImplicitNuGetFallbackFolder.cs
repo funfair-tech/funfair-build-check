@@ -5,33 +5,28 @@ using FunFair.BuildCheck.Interfaces;
 using FunFair.BuildCheck.ProjectChecks.Helpers;
 using Microsoft.Extensions.Logging;
 
-namespace FunFair.BuildCheck.ProjectChecks.Settings
+namespace FunFair.BuildCheck.ProjectChecks.Settings;
+
+/// <summary>
+///     Checks that the implicit fallback folder for nuget is turned off.
+/// </summary>
+[SuppressMessage(category: "ReSharper", checkId: "ClassNeverInstantiated.Global", Justification = "Created by DI")]
+public sealed class NuGetPolicyDisableImplicitNuGetFallbackFolder : IProjectCheck
 {
+    private readonly ILogger<NuGetPolicyDisableImplicitNuGetFallbackFolder> _logger;
+
     /// <summary>
-    ///     Checks that the implicit fallback folder for nuget is turned off.
+    ///     Constructor.
     /// </summary>
-    [SuppressMessage(category: "ReSharper", checkId: "ClassNeverInstantiated.Global", Justification = "Created by DI")]
-    public sealed class NuGetPolicyDisableImplicitNuGetFallbackFolder : IProjectCheck
+    /// <param name="logger">Logging.</param>
+    public NuGetPolicyDisableImplicitNuGetFallbackFolder(ILogger<NuGetPolicyDisableImplicitNuGetFallbackFolder> logger)
     {
-        private readonly ILogger<NuGetPolicyDisableImplicitNuGetFallbackFolder> _logger;
+        this._logger = logger ?? throw new ArgumentNullException(nameof(logger));
+    }
 
-        /// <summary>
-        ///     Constructor.
-        /// </summary>
-        /// <param name="logger">Logging.</param>
-        public NuGetPolicyDisableImplicitNuGetFallbackFolder(ILogger<NuGetPolicyDisableImplicitNuGetFallbackFolder> logger)
-        {
-            this._logger = logger ?? throw new ArgumentNullException(nameof(logger));
-        }
-
-        /// <inheritdoc />
-        public void Check(string projectName, string projectFolder, XmlDocument project)
-        {
-            ProjectValueHelpers.CheckValue(projectName: projectName,
-                                           project: project,
-                                           nodePresence: @"DisableImplicitNuGetFallbackFolder",
-                                           requiredValue: "true",
-                                           logger: this._logger);
-        }
+    /// <inheritdoc />
+    public void Check(string projectName, string projectFolder, XmlDocument project)
+    {
+        ProjectValueHelpers.CheckValue(projectName: projectName, project: project, nodePresence: @"DisableImplicitNuGetFallbackFolder", requiredValue: "true", logger: this._logger);
     }
 }

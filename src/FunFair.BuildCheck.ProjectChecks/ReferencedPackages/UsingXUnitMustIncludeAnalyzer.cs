@@ -1,21 +1,20 @@
 using System.Diagnostics.CodeAnalysis;
 using Microsoft.Extensions.Logging;
 
-namespace FunFair.BuildCheck.ProjectChecks.ReferencedPackages
+namespace FunFair.BuildCheck.ProjectChecks.ReferencedPackages;
+
+/// <summary>
+///     Checks that the xunit analyzer is installed for test projects.
+/// </summary>
+[SuppressMessage(category: "ReSharper", checkId: "ClassNeverInstantiated.Global", Justification = "Created by DI")]
+public sealed class UsingXUnitMustIncludeAnalyzer : HasAppropriateAnalysisPackages
 {
     /// <summary>
-    ///     Checks that the xunit analyzer is installed for test projects.
+    ///     Constructor.
     /// </summary>
-    [SuppressMessage(category: "ReSharper", checkId: "ClassNeverInstantiated.Global", Justification = "Created by DI")]
-    public sealed class UsingXUnitMustIncludeAnalyzer : HasAppropriateAnalysisPackages
+    /// <param name="logger">Logging.</param>
+    public UsingXUnitMustIncludeAnalyzer(ILogger<UsingXUnitMustIncludeAnalyzer> logger)
+        : base(detectPackageId: @"xunit", mustIncludePackageId: @"xunit.analyzers", logger: logger)
     {
-        /// <summary>
-        ///     Constructor.
-        /// </summary>
-        /// <param name="logger">Logging.</param>
-        public UsingXUnitMustIncludeAnalyzer(ILogger<UsingXUnitMustIncludeAnalyzer> logger)
-            : base(detectPackageId: @"xunit", mustIncludePackageId: @"xunit.analyzers", logger: logger)
-        {
-        }
     }
 }

@@ -1,13 +1,12 @@
 ﻿using FunFair.BuildCheck.Interfaces;
 
-namespace FunFair.BuildCheck.Services
+namespace FunFair.BuildCheck.Services;
+
+/// <summary>
+///     Check configuration.
+/// </summary>
+public sealed class CheckConfiguration : ICheckConfiguration
 {
-    /// <summary>
-    ///     Check configuration.
-    /// </summary>
-    public sealed class CheckConfiguration : ICheckConfiguration
-    {
-        /// <inheritdoc />
-        public bool PreReleaseBuild { get; init; }
-    }
+    /// <inheritdoc />
+    public bool PreReleaseBuild { get; init; }
 }

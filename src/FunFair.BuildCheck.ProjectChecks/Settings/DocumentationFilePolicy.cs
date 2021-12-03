@@ -5,58 +5,57 @@ using FunFair.BuildCheck.Interfaces;
 using FunFair.BuildCheck.ProjectChecks.Helpers;
 using Microsoft.Extensions.Logging;
 
-namespace FunFair.BuildCheck.ProjectChecks.Settings
+namespace FunFair.BuildCheck.ProjectChecks.Settings;
+
+/// <summary>
+///     Checks that the DocumentationFile is set appropriately
+/// </summary>
+[SuppressMessage(category: "ReSharper", checkId: "ClassNeverInstantiated.Global", Justification = "Created by DI")]
+public sealed class DocumentationFilePolicy : IProjectCheck
 {
+    private const string EXPECTED = @"bin\$(Configuration)\$(TargetFramework)\$(MSBuildProjectName).xml";
+    private readonly ILogger<DocumentationFilePolicy> _logger;
+
+    private readonly IRepositorySettings _repositorySettings;
+
     /// <summary>
-    ///     Checks that the DocumentationFile is set appropriately
+    ///     Constructor.
     /// </summary>
-    [SuppressMessage(category: "ReSharper", checkId: "ClassNeverInstantiated.Global", Justification = "Created by DI")]
-    public sealed class DocumentationFilePolicy : IProjectCheck
+    /// <param name="repositorySettings">Repository settings.</param>
+    /// <param name="logger">Logging.</param>
+    public DocumentationFilePolicy(IRepositorySettings repositorySettings, ILogger<DocumentationFilePolicy> logger)
     {
-        private const string EXPECTED = @"bin\$(Configuration)\$(TargetFramework)\$(MSBuildProjectName).xml";
-        private readonly ILogger<DocumentationFilePolicy> _logger;
+        this._repositorySettings = repositorySettings ?? throw new ArgumentNullException(nameof(repositorySettings));
+        this._logger = logger ?? throw new ArgumentNullException(nameof(logger));
+    }
 
-        private readonly IRepositorySettings _repositorySettings;
+    /// <inheritdoc />
+    public void Check(string projectName, string projectFolder, XmlDocument project)
+    {
+        bool testProject = project.IsTestProject(projectName: projectName, logger: this._logger);
 
-        /// <summary>
-        ///     Constructor.
-        /// </summary>
-        /// <param name="repositorySettings">Repository settings.</param>
-        /// <param name="logger">Logging.</param>
-        public DocumentationFilePolicy(IRepositorySettings repositorySettings, ILogger<DocumentationFilePolicy> logger)
+        if (testProject && this._repositorySettings.IsUnitTestBase)
         {
-            this._repositorySettings = repositorySettings ?? throw new ArgumentNullException(nameof(repositorySettings));
-            this._logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            testProject = projectName.EndsWith(value: ".Tests", comparisonType: StringComparison.OrdinalIgnoreCase);
         }
 
-        /// <inheritdoc />
-        public void Check(string projectName, string projectFolder, XmlDocument project)
+        if (testProject)
         {
-            bool testProject = project.IsTestProject(projectName: projectName, logger: this._logger);
+            this.CheckTestProject(projectName: projectName, project: project);
 
-            if (testProject && this._repositorySettings.IsUnitTestBase)
-            {
-                testProject = projectName.EndsWith(value: ".Tests", comparisonType: StringComparison.OrdinalIgnoreCase);
-            }
-
-            if (testProject)
-            {
-                this.CheckTestProject(projectName: projectName, project: project);
-
-                return;
-            }
-
-            ProjectValueHelpers.CheckValue(projectName: projectName, project: project, nodePresence: @"DocumentationFile", requiredValue: EXPECTED, logger: this._logger);
+            return;
         }
 
-        private void CheckTestProject(string projectName, XmlDocument project)
-        {
-            XmlNodeList? nodes = project.SelectNodes("/Project/PropertyGroup/DocumentationFile");
+        ProjectValueHelpers.CheckValue(projectName: projectName, project: project, nodePresence: @"DocumentationFile", requiredValue: EXPECTED, logger: this._logger);
+    }
 
-            if (nodes != null && nodes.Count != 0)
-            {
-                this._logger.LogError($"{projectName}: Test projects should not have XML Documentation");
-            }
+    private void CheckTestProject(string projectName, XmlDocument project)
+    {
+        XmlNodeList? nodes = project.SelectNodes("/Project/PropertyGroup/DocumentationFile");
+
+        if (nodes != null && nodes.Count != 0)
+        {
+            this._logger.LogError($"{projectName}: Test projects should not have XML Documentation");
         }
     }
 }

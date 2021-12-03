@@ -6,81 +6,80 @@ using FunFair.BuildCheck.Interfaces;
 using Microsoft.Extensions.Logging;
 using NuGet.Versioning;
 
-namespace FunFair.BuildCheck.ProjectChecks.Settings
-{
-    /// <summary>
-    ///     Checks that there are no pre-release packages referenced.
-    /// </summary>
-    [SuppressMessage(category: "ReSharper", checkId: "ClassNeverInstantiated.Global", Justification = "Created by DI")]
-    public sealed class NoPreReleaseNuGetPackages : IProjectCheck
-    {
-        private const string PACKAGE_PRIVATE_ASSETS = @"All";
-        private readonly ICheckConfiguration _configuration;
-        private readonly ILogger<NoPreReleaseNuGetPackages> _logger;
+namespace FunFair.BuildCheck.ProjectChecks.Settings;
 
-        /// <summary>
-        ///     Constructor.
-        /// </summary>
-        /// <param name="configuration">The configuration.</param>
-        /// <param name="logger">Logging.</param>
-        public NoPreReleaseNuGetPackages(ICheckConfiguration configuration, ILogger<NoPreReleaseNuGetPackages> logger)
+/// <summary>
+///     Checks that there are no pre-release packages referenced.
+/// </summary>
+[SuppressMessage(category: "ReSharper", checkId: "ClassNeverInstantiated.Global", Justification = "Created by DI")]
+public sealed class NoPreReleaseNuGetPackages : IProjectCheck
+{
+    private const string PACKAGE_PRIVATE_ASSETS = @"All";
+    private readonly ICheckConfiguration _configuration;
+    private readonly ILogger<NoPreReleaseNuGetPackages> _logger;
+
+    /// <summary>
+    ///     Constructor.
+    /// </summary>
+    /// <param name="configuration">The configuration.</param>
+    /// <param name="logger">Logging.</param>
+    public NoPreReleaseNuGetPackages(ICheckConfiguration configuration, ILogger<NoPreReleaseNuGetPackages> logger)
+    {
+        this._configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));
+        this._logger = logger ?? throw new ArgumentNullException(nameof(logger));
+    }
+
+    /// <inheritdoc />
+    public void Check(string projectName, string projectFolder, XmlDocument project)
+    {
+        XmlNodeList? nodes = project.SelectNodes(xpath: "/Project/ItemGroup/PackageReference");
+
+        if (nodes == null)
         {
-            this._configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));
-            this._logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            return;
         }
 
-        /// <inheritdoc />
-        public void Check(string projectName, string projectFolder, XmlDocument project)
+        foreach (XmlElement reference in nodes.OfType<XmlElement>())
         {
-            XmlNodeList? nodes = project.SelectNodes(xpath: "/Project/ItemGroup/PackageReference");
+            string packageName = reference.GetAttribute(name: @"Include");
 
-            if (nodes == null)
+            if (string.IsNullOrWhiteSpace(packageName))
             {
-                return;
+                this._logger.LogError($"{projectName}: Contains bad reference to packages.");
+
+                continue;
             }
 
-            foreach (XmlElement reference in nodes.OfType<XmlElement>())
+            // check for private asset (if it's private the build won't fail for a pre-release package)
+            string privateAssets = reference.GetAttribute(name: "PrivateAssets");
+
+            if (string.IsNullOrEmpty(privateAssets))
             {
-                string packageName = reference.GetAttribute(name: @"Include");
-
-                if (string.IsNullOrWhiteSpace(packageName))
+                if (reference.SelectSingleNode(xpath: "PrivateAssets") is XmlElement privateAssetsElement)
                 {
-                    this._logger.LogError($"{projectName}: Contains bad reference to packages.");
-
-                    continue;
+                    privateAssets = privateAssetsElement.InnerText;
                 }
+            }
 
-                // check for private asset (if it's private the build won't fail for a pre-release package)
-                string privateAssets = reference.GetAttribute(name: "PrivateAssets");
+            if (!string.IsNullOrEmpty(privateAssets) && StringComparer.OrdinalIgnoreCase.Equals(x: privateAssets, y: PACKAGE_PRIVATE_ASSETS))
+            {
+                continue;
+            }
 
-                if (string.IsNullOrEmpty(privateAssets))
-                {
-                    if (reference.SelectSingleNode(xpath: "PrivateAssets") is XmlElement privateAssetsElement)
-                    {
-                        privateAssets = privateAssetsElement.InnerText;
-                    }
-                }
+            string version = reference.GetAttribute(name: @"Version");
 
-                if (!string.IsNullOrEmpty(privateAssets) && StringComparer.OrdinalIgnoreCase.Equals(x: privateAssets, y: PACKAGE_PRIVATE_ASSETS))
-                {
-                    continue;
-                }
+            this._logger.LogDebug($"{projectName}: Found: {packageName} ({version})");
 
-                string version = reference.GetAttribute(name: @"Version");
+            if (!NuGetVersion.TryParse(value: version, out NuGetVersion nuGetVersion))
+            {
+                this._logger.LogError($"{projectName}: Package {packageName} could not parse version {version}.");
 
-                this._logger.LogDebug($"{projectName}: Found: {packageName} ({version})");
+                continue;
+            }
 
-                if (!NuGetVersion.TryParse(value: version, out NuGetVersion nuGetVersion))
-                {
-                    this._logger.LogError($"{projectName}: Package {packageName} could not parse version {version}.");
-
-                    continue;
-                }
-
-                if (nuGetVersion.IsPrerelease && !this._configuration.PreReleaseBuild)
-                {
-                    this._logger.LogError($"{projectName}: Package {packageName} uses pre-release version {version}.");
-                }
+            if (nuGetVersion.IsPrerelease && !this._configuration.PreReleaseBuild)
+            {
+                this._logger.LogError($"{projectName}: Package {packageName} uses pre-release version {version}.");
             }
         }
     }

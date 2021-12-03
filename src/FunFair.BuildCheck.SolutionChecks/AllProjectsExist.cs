@@ -7,38 +7,37 @@ using FunFair.BuildCheck.Helpers;
 using FunFair.BuildCheck.Interfaces;
 using Microsoft.Extensions.Logging;
 
-namespace FunFair.BuildCheck.SolutionChecks
+namespace FunFair.BuildCheck.SolutionChecks;
+
+/// <summary>
+///     Checks to see if all projects in the solution exist.
+/// </summary>
+[SuppressMessage(category: "ReSharper", checkId: "ClassNeverInstantiated.Global", Justification = "Created by DI")]
+public sealed class AllProjectsExist : ISolutionCheck
 {
+    private readonly ILogger<AllProjectsExist> _logger;
+    private readonly IReadOnlyList<Project> _projects;
+
     /// <summary>
-    ///     Checks to see if all projects in the solution exist.
+    ///     Constructor.
     /// </summary>
-    [SuppressMessage(category: "ReSharper", checkId: "ClassNeverInstantiated.Global", Justification = "Created by DI")]
-    public sealed class AllProjectsExist : ISolutionCheck
+    /// <param name="projects">The projects that are registered in the solution.</param>
+    /// <param name="logger">Logging.</param>
+    public AllProjectsExist(IReadOnlyList<Project> projects, ILogger<AllProjectsExist> logger)
     {
-        private readonly ILogger<AllProjectsExist> _logger;
-        private readonly IReadOnlyList<Project> _projects;
+        this._projects = projects ?? throw new ArgumentNullException(nameof(projects));
+        this._logger = logger ?? throw new ArgumentNullException(nameof(logger));
+    }
 
-        /// <summary>
-        ///     Constructor.
-        /// </summary>
-        /// <param name="projects">The projects that are registered in the solution.</param>
-        /// <param name="logger">Logging.</param>
-        public AllProjectsExist(IReadOnlyList<Project> projects, ILogger<AllProjectsExist> logger)
+    /// <inheritdoc />
+    public void Check(string solutionFileName)
+    {
+        this._logger.LogInformation($"Checking Solution: {solutionFileName}");
+
+        foreach (string projectFileName in this._projects.Select(project => project.FileName)
+                                               .Where(projectFileName => !File.Exists(PathHelpers.ConvertToNative(projectFileName))))
         {
-            this._projects = projects ?? throw new ArgumentNullException(nameof(projects));
-            this._logger = logger ?? throw new ArgumentNullException(nameof(logger));
-        }
-
-        /// <inheritdoc />
-        public void Check(string solutionFileName)
-        {
-            this._logger.LogInformation($"Checking Solution: {solutionFileName}");
-
-            foreach (string projectFileName in this._projects.Select(project => project.FileName)
-                                                   .Where(projectFileName => !File.Exists(PathHelpers.ConvertToNative(projectFileName))))
-            {
-                this._logger.LogError($"Project {projectFileName} does not exist");
-            }
+            this._logger.LogError($"Project {projectFileName} does not exist");
         }
     }
 }

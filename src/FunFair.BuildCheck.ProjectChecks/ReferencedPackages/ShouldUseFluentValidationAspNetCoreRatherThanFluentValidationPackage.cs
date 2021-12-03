@@ -1,21 +1,20 @@
 using System.Diagnostics.CodeAnalysis;
 using Microsoft.Extensions.Logging;
 
-namespace FunFair.BuildCheck.ProjectChecks.ReferencedPackages
+namespace FunFair.BuildCheck.ProjectChecks.ReferencedPackages;
+
+/// <summary>
+///     Checks that the correct version of FluentValidation is installed.
+/// </summary>
+[SuppressMessage(category: "ReSharper", checkId: "ClassNeverInstantiated.Global", Justification = "Created by DI")]
+public sealed class ShouldUseFluentValidationAspNetCoreRatherThanFluentValidationPackage : ShouldUseAlternatePackage
 {
     /// <summary>
-    ///     Checks that the correct version of FluentValidation is installed.
+    ///     Constructor.
     /// </summary>
-    [SuppressMessage(category: "ReSharper", checkId: "ClassNeverInstantiated.Global", Justification = "Created by DI")]
-    public sealed class ShouldUseFluentValidationAspNetCoreRatherThanFluentValidationPackage : ShouldUseAlternatePackage
+    /// <param name="logger">Logging.</param>
+    public ShouldUseFluentValidationAspNetCoreRatherThanFluentValidationPackage(ILogger<ShouldUseFluentValidationAspNetCoreRatherThanFluentValidationPackage> logger)
+        : base(matchPackageId: @"FluentValidation", usePackageId: @"FluentValidation.AspNetCore", logger: logger)
     {
-        /// <summary>
-        ///     Constructor.
-        /// </summary>
-        /// <param name="logger">Logging.</param>
-        public ShouldUseFluentValidationAspNetCoreRatherThanFluentValidationPackage(ILogger<ShouldUseFluentValidationAspNetCoreRatherThanFluentValidationPackage> logger)
-            : base(matchPackageId: @"FluentValidation", usePackageId: @"FluentValidation.AspNetCore", logger: logger)
-        {
-        }
     }
 }

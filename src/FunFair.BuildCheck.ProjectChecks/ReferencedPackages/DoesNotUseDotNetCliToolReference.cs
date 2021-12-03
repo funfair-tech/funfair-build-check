@@ -4,34 +4,33 @@ using System.Xml;
 using FunFair.BuildCheck.Interfaces;
 using Microsoft.Extensions.Logging;
 
-namespace FunFair.BuildCheck.ProjectChecks.ReferencedPackages
+namespace FunFair.BuildCheck.ProjectChecks.ReferencedPackages;
+
+/// <summary>
+///     Checks that a project does not use the Dot Net CLi Tool Reference.
+/// </summary>
+[SuppressMessage(category: "ReSharper", checkId: "ClassNeverInstantiated.Global", Justification = "Created by DI")]
+public sealed class DoesNotUseDotNetCliToolReference : IProjectCheck
 {
+    private readonly ILogger<DoesNotUseDotNetCliToolReference> _logger;
+
     /// <summary>
-    ///     Checks that a project does not use the Dot Net CLi Tool Reference.
+    ///     Constructor.
     /// </summary>
-    [SuppressMessage(category: "ReSharper", checkId: "ClassNeverInstantiated.Global", Justification = "Created by DI")]
-    public sealed class DoesNotUseDotNetCliToolReference : IProjectCheck
+    /// <param name="logger">Logging.</param>
+    public DoesNotUseDotNetCliToolReference(ILogger<DoesNotUseDotNetCliToolReference> logger)
     {
-        private readonly ILogger<DoesNotUseDotNetCliToolReference> _logger;
+        this._logger = logger ?? throw new ArgumentNullException(nameof(logger));
+    }
 
-        /// <summary>
-        ///     Constructor.
-        /// </summary>
-        /// <param name="logger">Logging.</param>
-        public DoesNotUseDotNetCliToolReference(ILogger<DoesNotUseDotNetCliToolReference> logger)
+    /// <inheritdoc />
+    public void Check(string projectName, string projectFolder, XmlDocument project)
+    {
+        XmlNodeList? nodes = project.SelectNodes(xpath: "/Project/ItemGroup/DotNetCliToolReference");
+
+        if (nodes != null && nodes.Count != 0)
         {
-            this._logger = logger ?? throw new ArgumentNullException(nameof(logger));
-        }
-
-        /// <inheritdoc />
-        public void Check(string projectName, string projectFolder, XmlDocument project)
-        {
-            XmlNodeList? nodes = project.SelectNodes(xpath: "/Project/ItemGroup/DotNetCliToolReference");
-
-            if (nodes != null && nodes.Count != 0)
-            {
-                this._logger.LogError($"{projectName}: Contains DotNetCliToolReference.");
-            }
+            this._logger.LogError($"{projectName}: Contains DotNetCliToolReference.");
         }
     }
 }

@@ -5,31 +5,30 @@ using FunFair.BuildCheck.Interfaces;
 using FunFair.BuildCheck.ProjectChecks.Helpers;
 using Microsoft.Extensions.Logging;
 
-namespace FunFair.BuildCheck.ProjectChecks.Settings
+namespace FunFair.BuildCheck.ProjectChecks.Settings;
+
+/// <summary>
+///     Checks that all warnings are treated as errors.
+/// </summary>
+[SuppressMessage(category: "ReSharper", checkId: "ClassNeverInstantiated.Global", Justification = "Created by DI")]
+public sealed class ErrorPolicyWarningAsErrors : IProjectCheck
 {
+    private readonly ILogger<ErrorPolicyWarningAsErrors> _logger;
+
     /// <summary>
-    ///     Checks that all warnings are treated as errors.
+    ///     Constructor.
     /// </summary>
-    [SuppressMessage(category: "ReSharper", checkId: "ClassNeverInstantiated.Global", Justification = "Created by DI")]
-    public sealed class ErrorPolicyWarningAsErrors : IProjectCheck
+    /// <param name="logger">Logging.</param>
+    public ErrorPolicyWarningAsErrors(ILogger<ErrorPolicyWarningAsErrors> logger)
     {
-        private readonly ILogger<ErrorPolicyWarningAsErrors> _logger;
+        this._logger = logger ?? throw new ArgumentNullException(nameof(logger));
+    }
 
-        /// <summary>
-        ///     Constructor.
-        /// </summary>
-        /// <param name="logger">Logging.</param>
-        public ErrorPolicyWarningAsErrors(ILogger<ErrorPolicyWarningAsErrors> logger)
-        {
-            this._logger = logger ?? throw new ArgumentNullException(nameof(logger));
-        }
+    /// <inheritdoc />
+    public void Check(string projectName, string projectFolder, XmlDocument project)
+    {
+        ProjectValueHelpers.CheckNode(projectName: projectName, project: project, nodePresence: @"WarningsAsErrors", logger: this._logger);
 
-        /// <inheritdoc />
-        public void Check(string projectName, string projectFolder, XmlDocument project)
-        {
-            ProjectValueHelpers.CheckNode(projectName: projectName, project: project, nodePresence: @"WarningsAsErrors", logger: this._logger);
-
-            ProjectValueHelpers.CheckValue(projectName: projectName, project: project, nodePresence: @"TreatWarningsAsErrors", requiredValue: true, logger: this._logger);
-        }
+        ProjectValueHelpers.CheckValue(projectName: projectName, project: project, nodePresence: @"TreatWarningsAsErrors", requiredValue: true, logger: this._logger);
     }
 }

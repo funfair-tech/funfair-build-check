@@ -1,25 +1,24 @@
 ﻿using System.IO;
 
-namespace FunFair.BuildCheck.Helpers
+namespace FunFair.BuildCheck.Helpers;
+
+/// <summary>
+///     Helpers for working with paths
+/// </summary>
+public static class PathHelpers
 {
     /// <summary>
-    ///     Helpers for working with paths
+    ///     Converts the path to the native format.
     /// </summary>
-    public static class PathHelpers
+    /// <param name="path">The path to convert.</param>
+    /// <returns>The native format path.</returns>
+    public static string ConvertToNative(string path)
     {
-        /// <summary>
-        ///     Converts the path to the native format.
-        /// </summary>
-        /// <param name="path">The path to convert.</param>
-        /// <returns>The native format path.</returns>
-        public static string ConvertToNative(string path)
+        if (Path.DirectorySeparatorChar == '\\')
         {
-            if (Path.DirectorySeparatorChar == '\\')
-            {
-                return path.Replace(oldChar: '/', newChar: Path.DirectorySeparatorChar);
-            }
-
-            return path.Replace(oldChar: '\\', newChar: Path.DirectorySeparatorChar);
+            return path.Replace(oldChar: '/', newChar: Path.DirectorySeparatorChar);
         }
+
+        return path.Replace(oldChar: '\\', newChar: Path.DirectorySeparatorChar);
     }
 }
