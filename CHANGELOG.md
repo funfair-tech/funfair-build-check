@@ -7,6 +7,7 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 
 ## [Unreleased]
 ### Added
+- Check that packable libraries do not depend on non-packable libraries.
 ### Fixed
 ### Changed
 - FF-1429 - Updated Roslynator.Analyzers to 3.3.0
