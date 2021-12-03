@@ -7,19 +7,23 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 
 ## [Unreleased]
 ### Added
-- Check that packable libraries do not depend on non-packable libraries.
 ### Fixed
 ### Changed
-- FF-1429 - Updated Roslynator.Analyzers to 3.3.0
-- FF-1429 - Updated FunFair.Test.Common to 5.7.0.1478
-- FF-1429 - Updated TeamCity.VSTest.TestAdapter to 1.0.29
-- FF-1429 - Updated FunFair.CodeAnalysis to 5.7.3.1052
 ### Removed
 ### Deployment Changes
 
 <!--
 Releases that have at least been deployed to staging, BUT NOT necessarily released to live.  Changes should be moved from [Unreleased] into here as they are merged into the appropriate release branch
 -->
+## [3.9.0] - 2021-12-03
+### Added
+- Check that packable libraries do not depend on non-packable libraries.
+### Changed
+- FF-1429 - Updated Roslynator.Analyzers to 3.3.0
+- FF-1429 - Updated FunFair.Test.Common to 5.7.0.1478
+- FF-1429 - Updated TeamCity.VSTest.TestAdapter to 1.0.29
+- FF-1429 - Updated FunFair.CodeAnalysis to 5.7.3.1052
+
 ## [3.8.0] - 2021-11-22
 ### Added
 - Check to see if web.config transforms are enabled for web library projects
