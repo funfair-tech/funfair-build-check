@@ -151,7 +151,12 @@ internal static class ProjectValueHelpers
         CheckValueCommon(projectName: projectName, project: project, nodePresence: nodePresence, isRequiredValue: isRequiredValue, requiredValueDisplayText: msg, logger: logger);
     }
 
-    private static void CheckValueCommon(string projectName, XmlDocument project, string nodePresence, Func<string, bool> isRequiredValue, string requiredValueDisplayText, ILogger logger)
+    private static void CheckValueCommon(string projectName,
+                                         XmlDocument project,
+                                         string nodePresence,
+                                         Func<string, bool> isRequiredValue,
+                                         string requiredValueDisplayText,
+                                         ILogger logger)
     {
         bool hasGlobalSetting = false;
         XmlNodeList? nodes = project.SelectNodes("/Project/PropertyGroup[not(@Condition)]/" + nodePresence);
