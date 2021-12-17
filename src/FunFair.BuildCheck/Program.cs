@@ -19,6 +19,12 @@ internal static class Program
     private const int SUCCESS = 0;
     private const int ERROR = 1;
 
+    private static readonly Regex ProjectReferenceRegex = new(
+        pattern:
+        "^Project\\(\"[{(]?[0-9A-F]{8}[-]?([0-9A-F]{4}[-]?){3}[0-9A-F]{12}[)}]\"\\)\\s*=\\s*\"(?<DisplayName>.*?)\",\\s*\"(?<FileName>.*?\\.csproj)\",\\s*\"[{(]?[0-9A-F]{8}[-]?([0-9A-F]{4}[-]?){3}[0-9A-F]{12}[)}]\"$",
+        RegexOptions.Compiled | RegexOptions.ExplicitCapture,
+        TimeSpan.FromSeconds(5));
+
     private static void Usage()
     {
         Console.WriteLine();
@@ -32,14 +38,7 @@ internal static class Program
         {
             Console.WriteLine($"{typeof(Program).Namespace} {ExecutableVersionInformation.ProgramVersion()}");
 
-            IConfigurationRoot configuration = new ConfigurationBuilder().AddCommandLine(args: args,
-                                                                                         new Dictionary<string, string>
-                                                                                         {
-                                                                                             { @"-Solution", @"solution" },
-                                                                                             { @"-WarningAsErrors", @"WarningAsErrors" },
-                                                                                             { @"-PreReleaseBuild", @"PreReleaseBuild" }
-                                                                                         })
-                                                                         .Build();
+            IConfigurationRoot configuration = GetCommandLineConfiguration(args);
 
             string solutionFileName = configuration.GetValue<string>(key: @"solution");
 
@@ -119,6 +118,16 @@ internal static class Program
         }
     }
 
+    private static IConfigurationRoot GetCommandLineConfiguration(string[] args)
+    {
+        return new ConfigurationBuilder().AddCommandLine(args: args,
+                                                         new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
+                                                         {
+                                                             { @"-Solution", @"solution" }, { @"-WarningAsErrors", @"WarningAsErrors" }, { @"-PreReleaseBuild", @"PreReleaseBuild" }
+                                                         })
+                                         .Build();
+    }
+
     private static void OutputSolutionFileName(string solutionFileName)
     {
         string? env = Environment.GetEnvironmentVariable("TEAMCITY_VERSION");
@@ -190,14 +199,9 @@ internal static class Program
 
         Console.WriteLine(value: "Looking for projects...");
 
-        Regex regex = new(
-            pattern:
-            "^Project\\(\"[{(]?[0-9A-F]{8}[-]?([0-9A-F]{4}[-]?){3}[0-9A-F]{12}[)}]\"\\)\\s*=\\s*\"(?<DisplayName>.*?)\",\\s*\"(?<FileName>.*?\\.csproj)\",\\s*\"[{(]?[0-9A-F]{8}[-]?([0-9A-F]{4}[-]?){3}[0-9A-F]{12}[)}]\"$",
-            options: RegexOptions.Compiled);
-
         foreach (string line in text)
         {
-            foreach (Match? match in regex.Matches(line))
+            foreach (Match? match in ProjectReferenceRegex.Matches(line))
             {
                 if (match == null)
                 {

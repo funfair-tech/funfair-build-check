@@ -417,6 +417,8 @@
     <Rules AnalyzerId="codecracker.CSharp" RuleNamespace="codecracker.CSharp">
         <!-- CC0001 - Use var instead of specifying type name -->
         <Rule Id="CC0001" Action="None"/>
+        <!-- CC0031 - Verifiy if delegate 'x' is null before invoking it -->
+        <Rule Id="CC0031" Action="None"/>
         <!-- CC0105 - Use var instead of specifying type name -->
         <Rule Id="CC0105" Action="None"/>
     </Rules>
@@ -428,8 +430,10 @@
     <Rules AnalyzerId="Meziantou.Analyzer" RuleNamespace="Meziantou.Analyzer">
         <!-- MA0004 - Use ConfigureAwait(false) as the current SynchronizationContext is not needed -->
         <Rule Id="MA0004" Action="None"/>
-        <!-- MA0005 - Use string.Equals instead of the comparaison operator -->
+        <!-- MA0006 - Use string.Equals instead of the comparaison operator -->
         <Rule Id="MA0006" Action="Info"/>
+        <!-- MA0026 - Fix TODO -->
+        <Rule Id="MA0026" Action="Info"/>
     </Rules>
     <Rules AnalyzerId="SecurityCodeScan.VS2019" RuleNamespace="SecurityCodeScan.VS2019">
 

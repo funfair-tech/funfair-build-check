@@ -48,67 +48,85 @@ public sealed class MustNotDisableUnexpectedWarnings : IProjectCheck
 
         if (nodes != null)
         {
-            foreach (XmlElement item in nodes.OfType<XmlElement>())
-            {
-                XmlElement? propertyGroup = item.ParentNode as XmlElement;
-
-                if (propertyGroup != null)
-                {
-                    string condition = propertyGroup.GetAttribute(name: "Condition");
-
-                    if (string.IsNullOrWhiteSpace(condition))
-                    {
-                        string value = GetTextValue(item);
-
-                        if (!string.IsNullOrWhiteSpace(value))
-                        {
-                            string[] warnings = ExtractWarnings(value);
-
-                            foreach (string warning in warnings)
-                            {
-                                if (!allowedWarnings.Contains(warning))
-                                {
-                                    this._logger.LogError($"{projectName}: Global Configuration hides warning {warning}.");
-                                }
-                            }
-                        }
-                    }
-                }
-            }
+            this.CheckGlobalConfiguration(projectName: projectName, nodes: nodes, allowedWarnings: allowedWarnings);
         }
 
         XmlNodeList? configurationGroups = project.SelectNodes(xpath: "/Project/PropertyGroup[@Condition]");
 
         if (configurationGroups != null)
         {
-            foreach (XmlElement propertyGroup in configurationGroups.OfType<XmlElement>())
+            this.CheckConfigurationGroup(projectName: projectName, configurationGroups: configurationGroups, nodePresence: nodePresence, allowedWarnings: allowedWarnings);
+        }
+    }
+
+    private void CheckConfigurationGroup(string projectName, XmlNodeList configurationGroups, string nodePresence, IReadOnlyList<string> allowedWarnings)
+    {
+        foreach (XmlElement propertyGroup in configurationGroups.OfType<XmlElement>())
+        {
+            XmlNode? node = propertyGroup.SelectSingleNode(nodePresence);
+
+            if (node == null)
             {
-                XmlNode? node = propertyGroup.SelectSingleNode(nodePresence);
+                continue;
+            }
 
-                if (node != null)
+            string value = GetTextValue(node);
+
+            if (string.IsNullOrWhiteSpace(value))
+            {
+                continue;
+            }
+
+            string configuration = propertyGroup.GetAttribute(name: "Condition");
+
+            string[] warnings = ExtractWarnings(value);
+
+            foreach (string warning in warnings)
+            {
+                if (warning == "$(NoWarn)")
                 {
-                    string value = GetTextValue(node);
+                    // skip references to global configs
+                    continue;
+                }
 
-                    if (!string.IsNullOrWhiteSpace(value))
-                    {
-                        string configuration = propertyGroup.GetAttribute(name: "Condition");
+                if (!allowedWarnings.Contains(value: warning, comparer: StringComparer.OrdinalIgnoreCase))
+                {
+                    this._logger.LogError($"{projectName}: Configuration {configuration} hides warning {warning}.");
+                }
+            }
+        }
+    }
 
-                        string[] warnings = ExtractWarnings(value);
+    private void CheckGlobalConfiguration(string projectName, XmlNodeList nodes, IReadOnlyList<string> allowedWarnings)
+    {
+        foreach (XmlElement item in nodes.OfType<XmlElement>())
+        {
+            if (item.ParentNode is not XmlElement propertyGroup)
+            {
+                continue;
+            }
 
-                        foreach (string warning in warnings)
-                        {
-                            if (warning == "$(NoWarn)")
-                            {
-                                // skip references to global configs
-                                continue;
-                            }
+            string condition = propertyGroup.GetAttribute(name: "Condition");
 
-                            if (!allowedWarnings.Contains(warning))
-                            {
-                                this._logger.LogError($"{projectName}: Configuration {configuration} hides warning {warning}.");
-                            }
-                        }
-                    }
+            if (!string.IsNullOrWhiteSpace(condition))
+            {
+                continue;
+            }
+
+            string value = GetTextValue(item);
+
+            if (string.IsNullOrWhiteSpace(value))
+            {
+                continue;
+            }
+
+            string[] warnings = ExtractWarnings(value);
+
+            foreach (string warning in warnings)
+            {
+                if (!allowedWarnings.Contains(value: warning, comparer: StringComparer.OrdinalIgnoreCase))
+                {
+                    this._logger.LogError($"{projectName}: Global Configuration hides warning {warning}.");
                 }
             }
         }

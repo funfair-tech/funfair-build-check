@@ -153,6 +153,65 @@ internal static class ProjectValueHelpers
 
     private static void CheckValueCommon(string projectName, XmlDocument project, string nodePresence, Func<string, bool> isRequiredValue, string requiredValueDisplayText, ILogger logger)
     {
+        bool hasGlobalSetting = CheckGlobalSettings(project: project, nodePresence: nodePresence, isRequiredValue: isRequiredValue);
+
+        XmlNodeList? configurationGroups = project.SelectNodes(xpath: "/Project/PropertyGroup[@Condition]");
+
+        if (configurationGroups != null)
+        {
+            CheckConditionalSettings(projectName: projectName,
+                                     nodePresence: nodePresence,
+                                     isRequiredValue: isRequiredValue,
+                                     requiredValueDisplayText: requiredValueDisplayText,
+                                     configurationGroups: configurationGroups,
+                                     hasGlobalSetting: hasGlobalSetting,
+                                     logger: logger);
+        }
+
+        if (!hasGlobalSetting && configurationGroups?.Count == 0)
+        {
+            logger.LogError($"{projectName}: Should specify {nodePresence} as {requiredValueDisplayText}.");
+        }
+    }
+
+    private static void CheckConditionalSettings(string projectName,
+                                                 string nodePresence,
+                                                 Func<string, bool> isRequiredValue,
+                                                 string requiredValueDisplayText,
+                                                 XmlNodeList configurationGroups,
+                                                 bool hasGlobalSetting,
+                                                 ILogger logger)
+    {
+        foreach (XmlElement propertyGroup in configurationGroups.OfType<XmlElement>())
+        {
+            XmlNode? node = propertyGroup.SelectSingleNode(nodePresence);
+
+            if (node == null)
+            {
+                if (!hasGlobalSetting)
+                {
+                    string configuration = propertyGroup.GetAttribute(name: "Condition");
+                    logger.LogError($"{projectName}: Configuration {configuration} should specify {nodePresence}.");
+                }
+            }
+            else
+            {
+                string value = GetTextValue(node);
+
+                if (!isRequiredValue(value))
+                {
+                    if (!hasGlobalSetting)
+                    {
+                        string configuration = propertyGroup.GetAttribute(name: "Condition");
+                        logger.LogError($"{projectName}: Configuration {configuration} should specify {nodePresence} as {requiredValueDisplayText}.");
+                    }
+                }
+            }
+        }
+    }
+
+    private static bool CheckGlobalSettings(XmlDocument project, string nodePresence, Func<string, bool> isRequiredValue)
+    {
         bool hasGlobalSetting = false;
         XmlNodeList? nodes = project.SelectNodes("/Project/PropertyGroup[not(@Condition)]/" + nodePresence);
 
@@ -160,63 +219,28 @@ internal static class ProjectValueHelpers
         {
             foreach (XmlElement item in nodes.OfType<XmlElement>())
             {
-                XmlElement? propertyGroup = item.ParentNode as XmlElement;
-
-                if (propertyGroup == null)
+                if (item.ParentNode is not XmlElement propertyGroup)
                 {
                     continue;
                 }
 
                 string condition = propertyGroup.GetAttribute(name: "Condition");
 
-                if (string.IsNullOrWhiteSpace(condition))
+                if (!string.IsNullOrWhiteSpace(condition))
                 {
-                    string value = GetTextValue(item);
+                    continue;
+                }
 
-                    if (isRequiredValue(value))
-                    {
-                        hasGlobalSetting = true;
-                    }
+                string value = GetTextValue(item);
+
+                if (isRequiredValue(value))
+                {
+                    hasGlobalSetting = true;
                 }
             }
         }
 
-        XmlNodeList? configurationGroups = project.SelectNodes(xpath: "/Project/PropertyGroup[@Condition]");
-
-        if (configurationGroups != null)
-        {
-            foreach (XmlElement propertyGroup in configurationGroups.OfType<XmlElement>())
-            {
-                XmlNode? node = propertyGroup.SelectSingleNode(nodePresence);
-
-                if (node == null)
-                {
-                    if (!hasGlobalSetting)
-                    {
-                        string configuration = propertyGroup.GetAttribute(name: "Condition");
-                        logger.LogError($"{projectName}: Configuration {configuration} should specify {nodePresence}.");
-                    }
-                }
-                else
-                {
-                    string value = GetTextValue(node);
-
-                    if (!isRequiredValue(value))
-                    {
-                        if (!hasGlobalSetting)
-                        {
-                            string configuration = propertyGroup.GetAttribute(name: "Condition");
-                            logger.LogError($"{projectName}: Configuration {configuration} should specify {nodePresence} as {requiredValueDisplayText}.");
-                        }
-                    }
-                }
-            }
-        }
-
-        if (!hasGlobalSetting && configurationGroups?.Count == 0)
-        {
-            logger.LogError($"{projectName}: Should specify {nodePresence} as {requiredValueDisplayText}.");
-        }
+        return hasGlobalSetting;
     }
 
     private static string GetTextValue(XmlNode node)

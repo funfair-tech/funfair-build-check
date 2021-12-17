@@ -1,4 +1,5 @@
-﻿using System.Xml;
+﻿using System;
+using System.Xml;
 using FunFair.BuildCheck.Interfaces;
 using NonBlocking;
 
@@ -16,7 +17,7 @@ public sealed class ProjectLoader : IProjectLoader
     /// </summary>
     public ProjectLoader()
     {
-        this._projects = new();
+        this._projects = new(StringComparer.Ordinal);
     }
 
     /// <inheritdoc />

@@ -27,7 +27,7 @@ public sealed class HasConsistentNuGetPackages : IProjectCheck
     {
         this._logger = logger ?? throw new ArgumentNullException(nameof(logger));
 
-        this._packages = new();
+        this._packages = new(StringComparer.OrdinalIgnoreCase);
     }
 
     /// <inheritdoc />
