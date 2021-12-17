@@ -9,17 +9,20 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 ### Added
 ### Fixed
 ### Changed
-- FF-1429 - Updated SonarAnalyzer.CSharp to 8.33.0.40503
-- FF-1429 - Updated TeamCity.VSTest.TestAdapter to 1.0.30
-- FF-1429 - Updated FunFair.Test.Common to 5.7.2.1514
-- FF-3881 - Updated DotNet SDK to 6.0.101
-- Obsoleted package message where its been obsoleted with an SDK reference
 ### Removed
 ### Deployment Changes
 
 <!--
 Releases that have at least been deployed to staging, BUT NOT necessarily released to live.  Changes should be moved from [Unreleased] into here as they are merged into the appropriate release branch
 -->
+## [3.9.1] - 2021-12-17
+### Changed
+- FF-1429 - Updated SonarAnalyzer.CSharp to 8.33.0.40503
+- FF-1429 - Updated TeamCity.VSTest.TestAdapter to 1.0.30
+- FF-1429 - Updated FunFair.Test.Common to 5.7.2.1514
+- FF-3881 - Updated DotNet SDK to 6.0.101
+- Obsoleted package message where its been obsoleted with an SDK reference
+
 ## [3.9.0] - 2021-12-03
 ### Added
 - Check that packable libraries do not depend on non-packable libraries.
