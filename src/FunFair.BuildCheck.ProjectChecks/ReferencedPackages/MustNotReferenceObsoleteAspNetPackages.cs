@@ -98,7 +98,7 @@ public sealed class MustNotReferenceObsoleteAspNetPackages : MustNotReferencePac
     /// </summary>
     /// <param name="logger">Logging.</param>
     public MustNotReferenceObsoleteAspNetPackages(ILogger<MustNotReferenceObsoleteAspNetPackages> logger)
-        : base(packageIds: PackageIds, reason: "Obsoleted with .net core 3.1", logger: logger)
+        : base(packageIds: PackageIds, reason: "Obsoleted as direct reference with .net core 3.1 use the implicit reference through <Project Sdk=\"Microsoft.NET.Sdk.Web\">", logger: logger)
     {
     }
 }
