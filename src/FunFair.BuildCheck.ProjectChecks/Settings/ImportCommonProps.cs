@@ -50,7 +50,7 @@ public sealed class ImportCommonProps : IProjectCheck
                            .Select(import => import.GetAttribute(name: "Project"))
                            .Any(projectImport => StringComparer.InvariantCultureIgnoreCase.Equals(x: this._projectImport, y: projectImport));
         }
-!
+
         if (!found)
         {
             this._logger.LogError($"Packable project {projectName} should <Import Project=\"{this._projectImport}\" />");
