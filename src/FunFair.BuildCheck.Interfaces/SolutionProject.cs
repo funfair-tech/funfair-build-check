@@ -6,14 +6,14 @@ namespace FunFair.BuildCheck.Interfaces;
 ///     A Project
 /// </summary>
 [DebuggerDisplay("{DisplayName}: {FileName}")]
-public sealed class Project
+public sealed class SolutionProject
 {
     /// <summary>
     ///     Constructor.
     /// </summary>
     /// <param name="fileName">The full path to the project.</param>
     /// <param name="displayName">The display name of the project as in the solution.</param>
-    public Project(string fileName, string displayName)
+    public SolutionProject(string fileName, string displayName)
     {
         this.FileName = fileName;
         this.DisplayName = displayName;

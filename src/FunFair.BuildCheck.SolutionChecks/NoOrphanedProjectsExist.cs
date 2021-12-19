@@ -15,14 +15,14 @@ namespace FunFair.BuildCheck.SolutionChecks;
 public sealed class NoOrphanedProjectsExist : ISolutionCheck
 {
     private readonly ILogger<NoOrphanedProjectsExist> _logger;
-    private readonly IReadOnlyList<Project> _projects;
+    private readonly IReadOnlyList<SolutionProject> _projects;
 
     /// <summary>
     ///     Constructor.
     /// </summary>
     /// <param name="projects">The projects that are registered in the solution.</param>
     /// <param name="logger">Logging.</param>
-    public NoOrphanedProjectsExist(IReadOnlyList<Project> projects, ILogger<NoOrphanedProjectsExist> logger)
+    public NoOrphanedProjectsExist(IReadOnlyList<SolutionProject> projects, ILogger<NoOrphanedProjectsExist> logger)
     {
         this._projects = projects ?? throw new ArgumentNullException(nameof(projects));
         this._logger = logger ?? throw new ArgumentNullException(nameof(logger));

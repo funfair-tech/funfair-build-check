@@ -46,19 +46,11 @@ public sealed class ImportCommonProps : IProjectCheck
 
         if (imports != null)
         {
-            foreach (XmlElement import in imports.OfType<XmlElement>())
-            {
-                string projectImport = import.GetAttribute(name: "Project");
-
-                if (StringComparer.InvariantCultureIgnoreCase.Equals(x: this._projectImport, y: projectImport))
-                {
-                    found = true;
-
-                    break;
-                }
-            }
+            found = imports.OfType<XmlElement>()
+                           .Select(import => import.GetAttribute(name: "Project"))
+                           .Any(projectImport => StringComparer.InvariantCultureIgnoreCase.Equals(x: this._projectImport, y: projectImport));
         }
-
+!
         if (!found)
         {
             this._logger.LogError($"Packable project {projectName} should <Import Project=\"{this._projectImport}\" />");

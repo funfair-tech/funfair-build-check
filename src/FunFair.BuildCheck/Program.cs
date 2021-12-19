@@ -40,42 +40,14 @@ internal static class Program
 
             IConfigurationRoot configuration = GetCommandLineConfiguration(args);
 
-            string solutionFileName = configuration.GetValue<string>(key: @"solution");
-
-            if (string.IsNullOrWhiteSpace(solutionFileName))
+            if (!GetConfiguration(configuration: configuration, out string solutionFileName, out bool warningsAsErrors, out bool preReleaseBuild))
             {
-                Console.WriteLine(value: "Missing Solution file.");
-
                 Usage();
 
                 return ERROR;
             }
 
-            solutionFileName = PathHelpers.ConvertToNative(solutionFileName);
-
-            if (!File.Exists(solutionFileName))
-            {
-                Console.WriteLine(value: $"Could not find solution file {solutionFileName}");
-                Usage();
-
-                return ERROR;
-            }
-
-            bool warningsAsErrors = configuration.GetValue<bool>(key: @"WarningAsErrors");
-
-            if (warningsAsErrors)
-            {
-                Console.WriteLine(value: "** Running with Warnings as Errors");
-            }
-
-            bool preReleaseBuild = configuration.GetValue<bool>(key: @"PreReleaseBuild");
-
-            if (!warningsAsErrors)
-            {
-                Console.WriteLine(value: "** Running with release build requirements");
-            }
-
-            IReadOnlyList<Project> projects = await LoadProjectsAsync(solutionFileName);
+            IReadOnlyList<SolutionProject> projects = await LoadProjectsAsync(solutionFileName);
             IServiceProvider services = Setup(warningsAsErrors: warningsAsErrors, preReleaseBuild: preReleaseBuild, projects: projects);
 
             string? baseFolder = Path.GetDirectoryName(solutionFileName);
@@ -93,22 +65,7 @@ internal static class Program
 
             PerformChecks(services: services, solutionFileName: solutionFileName, logging: logging);
 
-            if (logging.IsErrored)
-            {
-                Console.WriteLine();
-                Console.WriteLine(logging.Errors > 1
-                                      ? $"Found {logging.Errors} Errors"
-                                      : $"Found {logging.Errors} Error");
-
-                return (int)logging.Errors;
-            }
-
-            OutputSolutionFileName(solutionFileName);
-
-            Console.WriteLine();
-            Console.WriteLine(value: "No errors found.");
-
-            return SUCCESS;
+            return ReportStatus(logging: logging, solutionFileName: solutionFileName);
         }
         catch (Exception exception)
         {
@@ -116,6 +73,65 @@ internal static class Program
 
             return ERROR;
         }
+    }
+
+    private static int ReportStatus(IDiagnosticLogger logging, string solutionFileName)
+    {
+        if (logging.IsErrored)
+        {
+            Console.WriteLine();
+            Console.WriteLine(logging.Errors > 1
+                                  ? $"Found {logging.Errors} Errors"
+                                  : $"Found {logging.Errors} Error");
+
+            return (int)logging.Errors;
+        }
+
+        OutputSolutionFileName(solutionFileName);
+
+        Console.WriteLine();
+        Console.WriteLine(value: "No errors found.");
+
+        return SUCCESS;
+    }
+
+    private static bool GetConfiguration(IConfigurationRoot configuration, out string solutionFileName, out bool warningsAsErrors, out bool preReleaseBuild)
+    {
+        solutionFileName = configuration.GetValue<string>(key: @"solution");
+        warningsAsErrors = false;
+        preReleaseBuild = false;
+
+        if (string.IsNullOrWhiteSpace(solutionFileName))
+        {
+            Console.WriteLine(value: "Missing Solution file.");
+
+            return false;
+        }
+
+        solutionFileName = PathHelpers.ConvertToNative(solutionFileName);
+
+        if (!File.Exists(solutionFileName))
+        {
+            Console.WriteLine(value: $"Could not find solution file {solutionFileName}");
+
+            return false;
+        }
+
+        warningsAsErrors = configuration.GetValue<bool>(key: @"WarningAsErrors");
+
+        if (warningsAsErrors)
+        {
+            Console.WriteLine(value: "** Running with Warnings as Errors");
+        }
+
+        preReleaseBuild = configuration.GetValue<bool>(key: @"PreReleaseBuild");
+
+        if (!warningsAsErrors)
+        {
+            Console.WriteLine(value: "** Running with release build requirements");
+        }
+
+        return true;
     }
 
     private static IConfigurationRoot GetCommandLineConfiguration(string[] args)
@@ -149,9 +165,9 @@ internal static class Program
             check.Check(solutionFileName);
         }
 
-        IReadOnlyList<Project> projects = services.GetRequiredService<IReadOnlyList<Project>>();
+        IReadOnlyList<SolutionProject> projects = services.GetRequiredService<IReadOnlyList<SolutionProject>>();
 
-        foreach (Project project in projects)
+        foreach (SolutionProject project in projects)
         {
             logging.LogInformation($"Checking Project: {project.DisplayName}:");
 
@@ -165,7 +181,7 @@ internal static class Program
         }
     }
 
-    private static IServiceProvider Setup(bool warningsAsErrors, bool preReleaseBuild, IReadOnlyList<Project> projects)
+    private static IServiceProvider Setup(bool warningsAsErrors, bool preReleaseBuild, IReadOnlyList<SolutionProject> projects)
     {
         IServiceCollection services = new ServiceCollection();
 
@@ -188,14 +204,14 @@ internal static class Program
         return spf.CreateServiceProvider(services);
     }
 
-    private static async Task<IReadOnlyList<Project>> LoadProjectsAsync(string solution)
+    private static async Task<IReadOnlyList<SolutionProject>> LoadProjectsAsync(string solution)
     {
         string[] text = await File.ReadAllLinesAsync(solution);
 
         string basePath = Path.GetDirectoryName(solution)!;
         Console.WriteLine($"Solution base path: {basePath}");
 
-        List<Project> projects = new();
+        List<SolutionProject> projects = new();
 
         Console.WriteLine(value: "Looking for projects...");
 

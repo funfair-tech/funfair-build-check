@@ -16,14 +16,14 @@ namespace FunFair.BuildCheck.SolutionChecks;
 public sealed class AllProjectsExist : ISolutionCheck
 {
     private readonly ILogger<AllProjectsExist> _logger;
-    private readonly IReadOnlyList<Project> _projects;
+    private readonly IReadOnlyList<SolutionProject> _projects;
 
     /// <summary>
     ///     Constructor.
     /// </summary>
     /// <param name="projects">The projects that are registered in the solution.</param>
     /// <param name="logger">Logging.</param>
-    public AllProjectsExist(IReadOnlyList<Project> projects, ILogger<AllProjectsExist> logger)
+    public AllProjectsExist(IReadOnlyList<SolutionProject> projects, ILogger<AllProjectsExist> logger)
     {
         this._projects = projects ?? throw new ArgumentNullException(nameof(projects));
         this._logger = logger ?? throw new ArgumentNullException(nameof(logger));
