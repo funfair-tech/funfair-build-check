@@ -54,7 +54,8 @@ internal static class Setup
                        .AddProjectCheck<ShouldUseAbstractionsFileProvidersPackage>()
                        .AddProjectCheck<ShouldUseAbstractionsLoggingPackage>()
                        .AddProjectCheck<ShouldUseFluentValidationAspNetCoreRatherThanFluentValidationPackage>()
-                       .AddProjectCheck<ShouldUseNSubstituteRatherThanMoqPackage>();
+                       .AddProjectCheck<ShouldUseNSubstituteRatherThanMoqPackage>()
+                       .AddProjectCheck<UsingJwtAuthenticationMustIncludeIdentityModelJwt>();
     }
 
     private static IServiceCollection GeneralProjectSettings(this IServiceCollection services)
