@@ -51,9 +51,7 @@ public abstract class MustHaveAnalyzerPackage : IProjectCheck
 
     private static bool CheckPrivateAssets(string packageId, XmlDocument project)
     {
-        XmlElement? reference = project.SelectSingleNode("/Project/ItemGroup/PackageReference[@Include='" + packageId + "']") as XmlElement;
-
-        if (reference == null)
+        if (project.SelectSingleNode("/Project/ItemGroup/PackageReference[@Include='" + packageId + "']") is not XmlElement reference)
         {
             return false;
         }
@@ -64,9 +62,7 @@ public abstract class MustHaveAnalyzerPackage : IProjectCheck
         if (string.IsNullOrEmpty(assets))
         {
             // no PrivateAssets attribute, check for an element
-            XmlElement? privateAssets = reference.SelectSingleNode(xpath: "PrivateAssets") as XmlElement;
-
-            if (privateAssets == null)
+            if (reference.SelectSingleNode(xpath: "PrivateAssets") is not XmlElement privateAssets)
             {
                 return false;
             }

@@ -75,9 +75,7 @@ public sealed class MustHaveSourceLinkPackage : IProjectCheck
 
     private static bool CheckPrivateAssets(string packageId, XmlDocument project)
     {
-        XmlElement? reference = project.SelectSingleNode("/Project/ItemGroup/PackageReference[@Include='" + packageId + "']") as XmlElement;
-
-        if (reference == null)
+        if (project.SelectSingleNode("/Project/ItemGroup/PackageReference[@Include='" + packageId + "']") is not XmlElement reference)
         {
             return false;
         }

@@ -81,9 +81,7 @@ internal static class ProjectValueHelpers
         {
             foreach (XmlElement item in nodes.OfType<XmlElement>())
             {
-                XmlElement? propertyGroup = item.ParentNode as XmlElement;
-
-                if (propertyGroup == null)
+                if (item.ParentNode is not XmlElement propertyGroup)
                 {
                     continue;
                 }
