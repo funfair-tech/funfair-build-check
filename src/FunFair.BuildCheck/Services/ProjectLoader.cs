@@ -23,7 +23,7 @@ public sealed class ProjectLoader : IProjectLoader
     /// <inheritdoc />
     public XmlDocument Load(string path)
     {
-        if (this._projects.TryGetValue(key: path, out XmlDocument doc))
+        if (this._projects.TryGetValue(key: path, out XmlDocument? doc))
         {
             return doc;
         }
