@@ -11,7 +11,7 @@ namespace FunFair.BuildCheck;
 
 internal static class Setup
 {
-    public static IServiceCollection SetupSolutionChecks(IServiceCollection services)
+    public static IServiceCollection SetupSolutionChecks(this IServiceCollection services)
     {
         return services.AddSolutionCheck<AllProjectsExist>()
                        .AddSolutionCheck<NoOrphanedProjectsExist>()
@@ -21,9 +21,10 @@ internal static class Setup
     }
 
     [SuppressMessage(category: "", checkId: "MA0051: Method too long", Justification = "Registering Analyzers")]
-    public static IServiceCollection SetupProjectChecks(IRepositorySettings repositorySettings, IServiceCollection services)
+    public static IServiceCollection SetupProjectChecks(this IServiceCollection services, IRepositorySettings repositorySettings)
     {
         return services.GeneralProjectSettings()
+                       .XmlDocumentationProjectSettings()
                        .ProjectReferences()
                        .ProjectIntegrityChecks()
                        .PackagingSettings()
@@ -58,11 +59,17 @@ internal static class Setup
                        .AddProjectCheck<UsingJwtAuthenticationMustIncludeIdentityModelJwt>();
     }
 
+    private static IServiceCollection XmlDocumentationProjectSettings(this IServiceCollection services)
+    {
+        return StringComparer.InvariantCulture.Equals(Environment.GetEnvironmentVariable("XML_DOCUMENTATION"), y: "true")
+            ? services.AddProjectCheck<XmlDocumentationFileRequiredPolicy>()
+            : services.AddProjectCheck<XmlDocumentationFileProhibitedPolicy>();
+    }
+
     private static IServiceCollection GeneralProjectSettings(this IServiceCollection services)
     {
         return services.AddProjectCheck<DoesNotUseDotNetCliToolReference>()
                        .AddProjectCheck<DoesNotUseRootNamespace>()
-                       .AddProjectCheck<DocumentationFilePolicy>()
                        .AddProjectCheck<GenerateNeutralResourcesLanguageAttributePolicy>()
                        .AddProjectCheck<ImplicitUsingsPolicy>()
                        .AddProjectCheck<LanguagePolicyUseLatestVersion>()

@@ -183,25 +183,19 @@ internal static class Program
 
     private static IServiceProvider Setup(bool warningsAsErrors, bool preReleaseBuild, IReadOnlyList<SolutionProject> projects)
     {
-        IServiceCollection services = new ServiceCollection();
-
         IRepositorySettings repositorySettings = new RepositorySettings();
         DiagnosticLogger logger = new(warningsAsErrors);
-        services.AddSingleton(repositorySettings);
-        services.AddSingleton<ILogger>(logger);
-        services.AddSingleton<IDiagnosticLogger>(logger);
-        services.AddSingleton(typeof(ILogger<>), typeof(LoggerProxy<>));
-        services.AddSingleton(projects);
-        services.AddSingleton<IProjectLoader, ProjectLoader>();
 
-        BuildCheck.Setup.SetupSolutionChecks(services);
-        BuildCheck.Setup.SetupProjectChecks(repositorySettings: repositorySettings, services: services);
-
-        services.AddSingleton<ICheckConfiguration>(new CheckConfiguration { PreReleaseBuild = preReleaseBuild });
-
-        IServiceProviderFactory<IServiceCollection> spf = new DefaultServiceProviderFactory();
-
-        return spf.CreateServiceProvider(services);
+        return new ServiceCollection().AddSingleton(repositorySettings)
+                                      .AddSingleton<ILogger>(logger)
+                                      .AddSingleton<IDiagnosticLogger>(logger)
+                                      .AddSingleton(typeof(ILogger<>), typeof(LoggerProxy<>))
+                                      .AddSingleton(projects)
+                                      .AddSingleton<IProjectLoader, ProjectLoader>()
+                                      .SetupSolutionChecks()
+                                      .SetupProjectChecks(repositorySettings: repositorySettings)
+                                      .AddSingleton<ICheckConfiguration>(new CheckConfiguration { PreReleaseBuild = preReleaseBuild })
+                                      .BuildServiceProvider();
     }
 
     private static async Task<IReadOnlyList<SolutionProject>> LoadProjectsAsync(string solution)

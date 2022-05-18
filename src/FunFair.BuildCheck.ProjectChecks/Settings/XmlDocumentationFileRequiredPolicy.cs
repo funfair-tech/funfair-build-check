@@ -11,10 +11,10 @@ namespace FunFair.BuildCheck.ProjectChecks.Settings;
 ///     Checks that the DocumentationFile is set appropriately
 /// </summary>
 [SuppressMessage(category: "ReSharper", checkId: "ClassNeverInstantiated.Global", Justification = "Created by DI")]
-public sealed class DocumentationFilePolicy : IProjectCheck
+public sealed class XmlDocumentationFileRequiredPolicy : IProjectCheck
 {
     private const string EXPECTED = @"bin\$(Configuration)\$(TargetFramework)\$(MSBuildProjectName).xml";
-    private readonly ILogger<DocumentationFilePolicy> _logger;
+    private readonly ILogger<XmlDocumentationFileRequiredPolicy> _logger;
 
     private readonly IRepositorySettings _repositorySettings;
 
@@ -23,7 +23,7 @@ public sealed class DocumentationFilePolicy : IProjectCheck
     /// </summary>
     /// <param name="repositorySettings">Repository settings.</param>
     /// <param name="logger">Logging.</param>
-    public DocumentationFilePolicy(IRepositorySettings repositorySettings, ILogger<DocumentationFilePolicy> logger)
+    public XmlDocumentationFileRequiredPolicy(IRepositorySettings repositorySettings, ILogger<XmlDocumentationFileRequiredPolicy> logger)
     {
         this._repositorySettings = repositorySettings ?? throw new ArgumentNullException(nameof(repositorySettings));
         this._logger = logger ?? throw new ArgumentNullException(nameof(logger));
