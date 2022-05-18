@@ -7,10 +7,19 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 
 ## [Unreleased]
 ### Added
+### Fixed
+### Changed
+### Removed
+### Deployment Changes
+
+<!--
+Releases that have at least been deployed to staging, BUT NOT necessarily released to live.  Changes should be moved from [Unreleased] into here as they are merged into the appropriate release branch
+-->
+## [3.9.2] - 2022-05-18
+### Added
 - Using Microsoft.AspNetCore.Authentication.JwtBearer package should include System.IdentityModel.Tokens.Jwt
 - Enabled AOT Compilation
 - Configurable XMLDOC comment requirements.
-### Fixed
 ### Changed
 - FF-1429 - Updated NSubstitute to 4.3.0
 - FF-1429 - Updated coverlet to 3.1.2
@@ -30,12 +39,7 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 - FF-1429 - Updated AsyncFixer to 1.6.0
 - FF-1429 - Updated Microsoft.NET.Test.Sdk to 17.2.0
 - FF-3881 - Updated DotNet SDK to 6.0.300
-### Removed
-### Deployment Changes
 
-<!--
-Releases that have at least been deployed to staging, BUT NOT necessarily released to live.  Changes should be moved from [Unreleased] into here as they are merged into the appropriate release branch
--->
 ## [3.9.1] - 2021-12-17
 ### Changed
 - FF-1429 - Updated SonarAnalyzer.CSharp to 8.33.0.40503
