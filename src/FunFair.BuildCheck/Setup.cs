@@ -73,6 +73,7 @@ internal static class Setup
                        .AddProjectCheck<NoPreReleaseNuGetPackages>()
                        .AddProjectCheck<NuGetPolicyDisableImplicitNuGetFallbackFolder>()
                        .AddProjectCheck<OnlyExesShouldBePublishablePolicy>()
+                       .AddProjectCheck<RunAotCompilationPolicy>()
                        .AddProjectCheck<TargetFrameworkIsSetCorrectlyPolicy>()
                        .AddProjectCheck<TieredCompilationPolicy>();
     }
