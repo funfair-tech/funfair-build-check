@@ -10,6 +10,7 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 ### Fixed
 ### Changed
 - FF-1429 - Updated NuGet to 6.2.0
+- FF-1429 - Updated FunFair.CodeAnalysis to 5.8.2.1317
 ### Removed
 ### Deployment Changes
 
