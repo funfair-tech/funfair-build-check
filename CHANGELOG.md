@@ -26,6 +26,7 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 - FF-1429 - Updated NonBlocking to 2.1.0
 - FF-1429 - Updated FunFair.Test.Common to 5.9.8.1897
 - FF-1429 - Updated FunFair.Test.Common to 5.9.9.1903
+- FF-1429 - Updated Meziantou.Analyzer to 1.0.703
 ### Removed
 ### Deployment Changes
 
