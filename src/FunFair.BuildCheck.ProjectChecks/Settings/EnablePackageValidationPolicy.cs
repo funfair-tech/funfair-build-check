@@ -1,5 +1,4 @@
 using System;
-using System.Diagnostics.CodeAnalysis;
 using System.Xml;
 using FunFair.BuildCheck.Interfaces;
 using FunFair.BuildCheck.ProjectChecks.Helpers;
@@ -10,7 +9,6 @@ namespace FunFair.BuildCheck.ProjectChecks.Settings;
 /// <summary>
 ///     Checks that the package validation is set appropriately.
 /// </summary>
-[SuppressMessage(category: "ReSharper", checkId: "ClassNeverInstantiated.Global", Justification = "Created by DI")]
 public sealed class EnablePackageValidationPolicy : IProjectCheck
 {
     private const string EXPECTED = @"true";

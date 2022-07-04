@@ -7,6 +7,7 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 
 ## [Unreleased]
 ### Added
+- Pre-compiled json parsing
 ### Fixed
 ### Changed
 - FF-1429 - Updated NuGet to 6.2.0
@@ -31,6 +32,8 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 - FF-1429 - Updated FunFair.Test.Common to 5.9.10.1914
 - FF-1429 - Updated SonarAnalyzer.CSharp to 8.41.0.50478
 ### Removed
+
+- Support for Dotnet 5.0 builds
 ### Deployment Changes
 
 <!--

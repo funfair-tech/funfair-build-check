@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using FunFair.BuildCheck.Helpers;
@@ -12,7 +11,6 @@ namespace FunFair.BuildCheck.SolutionChecks;
 /// <summary>
 ///     Checks to see if all projects in the solution exist.
 /// </summary>
-[SuppressMessage(category: "ReSharper", checkId: "ClassNeverInstantiated.Global", Justification = "Created by DI")]
 public sealed class AllProjectsExist : ISolutionCheck
 {
     private readonly ILogger<AllProjectsExist> _logger;

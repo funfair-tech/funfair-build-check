@@ -1,8 +1,6 @@
 using System;
-using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Text.Json;
-using System.Text.Json.Serialization;
 using FunFair.BuildCheck.Interfaces;
 using FunFair.BuildCheck.SolutionChecks.Models;
 using Microsoft.Extensions.Logging;
@@ -12,7 +10,6 @@ namespace FunFair.BuildCheck.SolutionChecks;
 /// <summary>
 ///     Checks the global.json pre-release settings.
 /// </summary>
-[SuppressMessage(category: "ReSharper", checkId: "ClassNeverInstantiated.Global", Justification = "Created by DI")]
 public sealed class GlobalJsonMustNotAllowPreRelease : ISolutionCheck
 {
     private const bool PRE_RELEASE_POLICY = false;
@@ -27,15 +24,6 @@ public sealed class GlobalJsonMustNotAllowPreRelease : ISolutionCheck
     {
         this._logger = logger ?? throw new ArgumentNullException(nameof(logger));
     }
-
-    private static JsonSerializerOptions JsonSerializerOptions { get; } = new()
-                                                                          {
-                                                                              DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
-                                                                              PropertyNameCaseInsensitive = false,
-                                                                              PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
-                                                                              WriteIndented = false,
-                                                                              AllowTrailingCommas = false
-                                                                          };
 
     /// <inheritdoc />
     public void Check(string solutionFileName)
@@ -58,7 +46,7 @@ public sealed class GlobalJsonMustNotAllowPreRelease : ISolutionCheck
 
         try
         {
-            GlobalJsonPacket? p = JsonSerializer.Deserialize<GlobalJsonPacket>(json: content, options: JsonSerializerOptions);
+            GlobalJsonPacket? p = JsonSerializer.Deserialize<GlobalJsonPacket>(json: content, MustBeSerializable.Default.GlobalJsonPacket);
 
             if (p?.Sdk?.AllowPrerelease != null)
             {

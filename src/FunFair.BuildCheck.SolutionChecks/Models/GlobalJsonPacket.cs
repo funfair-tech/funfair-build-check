@@ -1,11 +1,14 @@
-using System.Diagnostics.CodeAnalysis;
+using System.Text.Json.Serialization;
 
 namespace FunFair.BuildCheck.SolutionChecks.Models;
 
-[SuppressMessage(category: "ReSharper", checkId: "ClassNeverInstantiated.Global", Justification = "Created by DI")]
-[SuppressMessage(category: "Microsoft.Performance", checkId: "CA1812:AvoidUninstantiatedInternalClasses", Justification = "Created through deserialization")]
 internal sealed class GlobalJsonPacket
 {
-    [SuppressMessage(category: "ReSharper", checkId: "UnusedAutoPropertyAccessor.Global", Justification = "TODO: Review")]
+    [JsonConstructor]
+    public GlobalJsonPacket(GlobalJsonSdk? sdk)
+    {
+        this.Sdk = sdk;
+    }
+
     public GlobalJsonSdk? Sdk { get; set; }
 }

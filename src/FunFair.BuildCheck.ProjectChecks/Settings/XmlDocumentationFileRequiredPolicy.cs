@@ -1,5 +1,4 @@
 using System;
-using System.Diagnostics.CodeAnalysis;
 using System.Xml;
 using FunFair.BuildCheck.Interfaces;
 using FunFair.BuildCheck.ProjectChecks.Helpers;
@@ -10,7 +9,6 @@ namespace FunFair.BuildCheck.ProjectChecks.Settings;
 /// <summary>
 ///     Checks that the DocumentationFile is set appropriately
 /// </summary>
-[SuppressMessage(category: "ReSharper", checkId: "ClassNeverInstantiated.Global", Justification = "Created by DI")]
 public sealed class XmlDocumentationFileRequiredPolicy : IProjectCheck
 {
     private const string EXPECTED = @"bin\$(Configuration)\$(TargetFramework)\$(MSBuildProjectName).xml";

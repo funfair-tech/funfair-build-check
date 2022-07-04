@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Immutable;
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Xml;
 using FunFair.BuildCheck.Interfaces;
@@ -12,7 +11,6 @@ namespace FunFair.BuildCheck.ProjectChecks.Settings;
 /// <summary>
 ///     Checks that exes are 'publishable' except when they are test assemblies.
 /// </summary>
-[SuppressMessage(category: "ReSharper", checkId: "ClassNeverInstantiated.Global", Justification = "Created by DI")]
 public sealed class OnlyExesShouldBePublishablePolicy : IProjectCheck
 {
     private readonly bool _isUnitTestBase;

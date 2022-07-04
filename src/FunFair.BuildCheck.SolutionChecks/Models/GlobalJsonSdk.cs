@@ -1,17 +1,20 @@
-using System.Diagnostics.CodeAnalysis;
+using System.Text.Json.Serialization;
 
 namespace FunFair.BuildCheck.SolutionChecks.Models;
 
-[SuppressMessage(category: "ReSharper", checkId: "ClassNeverInstantiated.Global", Justification = "Created by DI")]
-[SuppressMessage(category: "Microsoft.Performance", checkId: "CA1812:AvoidUninstantiatedInternalClasses", Justification = "Created through deserialization")]
 internal sealed class GlobalJsonSdk
 {
-    [SuppressMessage(category: "ReSharper", checkId: "UnusedAutoPropertyAccessor.Global", Justification = "TODO: Review")]
-    public string? Version { get; set; }
+    [JsonConstructor]
+    public GlobalJsonSdk(string? version, string? rollForward, bool? allowPrerelease)
+    {
+        this.Version = version;
+        this.RollForward = rollForward;
+        this.AllowPrerelease = allowPrerelease;
+    }
 
-    [SuppressMessage(category: "ReSharper", checkId: "UnusedAutoPropertyAccessor.Global", Justification = "TODO: Review")]
-    public string? RollForward { get; set; }
+    public string? Version { get; }
 
-    [SuppressMessage(category: "ReSharper", checkId: "UnusedAutoPropertyAccessor.Global", Justification = "TODO: Review")]
-    public bool? AllowPrerelease { get; set; }
+    public string? RollForward { get; }
+
+    public bool? AllowPrerelease { get; }
 }

@@ -1,12 +1,10 @@
-﻿using System.Diagnostics.CodeAnalysis;
-using Microsoft.Extensions.Logging;
+﻿using Microsoft.Extensions.Logging;
 
 namespace FunFair.BuildCheck.ProjectChecks.ReferencedPackages;
 
 /// <summary>
 ///     Checks that NSubstitute is used rather than Moq
 /// </summary>
-[SuppressMessage(category: "ReSharper", checkId: "ClassNeverInstantiated.Global", Justification = "Created by DI")]
 public sealed class ShouldUseNSubstituteRatherThanMoqPackage : ShouldUseAlternatePackage
 {
     /// <summary>

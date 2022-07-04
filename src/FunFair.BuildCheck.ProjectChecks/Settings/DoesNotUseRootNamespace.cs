@@ -1,5 +1,4 @@
 using System;
-using System.Diagnostics.CodeAnalysis;
 using System.Xml;
 using FunFair.BuildCheck.Interfaces;
 using Microsoft.Extensions.Logging;
@@ -9,7 +8,6 @@ namespace FunFair.BuildCheck.ProjectChecks.Settings;
 /// <summary>
 ///     Checks that the project does not include a RootNamespace setting.
 /// </summary>
-[SuppressMessage(category: "ReSharper", checkId: "ClassNeverInstantiated.Global", Justification = "Created by DI")]
 public sealed class DoesNotUseRootNamespace : IProjectCheck
 {
     private readonly ILogger<DoesNotUseRootNamespace> _logger;

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using System.Xml;
@@ -12,7 +11,6 @@ namespace FunFair.BuildCheck.ProjectChecks.References;
 /// <summary>
 ///     Checks that libraries do not depend on non-packable items.
 /// </summary>
-[SuppressMessage(category: "ReSharper", checkId: "ClassNeverInstantiated.Global", Justification = "Created by DI")]
 public sealed class PackableLibrariesShouldNotDependOnNonPackable : IProjectCheck
 {
     private readonly ILogger<PackableLibrariesShouldNotDependOnNonPackable> _logger;

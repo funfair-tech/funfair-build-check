@@ -1,5 +1,4 @@
 using System;
-using System.Diagnostics.CodeAnalysis;
 using System.Xml;
 using FunFair.BuildCheck.Interfaces;
 using FunFair.BuildCheck.ProjectChecks.Helpers;
@@ -10,7 +9,6 @@ namespace FunFair.BuildCheck.ProjectChecks.Settings;
 /// <summary>
 ///     Checks that the validate executable references match property is set appropriately.
 /// </summary>
-[SuppressMessage(category: "ReSharper", checkId: "ClassNeverInstantiated.Global", Justification = "Created by DI")]
 public sealed class ValidateExecutableReferencesMatchSelfContainedPolicy : IProjectCheck
 {
     private const string EXPECTED = @"true";
@@ -34,10 +32,6 @@ public sealed class ValidateExecutableReferencesMatchSelfContainedPolicy : IProj
             return;
         }
 
-        ProjectValueHelpers.CheckValue(projectName: projectName,
-                                       project: project,
-                                       nodePresence: @"ValidateExecutableReferencesMatchSelfContained",
-                                       requiredValue: EXPECTED,
-                                       logger: this._logger);
+        ProjectValueHelpers.CheckValue(projectName: projectName, project: project, nodePresence: @"ValidateExecutableReferencesMatchSelfContained", requiredValue: EXPECTED, logger: this._logger);
     }
 }

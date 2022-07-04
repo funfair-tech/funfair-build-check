@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Xml;
 using FunFair.BuildCheck.Interfaces;
@@ -11,7 +10,6 @@ namespace FunFair.BuildCheck.ProjectChecks.Settings;
 /// <summary>
 ///     Checks that any publishable exes specify RunTimeIdentifiers
 /// </summary>
-[SuppressMessage(category: "ReSharper", checkId: "ClassNeverInstantiated.Global", Justification = "Created by DI")]
 public sealed class PublishableExesMustHaveRuntimeIdentifiers : IProjectCheck
 {
     private readonly ILogger<PublishableExesMustHaveRuntimeIdentifiers> _logger;

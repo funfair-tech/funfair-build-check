@@ -10,7 +10,6 @@ namespace FunFair.BuildCheck.ProjectChecks.Settings;
 /// <summary>
 ///     Checks to see if the TargetFramework/TargetFrameworks is set correctly.
 /// </summary>
-[SuppressMessage(category: "ReSharper", checkId: "ClassNeverInstantiated.Global", Justification = "Created by DI")]
 [SuppressMessage(category: "ReSharper", checkId: "UnusedType.Global", Justification = "Created by DI")]
 public sealed class TargetFrameworkIsSetCorrectlyPolicy : IProjectCheck
 {

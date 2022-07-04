@@ -1,5 +1,4 @@
 using System;
-using System.Diagnostics.CodeAnalysis;
 using System.Xml;
 using FunFair.BuildCheck.Interfaces;
 using Microsoft.Extensions.Logging;
@@ -9,7 +8,6 @@ namespace FunFair.BuildCheck.ProjectChecks.ReferencedPackages;
 /// <summary>
 ///     Checks that a project does not use the Dot Net CLi Tool Reference.
 /// </summary>
-[SuppressMessage(category: "ReSharper", checkId: "ClassNeverInstantiated.Global", Justification = "Created by DI")]
 public sealed class DoesNotUseDotNetCliToolReference : IProjectCheck
 {
     private readonly ILogger<DoesNotUseDotNetCliToolReference> _logger;

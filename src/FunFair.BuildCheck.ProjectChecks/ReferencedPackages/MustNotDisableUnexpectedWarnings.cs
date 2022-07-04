@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Xml;
 using FunFair.BuildCheck.Interfaces;
@@ -12,7 +11,6 @@ namespace FunFair.BuildCheck.ProjectChecks.ReferencedPackages;
 /// <summary>
 ///     Checks that only whitelisted warnings can be disabled.
 /// </summary>
-[SuppressMessage(category: "ReSharper", checkId: "ClassNeverInstantiated.Global", Justification = "Created by DI")]
 public sealed class MustNotDisableUnexpectedWarnings : IProjectCheck
 {
     private static readonly IReadOnlyList<string> AllowedWarnings = new[]
