@@ -46,7 +46,7 @@ public sealed class GlobalJsonMustNotAllowPreRelease : ISolutionCheck
 
         try
         {
-            GlobalJsonPacket? p = JsonSerializer.Deserialize<GlobalJsonPacket>(json: content, MustBeSerializable.Default.GlobalJsonPacket);
+            GlobalJsonPacket? p = JsonSerializer.Deserialize(json: content, jsonTypeInfo: MustBeSerializable.Default.GlobalJsonPacket);
 
             if (p?.Sdk?.AllowPrerelease != null)
             {
