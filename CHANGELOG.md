@@ -7,38 +7,31 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 
 ## [Unreleased]
 ### Added
-- Pre-compiled json parsing
 ### Fixed
 ### Changed
-- FF-1429 - Updated NuGet to 6.2.0
-- FF-1429 - Updated FunFair.CodeAnalysis to 5.8.2.1317
-- FF-1429 - Updated Meziantou.Analyzer to 1.0.702
-- FF-1429 - Updated SmartAnalyzers.CSharpExtensions.Annotations to 4.2.5
-- FF-1429 - Updated SonarAnalyzer.CSharp to 8.39.0.47922
-- FF-1429 - Updated FunFair.Test.Common to 5.9.5.1833
-- FF-1429 - Updated Roslynator.Analyzers to 4.1.1
-- FF-1429 - Updated SonarAnalyzer.CSharp to 8.40.0.48530
-- FF-1429 - Updated SecurityCodeScan.VS2019 to 5.6.3
-- FF-1429 - Updated FunFair.Test.Common to 5.9.6.1865
-- FF-1429 - Updated NuGet to 6.2.1
-- FF-3881 - Updated DotNet SDK to 6.0.301
-- FF-1429 - Updated FunFair.Test.Common to 5.9.7.1871
-- FF-1429 - Updated FunFair.CodeAnalysis to 5.8.3.1353
-- FF-1429 - Updated NonBlocking to 2.1.0
-- FF-1429 - Updated FunFair.Test.Common to 5.9.8.1897
-- FF-1429 - Updated FunFair.Test.Common to 5.9.9.1903
-- FF-1429 - Updated Meziantou.Analyzer to 1.0.703
-- FF-1429 - Updated Meziantou.Analyzer to 1.0.704
-- FF-1429 - Updated FunFair.Test.Common to 5.9.10.1914
-- FF-1429 - Updated SonarAnalyzer.CSharp to 8.41.0.50478
 ### Removed
-
-- Support for Dotnet 5.0 builds
 ### Deployment Changes
 
 <!--
 Releases that have at least been deployed to staging, BUT NOT necessarily released to live.  Changes should be moved from [Unreleased] into here as they are merged into the appropriate release branch
 -->
+## [6.0.0] - 2022-07-05
+### Added
+- Pre-compiled json parsing
+### Changed
+- FF-1429 - Updated SmartAnalyzers.CSharpExtensions.Annotations to 4.2.5
+- FF-1429 - Updated Roslynator.Analyzers to 4.1.1
+- FF-1429 - Updated SecurityCodeScan.VS2019 to 5.6.3
+- FF-1429 - Updated NuGet to 6.2.1
+- FF-3881 - Updated DotNet SDK to 6.0.301
+- FF-1429 - Updated FunFair.CodeAnalysis to 5.8.3.1353
+- FF-1429 - Updated NonBlocking to 2.1.0
+- FF-1429 - Updated Meziantou.Analyzer to 1.0.704
+- FF-1429 - Updated FunFair.Test.Common to 5.9.10.1914
+- FF-1429 - Updated SonarAnalyzer.CSharp to 8.41.0.50478
+### Removed
+- Support for Dotnet 5.0 builds
+
 ## [3.9.2] - 2022-05-18
 ### Added
 - Using Microsoft.AspNetCore.Authentication.JwtBearer package should include System.IdentityModel.Tokens.Jwt
