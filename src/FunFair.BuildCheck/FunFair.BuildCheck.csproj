@@ -18,10 +18,16 @@
     <TargetFramework>net6.0</TargetFramework>
     <TieredCompilation>true</TieredCompilation>
     <ToolCommandName>buildcheck</ToolCommandName>
-    <TreatSpecificWarningsAsErrors />
+    <TreatSpecificWarningsAsErrors/>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <ValidateExecutableReferencesMatchSelfContained>true</ValidateExecutableReferencesMatchSelfContained>
-    <WarningsAsErrors />
+    <WarningsAsErrors/>
+    <!-- Dotnet 7 features -->
+    <TieredPGO>true</TieredPGO>
+    <UseSystemResourceKeys>true</UseSystemResourceKeys>
+    <IlcOptimizationPreference>Size</IlcOptimizationPreference>
+    <IlcGenerateStackTraceData>false</IlcGenerateStackTraceData>
+    <DebuggerSupport>true</DebuggerSupport>
   </PropertyGroup>
   <PropertyGroup>
     <Description>Dot net core build checking tool.</Description>
