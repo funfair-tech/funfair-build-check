@@ -12,7 +12,7 @@ namespace FunFair.BuildCheck.SolutionChecks;
 /// </summary>
 public sealed class GlobalJsonMustNotAllowPreRelease : ISolutionCheck
 {
-    private const bool PRE_RELEASE_POLICY = false;
+    private readonly bool _allowPreRelease;
 
     private readonly ILogger<GlobalJsonMustNotAllowPreRelease> _logger;
 
@@ -23,6 +23,9 @@ public sealed class GlobalJsonMustNotAllowPreRelease : ISolutionCheck
     public GlobalJsonMustNotAllowPreRelease(ILogger<GlobalJsonMustNotAllowPreRelease> logger)
     {
         this._logger = logger ?? throw new ArgumentNullException(nameof(logger));
+        string allowPreRelease = Environment.GetEnvironmentVariable("DOTNET_SDK_ALLOW_PRE_RELEASE") ?? "false";
+
+        this._allowPreRelease = StringComparer.InvariantCultureIgnoreCase.Equals(x: allowPreRelease, y: "true");
     }
 
     /// <inheritdoc />
@@ -50,10 +53,11 @@ public sealed class GlobalJsonMustNotAllowPreRelease : ISolutionCheck
 
             if (p?.Sdk?.AllowPrerelease != null)
             {
-                if (p.Sdk.AllowPrerelease != PRE_RELEASE_POLICY)
+                bool preReleaseAllowedInConfig = p.Sdk.AllowPrerelease.GetValueOrDefault(defaultValue: true);
+
+                if (!this._allowPreRelease && preReleaseAllowedInConfig)
                 {
-                    this._logger.LogError(
-                        $"global.json is using SDK pre-release policy of {FormatPolicy(p.Sdk.AllowPrerelease.GetValueOrDefault(defaultValue: true))} rather than {FormatPolicy(PRE_RELEASE_POLICY)}");
+                    this._logger.LogError($"global.json is using SDK pre-release policy of {FormatPolicy(preReleaseAllowedInConfig)} rather than {FormatPolicy(this._allowPreRelease)}");
                 }
             }
             else

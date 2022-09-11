@@ -13,35 +13,19 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 - FF-1429 - Updated NSubstitute to 4.4.0
 - FF-3881 - Updated DotNet SDK to 6.0.302
 - FF-1429 - Updated FunFair.Test.Common to 6.0.1.1951
-- FF-1429 - Updated SonarAnalyzer.CSharp to 8.42.0.51121
-- FF-1429 - Updated Meziantou.Analyzer to 1.0.708
-- FF-1429 - Updated SmartAnalyzers.CSharpExtensions.Annotations to 4.2.6
 - FF-1429 - Updated SmartAnalyzers.CSharpExtensions.Annotations to 4.2.7
 - FF-1429 - Updated xunit.analyzers to 1.0.0
 - FF-1429 - Updated SonarAnalyzer.CSharp to 8.43.0.51858
 - FF-3881 - Updated DotNet SDK to 6.0.400
 - FF-1429 - Updated NuGet to 6.3.0
 - FF-1429 - Updated Microsoft.VisualStudio.Threading.Analyzers to 17.3.44
-- FF-1429 - Updated Meziantou.Analyzer to 1.0.709
-- FF-1429 - Updated Meziantou.Analyzer to 1.0.710
-- FF-1429 - Updated Meziantou.Analyzer to 1.0.711
-- FF-1429 - Updated Meziantou.Analyzer to 1.0.712
-- FF-1429 - Updated SecurityCodeScan.VS2019 to 5.6.5
-- FF-1429 - Updated Meziantou.Analyzer to 1.0.713
 - FF-1429 - Updated SonarAnalyzer.CSharp to 8.44.0.52574
-- FF-1429 - Updated SecurityCodeScan.VS2019 to 5.6.6
-- FF-1429 - Updated Meziantou.Analyzer to 1.0.714
-- FF-1429 - Updated Meziantou.Analyzer to 1.0.715
-- FF-1429 - Updated Meziantou.Analyzer to 1.0.716
-- FF-1429 - Updated Meziantou.Analyzer to 1.0.717
-- FF-1429 - Updated Meziantou.Analyzer to 1.0.719
-- FF-1429 - Updated Meziantou.Analyzer to 1.0.720
 - FF-1429 - Updated Microsoft.NET.Test.Sdk to 17.3.1
-- FF-1429 - Updated Meziantou.Analyzer to 1.0.721
-- FF-1429 - Updated Meziantou.Analyzer to 1.0.722
 - FF-1429 - Updated SecurityCodeScan.VS2019 to 5.6.7
 - FF-1429 - Updated FunFair.CodeAnalysis to 5.9.0.1493
 - FF-1429 - Updated Meziantou.Analyzer to 1.0.723
+- Added DOTNET_SDK_ALLOW_PRE_RELEASE environment variable override to allow pre-release versions
+
 ### Removed
 ### Deployment Changes
 
