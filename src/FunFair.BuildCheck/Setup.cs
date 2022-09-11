@@ -87,7 +87,12 @@ internal static class Setup
 
     private static IServiceCollection PublishingSettings(this IServiceCollection services)
     {
-        return services.AddProjectCheck<PublishableExesMustHaveRuntimeIdentifiers>()
+        return services.AddProjectCheck<DebuggerSupportPolicy>()
+                       .AddProjectCheck<IlcGenerateStackTraceDataPolicy>()
+                       .AddProjectCheck<IlcOptimizationPreferencePolicy>()
+                       .AddProjectCheck<PublishableExesMustHaveRuntimeIdentifiers>()
+                       .AddProjectCheck<TieredPgoPolicy>()
+                       .AddProjectCheck<UseSystemResourceKeysPolicy>()
                        .AddProjectCheck<ValidateExecutableReferencesMatchSelfContainedPolicy>();
     }
 
