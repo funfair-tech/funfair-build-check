@@ -10,6 +10,7 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 - Dotnet 7 specific checks
 ### Fixed
 ### Changed
+- FF-1429 - Updated Meziantou.Analyzer to 1.0.725
 ### Removed
 ### Deployment Changes
 
@@ -32,7 +33,6 @@ Releases that have at least been deployed to staging, BUT NOT necessarily releas
 - FF-1429 - Updated Microsoft.NET.Test.Sdk to 17.3.1
 - FF-1429 - Updated SecurityCodeScan.VS2019 to 5.6.7
 - FF-1429 - Updated FunFair.CodeAnalysis to 5.9.0.1493
-- FF-1429 - Updated Meziantou.Analyzer to 1.0.723
 - Added DOTNET_SDK_ALLOW_PRE_RELEASE environment variable override to allow pre-release versions
 
 ## [6.0.0] - 2022-07-05
