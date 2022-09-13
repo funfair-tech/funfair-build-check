@@ -11,6 +11,7 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 ### Fixed
 ### Changed
 - FF-1429 - Updated Meziantou.Analyzer to 1.0.725
+- FF-1429 - Updated Microsoft.Extensions to 6.0.2
 ### Removed
 ### Deployment Changes
 
@@ -65,7 +66,6 @@ Releases that have at least been deployed to staging, BUT NOT necessarily releas
 - FF-1429 - Updated TeamCity.VSTest.TestAdapter to 1.0.36
 - FF-1429 - Updated SecurityCodeScan.VS2019 to 5.6.2
 - FF-1429 - Updated SmartAnalyzers.CSharpExtensions.Annotations to 4.2.2
-- FF-1429 - Updated Microsoft.Extensions to 6.0.1
 - FF-1429 - Updated NonBlocking to 2.0.0
 - FF-1429 - Updated FunFair.Test.Common to 5.9.4.1729
 - FF-1429 - Updated Roslynator.Analyzers to 4.1.0
