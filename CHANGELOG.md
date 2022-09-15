@@ -11,7 +11,7 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 ### Fixed
 ### Changed
 - FF-1429 - Updated Microsoft.Extensions to 6.0.2
-- FF-1429 - Updated Meziantou.Analyzer to 1.0.727
+- FF-1429 - Updated Meziantou.Analyzer to 1.0.728
 ### Removed
 ### Deployment Changes
 
