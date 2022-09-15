@@ -10,8 +10,8 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 - Dotnet 7 specific checks
 ### Fixed
 ### Changed
-- FF-1429 - Updated Meziantou.Analyzer to 1.0.725
 - FF-1429 - Updated Microsoft.Extensions to 6.0.2
+- FF-1429 - Updated Meziantou.Analyzer to 1.0.727
 ### Removed
 ### Deployment Changes
 
