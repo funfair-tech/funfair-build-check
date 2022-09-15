@@ -11,7 +11,7 @@ namespace FunFair.BuildCheck.ProjectChecks.Settings;
 /// </summary>
 public sealed class RunAotCompilationPolicy : IProjectCheck
 {
-    private const string EXPECTED = @"true";
+    private const string EXPECTED = @"false";
 
     private readonly ILogger<RunAotCompilationPolicy> _logger;
 
