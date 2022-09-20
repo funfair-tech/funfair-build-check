@@ -19,11 +19,13 @@
     <TargetFrameworks>net6.0;net7.0</TargetFrameworks>
     <TieredCompilation>true</TieredCompilation>
     <TieredPGO>true</TieredPGO>
-    <TreatSpecificWarningsAsErrors />
+    <TreatSpecificWarningsAsErrors/>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <UseSystemResourceKeys>true</UseSystemResourceKeys>
     <ValidateExecutableReferencesMatchSelfContained>true</ValidateExecutableReferencesMatchSelfContained>
-    <WarningsAsErrors />
+    <WarningsAsErrors/>
+    <IsTrimmable>true</IsTrimmable>
+    <EnableTrimAnalyzer>true</EnableTrimAnalyzer>
   </PropertyGroup>
   <PropertyGroup>
     <Authors>$(Company)</Authors>

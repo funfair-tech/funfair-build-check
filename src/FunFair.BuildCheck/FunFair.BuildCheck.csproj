@@ -22,11 +22,13 @@
     <TieredCompilation>true</TieredCompilation>
     <TieredPGO>true</TieredPGO>
     <ToolCommandName>buildcheck</ToolCommandName>
-    <TreatSpecificWarningsAsErrors />
+    <TreatSpecificWarningsAsErrors/>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <UseSystemResourceKeys>true</UseSystemResourceKeys>
     <ValidateExecutableReferencesMatchSelfContained>true</ValidateExecutableReferencesMatchSelfContained>
-    <WarningsAsErrors />
+    <WarningsAsErrors/>
+    <IsTrimmable>false</IsTrimmable>
+    <EnableTrimAnalyzer>false</EnableTrimAnalyzer>
   </PropertyGroup>
   <PropertyGroup>
     <Description>Dot net core build checking tool.</Description>
