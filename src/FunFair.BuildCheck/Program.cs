@@ -19,11 +19,7 @@ internal static class Program
     private const int SUCCESS = 0;
     private const int ERROR = 1;
 
-    private static readonly Regex ProjectReferenceRegex = new(
-        pattern:
-        "^Project\\(\"[{(]?[0-9A-F]{8}[-]?([0-9A-F]{4}[-]?){3}[0-9A-F]{12}[)}]\"\\)\\s*=\\s*\"(?<DisplayName>.*?)\",\\s*\"(?<FileName>.*?\\.csproj)\",\\s*\"[{(]?[0-9A-F]{8}[-]?([0-9A-F]{4}[-]?){3}[0-9A-F]{12}[)}]\"$",
-        RegexOptions.Compiled | RegexOptions.ExplicitCapture,
-        TimeSpan.FromSeconds(5));
+    private static readonly Regex ProjectReferenceRegex = SourceGenerated.ProjectReferenceRegex();
 
     private static void Usage()
     {
