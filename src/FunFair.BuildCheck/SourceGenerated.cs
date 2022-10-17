@@ -5,7 +5,7 @@ namespace FunFair.BuildCheck;
 #if NET6_0
 internal static class SourceGenerated
 {
-    private static readonly System.TimeSpan Short = System.TimeSpan.FromMilliseconds(RegexSettings.TimeoutMilliseconds);
+    private static readonly TimeSpan Short = TimeSpan.FromMilliseconds(RegexSettings.TimeoutMilliseconds);
 
     public static Regex ProjectReferenceRegex()
     {
