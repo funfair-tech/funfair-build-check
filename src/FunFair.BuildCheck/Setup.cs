@@ -66,6 +66,7 @@ internal static class Setup
             : services.AddProjectCheck<XmlDocumentationFileProhibitedPolicy>();
     }
 
+    [SuppressMessage(category: "Philips.CodeAnalysis.DuplicateCodeAnalyzer", checkId: "PH2071: Duplicate code shape", Justification = "Registering Analyzers")]
     private static IServiceCollection GeneralProjectSettings(this IServiceCollection services)
     {
         return services.AddProjectCheck<DoesNotUseDotNetCliToolReference>()
@@ -107,6 +108,7 @@ internal static class Setup
                        .AddProjectCheck<RepositoryUrlMetadata>();
     }
 
+    [SuppressMessage(category: "Philips.CodeAnalysis.DuplicateCodeAnalyzer", checkId: "PH2071: Duplicate code shape", Justification = "Registering Analyzers")]
     private static IServiceCollection StaticCodeAnalysis(this IServiceCollection services, IRepositorySettings repositorySettings)
     {
         return services.AddProjectCheck<AnalysisLevelPolicyUseLatestVersion>()
