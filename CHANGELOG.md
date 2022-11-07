@@ -9,7 +9,6 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 ### Added
 ### Fixed
 ### Changed
-- FF-1429 - Updated Microsoft.NET.Test.Sdk to 17.3.2
 - FF-1429 - Updated Microsoft.Extensions to 6.0.1
 - FF-1429 - Updated NuGet to 6.3.1
 - FF-1429 - Updated xunit to 2.4.2
@@ -19,6 +18,7 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 - FF-1429 - Updated Roslynator.Analyzers to 4.1.2
 - FF-1429 - Updated Meziantou.Analyzer to 1.0.745
 - FF-1429 - Updated FunFair.Test.Common to 6.0.6.2271
+- FF-1429 - Updated Microsoft.NET.Test.Sdk to 17.4.0
 ### Removed
 ### Deployment Changes
 
