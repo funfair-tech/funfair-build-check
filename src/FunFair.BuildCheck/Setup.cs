@@ -13,11 +13,15 @@ internal static class Setup
 {
     public static IServiceCollection SetupSolutionChecks(this IServiceCollection services)
     {
+        if (!string.IsNullOrWhiteSpace(Environment.GetEnvironmentVariable("DOTNET_CORE_SDK_VERSION")))
+        {
+            services = services.AddSolutionCheck<GlobalJsonIsLatest>()
+                               .AddSolutionCheck<GlobalJsonMustSpecifyCorrectRollforwardPolicy>()
+                               .AddSolutionCheck<GlobalJsonMustNotAllowPreRelease>();
+        }
+
         return services.AddSolutionCheck<AllProjectsExist>()
-                       .AddSolutionCheck<NoOrphanedProjectsExist>()
-                       .AddSolutionCheck<GlobalJsonIsLatest>()
-                       .AddSolutionCheck<GlobalJsonMustSpecifyCorrectRollforwardPolicy>()
-                       .AddSolutionCheck<GlobalJsonMustNotAllowPreRelease>();
+                       .AddSolutionCheck<NoOrphanedProjectsExist>();
     }
 
     [SuppressMessage(category: "", checkId: "MA0051: Method too long", Justification = "Registering Analyzers")]
@@ -69,21 +73,36 @@ internal static class Setup
     [SuppressMessage(category: "Philips.CodeAnalysis.DuplicateCodeAnalyzer", checkId: "PH2071: Duplicate code shape", Justification = "Registering Analyzers")]
     private static IServiceCollection GeneralProjectSettings(this IServiceCollection services)
     {
-        return services.AddProjectCheck<DoesNotUseDotNetCliToolReference>()
-                       .AddProjectCheck<DoesNotUseRootNamespace>()
-                       .AddProjectCheck<GenerateNeutralResourcesLanguageAttributePolicy>()
-                       .AddProjectCheck<ImplicitUsingsPolicy>()
-                       .AddProjectCheck<LanguagePolicyUseLatestVersion>()
-                       .AddProjectCheck<LibrariesShouldBePackablePolicy>()
-                       .AddProjectCheck<MustEnableNullable>()
-                       .AddProjectCheck<MustNotDisableUnexpectedWarnings>()
-                       .AddProjectCheck<MustSpecifyOutputType>()
-                       .AddProjectCheck<NoPreReleaseNuGetPackages>()
-                       .AddProjectCheck<NuGetPolicyDisableImplicitNuGetFallbackFolder>()
-                       .AddProjectCheck<OnlyExesShouldBePublishablePolicy>()
-                       .AddProjectCheck<RunAotCompilationPolicy>()
-                       .AddProjectCheck<TargetFrameworkIsSetCorrectlyPolicy>()
-                       .AddProjectCheck<TieredCompilationPolicy>();
+        services = services.AddProjectCheck<DoesNotUseDotNetCliToolReference>()
+                           .AddProjectCheck<DoesNotUseRootNamespace>()
+                           .AddProjectCheck<GenerateNeutralResourcesLanguageAttributePolicy>()
+                           .AddProjectCheck<ImplicitUsingsPolicy>()
+                           .AddProjectCheck<LanguagePolicyUseLatestVersion>();
+
+        if (!string.IsNullOrWhiteSpace(Environment.GetEnvironmentVariable("DOTNET_PACKABLE")))
+        {
+            services = services.AddProjectCheck<LibrariesShouldBePackablePolicy>();
+        }
+
+        services = services.AddProjectCheck<MustEnableNullable>()
+                           .AddProjectCheck<MustNotDisableUnexpectedWarnings>()
+                           .AddProjectCheck<MustSpecifyOutputType>()
+                           .AddProjectCheck<NoPreReleaseNuGetPackages>()
+                           .AddProjectCheck<NuGetPolicyDisableImplicitNuGetFallbackFolder>();
+
+        if (!string.IsNullOrWhiteSpace(Environment.GetEnvironmentVariable("DOTNET_PUBLISHABLE")))
+        {
+            services = services.AddProjectCheck<OnlyExesShouldBePublishablePolicy>();
+        }
+
+        services = services.AddProjectCheck<RunAotCompilationPolicy>();
+
+        if (!string.IsNullOrWhiteSpace(Environment.GetEnvironmentVariable("DOTNET_CORE_APP_TARGET_FRAMEWORK")))
+        {
+            services = services.AddProjectCheck<TargetFrameworkIsSetCorrectlyPolicy>();
+        }
+
+        return services.AddProjectCheck<TieredCompilationPolicy>();
     }
 
     private static IServiceCollection PublishingSettings(this IServiceCollection services)
@@ -99,10 +118,15 @@ internal static class Setup
 
     private static IServiceCollection PackagingSettings(this IServiceCollection services)
     {
-        return services.AddProjectCheck<DescriptionMetadata>()
-                       .AddProjectCheck<EnablePackageValidationPolicy>()
-                       .AddProjectCheck<ImportCommonProps>()
-                       .AddProjectCheck<IsTransformWebConfigDisabledShouldBeTrueForWebLibraryProjects>()
+        services = services.AddProjectCheck<DescriptionMetadata>()
+                           .AddProjectCheck<EnablePackageValidationPolicy>();
+
+        if (!string.IsNullOrWhiteSpace(Environment.GetEnvironmentVariable("DOTNET_PACK_PROJECT_METADATA_IMPORT")))
+        {
+            services = services.AddProjectCheck<ImportCommonProps>();
+        }
+
+        return services.AddProjectCheck<IsTransformWebConfigDisabledShouldBeTrueForWebLibraryProjects>()
                        .AddProjectCheck<PackableLibrariesShouldNotDependOnNonPackable>()
                        .AddProjectCheck<PackageTagsMetadata>()
                        .AddProjectCheck<RepositoryUrlMetadata>();
