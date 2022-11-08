@@ -11,6 +11,7 @@ namespace FunFair.BuildCheck.ProjectChecks.ReferencedPackages;
 public abstract class MustHaveAnalyzerPackage : IProjectCheck
 {
     private const string PACKAGE_PRIVATE_ASSETS = @"All";
+    private const string PACKAGE_EXCLUDE_ASSETS = @"runtime";
     private readonly ILogger _logger;
 
     private readonly string _packageId;
@@ -36,6 +37,11 @@ public abstract class MustHaveAnalyzerPackage : IProjectCheck
             if (!CheckPrivateAssets(packageId: this._packageId, project: project))
             {
                 this._logger.LogError($"{projectName}: Does not reference {this._packageId} with a PrivateAssets=\"{PACKAGE_PRIVATE_ASSETS}\" attribute");
+            }
+
+            if(!CheckExcludeAssets(packageId: this._packageId, project: project))
+            {
+                this._logger.LogError($"{projectName}: Does not reference {this._packageId} with a ExcludeAssets=\"{PACKAGE_EXCLUDE_ASSETS}\" attribute");
             }
         }
         else
@@ -71,5 +77,29 @@ public abstract class MustHaveAnalyzerPackage : IProjectCheck
         }
 
         return !string.IsNullOrEmpty(assets) && StringComparer.OrdinalIgnoreCase.Equals(x: assets, y: PACKAGE_PRIVATE_ASSETS);
+    }
+
+    private static bool CheckExcludeAssets(string packageId, XmlDocument project)
+    {
+        if (project.SelectSingleNode("/Project/ItemGroup/PackageReference[@Include='" + packageId + "']") is not XmlElement reference)
+        {
+            return false;
+        }
+
+        // check for an attribute
+        string assets = reference.GetAttribute(name: "ExcludeAssets");
+
+        if (string.IsNullOrEmpty(assets))
+        {
+            // no PrivateAssets attribute, check for an element
+            if (reference.SelectSingleNode(xpath: "ExcludeAssets") is not XmlElement privateAssets)
+            {
+                return false;
+            }
+
+            assets = privateAssets.InnerText;
+        }
+
+        return !string.IsNullOrEmpty(assets) && StringComparer.OrdinalIgnoreCase.Equals(x: assets, y: PACKAGE_EXCLUDE_ASSETS);
     }
 }

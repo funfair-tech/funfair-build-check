@@ -7,6 +7,8 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 
 ## [Unreleased]
 ### Added
+- Additional analyzers
+- Requirements that analyzers be referenced with ExcludeAssets='runtime'
 ### Fixed
 ### Changed
 - FF-1429 - Updated Microsoft.Extensions to 6.0.1
