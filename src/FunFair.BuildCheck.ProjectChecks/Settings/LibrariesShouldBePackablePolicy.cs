@@ -30,7 +30,11 @@ public sealed class LibrariesShouldBePackablePolicy : IProjectCheck
 
         string packable = Environment.GetEnvironmentVariable(variable: @"DOTNET_PACKABLE") ?? "NONE";
 
-        if (StringComparer.InvariantCultureIgnoreCase.Equals(x: packable, y: "NONE"))
+        if (StringComparer.InvariantCultureIgnoreCase.Equals(x: packable, y: "ANY"))
+        {
+            this._packablePolicy = (_, _, _, _) => true;
+        }
+        else if (StringComparer.InvariantCultureIgnoreCase.Equals(x: packable, y: "NONE"))
         {
             this._packablePolicy = (_, _, _, _) => false;
         }
