@@ -7,9 +7,18 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 
 ## [Unreleased]
 ### Added
+### Fixed
+### Changed
+### Removed
+### Deployment Changes
+
+<!--
+Releases that have at least been deployed to staging, BUT NOT necessarily released to live.  Changes should be moved from [Unreleased] into here as they are merged into the appropriate release branch
+-->
+## [6.3.0] - 2022-11-08
+### Added
 - Additional analyzers
 - Requirements that analyzers be referenced with ExcludeAssets='runtime'
-### Fixed
 ### Changed
 - FF-1429 - Updated Microsoft.Extensions to 6.0.1
 - FF-1429 - Updated NuGet to 6.3.1
@@ -27,12 +36,7 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 - FF-1429 - Updated Roslynator.Analyzers to 4.1.2
 - FF-1429 - Updated SecurityCodeScan.VS2019 to 5.6.7
 - FF-1429 - Updated SmartAnalyzers.CSharpExtensions.Annotations to 4.2.7
-### Removed
-### Deployment Changes
 
-<!--
-Releases that have at least been deployed to staging, BUT NOT necessarily released to live.  Changes should be moved from [Unreleased] into here as they are merged into the appropriate release branch
--->
 ## [6.2.0] - 2022-09-20
 ### Added
 - Dotnet 7 specific checks
