@@ -29,6 +29,7 @@ public sealed class DiagnosticLogger : IDiagnosticLogger
 
     /// <inheritdoc />
     public void Log<TState>(LogLevel logLevel, EventId eventId, TState state, Exception? exception, Func<TState, Exception?, string> formatter)
+
     {
         if (this.IsWarningAsError(logLevel))
         {
@@ -55,6 +56,7 @@ public sealed class DiagnosticLogger : IDiagnosticLogger
 
     /// <inheritdoc />
     public IDisposable BeginScope<TState>(TState state)
+        where TState : notnull
     {
         return new DisposableScope();
     }

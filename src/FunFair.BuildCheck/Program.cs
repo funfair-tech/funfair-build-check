@@ -93,7 +93,7 @@ internal static class Program
 
     private static bool GetConfiguration(IConfigurationRoot configuration, out string solutionFileName, out bool warningsAsErrors, out bool preReleaseBuild)
     {
-        solutionFileName = configuration.GetValue<string>(key: @"solution");
+        solutionFileName = configuration.GetValue<string>(key: @"solution") ?? string.Empty;
         warningsAsErrors = false;
         preReleaseBuild = false;
 
