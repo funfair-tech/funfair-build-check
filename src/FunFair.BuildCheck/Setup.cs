@@ -135,6 +135,11 @@ internal static class Setup
     [SuppressMessage(category: "Philips.CodeAnalysis.DuplicateCodeAnalyzer", checkId: "PH2071: Duplicate code shape", Justification = "Registering Analyzers")]
     private static IServiceCollection StaticCodeAnalysis(this IServiceCollection services, IRepositorySettings repositorySettings)
     {
+        if (string.IsNullOrWhiteSpace(Environment.GetEnvironmentVariable("EXCLUDE_DOTNET_SOURCE_GENERATION")))
+        {
+            services = services.AddProjectCheck<MustHaveEnumSourceGeneratorAnalyzerPackage>();
+        }
+
         return services.AddProjectCheck<AnalysisLevelPolicyUseLatestVersion>()
                        .AddProjectCheck<AnalysisModePolicy>()
                        .AddProjectCheck<CodeAnalysisTreatWarningsAsErrorsPolicy>()
@@ -143,7 +148,6 @@ internal static class Setup
                        .AddProjectCheck<ErrorPolicyWarningAsErrors>()
                        .AddProjectCheck<MustHaveAsyncAnalyzerPackage>()
                        .AddProjectCheck<MustHaveCodecrackerCSharpAnalyzerPackage>()
-                       .AddProjectCheck<MustHaveEnumSourceGeneratorAnalyzerPackage>()
                        .AddProjectCheck<MustHaveMeziantouAnalyzerPackage>()
                        .AddProjectCheck<MustHaveDuplicateCodeAnalyzerPackage>()
                        .AddProjectCheck<MustHaveSecurityCodeScanAnalyzerPackage>()
