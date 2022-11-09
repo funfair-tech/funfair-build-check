@@ -1,6 +1,7 @@
 using System;
 using System.Xml;
 using FunFair.BuildCheck.Interfaces;
+using FunFair.BuildCheck.ProjectChecks.Helpers;
 using Microsoft.Extensions.Logging;
 
 namespace FunFair.BuildCheck.ProjectChecks.ReferencedPackages;
@@ -39,15 +40,25 @@ public abstract class MustHaveAnalyzerPackage : IProjectCheck
                 this._logger.LogError($"{projectName}: Does not reference {this._packageId} with a PrivateAssets=\"{PACKAGE_PRIVATE_ASSETS}\" attribute");
             }
 
-            if(!CheckExcludeAssets(packageId: this._packageId, project: project))
+            if(!(project.IsFunFairTestProject() && IsPackageExcluded(packageId: this._packageId)))
             {
-                this._logger.LogError($"{projectName}: Does not reference {this._packageId} with a ExcludeAssets=\"{PACKAGE_EXCLUDE_ASSETS}\" attribute");
+
+                if (!CheckExcludeAssets(packageId: this._packageId, project: project))
+                {
+                    this._logger.LogError($"{projectName}: Does not reference {this._packageId} with a ExcludeAssets=\"{PACKAGE_EXCLUDE_ASSETS}\" attribute");
+                }
             }
         }
         else
         {
             this._logger.LogError($"{projectName}: Does not reference {this._packageId} using NuGet");
         }
+    }
+
+    private static bool IsPackageExcluded(string packageId)
+    {
+        return StringComparer.InvariantCultureIgnoreCase.Equals(packageId, "Microsoft.NET.Test.Sdk") ||
+               StringComparer.InvariantCultureIgnoreCase.Equals(packageId, "xunit.runner.visualstudio");
     }
 
     private static bool CheckReference(string packageId, XmlDocument project)

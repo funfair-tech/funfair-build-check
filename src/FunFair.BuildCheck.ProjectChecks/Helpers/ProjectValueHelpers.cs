@@ -149,12 +149,7 @@ internal static class ProjectValueHelpers
         CheckValueCommon(projectName: projectName, project: project, nodePresence: nodePresence, isRequiredValue: isRequiredValue, requiredValueDisplayText: msg, logger: logger);
     }
 
-    private static void CheckValueCommon(string projectName,
-                                         XmlDocument project,
-                                         string nodePresence,
-                                         Func<string, bool> isRequiredValue,
-                                         string requiredValueDisplayText,
-                                         ILogger logger)
+    private static void CheckValueCommon(string projectName, XmlDocument project, string nodePresence, Func<string, bool> isRequiredValue, string requiredValueDisplayText, ILogger logger)
     {
         bool hasGlobalSetting = CheckGlobalSettings(project: project, nodePresence: nodePresence, isRequiredValue: isRequiredValue);
 
@@ -317,6 +312,18 @@ internal static class ProjectValueHelpers
         if (outputTypeNode != null)
         {
             return !string.IsNullOrWhiteSpace(outputTypeNode.InnerText);
+        }
+
+        return false;
+    }
+
+    public static bool IsFunFairTestProject(this XmlDocument project)
+    {
+        XmlNode? outputTypeNode = project.SelectSingleNode("/Project/PropertyGroup/FFTestProject");
+
+        if (outputTypeNode != null)
+        {
+            return !string.IsNullOrWhiteSpace(outputTypeNode.InnerText) && StringComparer.InvariantCultureIgnoreCase.Equals(x: outputTypeNode.InnerText, y: "true");
         }
 
         return false;
