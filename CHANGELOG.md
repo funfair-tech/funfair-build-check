@@ -11,7 +11,7 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 ### Changed
 - FF-1429 - Updated Credfeto.Enumeration.Source.Generation to 0.0.8.10
 - FF-1429 - Updated FunFair.Test.Common to 6.0.8.2334
-- FF-1429 - Updated Meziantou.Analyzer to 1.0.749
+- FF-1429 - Updated Meziantou.Analyzer to 1.0.750
 ### Removed
 ### Deployment Changes
 
