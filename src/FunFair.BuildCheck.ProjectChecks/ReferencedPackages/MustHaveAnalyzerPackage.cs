@@ -40,9 +40,8 @@ public abstract class MustHaveAnalyzerPackage : IProjectCheck
                 this._logger.LogError($"{projectName}: Does not reference {this._packageId} with a PrivateAssets=\"{PACKAGE_PRIVATE_ASSETS}\" attribute");
             }
 
-            if(!(project.IsFunFairTestProject() && IsPackageExcluded(packageId: this._packageId)))
+            if (!(project.IsFunFairTestProject() && IsPackageExcluded(packageId: this._packageId)))
             {
-
                 if (!CheckExcludeAssets(packageId: this._packageId, project: project))
                 {
                     this._logger.LogError($"{projectName}: Does not reference {this._packageId} with a ExcludeAssets=\"{PACKAGE_EXCLUDE_ASSETS}\" attribute");
@@ -57,8 +56,8 @@ public abstract class MustHaveAnalyzerPackage : IProjectCheck
 
     private static bool IsPackageExcluded(string packageId)
     {
-        return StringComparer.InvariantCultureIgnoreCase.Equals(packageId, "Microsoft.NET.Test.Sdk") ||
-               StringComparer.InvariantCultureIgnoreCase.Equals(packageId, "xunit.runner.visualstudio");
+        return StringComparer.InvariantCultureIgnoreCase.Equals(x: packageId, y: "Microsoft.NET.Test.Sdk") ||
+               StringComparer.InvariantCultureIgnoreCase.Equals(x: packageId, y: "xunit.runner.visualstudio");
     }
 
     private static bool CheckReference(string packageId, XmlDocument project)
