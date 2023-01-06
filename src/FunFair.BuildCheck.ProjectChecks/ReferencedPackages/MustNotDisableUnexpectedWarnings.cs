@@ -77,7 +77,7 @@ public sealed class MustNotDisableUnexpectedWarnings : IProjectCheck
 
             string configuration = propertyGroup.GetAttribute(name: "Condition");
 
-            string[] warnings = ExtractWarnings(value);
+            IReadOnlyList<string> warnings = ExtractWarnings(value);
 
             foreach (string warning in warnings)
             {
@@ -118,7 +118,7 @@ public sealed class MustNotDisableUnexpectedWarnings : IProjectCheck
                 continue;
             }
 
-            string[] warnings = ExtractWarnings(value);
+            IReadOnlyList<string> warnings = ExtractWarnings(value);
 
             foreach (string warning in warnings)
             {
@@ -130,15 +130,20 @@ public sealed class MustNotDisableUnexpectedWarnings : IProjectCheck
         }
     }
 
-    private static string[] ExtractWarnings(string value)
+    private static IReadOnlyList<string> ExtractWarnings(string value)
     {
         return value.Split(separator: ";")
-                    .Where(predicate: s => !string.IsNullOrWhiteSpace(s))
+                    .Where(predicate: HasContent)
                     .SelectMany(selector: s => s.Split(separator: ",")
-                                                .Where(predicate: t => !string.IsNullOrWhiteSpace(t)))
+                                                .Where(predicate: HasContent))
                     .Where(predicate: s => !string.IsNullOrWhiteSpace(s))
-                    .OrderBy(keySelector: s => s.ToLowerInvariant())
+                    .OrderBy(keySelector: s => s, comparer: StringComparer.OrdinalIgnoreCase)
                     .ToArray();
+    }
+
+    private static bool HasContent(string t)
+    {
+        return !string.IsNullOrWhiteSpace(t);
     }
 
     private static string GetTextValue(XmlNode node)

@@ -52,7 +52,7 @@ public sealed class NoOrphanedProjectsExist : ISolutionCheck
     private static IReadOnlyList<string> GetOrderedProjects(string basePath)
     {
         return GetProjects(basePath)
-               .OrderBy(Ordering)
+               .OrderBy(keySelector: Ordering, comparer: StringComparer.Ordinal)
                .ToArray();
     }
 
