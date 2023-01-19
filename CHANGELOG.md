@@ -9,6 +9,14 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 ### Added
 ### Fixed
 ### Changed
+### Removed
+### Deployment Changes
+
+<!--
+Releases that have at least been deployed to staging, BUT NOT necessarily released to live.  Changes should be moved from [Unreleased] into here as they are merged into the appropriate release branch
+-->
+## [6.3.4] - 2023-01-19
+### Changed
 - FF-1429 - Updated Roslynator.Analyzers to 4.2.0
 - FF-1429 - Updated xunit.analyzers to 1.1.0
 - FF-1429 - Updated Microsoft.NET.Test.Sdk to 17.4.1
@@ -21,12 +29,7 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 - FF-1429 - Updated Meziantou.Analyzer to 2.0.8
 - FF-1429 - Updated Credfeto.Enumeration.Source.Generation to 1.0.5.17
 - FF-1429 - Updated FunFair.Test.Common to 6.0.16.2535
-### Removed
-### Deployment Changes
 
-<!--
-Releases that have at least been deployed to staging, BUT NOT necessarily released to live.  Changes should be moved from [Unreleased] into here as they are merged into the appropriate release branch
--->
 ## [6.3.3] - 2022-11-09
 ### Changed
 - FF-1429 - Updated NuGet to 6.4.0
