@@ -49,7 +49,8 @@ public sealed class MustNotReferenceObsoleteAspNetPackages : MustNotReferencePac
                                                                    "Microsoft.AspNetCore.Localization.Routing",
                                                                    "Microsoft.AspNetCore.MiddlewareAnalysis",
                                                                    "Microsoft.AspNetCore.Mvc",
-                                                                   "Microsoft.AspNetCore.Mvc.Abstractions",
+
+                                                                   // "Microsoft.AspNetCore.Mvc.Abstractions",
                                                                    "Microsoft.AspNetCore.Mvc.Analyzers",
                                                                    "Microsoft.AspNetCore.Mvc.ApiExplorer",
                                                                    "Microsoft.AspNetCore.Mvc.Api.Analyzers",
@@ -96,9 +97,7 @@ public sealed class MustNotReferenceObsoleteAspNetPackages : MustNotReferencePac
     /// </summary>
     /// <param name="logger">Logging.</param>
     public MustNotReferenceObsoleteAspNetPackages(ILogger<MustNotReferenceObsoleteAspNetPackages> logger)
-        : base(packageIds: PackageIds,
-               reason: "Obsoleted as direct reference with .net core 3.1 use the implicit reference through <Project Sdk=\"Microsoft.NET.Sdk.Web\">",
-               logger: logger)
+        : base(packageIds: PackageIds, reason: "Obsoleted as direct reference with .net core 3.1 use the implicit reference through <Project Sdk=\"Microsoft.NET.Sdk.Web\">", logger: logger)
     {
     }
 }
