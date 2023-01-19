@@ -58,7 +58,6 @@ internal static class Setup
                        .AddProjectCheck<ShouldUseAbstractionsExtensionHostingPackage>()
                        .AddProjectCheck<ShouldUseAbstractionsFileProvidersPackage>()
                        .AddProjectCheck<ShouldUseAbstractionsLoggingPackage>()
-                       .AddProjectCheck<ShouldUseFluentValidationAspNetCoreRatherThanFluentValidationPackage>()
                        .AddProjectCheck<ShouldUseNSubstituteRatherThanMoqPackage>()
                        .AddProjectCheck<UsingJwtAuthenticationMustIncludeIdentityModelJwt>();
     }
