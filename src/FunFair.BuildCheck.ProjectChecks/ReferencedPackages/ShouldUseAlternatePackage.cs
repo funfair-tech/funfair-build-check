@@ -48,6 +48,12 @@ public abstract class ShouldUseAlternatePackage : IProjectCheck
             return;
         }
 
+        if (this.ShouldExclude(project: project, projectName: projectName, logger: this._logger))
+        {
+            // Test projects can use whatever they want.
+            return;
+        }
+
         XmlNodeList? referenceNodes = project.SelectNodes("/Project/ItemGroup/PackageReference");
 
         if (referenceNodes == null)
@@ -64,5 +70,10 @@ public abstract class ShouldUseAlternatePackage : IProjectCheck
                 this._logger.LogError($"Should use package {this._usePackageId} rather than {this._matchPackageId}");
             }
         }
+    }
+
+    protected virtual bool ShouldExclude(XmlDocument project, string projectName, ILogger logger)
+    {
+        return false;
     }
 }
