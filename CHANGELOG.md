@@ -7,18 +7,22 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 
 ## [Unreleased]
 ### Added
-- Special cases for non-abstraction packages that are ok to be used in test projects
 ### Fixed
 ### Changed
-- FF-1429 - Updated FunFair.Test.Common to 6.0.17.2561
-- FF-1429 - Updated Meziantou.Analyzer to 2.0.10
-- FF-1429 - Updated NSubstitute.Analyzers.CSharp to 1.0.16
 ### Removed
 ### Deployment Changes
 
 <!--
 Releases that have at least been deployed to staging, BUT NOT necessarily released to live.  Changes should be moved from [Unreleased] into here as they are merged into the appropriate release branch
 -->
+## [6.3.5] - 2023-01-22
+### Added
+- Special cases for non-abstraction packages that are ok to be used in test projects
+### Changed
+- FF-1429 - Updated FunFair.Test.Common to 6.0.17.2561
+- FF-1429 - Updated Meziantou.Analyzer to 2.0.10
+- FF-1429 - Updated NSubstitute.Analyzers.CSharp to 1.0.16
+
 ## [6.3.4] - 2023-01-19
 ### Changed
 - FF-1429 - Updated Roslynator.Analyzers to 4.2.0
