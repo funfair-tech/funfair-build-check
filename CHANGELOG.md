@@ -7,6 +7,7 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 
 ## [Unreleased]
 ### Added
+- Special cases for non-abstraction packages that are ok to be used in test projects
 ### Fixed
 ### Changed
 - FF-1429 - Updated FunFair.Test.Common to 6.0.17.2561
