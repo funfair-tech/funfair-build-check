@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Xml;
 using FunFair.BuildCheck.Helpers;
@@ -43,7 +44,7 @@ internal static class Program
                 return ERROR;
             }
 
-            IReadOnlyList<SolutionProject> projects = await LoadProjectsAsync(solutionFileName);
+            IReadOnlyList<SolutionProject> projects = await LoadProjectsAsync(solution: solutionFileName, cancellationToken: CancellationToken.None);
             IServiceProvider services = Setup(warningsAsErrors: warningsAsErrors, preReleaseBuild: preReleaseBuild, projects: projects);
 
             string? baseFolder = Path.GetDirectoryName(solutionFileName);
@@ -194,9 +195,9 @@ internal static class Program
                                       .BuildServiceProvider();
     }
 
-    private static async Task<IReadOnlyList<SolutionProject>> LoadProjectsAsync(string solution)
+    private static async Task<IReadOnlyList<SolutionProject>> LoadProjectsAsync(string solution, CancellationToken cancellationToken)
     {
-        string[] text = await File.ReadAllLinesAsync(solution);
+        string[] text = await File.ReadAllLinesAsync(path: solution, cancellationToken: cancellationToken);
 
         string basePath = Path.GetDirectoryName(solution)!;
         Console.WriteLine($"Solution base path: {basePath}");
