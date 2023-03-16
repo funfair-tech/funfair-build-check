@@ -19,11 +19,11 @@ public sealed class ImportCommonProps : IProjectCheck
     ///     Constructor.
     /// </summary>
     /// <param name="logger">Logging.</param>
-    public ImportCommonProps(ILogger<ImportCommonProps> logger)
+    public ImportCommonProps(IRepositorySettings repositorySettings, ILogger<ImportCommonProps> logger)
     {
         this._logger = logger ?? throw new ArgumentNullException(nameof(logger));
 
-        this._projectImport = Environment.GetEnvironmentVariable("DOTNET_PACK_PROJECT_METADATA_IMPORT") ?? string.Empty;
+        this._projectImport = repositorySettings.ProjectImport;
     }
 
     /// <inheritdoc />

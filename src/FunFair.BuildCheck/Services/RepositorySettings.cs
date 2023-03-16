@@ -37,4 +37,7 @@ internal sealed class RepositorySettings : IRepositorySettings
             return !string.IsNullOrWhiteSpace(codeAnalysis) && StringComparer.InvariantCultureIgnoreCase.Equals(x: codeAnalysis, y: @"TRUE");
         }
     }
+
+    /// <inheritdoc />
+    public string ProjectImport => Environment.GetEnvironmentVariable("DOTNET_PACK_PROJECT_METADATA_IMPORT") ?? string.Empty;
 }

@@ -7,4 +7,6 @@ public interface IRepositorySettings
     public bool IsNullableGloballyEnforced { get; }
 
     public bool IsUnitTestBase { get; }
+
+    string ProjectImport { get; }
 }
