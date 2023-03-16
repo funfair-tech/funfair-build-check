@@ -46,4 +46,7 @@ internal sealed class RepositorySettings : IRepositorySettings
 
     /// <inheritdoc />
     public string DotnetPublishable => Environment.GetEnvironmentVariable(variable: @"DOTNET_PUBLISHABLE") ?? "NONE";
+
+    /// <inheritdoc />
+    public string? DotnetTargetFramework => Environment.GetEnvironmentVariable("DOTNET_CORE_APP_TARGET_FRAMEWORK");
 }

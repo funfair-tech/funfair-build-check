@@ -13,4 +13,6 @@ public interface IRepositorySettings
     string DotnetPackable { get; }
 
     string DotnetPublishable { get; }
+
+    string? DotnetTargetFramework { get; }
 }

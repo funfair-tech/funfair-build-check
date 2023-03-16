@@ -26,7 +26,7 @@ public sealed class TargetFrameworkIsSetCorrectlyPolicy : IProjectCheck
     {
         this._repositorySettings = repositorySettings;
         this._logger = logger ?? throw new ArgumentNullException(nameof(logger));
-        this._expected = Environment.GetEnvironmentVariable("DOTNET_CORE_APP_TARGET_FRAMEWORK");
+        this._expected = repositorySettings.DotnetTargetFramework;
     }
 
     /// <inheritdoc />
