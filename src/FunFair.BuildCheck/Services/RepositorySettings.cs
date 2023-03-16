@@ -41,5 +41,9 @@ internal sealed class RepositorySettings : IRepositorySettings
     /// <inheritdoc />
     public string ProjectImport => Environment.GetEnvironmentVariable("DOTNET_PACK_PROJECT_METADATA_IMPORT") ?? string.Empty;
 
+    /// <inheritdoc />
     public string DotnetPackable => Environment.GetEnvironmentVariable(variable: @"DOTNET_PACKABLE") ?? "NONE";
+
+    /// <inheritdoc />
+    public string DotnetPublishable => Environment.GetEnvironmentVariable(variable: @"DOTNET_PUBLISHABLE") ?? "NONE";
 }

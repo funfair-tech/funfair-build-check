@@ -28,7 +28,7 @@ public sealed class OnlyExesShouldBePublishablePolicy : IProjectCheck
         this._logger = logger ?? throw new ArgumentNullException(nameof(logger));
         this._isUnitTestBase = repositorySettings.IsUnitTestBase;
 
-        string packable = Environment.GetEnvironmentVariable(variable: @"DOTNET_PUBLISHABLE") ?? "NONE";
+        string packable = repositorySettings.DotnetPublishable;
 
         if (StringComparer.InvariantCultureIgnoreCase.Equals(x: packable, y: "NONE"))
         {

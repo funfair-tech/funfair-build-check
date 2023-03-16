@@ -11,4 +11,6 @@ public interface IRepositorySettings
     string ProjectImport { get; }
 
     string DotnetPackable { get; }
+
+    string DotnetPublishable { get; }
 }
