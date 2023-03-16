@@ -10,9 +10,9 @@ public interface IRepositorySettings
 
     string ProjectImport { get; }
 
-    string DotnetPackable { get; }
+    string? DotnetPackable { get; }
 
-    string DotnetPublishable { get; }
+    string? DotnetPublishable { get; }
 
     string? DotnetTargetFramework { get; }
 

@@ -17,6 +17,7 @@ public sealed class OnlyExesShouldBePublishablePolicy : IProjectCheck
     private readonly ILogger<OnlyExesShouldBePublishablePolicy> _logger;
 
     private readonly Func<bool, bool, bool, string, bool> _packablePolicy;
+    private readonly IRepositorySettings _repositorySettings;
 
     /// <summary>
     ///     Constructor.
@@ -25,10 +26,11 @@ public sealed class OnlyExesShouldBePublishablePolicy : IProjectCheck
     /// <param name="logger">Logging.</param>
     public OnlyExesShouldBePublishablePolicy(IRepositorySettings repositorySettings, ILogger<OnlyExesShouldBePublishablePolicy> logger)
     {
+        this._repositorySettings = repositorySettings;
         this._logger = logger ?? throw new ArgumentNullException(nameof(logger));
         this._isUnitTestBase = repositorySettings.IsUnitTestBase;
 
-        string packable = repositorySettings.DotnetPublishable;
+        string packable = repositorySettings.DotnetPublishable ?? "NONE";
 
         if (StringComparer.InvariantCultureIgnoreCase.Equals(x: packable, y: "NONE"))
         {
@@ -60,6 +62,11 @@ public sealed class OnlyExesShouldBePublishablePolicy : IProjectCheck
     /// <inheritdoc />
     public void Check(string projectName, string projectFolder, XmlDocument project)
     {
+        if (string.IsNullOrWhiteSpace(this._repositorySettings.DotnetPublishable))
+        {
+            return;
+        }
+
         bool isTestProject = project.IsTestProject(projectName: projectName, logger: this._logger) &&
                              (this._isUnitTestBase && projectName.EndsWith(value: ".Tests", comparisonType: StringComparison.OrdinalIgnoreCase) || !this._isUnitTestBase);
 

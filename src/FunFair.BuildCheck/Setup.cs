@@ -13,14 +13,10 @@ internal static class Setup
 {
     public static IServiceCollection SetupSolutionChecks(this IServiceCollection services)
     {
-        if (!string.IsNullOrWhiteSpace(Environment.GetEnvironmentVariable("DOTNET_CORE_SDK_VERSION")))
-        {
-            services = services.AddSolutionCheck<GlobalJsonIsLatest>()
-                               .AddSolutionCheck<GlobalJsonMustSpecifyCorrectRollforwardPolicy>()
-                               .AddSolutionCheck<GlobalJsonMustNotAllowPreRelease>();
-        }
-
-        return services.AddSolutionCheck<AllProjectsExist>()
+        return services.AddSolutionCheck<GlobalJsonIsLatest>()
+                       .AddSolutionCheck<GlobalJsonMustSpecifyCorrectRollforwardPolicy>()
+                       .AddSolutionCheck<GlobalJsonMustNotAllowPreRelease>()
+                       .AddSolutionCheck<AllProjectsExist>()
                        .AddSolutionCheck<NoOrphanedProjectsExist>();
     }
 
@@ -76,14 +72,9 @@ internal static class Setup
                            .AddProjectCheck<DoesNotUseRootNamespace>()
                            .AddProjectCheck<GenerateNeutralResourcesLanguageAttributePolicy>()
                            .AddProjectCheck<ImplicitUsingsPolicy>()
-                           .AddProjectCheck<LanguagePolicyUseLatestVersion>();
-
-        if (!string.IsNullOrWhiteSpace(Environment.GetEnvironmentVariable("DOTNET_PACKABLE")))
-        {
-            services = services.AddProjectCheck<LibrariesShouldBePackablePolicy>();
-        }
-
-        services = services.AddProjectCheck<MustEnableNullable>()
+                           .AddProjectCheck<LanguagePolicyUseLatestVersion>()
+                           .AddProjectCheck<LibrariesShouldBePackablePolicy>()
+                           .AddProjectCheck<MustEnableNullable>()
                            .AddProjectCheck<MustNotDisableUnexpectedWarnings>()
                            .AddProjectCheck<MustSpecifyOutputType>()
                            .AddProjectCheck<NoPreReleaseNuGetPackages>()

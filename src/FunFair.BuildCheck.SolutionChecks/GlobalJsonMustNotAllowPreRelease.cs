@@ -13,15 +13,18 @@ namespace FunFair.BuildCheck.SolutionChecks;
 public sealed class GlobalJsonMustNotAllowPreRelease : ISolutionCheck
 {
     private readonly bool _allowPreRelease;
-
     private readonly ILogger<GlobalJsonMustNotAllowPreRelease> _logger;
+
+    private readonly IRepositorySettings _repositorySettings;
 
     /// <summary>
     ///     Constructor.
     /// </summary>
+    /// <param name="repositorySettings">Repository settings.</param>
     /// <param name="logger">Logging.</param>
     public GlobalJsonMustNotAllowPreRelease(IRepositorySettings repositorySettings, ILogger<GlobalJsonMustNotAllowPreRelease> logger)
     {
+        this._repositorySettings = repositorySettings;
         this._logger = logger ?? throw new ArgumentNullException(nameof(logger));
         string allowPreRelease = repositorySettings.DotNetAllowPreReleaseSdk;
 
@@ -31,6 +34,11 @@ public sealed class GlobalJsonMustNotAllowPreRelease : ISolutionCheck
     /// <inheritdoc />
     public void Check(string solutionFileName)
     {
+        if (string.IsNullOrWhiteSpace(this._repositorySettings.DotNetSdkVersion))
+        {
+            return;
+        }
+
         string? solutionDir = Path.GetDirectoryName(solutionFileName);
 
         if (solutionDir == null)

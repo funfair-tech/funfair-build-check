@@ -14,19 +14,27 @@ public sealed class GlobalJsonMustSpecifyCorrectRollforwardPolicy : ISolutionChe
 {
     private const string ROLL_FORWARD_POLICY = @"latestPatch";
     private readonly ILogger<GlobalJsonMustSpecifyCorrectRollforwardPolicy> _logger;
+    private readonly IRepositorySettings _repositorySettings;
 
     /// <summary>
     ///     Constructor.
     /// </summary>
+    /// <param name="repositorySettings"></param>
     /// <param name="logger">Logging.</param>
-    public GlobalJsonMustSpecifyCorrectRollforwardPolicy(ILogger<GlobalJsonMustSpecifyCorrectRollforwardPolicy> logger)
+    public GlobalJsonMustSpecifyCorrectRollforwardPolicy(IRepositorySettings repositorySettings, ILogger<GlobalJsonMustSpecifyCorrectRollforwardPolicy> logger)
     {
+        this._repositorySettings = repositorySettings;
         this._logger = logger ?? throw new ArgumentNullException(nameof(logger));
     }
 
     /// <inheritdoc />
     public void Check(string solutionFileName)
     {
+        if (string.IsNullOrWhiteSpace(this._repositorySettings.DotNetSdkVersion))
+        {
+            return;
+        }
+
         string? solutionDir = Path.GetDirectoryName(solutionFileName);
 
         if (solutionDir == null)

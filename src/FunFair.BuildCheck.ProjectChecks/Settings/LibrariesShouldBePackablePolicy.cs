@@ -17,6 +17,7 @@ public sealed class LibrariesShouldBePackablePolicy : IProjectCheck
     private readonly ILogger<LibrariesShouldBePackablePolicy> _logger;
 
     private readonly Func<bool, bool, bool, string, bool> _packablePolicy;
+    private readonly IRepositorySettings _repositorySettings;
 
     /// <summary>
     ///     Constructor.
@@ -25,10 +26,11 @@ public sealed class LibrariesShouldBePackablePolicy : IProjectCheck
     /// <param name="logger">Logging.</param>
     public LibrariesShouldBePackablePolicy(IRepositorySettings repositorySettings, ILogger<LibrariesShouldBePackablePolicy> logger)
     {
+        this._repositorySettings = repositorySettings;
         this._logger = logger ?? throw new ArgumentNullException(nameof(logger));
         this._isUnitTestBase = repositorySettings.IsUnitTestBase;
 
-        string packable = repositorySettings.DotnetPackable;
+        string packable = repositorySettings.DotnetPackable ?? "NONE";
 
         if (StringComparer.InvariantCultureIgnoreCase.Equals(x: packable, y: "NONE"))
         {
@@ -64,6 +66,11 @@ public sealed class LibrariesShouldBePackablePolicy : IProjectCheck
     /// <inheritdoc />
     public void Check(string projectName, string projectFolder, XmlDocument project)
     {
+        if (string.IsNullOrWhiteSpace(this._repositorySettings.DotnetPackable))
+        {
+            return;
+        }
+
         bool isTestProject = project.IsTestProject(projectName: projectName, logger: this._logger) &&
                              (this._isUnitTestBase && projectName.EndsWith(value: ".Tests", comparisonType: StringComparison.OrdinalIgnoreCase) || !this._isUnitTestBase);
 
