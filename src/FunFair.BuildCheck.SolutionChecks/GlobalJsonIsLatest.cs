@@ -19,10 +19,10 @@ public sealed class GlobalJsonIsLatest : ISolutionCheck
     ///     Constructor.
     /// </summary>
     /// <param name="logger">Logging.</param>
-    public GlobalJsonIsLatest(ILogger<GlobalJsonIsLatest> logger)
+    public GlobalJsonIsLatest(IRepositorySettings repositorySettings, ILogger<GlobalJsonIsLatest> logger)
     {
         this._logger = logger ?? throw new ArgumentNullException(nameof(logger));
-        this._dotnetVersion = Environment.GetEnvironmentVariable(variable: @"DOTNET_CORE_SDK_VERSION");
+        this._dotnetVersion = repositorySettings.DotNetSdkVersion;
     }
 
     /// <inheritdoc />

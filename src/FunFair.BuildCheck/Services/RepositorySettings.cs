@@ -49,4 +49,10 @@ internal sealed class RepositorySettings : IRepositorySettings
 
     /// <inheritdoc />
     public string? DotnetTargetFramework => Environment.GetEnvironmentVariable("DOTNET_CORE_APP_TARGET_FRAMEWORK");
+
+    /// <inheritdoc />
+    public string? DotNetSdkVersion => Environment.GetEnvironmentVariable(variable: @"DOTNET_CORE_SDK_VERSION");
+
+    /// <inheritdoc />
+    public string DotNetAllowPreReleaseSdk => Environment.GetEnvironmentVariable("DOTNET_SDK_ALLOW_PRE_RELEASE") ?? "false";
 }

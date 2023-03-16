@@ -15,4 +15,8 @@ public interface IRepositorySettings
     string DotnetPublishable { get; }
 
     string? DotnetTargetFramework { get; }
+
+    string? DotNetSdkVersion { get; }
+
+    string DotNetAllowPreReleaseSdk { get; }
 }
