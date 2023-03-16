@@ -28,7 +28,7 @@ public sealed class LibrariesShouldBePackablePolicy : IProjectCheck
         this._logger = logger ?? throw new ArgumentNullException(nameof(logger));
         this._isUnitTestBase = repositorySettings.IsUnitTestBase;
 
-        string packable = Environment.GetEnvironmentVariable(variable: @"DOTNET_PACKABLE") ?? "NONE";
+        string packable = repositorySettings.DotnetPackable;
 
         if (StringComparer.InvariantCultureIgnoreCase.Equals(x: packable, y: "NONE"))
         {

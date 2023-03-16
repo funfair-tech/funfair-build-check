@@ -9,4 +9,6 @@ public interface IRepositorySettings
     public bool IsUnitTestBase { get; }
 
     string ProjectImport { get; }
+
+    string DotnetPackable { get; }
 }
