@@ -30,6 +30,11 @@ public sealed class XmlDocumentationFileRequiredPolicy : IProjectCheck
     /// <inheritdoc />
     public void Check(string projectName, string projectFolder, XmlDocument project)
     {
+        if (!this._repositorySettings.XmlDocumentationRequired)
+        {
+            return;
+        }
+
         bool testProject = project.IsTestProject(projectName: projectName, logger: this._logger);
 
         if (testProject && this._repositorySettings.IsUnitTestBase)

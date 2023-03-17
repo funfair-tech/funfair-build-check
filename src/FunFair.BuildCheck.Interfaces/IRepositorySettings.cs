@@ -19,4 +19,6 @@ public interface IRepositorySettings
     string? DotNetSdkVersion { get; }
 
     string DotNetAllowPreReleaseSdk { get; }
+
+    bool XmlDocumentationRequired { get; }
 }

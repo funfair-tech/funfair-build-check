@@ -60,9 +60,8 @@ internal static class Setup
 
     private static IServiceCollection XmlDocumentationProjectSettings(this IServiceCollection services)
     {
-        return StringComparer.InvariantCulture.Equals(Environment.GetEnvironmentVariable("XML_DOCUMENTATION"), y: "true")
-            ? services.AddProjectCheck<XmlDocumentationFileRequiredPolicy>()
-            : services.AddProjectCheck<XmlDocumentationFileProhibitedPolicy>();
+        return services.AddProjectCheck<XmlDocumentationFileRequiredPolicy>()
+                       .AddProjectCheck<XmlDocumentationFileProhibitedPolicy>();
     }
 
     [SuppressMessage(category: "Philips.CodeAnalysis.DuplicateCodeAnalyzer", checkId: "PH2071: Duplicate code shape", Justification = "Registering Analyzers")]

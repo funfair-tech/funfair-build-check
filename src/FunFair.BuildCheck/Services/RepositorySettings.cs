@@ -55,4 +55,7 @@ internal sealed class RepositorySettings : IRepositorySettings
 
     /// <inheritdoc />
     public string DotNetAllowPreReleaseSdk => Environment.GetEnvironmentVariable("DOTNET_SDK_ALLOW_PRE_RELEASE") ?? "false";
+
+    /// <inheritdoc />
+    public bool XmlDocumentationRequired => StringComparer.InvariantCulture.Equals(Environment.GetEnvironmentVariable("XML_DOCUMENTATION"), y: "true");
 }
