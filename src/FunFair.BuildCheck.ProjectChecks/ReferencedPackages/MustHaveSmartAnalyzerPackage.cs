@@ -12,7 +12,7 @@ public sealed class MustHaveSmartAnalyzerPackage : MustHaveAnalyzerPackage
     /// </summary>
     /// <param name="logger">Logging.</param>
     public MustHaveSmartAnalyzerPackage(ILogger<MustHaveSmartAnalyzerPackage> logger)
-        : base(packageId: @"SmartAnalyzers.CSharpExtensions.Annotations", logger: logger)
+        : base(packageId: @"SmartAnalyzers.CSharpExtensions.Annotations", mustHave: true, logger: logger)
     {
     }
 }

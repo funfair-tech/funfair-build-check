@@ -12,7 +12,7 @@ public sealed class MustHavePhilipsMaintainabilityAnalyzerPackage : MustHaveAnal
     /// </summary>
     /// <param name="logger">Logging.</param>
     public MustHavePhilipsMaintainabilityAnalyzerPackage(ILogger<MustHavePhilipsMaintainabilityAnalyzerPackage> logger)
-        : base(packageId: @"Philips.CodeAnalysis.MaintainabilityAnalyzers", logger: logger)
+        : base(packageId: @"Philips.CodeAnalysis.MaintainabilityAnalyzers", mustHave: true, logger: logger)
     {
     }
 }

@@ -12,7 +12,7 @@ public sealed class MustHaveRoslynatorAnalyzersPackage : MustHaveAnalyzerPackage
     /// </summary>
     /// <param name="logger">Logging.</param>
     public MustHaveRoslynatorAnalyzersPackage(ILogger<MustHaveRoslynatorAnalyzersPackage> logger)
-        : base(packageId: @"Roslynator.Analyzers", logger: logger)
+        : base(packageId: @"Roslynator.Analyzers", mustHave: true, logger: logger)
     {
     }
 }

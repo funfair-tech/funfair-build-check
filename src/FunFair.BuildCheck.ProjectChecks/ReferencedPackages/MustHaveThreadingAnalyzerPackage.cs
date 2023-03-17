@@ -12,7 +12,7 @@ public sealed class MustHaveThreadingAnalyzerPackage : MustHaveAnalyzerPackage
     /// </summary>
     /// <param name="logger">Logging.</param>
     public MustHaveThreadingAnalyzerPackage(ILogger<MustHaveThreadingAnalyzerPackage> logger)
-        : base(packageId: @"Microsoft.VisualStudio.Threading.Analyzers", logger: logger)
+        : base(packageId: @"Microsoft.VisualStudio.Threading.Analyzers", mustHave: true, logger: logger)
     {
     }
 }

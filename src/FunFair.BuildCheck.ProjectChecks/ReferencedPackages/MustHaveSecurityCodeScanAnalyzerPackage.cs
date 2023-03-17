@@ -12,7 +12,7 @@ public sealed class MustHaveSecurityCodeScanAnalyzerPackage : MustHaveAnalyzerPa
     /// </summary>
     /// <param name="logger">Logging.</param>
     public MustHaveSecurityCodeScanAnalyzerPackage(ILogger<MustHaveSecurityCodeScanAnalyzerPackage> logger)
-        : base(packageId: @"SecurityCodeScan.VS2019", logger: logger)
+        : base(packageId: @"SecurityCodeScan.VS2019", mustHave: true, logger: logger)
     {
     }
 }

@@ -12,7 +12,7 @@ public sealed class MustHaveFunFairCodeAnalysisPackage : MustHaveAnalyzerPackage
     /// </summary>
     /// <param name="logger">Logging.</param>
     public MustHaveFunFairCodeAnalysisPackage(ILogger<MustHaveFunFairCodeAnalysisPackage> logger)
-        : base(packageId: @"FunFair.CodeAnalysis", logger: logger)
+        : base(packageId: @"FunFair.CodeAnalysis", mustHave: true, logger: logger)
     {
     }
 }

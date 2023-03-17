@@ -12,7 +12,7 @@ public sealed class MustHaveMeziantouAnalyzerPackage : MustHaveAnalyzerPackage
     /// </summary>
     /// <param name="logger">Logging.</param>
     public MustHaveMeziantouAnalyzerPackage(ILogger<MustHaveMeziantouAnalyzerPackage> logger)
-        : base(packageId: @"Meziantou.Analyzer", logger: logger)
+        : base(packageId: @"Meziantou.Analyzer", mustHave: true, logger: logger)
     {
     }
 }

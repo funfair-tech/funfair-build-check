@@ -12,7 +12,7 @@ public sealed class MustHaveAsyncAnalyzerPackage : MustHaveAnalyzerPackage
     /// </summary>
     /// <param name="logger">Logging.</param>
     public MustHaveAsyncAnalyzerPackage(ILogger<MustHaveAsyncAnalyzerPackage> logger)
-        : base(packageId: @"AsyncFixer", logger: logger)
+        : base(packageId: @"AsyncFixer", mustHave: true, logger: logger)
     {
     }
 }

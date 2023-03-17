@@ -12,7 +12,7 @@ public sealed class MustHaveSonarAnalyzerPackage : MustHaveAnalyzerPackage
     /// </summary>
     /// <param name="logger">Logging.</param>
     public MustHaveSonarAnalyzerPackage(ILogger<MustHaveSonarAnalyzerPackage> logger)
-        : base(packageId: @"SonarAnalyzer.CSharp", logger: logger)
+        : base(packageId: @"SonarAnalyzer.CSharp", mustHave: true, logger: logger)
     {
     }
 }

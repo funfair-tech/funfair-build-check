@@ -12,7 +12,7 @@ public sealed class MustHaveCodecrackerCSharpAnalyzerPackage : MustHaveAnalyzerP
     /// </summary>
     /// <param name="logger">Logging.</param>
     public MustHaveCodecrackerCSharpAnalyzerPackage(ILogger<MustHaveCodecrackerCSharpAnalyzerPackage> logger)
-        : base(packageId: @"codecracker.CSharp", logger: logger)
+        : base(packageId: @"codecracker.CSharp", mustHave: true, logger: logger)
     {
     }
 }

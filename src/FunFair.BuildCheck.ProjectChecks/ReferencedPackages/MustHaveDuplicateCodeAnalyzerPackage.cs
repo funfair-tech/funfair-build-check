@@ -12,7 +12,7 @@ public sealed class MustHaveDuplicateCodeAnalyzerPackage : MustHaveAnalyzerPacka
     /// </summary>
     /// <param name="logger">Logging.</param>
     public MustHaveDuplicateCodeAnalyzerPackage(ILogger<MustHaveDuplicateCodeAnalyzerPackage> logger)
-        : base(packageId: @"Philips.CodeAnalysis.DuplicateCodeAnalyzer", logger: logger)
+        : base(packageId: @"Philips.CodeAnalysis.DuplicateCodeAnalyzer", mustHave: true, logger: logger)
     {
     }
 }

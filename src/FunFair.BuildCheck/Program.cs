@@ -180,7 +180,7 @@ internal static class Program
 
     private static IServiceProvider Setup(bool warningsAsErrors, bool preReleaseBuild, IReadOnlyList<SolutionProject> projects)
     {
-        IRepositorySettings repositorySettings = new RepositorySettings();
+        IRepositorySettings repositorySettings = new RepositorySettings(projects);
         DiagnosticLogger logger = new(warningsAsErrors);
 
         return new ServiceCollection().AddSingleton(repositorySettings)

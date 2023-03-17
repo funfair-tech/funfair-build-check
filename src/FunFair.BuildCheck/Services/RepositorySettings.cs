@@ -1,20 +1,21 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using FunFair.BuildCheck.Interfaces;
 
 namespace FunFair.BuildCheck.Services;
 
 internal sealed class RepositorySettings : IRepositorySettings
 {
-    /// <inheritdoc />
-    public bool IsCodeAnalysisSolution
-    {
-        get
-        {
-            string? codeAnalysis = Environment.GetEnvironmentVariable(variable: @"BUILD_CODEANALYSIS");
+    private readonly IReadOnlyList<SolutionProject> _projects;
 
-            return !string.IsNullOrWhiteSpace(codeAnalysis) && StringComparer.InvariantCultureIgnoreCase.Equals(x: codeAnalysis, y: @"TRUE");
-        }
+    public RepositorySettings(IReadOnlyList<SolutionProject> projects)
+    {
+        this._projects = projects;
     }
+
+    /// <inheritdoc />
+    public bool IsCodeAnalysisSolution => this.HasNamedProject(@"FunFair.CodeAnalysis");
 
     /// <inheritdoc />
     public bool IsNullableGloballyEnforced
@@ -60,5 +61,10 @@ internal sealed class RepositorySettings : IRepositorySettings
     public bool XmlDocumentationRequired => StringComparer.InvariantCulture.Equals(Environment.GetEnvironmentVariable("XML_DOCUMENTATION"), y: "true");
 
     /// <inheritdoc />
-    public bool MustHaveEnumSourceGeneratorAnalyzerPackage => !string.IsNullOrWhiteSpace(Environment.GetEnvironmentVariable("EXCLUDE_DOTNET_ENUM_SOURCE_GENERATION"));
+    public bool MustHaveEnumSourceGeneratorAnalyzerPackage => this.HasNamedProject(@"Credfeto.Enumeration.Source.Generation");
+
+    private bool HasNamedProject(string projectName)
+    {
+        return this._projects.Any(project => StringComparer.InvariantCultureIgnoreCase.Equals(x: project.DisplayName, y: projectName));
+    }
 }
