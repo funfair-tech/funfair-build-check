@@ -67,31 +67,21 @@ internal static class Setup
     [SuppressMessage(category: "Philips.CodeAnalysis.DuplicateCodeAnalyzer", checkId: "PH2071: Duplicate code shape", Justification = "Registering Analyzers")]
     private static IServiceCollection GeneralProjectSettings(this IServiceCollection services)
     {
-        services = services.AddProjectCheck<DoesNotUseDotNetCliToolReference>()
-                           .AddProjectCheck<DoesNotUseRootNamespace>()
-                           .AddProjectCheck<GenerateNeutralResourcesLanguageAttributePolicy>()
-                           .AddProjectCheck<ImplicitUsingsPolicy>()
-                           .AddProjectCheck<LanguagePolicyUseLatestVersion>()
-                           .AddProjectCheck<LibrariesShouldBePackablePolicy>()
-                           .AddProjectCheck<MustEnableNullable>()
-                           .AddProjectCheck<MustNotDisableUnexpectedWarnings>()
-                           .AddProjectCheck<MustSpecifyOutputType>()
-                           .AddProjectCheck<NoPreReleaseNuGetPackages>()
-                           .AddProjectCheck<NuGetPolicyDisableImplicitNuGetFallbackFolder>();
-
-        if (!string.IsNullOrWhiteSpace(Environment.GetEnvironmentVariable("DOTNET_PUBLISHABLE")))
-        {
-            services = services.AddProjectCheck<OnlyExesShouldBePublishablePolicy>();
-        }
-
-        services = services.AddProjectCheck<RunAotCompilationPolicy>();
-
-        if (!string.IsNullOrWhiteSpace(Environment.GetEnvironmentVariable("DOTNET_CORE_APP_TARGET_FRAMEWORK")))
-        {
-            services = services.AddProjectCheck<TargetFrameworkIsSetCorrectlyPolicy>();
-        }
-
-        return services.AddProjectCheck<TieredCompilationPolicy>();
+        return services.AddProjectCheck<DoesNotUseDotNetCliToolReference>()
+                       .AddProjectCheck<DoesNotUseRootNamespace>()
+                       .AddProjectCheck<GenerateNeutralResourcesLanguageAttributePolicy>()
+                       .AddProjectCheck<ImplicitUsingsPolicy>()
+                       .AddProjectCheck<LanguagePolicyUseLatestVersion>()
+                       .AddProjectCheck<LibrariesShouldBePackablePolicy>()
+                       .AddProjectCheck<MustEnableNullable>()
+                       .AddProjectCheck<MustNotDisableUnexpectedWarnings>()
+                       .AddProjectCheck<MustSpecifyOutputType>()
+                       .AddProjectCheck<NoPreReleaseNuGetPackages>()
+                       .AddProjectCheck<NuGetPolicyDisableImplicitNuGetFallbackFolder>()
+                       .AddProjectCheck<OnlyExesShouldBePublishablePolicy>()
+                       .AddProjectCheck<RunAotCompilationPolicy>()
+                       .AddProjectCheck<TargetFrameworkIsSetCorrectlyPolicy>()
+                       .AddProjectCheck<TieredCompilationPolicy>();
     }
 
     private static IServiceCollection PublishingSettings(this IServiceCollection services)

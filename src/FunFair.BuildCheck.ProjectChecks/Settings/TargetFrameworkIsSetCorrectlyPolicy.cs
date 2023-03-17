@@ -32,6 +32,12 @@ public sealed class TargetFrameworkIsSetCorrectlyPolicy : IProjectCheck
     /// <inheritdoc />
     public void Check(string projectName, string projectFolder, XmlDocument project)
     {
+        if (string.IsNullOrWhiteSpace(this._expected))
+        {
+            // no frameworks defined - allow any
+            return;
+        }
+
         if (this._repositorySettings.IsCodeAnalysisSolution && !project.IsTestProject(projectName: projectName, logger: this._logger))
         {
             // Code analysis project has specific requirements
