@@ -9,6 +9,14 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 ### Added
 ### Fixed
 ### Changed
+### Removed
+### Deployment Changes
+
+<!--
+Releases that have at least been deployed to staging, BUT NOT necessarily released to live.  Changes should be moved from [Unreleased] into here as they are merged into the appropriate release branch
+-->
+## [474.0.0] - 2023-03-17
+### Changed
 - FF-1429 - Updated SmartAnalyzers.CSharpExtensions.Annotations to 4.2.8
 - FF-1429 - Updated Meziantou.Analyzer to 2.0.14
 - FF-1429 - Updated SonarAnalyzer.CSharp to 8.52.0.60960
@@ -18,12 +26,8 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 - FF-1429 - Updated Microsoft.Extensions to 7.0.3
 - FF-3881 - Updated DotNet SDK to 7.0.200
 - SDK - Updated DotNet SDK to 7.0.202
-### Removed
-### Deployment Changes
+- Forced version to be greater than what got accidentally uploaded, marked as do not use, but dotnet insists on installing
 
-<!--
-Releases that have at least been deployed to staging, BUT NOT necessarily released to live.  Changes should be moved from [Unreleased] into here as they are merged into the appropriate release branch
--->
 ## [6.3.5] - 2023-01-22
 ### Added
 - Special cases for non-abstraction packages that are ok to be used in test projects
