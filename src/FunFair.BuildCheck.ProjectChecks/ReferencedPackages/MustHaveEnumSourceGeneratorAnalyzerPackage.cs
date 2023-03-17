@@ -1,3 +1,4 @@
+using FunFair.BuildCheck.Interfaces;
 using Microsoft.Extensions.Logging;
 
 namespace FunFair.BuildCheck.ProjectChecks.ReferencedPackages;
@@ -11,8 +12,8 @@ public sealed class MustHaveEnumSourceGeneratorAnalyzerPackage : MustHaveAnalyze
     ///     Constructor.
     /// </summary>
     /// <param name="logger">Logging.</param>
-    public MustHaveEnumSourceGeneratorAnalyzerPackage(ILogger<MustHaveEnumSourceGeneratorAnalyzerPackage> logger)
-        : base(packageId: @"Credfeto.Enumeration.Source.Generation", logger: logger)
+    public MustHaveEnumSourceGeneratorAnalyzerPackage(IRepositorySettings repositorySettings, ILogger<MustHaveEnumSourceGeneratorAnalyzerPackage> logger)
+        : base(packageId: @"Credfeto.Enumeration.Source.Generation", mustHave: repositorySettings.MustHaveEnumSourceGeneratorAnalyzerPackage, logger: logger)
     {
     }
 }

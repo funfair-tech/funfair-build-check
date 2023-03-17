@@ -14,6 +14,7 @@ public abstract class MustHaveAnalyzerPackage : IProjectCheck
     private const string PACKAGE_PRIVATE_ASSETS = @"All";
     private const string PACKAGE_EXCLUDE_ASSETS = @"runtime";
     private readonly ILogger _logger;
+    private readonly bool _mustHave;
 
     private readonly string _packageId;
 
@@ -22,15 +23,21 @@ public abstract class MustHaveAnalyzerPackage : IProjectCheck
     /// </summary>
     /// <param name="packageId">The package that must be installed.</param>
     /// <param name="logger">Logging.</param>
-    protected MustHaveAnalyzerPackage(string packageId, ILogger logger)
+    protected MustHaveAnalyzerPackage(string packageId, bool mustHave, ILogger logger)
     {
         this._packageId = packageId ?? throw new ArgumentNullException(nameof(packageId));
+        this._mustHave = mustHave;
         this._logger = logger ?? throw new ArgumentNullException(nameof(logger));
     }
 
     /// <inheritdoc />
     public void Check(string projectName, string projectFolder, XmlDocument project)
     {
+        if (!this._mustHave)
+        {
+            return;
+        }
+
         bool packageExists = CheckReference(packageId: this._packageId, project: project);
 
         if (packageExists)

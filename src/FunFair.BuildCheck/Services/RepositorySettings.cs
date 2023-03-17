@@ -58,4 +58,7 @@ internal sealed class RepositorySettings : IRepositorySettings
 
     /// <inheritdoc />
     public bool XmlDocumentationRequired => StringComparer.InvariantCulture.Equals(Environment.GetEnvironmentVariable("XML_DOCUMENTATION"), y: "true");
+
+    /// <inheritdoc />
+    public bool MustHaveEnumSourceGeneratorAnalyzerPackage => !string.IsNullOrWhiteSpace(Environment.GetEnvironmentVariable("EXCLUDE_DOTNET_ENUM_SOURCE_GENERATION"));
 }

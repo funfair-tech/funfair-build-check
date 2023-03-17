@@ -21,4 +21,6 @@ public interface IRepositorySettings
     string DotNetAllowPreReleaseSdk { get; }
 
     bool XmlDocumentationRequired { get; }
+
+    bool MustHaveEnumSourceGeneratorAnalyzerPackage { get; }
 }

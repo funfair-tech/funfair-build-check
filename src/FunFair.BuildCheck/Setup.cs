@@ -97,15 +97,10 @@ internal static class Setup
 
     private static IServiceCollection PackagingSettings(this IServiceCollection services)
     {
-        services = services.AddProjectCheck<DescriptionMetadata>()
-                           .AddProjectCheck<EnablePackageValidationPolicy>();
-
-        if (!string.IsNullOrWhiteSpace(Environment.GetEnvironmentVariable("DOTNET_PACK_PROJECT_METADATA_IMPORT")))
-        {
-            services = services.AddProjectCheck<ImportCommonProps>();
-        }
-
-        return services.AddProjectCheck<IsTransformWebConfigDisabledShouldBeTrueForWebLibraryProjects>()
+        return services.AddProjectCheck<DescriptionMetadata>()
+                       .AddProjectCheck<EnablePackageValidationPolicy>()
+                       .AddProjectCheck<ImportCommonProps>()
+                       .AddProjectCheck<IsTransformWebConfigDisabledShouldBeTrueForWebLibraryProjects>()
                        .AddProjectCheck<PackableLibrariesShouldNotDependOnNonPackable>()
                        .AddProjectCheck<PackageTagsMetadata>()
                        .AddProjectCheck<RepositoryUrlMetadata>();
@@ -114,12 +109,8 @@ internal static class Setup
     [SuppressMessage(category: "Philips.CodeAnalysis.DuplicateCodeAnalyzer", checkId: "PH2071: Duplicate code shape", Justification = "Registering Analyzers")]
     private static IServiceCollection StaticCodeAnalysis(this IServiceCollection services, IRepositorySettings repositorySettings)
     {
-        if (string.IsNullOrWhiteSpace(Environment.GetEnvironmentVariable("EXCLUDE_DOTNET_SOURCE_GENERATION")))
-        {
-            services = services.AddProjectCheck<MustHaveEnumSourceGeneratorAnalyzerPackage>();
-        }
-
-        return services.AddProjectCheck<AnalysisLevelPolicyUseLatestVersion>()
+        return services.AddProjectCheck<MustHaveEnumSourceGeneratorAnalyzerPackage>()
+                       .AddProjectCheck<AnalysisLevelPolicyUseLatestVersion>()
                        .AddProjectCheck<AnalysisModePolicy>()
                        .AddProjectCheck<CodeAnalysisTreatWarningsAsErrorsPolicy>()
                        .AddProjectCheck<EnableNetAnalyzersPolicy>()
