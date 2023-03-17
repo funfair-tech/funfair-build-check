@@ -1,6 +1,7 @@
 using System;
 using System.Xml;
 using FunFair.BuildCheck.Interfaces;
+using FunFair.BuildCheck.ProjectChecks.ReferencedPackages.LoggingExtensions;
 using Microsoft.Extensions.Logging;
 
 namespace FunFair.BuildCheck.ProjectChecks.ReferencedPackages;
@@ -28,7 +29,7 @@ public sealed class DoesNotUseDotNetCliToolReference : IProjectCheck
 
         if (nodes != null && nodes.Count != 0)
         {
-            this._logger.LogError($"{projectName}: Contains DotNetCliToolReference.");
+            this._logger.ContainsDotNetCliToolReference(projectName);
         }
     }
 }
