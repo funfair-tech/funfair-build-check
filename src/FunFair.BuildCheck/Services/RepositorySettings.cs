@@ -29,15 +29,7 @@ internal sealed class RepositorySettings : IRepositorySettings
     }
 
     /// <inheritdoc />
-    public bool IsUnitTestBase
-    {
-        get
-        {
-            string? codeAnalysis = Environment.GetEnvironmentVariable(variable: @"IS_UNITTEST_BASE");
-
-            return !string.IsNullOrWhiteSpace(codeAnalysis) && StringComparer.InvariantCultureIgnoreCase.Equals(x: codeAnalysis, y: @"TRUE");
-        }
-    }
+    public bool IsUnitTestBase => this.HasNamedProject(@"FunFair.Test.Common");
 
     /// <inheritdoc />
     public string ProjectImport => Environment.GetEnvironmentVariable("DOTNET_PACK_PROJECT_METADATA_IMPORT") ?? string.Empty;
