@@ -10,6 +10,7 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 ### Fixed
 ### Changed
 - Dependencies - Updated Credfeto.Enumeration.Source.Generation to 1.0.7.19
+- Dependencies - Updated Meziantou.Analyzer to 2.0.22
 ### Removed
 ### Deployment Changes
 
