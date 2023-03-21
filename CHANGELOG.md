@@ -13,6 +13,7 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 - Dependencies - Updated Meziantou.Analyzer to 2.0.22
 - Dependencies - Updated SonarAnalyzer.CSharp to 8.54.0.64047
 - Dependencies - Updated FunFair.Test.Common to 6.0.26.2754
+- Dependencies - Updated Microsoft.Extensions to 7.0.4
 ### Removed
 ### Deployment Changes
 
