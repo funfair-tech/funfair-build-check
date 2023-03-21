@@ -46,7 +46,7 @@
     <ProjectReference Include="..\FunFair.BuildCheck.Interfaces\FunFair.BuildCheck.Interfaces.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="NuGet.Versioning" Version="6.4.0" />
+    <PackageReference Include="NuGet.Versioning" Version="6.5.0" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="AsyncFixer" Version="1.6.0" PrivateAssets="All" ExcludeAssets="runtime" />
