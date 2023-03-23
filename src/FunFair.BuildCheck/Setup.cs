@@ -99,6 +99,8 @@ internal static class Setup
     {
         return services.AddProjectCheck<DescriptionMetadata>()
                        .AddProjectCheck<EnablePackageValidationPolicy>()
+                       .AddProjectCheck<IncludeSymbolsPolicy>()
+                       .AddProjectCheck<SymbolPackageFormatPolicy>()
                        .AddProjectCheck<ImportCommonProps>()
                        .AddProjectCheck<IsTransformWebConfigDisabledShouldBeTrueForWebLibraryProjects>()
                        .AddProjectCheck<PackableLibrariesShouldNotDependOnNonPackable>()
@@ -115,6 +117,7 @@ internal static class Setup
                        .AddProjectCheck<CodeAnalysisTreatWarningsAsErrorsPolicy>()
                        .AddProjectCheck<EnableNetAnalyzersPolicy>()
                        .AddProjectCheck<EnforceCodeStyleInBuildPolicy>()
+                       .AddProjectCheck<EnforceExtendedAnalyzerRulesPolicy>()
                        .AddProjectCheck<ErrorPolicyWarningAsErrors>()
                        .AddProjectCheck<MustHaveAsyncAnalyzerPackage>()
                        .AddProjectCheck<MustHaveCodecrackerCSharpAnalyzerPackage>()

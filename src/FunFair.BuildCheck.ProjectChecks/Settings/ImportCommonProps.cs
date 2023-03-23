@@ -1,5 +1,4 @@
 using System;
-using System.Linq;
 using System.Xml;
 using FunFair.BuildCheck.Interfaces;
 using FunFair.BuildCheck.ProjectChecks.Helpers;
@@ -39,15 +38,7 @@ public sealed class ImportCommonProps : IProjectCheck
             return;
         }
 
-        bool found = false;
-        XmlNodeList? imports = project.SelectNodes("/Project/Import[@Project]");
-
-        if (imports != null)
-        {
-            found = imports.OfType<XmlElement>()
-                           .Select(import => import.GetAttribute(name: "Project"))
-                           .Any(projectImport => StringComparer.InvariantCultureIgnoreCase.Equals(x: this._projectImport, y: projectImport));
-        }
+        bool found = project.HasProjectImport(this._projectImport);
 
         if (!found)
         {

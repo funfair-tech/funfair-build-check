@@ -7,6 +7,9 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 
 ## [Unreleased]
 ### Added
+- Checks for nuget package symbol generation on packages
+- Checks for nuget package symbol format on packages
+- Checks for code analyzer extended checking on analyzer packages
 ### Fixed
 ### Changed
 - Dependencies - Updated Credfeto.Enumeration.Source.Generation to 1.0.7.19

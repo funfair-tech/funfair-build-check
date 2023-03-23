@@ -149,12 +149,7 @@ internal static class ProjectValueHelpers
         CheckValueCommon(projectName: projectName, project: project, nodePresence: nodePresence, isRequiredValue: isRequiredValue, requiredValueDisplayText: msg, logger: logger);
     }
 
-    private static void CheckValueCommon(string projectName,
-                                         XmlDocument project,
-                                         string nodePresence,
-                                         Func<string, bool> isRequiredValue,
-                                         string requiredValueDisplayText,
-                                         ILogger logger)
+    private static void CheckValueCommon(string projectName, XmlDocument project, string nodePresence, Func<string, bool> isRequiredValue, string requiredValueDisplayText, ILogger logger)
     {
         bool hasGlobalSetting = CheckGlobalSettings(project: project, nodePresence: nodePresence, isRequiredValue: isRequiredValue);
 
@@ -301,6 +296,36 @@ internal static class ProjectValueHelpers
         string value = GetStringProperty(project: project, path: "/Project/PropertyGroup/IsPublishable", defaultType: "true");
 
         return StringComparer.InvariantCultureIgnoreCase.Equals(x: value, y: "true");
+    }
+
+    public static bool IsAnalyzerOrSourceGenerator(this XmlDocument project)
+    {
+        return project.IsAnalyzer() || project.IsSourceGenerator();
+    }
+
+    private static bool IsAnalyzer(this XmlDocument project)
+    {
+        return project.HasProjectImport("$(SolutionDir)Analyzer.props");
+    }
+
+    private static bool IsSourceGenerator(this XmlDocument project)
+    {
+        return project.HasProjectImport("$(SolutionDir)SourceGenerator.props");
+    }
+
+    public static bool HasProjectImport(this XmlDocument project, string projectImport)
+    {
+        bool found = false;
+        XmlNodeList? imports = project.SelectNodes("/Project/Import[@Project]");
+
+        if (imports != null)
+        {
+            found = imports.OfType<XmlElement>()
+                           .Select(import => import.GetAttribute(name: "Project"))
+                           .Any(candidate => StringComparer.InvariantCultureIgnoreCase.Equals(x: candidate, y: projectImport));
+        }
+
+        return found;
     }
 
     public static string? GetAwsProjectType(this XmlDocument project)
