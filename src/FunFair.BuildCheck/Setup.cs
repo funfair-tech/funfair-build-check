@@ -111,8 +111,7 @@ internal static class Setup
     [SuppressMessage(category: "Philips.CodeAnalysis.DuplicateCodeAnalyzer", checkId: "PH2071: Duplicate code shape", Justification = "Registering Analyzers")]
     private static IServiceCollection StaticCodeAnalysis(this IServiceCollection services, IRepositorySettings repositorySettings)
     {
-        return services.AddProjectCheck<MustHaveEnumSourceGeneratorAnalyzerPackage>()
-                       .AddProjectCheck<AnalysisLevelPolicyUseLatestVersion>()
+        return services.AddProjectCheck<AnalysisLevelPolicyUseLatestVersion>()
                        .AddProjectCheck<AnalysisModePolicy>()
                        .AddProjectCheck<CodeAnalysisTreatWarningsAsErrorsPolicy>()
                        .AddProjectCheck<EnableNetAnalyzersPolicy>()
@@ -133,6 +132,7 @@ internal static class Setup
                        .AddProjectCheck<MustHaveToStringWithoutOverrideAnalyzerPackage>()
                        .AddProjectCheck<MustNotHaveFxCopAnalyzerPackage>()
                        .AddProjectCheck<MustUseOpenApiAnalyzers>()
+                       .AddEnumSourceGeneratorAnalyzerPackage(repositorySettings: repositorySettings)
                        .AddUnitTestAnalysers(repositorySettings: repositorySettings)
                        .AddFunFairCodeAnalysisRequirements(repositorySettings: repositorySettings);
     }
@@ -142,6 +142,13 @@ internal static class Setup
         return repositorySettings.IsCodeAnalysisSolution
             ? services
             : services.AddProjectCheck<MustHaveFunFairCodeAnalysisPackage>();
+    }
+
+    private static IServiceCollection AddEnumSourceGeneratorAnalyzerPackage(this IServiceCollection services, IRepositorySettings repositorySettings)
+    {
+        return repositorySettings.MustHaveEnumSourceGeneratorAnalyzerPackage
+            ? services
+            : services.AddProjectCheck<MustHaveEnumSourceGeneratorAnalyzerPackage>();
     }
 
     private static IServiceCollection AddUnitTestAnalysers(this IServiceCollection services, IRepositorySettings repositorySettings)
