@@ -7,10 +7,19 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 
 ## [Unreleased]
 ### Added
+### Fixed
+### Changed
+### Removed
+### Deployment Changes
+
+<!--
+Releases that have at least been deployed to staging, BUT NOT necessarily released to live.  Changes should be moved from [Unreleased] into here as they are merged into the appropriate release branch
+-->
+## [474.0.1] - 2023-04-02
+### Added
 - Checks for nuget package symbol generation on packages
 - Checks for nuget package symbol format on packages
 - Checks for code analyzer extended checking on analyzer packages
-### Fixed
 ### Changed
 - Dependencies - Updated Credfeto.Enumeration.Source.Generation to 1.0.7.19
 - Dependencies - Updated FunFair.Test.Common to 6.0.26.2754
@@ -19,12 +28,7 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 - Dependencies - Updated NuGet to 6.5.0
 - Dependencies - Updated SonarAnalyzer.CSharp to 8.55.0.65544
 - Dependencies - Updated Meziantou.Analyzer to 2.0.29
-### Removed
-### Deployment Changes
 
-<!--
-Releases that have at least been deployed to staging, BUT NOT necessarily released to live.  Changes should be moved from [Unreleased] into here as they are merged into the appropriate release branch
--->
 ## [474.0.0] - 2023-03-17
 ### Changed
 - FF-1429 - Updated SmartAnalyzers.CSharpExtensions.Annotations to 4.2.8
