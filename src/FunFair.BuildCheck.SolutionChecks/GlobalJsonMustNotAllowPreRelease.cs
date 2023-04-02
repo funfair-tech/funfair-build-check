@@ -7,9 +7,6 @@ using Microsoft.Extensions.Logging;
 
 namespace FunFair.BuildCheck.SolutionChecks;
 
-/// <summary>
-///     Checks the global.json pre-release settings.
-/// </summary>
 public sealed class GlobalJsonMustNotAllowPreRelease : ISolutionCheck
 {
     private readonly bool _allowPreRelease;
@@ -17,11 +14,6 @@ public sealed class GlobalJsonMustNotAllowPreRelease : ISolutionCheck
 
     private readonly IRepositorySettings _repositorySettings;
 
-    /// <summary>
-    ///     Constructor.
-    /// </summary>
-    /// <param name="repositorySettings">Repository settings.</param>
-    /// <param name="logger">Logging.</param>
     public GlobalJsonMustNotAllowPreRelease(IRepositorySettings repositorySettings, ILogger<GlobalJsonMustNotAllowPreRelease> logger)
     {
         this._repositorySettings = repositorySettings;
@@ -31,7 +23,6 @@ public sealed class GlobalJsonMustNotAllowPreRelease : ISolutionCheck
         this._allowPreRelease = StringComparer.InvariantCultureIgnoreCase.Equals(x: allowPreRelease, y: "true");
     }
 
-    /// <inheritdoc />
     public void Check(string solutionFileName)
     {
         if (string.IsNullOrWhiteSpace(this._repositorySettings.DotNetSdkVersion))
@@ -65,7 +56,8 @@ public sealed class GlobalJsonMustNotAllowPreRelease : ISolutionCheck
 
                 if (!this._allowPreRelease && preReleaseAllowedInConfig)
                 {
-                    this._logger.LogError($"global.json is using SDK pre-release policy of {FormatPolicy(preReleaseAllowedInConfig)} rather than {FormatPolicy(this._allowPreRelease)}");
+                    this._logger.LogError(
+                        $"global.json is using SDK pre-release policy of {FormatPolicy(preReleaseAllowedInConfig)} rather than {FormatPolicy(this._allowPreRelease)}");
                 }
             }
             else

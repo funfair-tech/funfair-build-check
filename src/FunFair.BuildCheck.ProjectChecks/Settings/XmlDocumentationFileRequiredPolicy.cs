@@ -6,9 +6,6 @@ using Microsoft.Extensions.Logging;
 
 namespace FunFair.BuildCheck.ProjectChecks.Settings;
 
-/// <summary>
-///     Checks that the DocumentationFile is set appropriately
-/// </summary>
 public sealed class XmlDocumentationFileRequiredPolicy : IProjectCheck
 {
     private const string EXPECTED = @"bin\$(Configuration)\$(TargetFramework)\$(MSBuildProjectName).xml";
@@ -16,18 +13,12 @@ public sealed class XmlDocumentationFileRequiredPolicy : IProjectCheck
 
     private readonly IRepositorySettings _repositorySettings;
 
-    /// <summary>
-    ///     Constructor.
-    /// </summary>
-    /// <param name="repositorySettings">Repository settings.</param>
-    /// <param name="logger">Logging.</param>
     public XmlDocumentationFileRequiredPolicy(IRepositorySettings repositorySettings, ILogger<XmlDocumentationFileRequiredPolicy> logger)
     {
         this._repositorySettings = repositorySettings ?? throw new ArgumentNullException(nameof(repositorySettings));
         this._logger = logger ?? throw new ArgumentNullException(nameof(logger));
     }
 
-    /// <inheritdoc />
     public void Check(string projectName, string projectFolder, XmlDocument project)
     {
         if (!this._repositorySettings.XmlDocumentationRequired)

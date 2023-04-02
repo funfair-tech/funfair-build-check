@@ -7,23 +7,15 @@ using Microsoft.Extensions.Logging;
 
 namespace FunFair.BuildCheck.ProjectChecks.ReferencedPackages;
 
-/// <summary>
-///     Checks that nuget *.All packages are not referenced in a packable project.
-/// </summary>
 public sealed class ShouldNotReferenceAllMetaPackagesInPackableProjects : IProjectCheck
 {
     private readonly ILogger<ShouldNotReferenceAllMetaPackagesInPackableProjects> _logger;
 
-    /// <summary>
-    ///     Constructor.
-    /// </summary>
-    /// <param name="logger">Logging.</param>
     public ShouldNotReferenceAllMetaPackagesInPackableProjects(ILogger<ShouldNotReferenceAllMetaPackagesInPackableProjects> logger)
     {
         this._logger = logger ?? throw new ArgumentNullException(nameof(logger));
     }
 
-    /// <inheritdoc />
     public void Check(string projectName, string projectFolder, XmlDocument project)
     {
         if (!project.IsPackable())

@@ -6,9 +6,6 @@ using Microsoft.Extensions.Logging;
 
 namespace FunFair.BuildCheck.ProjectChecks.ReferencedPackages;
 
-/// <summary>
-///     Checks that global analyzer packages are installed.
-/// </summary>
 public abstract class MustHaveAnalyzerPackage : IProjectCheck
 {
     private const string PACKAGE_PRIVATE_ASSETS = @"All";
@@ -18,11 +15,6 @@ public abstract class MustHaveAnalyzerPackage : IProjectCheck
 
     private readonly string _packageId;
 
-    /// <summary>
-    ///     Constructor.
-    /// </summary>
-    /// <param name="packageId">The package that must be installed.</param>
-    /// <param name="logger">Logging.</param>
     protected MustHaveAnalyzerPackage(string packageId, bool mustHave, ILogger logger)
     {
         this._packageId = packageId ?? throw new ArgumentNullException(nameof(packageId));
@@ -30,7 +22,6 @@ public abstract class MustHaveAnalyzerPackage : IProjectCheck
         this._logger = logger ?? throw new ArgumentNullException(nameof(logger));
     }
 
-    /// <inheritdoc />
     public void Check(string projectName, string projectFolder, XmlDocument project)
     {
         if (!this._mustHave)

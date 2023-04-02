@@ -8,9 +8,6 @@ using Microsoft.Extensions.Logging;
 
 namespace FunFair.BuildCheck.ProjectChecks.ReferencedPackages;
 
-/// <summary>
-///     Checks that only whitelisted warnings can be disabled.
-/// </summary>
 public sealed class MustNotDisableUnexpectedWarnings : IProjectCheck
 {
     private static readonly IReadOnlyList<string> AllowedWarnings = new[]
@@ -23,16 +20,11 @@ public sealed class MustNotDisableUnexpectedWarnings : IProjectCheck
 
     private readonly ILogger<MustNotDisableUnexpectedWarnings> _logger;
 
-    /// <summary>
-    ///     Constructor.
-    /// </summary>
-    /// <param name="logger">Logging.</param>
     public MustNotDisableUnexpectedWarnings(ILogger<MustNotDisableUnexpectedWarnings> logger)
     {
         this._logger = logger ?? throw new ArgumentNullException(nameof(logger));
     }
 
-    /// <inheritdoc />
     public void Check(string projectName, string projectFolder, XmlDocument project)
     {
         bool isTestProject = project.IsTestProject(projectName: projectName, logger: this._logger);

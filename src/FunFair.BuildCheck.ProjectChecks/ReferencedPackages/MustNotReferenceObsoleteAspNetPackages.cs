@@ -3,9 +3,6 @@ using Microsoft.Extensions.Logging;
 
 namespace FunFair.BuildCheck.ProjectChecks.ReferencedPackages;
 
-/// <summary>
-///     Checks that obsolete packages aren't referenced.
-/// </summary>
 public sealed class MustNotReferenceObsoleteAspNetPackages : MustNotReferencePackages
 {
     private static readonly IReadOnlyList<string> PackageIds = new[]
@@ -92,10 +89,6 @@ public sealed class MustNotReferenceObsoleteAspNetPackages : MustNotReferencePac
                                                                    "Microsoft.Net.Http.Headers"
                                                                };
 
-    /// <summary>
-    ///     Constructor.
-    /// </summary>
-    /// <param name="logger">Logging.</param>
     public MustNotReferenceObsoleteAspNetPackages(ILogger<MustNotReferenceObsoleteAspNetPackages> logger)
         : base(packageIds: PackageIds,
                reason: "Obsoleted as direct reference with .net core 3.1 use the implicit reference through <Project Sdk=\"Microsoft.NET.Sdk.Web\">",

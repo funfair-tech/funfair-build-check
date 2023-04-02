@@ -6,23 +6,15 @@ using Microsoft.Extensions.Logging;
 
 namespace FunFair.BuildCheck.ProjectChecks.Settings;
 
-/// <summary>
-///     Checks that the compiler analysis level policy is set to latest.
-/// </summary>
 public sealed class AnalysisLevelPolicyUseLatestVersion : IProjectCheck
 {
     private readonly ILogger<AnalysisLevelPolicyUseLatestVersion> _logger;
 
-    /// <summary>
-    ///     Constructor.
-    /// </summary>
-    /// <param name="logger">Logging.</param>
     public AnalysisLevelPolicyUseLatestVersion(ILogger<AnalysisLevelPolicyUseLatestVersion> logger)
     {
         this._logger = logger ?? throw new ArgumentNullException(nameof(logger));
     }
 
-    /// <inheritdoc />
     public void Check(string projectName, string projectFolder, XmlDocument project)
     {
         ProjectValueHelpers.CheckValue(projectName: projectName, project: project, nodePresence: @"AnalysisLevel", requiredValue: "latest", logger: this._logger);

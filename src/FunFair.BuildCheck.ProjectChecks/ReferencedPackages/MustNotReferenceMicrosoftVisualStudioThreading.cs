@@ -1,10 +1,7 @@
-﻿using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging;
 
 namespace FunFair.BuildCheck.ProjectChecks.ReferencedPackages;
 
-/// <summary>
-///     Checks that Microsoft.VisualStudio.Threading package is not referenced.
-/// </summary>
 public sealed class MustNotReferenceMicrosoftVisualStudioThreading : MustNotReferencePackages
 {
     public MustNotReferenceMicrosoftVisualStudioThreading(ILogger<MustNotReferenceMicrosoftVisualStudioThreading> logger)

@@ -7,27 +7,18 @@ using NuGet.Versioning;
 
 namespace FunFair.BuildCheck.ProjectChecks.Settings;
 
-/// <summary>
-///     Checks that there are no pre-release packages referenced.
-/// </summary>
 public sealed class NoPreReleaseNuGetPackages : IProjectCheck
 {
     private const string PACKAGE_PRIVATE_ASSETS = @"All";
     private readonly ICheckConfiguration _configuration;
     private readonly ILogger<NoPreReleaseNuGetPackages> _logger;
 
-    /// <summary>
-    ///     Constructor.
-    /// </summary>
-    /// <param name="configuration">The configuration.</param>
-    /// <param name="logger">Logging.</param>
     public NoPreReleaseNuGetPackages(ICheckConfiguration configuration, ILogger<NoPreReleaseNuGetPackages> logger)
     {
         this._configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));
         this._logger = logger ?? throw new ArgumentNullException(nameof(logger));
     }
 
-    /// <inheritdoc />
     public void Check(string projectName, string projectFolder, XmlDocument project)
     {
         XmlNodeList? nodes = project.SelectNodes(xpath: "/Project/ItemGroup/PackageReference");

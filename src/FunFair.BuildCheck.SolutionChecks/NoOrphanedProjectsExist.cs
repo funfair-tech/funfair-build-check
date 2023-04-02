@@ -7,26 +7,17 @@ using Microsoft.Extensions.Logging;
 
 namespace FunFair.BuildCheck.SolutionChecks;
 
-/// <summary>
-///     Checks to see if there are projects in the folder that aren't registered in the solution.
-/// </summary>
 public sealed class NoOrphanedProjectsExist : ISolutionCheck
 {
     private readonly ILogger<NoOrphanedProjectsExist> _logger;
     private readonly IReadOnlyList<SolutionProject> _projects;
 
-    /// <summary>
-    ///     Constructor.
-    /// </summary>
-    /// <param name="projects">The projects that are registered in the solution.</param>
-    /// <param name="logger">Logging.</param>
     public NoOrphanedProjectsExist(IReadOnlyList<SolutionProject> projects, ILogger<NoOrphanedProjectsExist> logger)
     {
         this._projects = projects ?? throw new ArgumentNullException(nameof(projects));
         this._logger = logger ?? throw new ArgumentNullException(nameof(logger));
     }
 
-    /// <inheritdoc />
     public void Check(string solutionFileName)
     {
         string basePath = Path.GetDirectoryName(solutionFileName)!;

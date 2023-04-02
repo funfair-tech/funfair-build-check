@@ -6,23 +6,15 @@ using Microsoft.Extensions.Logging;
 
 namespace FunFair.BuildCheck.ProjectChecks.Settings;
 
-/// <summary>
-///     Checks that the language policy it set to the latest version.
-/// </summary>
 public sealed class LanguagePolicyUseLatestVersion : IProjectCheck
 {
     private readonly ILogger<LanguagePolicyUseLatestVersion> _logger;
 
-    /// <summary>
-    ///     Constructor.
-    /// </summary>
-    /// <param name="logger">Logging.</param>
     public LanguagePolicyUseLatestVersion(ILogger<LanguagePolicyUseLatestVersion> logger)
     {
         this._logger = logger ?? throw new ArgumentNullException(nameof(logger));
     }
 
-    /// <inheritdoc />
     public void Check(string projectName, string projectFolder, XmlDocument project)
     {
         ProjectValueHelpers.CheckValue(projectName: projectName, project: project, nodePresence: @"LangVersion", requiredValue: "latest", logger: this._logger);

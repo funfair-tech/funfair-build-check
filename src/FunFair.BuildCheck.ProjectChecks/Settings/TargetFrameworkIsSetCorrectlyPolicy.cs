@@ -7,9 +7,6 @@ using Microsoft.Extensions.Logging;
 
 namespace FunFair.BuildCheck.ProjectChecks.Settings;
 
-/// <summary>
-///     Checks to see if the TargetFramework/TargetFrameworks is set correctly.
-/// </summary>
 [SuppressMessage(category: "ReSharper", checkId: "UnusedType.Global", Justification = "Created by DI")]
 public sealed class TargetFrameworkIsSetCorrectlyPolicy : IProjectCheck
 {
@@ -17,11 +14,6 @@ public sealed class TargetFrameworkIsSetCorrectlyPolicy : IProjectCheck
     private readonly ILogger<TargetFrameworkIsSetCorrectlyPolicy> _logger;
     private readonly IRepositorySettings _repositorySettings;
 
-    /// <summary>
-    ///     Constructor.
-    /// </summary>
-    /// <param name="repositorySettings">Repository settings</param>
-    /// <param name="logger">Logging.</param>
     public TargetFrameworkIsSetCorrectlyPolicy(IRepositorySettings repositorySettings, ILogger<TargetFrameworkIsSetCorrectlyPolicy> logger)
     {
         this._repositorySettings = repositorySettings;
@@ -29,7 +21,6 @@ public sealed class TargetFrameworkIsSetCorrectlyPolicy : IProjectCheck
         this._expected = repositorySettings.DotnetTargetFramework;
     }
 
-    /// <inheritdoc />
     public void Check(string projectName, string projectFolder, XmlDocument project)
     {
         if (string.IsNullOrWhiteSpace(this._expected))

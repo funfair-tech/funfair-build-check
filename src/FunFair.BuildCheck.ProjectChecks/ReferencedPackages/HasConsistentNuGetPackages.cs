@@ -8,19 +8,12 @@ using NuGet.Versioning;
 
 namespace FunFair.BuildCheck.ProjectChecks.ReferencedPackages;
 
-/// <summary>
-///     Checks that nuget packages are set to a consistent version across an entire solution.
-/// </summary>
 public sealed class HasConsistentNuGetPackages : IProjectCheck
 {
     private readonly ILogger<HasConsistentNuGetPackages> _logger;
 
     private readonly Dictionary<string, NuGetVersion> _packages;
 
-    /// <summary>
-    ///     Constructor.
-    /// </summary>
-    /// <param name="logger">Logging.</param>
     public HasConsistentNuGetPackages(ILogger<HasConsistentNuGetPackages> logger)
     {
         this._logger = logger ?? throw new ArgumentNullException(nameof(logger));
@@ -28,7 +21,6 @@ public sealed class HasConsistentNuGetPackages : IProjectCheck
         this._packages = new(StringComparer.OrdinalIgnoreCase);
     }
 
-    /// <inheritdoc />
     public void Check(string projectName, string projectFolder, XmlDocument project)
     {
         XmlNodeList? nodes = project.SelectNodes(xpath: "/Project/ItemGroup/PackageReference");

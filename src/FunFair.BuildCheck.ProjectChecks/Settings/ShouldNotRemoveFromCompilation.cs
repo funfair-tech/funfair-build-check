@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Linq;
 using System.Xml;
 using FunFair.BuildCheck.Interfaces;
@@ -6,9 +6,6 @@ using Microsoft.Extensions.Logging;
 
 namespace FunFair.BuildCheck.ProjectChecks.Settings;
 
-/// <summary>
-///     Checks that files are not removed from compilation.
-/// </summary>
 public sealed class ShouldNotRemoveFromCompilation : IProjectCheck
 {
     private readonly ILogger<ShouldNotRemoveFromCompilation> _logger;

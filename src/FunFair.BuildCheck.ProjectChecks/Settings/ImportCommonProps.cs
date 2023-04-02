@@ -6,18 +6,11 @@ using Microsoft.Extensions.Logging;
 
 namespace FunFair.BuildCheck.ProjectChecks.Settings;
 
-/// <summary>
-///     Looks for common properties project import.
-/// </summary>
 public sealed class ImportCommonProps : IProjectCheck
 {
     private readonly ILogger<ImportCommonProps> _logger;
     private readonly string _projectImport;
 
-    /// <summary>
-    ///     Constructor.
-    /// </summary>
-    /// <param name="logger">Logging.</param>
     public ImportCommonProps(IRepositorySettings repositorySettings, ILogger<ImportCommonProps> logger)
     {
         this._logger = logger ?? throw new ArgumentNullException(nameof(logger));
@@ -25,7 +18,6 @@ public sealed class ImportCommonProps : IProjectCheck
         this._projectImport = repositorySettings.ProjectImport;
     }
 
-    /// <inheritdoc />
     public void Check(string projectName, string projectFolder, XmlDocument project)
     {
         if (string.IsNullOrWhiteSpace(this._projectImport))
