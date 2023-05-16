@@ -14,7 +14,7 @@ public sealed class ReferencesNugetPackageOnlyOnce : IProjectCheck
 
     public ReferencesNugetPackageOnlyOnce(ILogger<ReferencesNugetPackageOnlyOnce> logger)
     {
-        this._logger = logger ?? throw new ArgumentNullException(nameof(logger));
+        this._logger = logger;
     }
 
     public void Check(string projectName, string projectFolder, XmlDocument project)

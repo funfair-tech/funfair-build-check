@@ -15,8 +15,8 @@ public sealed class LibrariesShouldNotDependOnExecutables : IProjectCheck
 
     public LibrariesShouldNotDependOnExecutables(IProjectLoader projectLoader, ILogger<LibrariesShouldNotDependOnExecutables> logger)
     {
-        this._projectLoader = projectLoader ?? throw new ArgumentNullException(nameof(projectLoader));
-        this._logger = logger ?? throw new ArgumentNullException(nameof(logger));
+        this._projectLoader = projectLoader;
+        this._logger = logger;
     }
 
     public void Check(string projectName, string projectFolder, XmlDocument project)

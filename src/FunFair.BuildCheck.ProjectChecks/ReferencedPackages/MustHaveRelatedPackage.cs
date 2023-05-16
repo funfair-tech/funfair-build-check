@@ -14,9 +14,9 @@ public abstract class MustHaveRelatedPackage : IProjectCheck
 
     protected MustHaveRelatedPackage(string detectPackageId, string mustIncludePackageId, ILogger logger)
     {
-        this._detectPackageId = detectPackageId ?? throw new ArgumentNullException(nameof(detectPackageId));
-        this._mustIncludePackageId = mustIncludePackageId ?? throw new ArgumentNullException(nameof(mustIncludePackageId));
-        this._logger = logger ?? throw new ArgumentNullException(nameof(logger));
+        this._detectPackageId = detectPackageId;
+        this._mustIncludePackageId = mustIncludePackageId;
+        this._logger = logger;
     }
 
     public void Check(string projectName, string projectFolder, XmlDocument project)

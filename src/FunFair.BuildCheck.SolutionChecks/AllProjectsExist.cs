@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -15,8 +14,8 @@ public sealed class AllProjectsExist : ISolutionCheck
 
     public AllProjectsExist(IReadOnlyList<SolutionProject> projects, ILogger<AllProjectsExist> logger)
     {
-        this._projects = projects ?? throw new ArgumentNullException(nameof(projects));
-        this._logger = logger ?? throw new ArgumentNullException(nameof(logger));
+        this._projects = projects;
+        this._logger = logger;
     }
 
     public void Check(string solutionFileName)

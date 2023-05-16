@@ -1,4 +1,3 @@
-using System;
 using System.Xml;
 using FunFair.BuildCheck.Interfaces;
 using Microsoft.Extensions.Logging;
@@ -11,7 +10,7 @@ public sealed class DoesNotUseRootNamespace : IProjectCheck
 
     public DoesNotUseRootNamespace(ILogger<DoesNotUseRootNamespace> logger)
     {
-        this._logger = logger ?? throw new ArgumentNullException(nameof(logger));
+        this._logger = logger;
     }
 
     public void Check(string projectName, string projectFolder, XmlDocument project)

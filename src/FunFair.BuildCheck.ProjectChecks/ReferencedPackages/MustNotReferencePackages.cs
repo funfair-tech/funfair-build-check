@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Xml;
 using FunFair.BuildCheck.Interfaces;
@@ -14,9 +13,9 @@ public abstract class MustNotReferencePackages : IProjectCheck
 
     protected MustNotReferencePackages(IReadOnlyList<string> packageIds, string reason, ILogger logger)
     {
-        this._packageIds = packageIds ?? throw new ArgumentNullException(nameof(packageIds));
-        this._reason = reason ?? throw new ArgumentNullException(nameof(reason));
-        this._logger = logger ?? throw new ArgumentNullException(nameof(logger));
+        this._packageIds = packageIds;
+        this._reason = reason;
+        this._logger = logger;
     }
 
     public void Check(string projectName, string projectFolder, XmlDocument project)

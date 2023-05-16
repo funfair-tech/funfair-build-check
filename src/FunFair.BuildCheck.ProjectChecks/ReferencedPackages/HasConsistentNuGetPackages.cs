@@ -16,7 +16,7 @@ public sealed class HasConsistentNuGetPackages : IProjectCheck
 
     public HasConsistentNuGetPackages(ILogger<HasConsistentNuGetPackages> logger)
     {
-        this._logger = logger ?? throw new ArgumentNullException(nameof(logger));
+        this._logger = logger;
 
         this._packages = new(StringComparer.OrdinalIgnoreCase);
     }

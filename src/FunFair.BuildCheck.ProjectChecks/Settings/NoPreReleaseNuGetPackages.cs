@@ -15,8 +15,8 @@ public sealed class NoPreReleaseNuGetPackages : IProjectCheck
 
     public NoPreReleaseNuGetPackages(ICheckConfiguration configuration, ILogger<NoPreReleaseNuGetPackages> logger)
     {
-        this._configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));
-        this._logger = logger ?? throw new ArgumentNullException(nameof(logger));
+        this._configuration = configuration;
+        this._logger = logger;
     }
 
     public void Check(string projectName, string projectFolder, XmlDocument project)

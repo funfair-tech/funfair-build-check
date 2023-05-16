@@ -14,8 +14,8 @@ public sealed class NoOrphanedProjectsExist : ISolutionCheck
 
     public NoOrphanedProjectsExist(IReadOnlyList<SolutionProject> projects, ILogger<NoOrphanedProjectsExist> logger)
     {
-        this._projects = projects ?? throw new ArgumentNullException(nameof(projects));
-        this._logger = logger ?? throw new ArgumentNullException(nameof(logger));
+        this._projects = projects;
+        this._logger = logger;
     }
 
     public void Check(string solutionFileName)

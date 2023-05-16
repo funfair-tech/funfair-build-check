@@ -1,4 +1,3 @@
-using System;
 using System.IO;
 using System.Linq;
 using System.Xml;
@@ -14,7 +13,7 @@ public sealed class ReferencedProjectsMustExist : IProjectCheck
 
     public ReferencedProjectsMustExist(ILogger<ReferencedProjectsMustExist> logger)
     {
-        this._logger = logger ?? throw new ArgumentNullException(nameof(logger));
+        this._logger = logger;
     }
 
     public void Check(string projectName, string projectFolder, XmlDocument project)

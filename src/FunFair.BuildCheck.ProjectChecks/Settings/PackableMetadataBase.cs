@@ -1,4 +1,3 @@
-using System;
 using System.Xml;
 using FunFair.BuildCheck.Interfaces;
 using FunFair.BuildCheck.ProjectChecks.Helpers;
@@ -13,8 +12,8 @@ public abstract class PackableMetadataBase : IProjectCheck
 
     protected PackableMetadataBase(string property, ILogger logger)
     {
-        this._property = property ?? throw new ArgumentNullException(nameof(property));
-        this._logger = logger ?? throw new ArgumentNullException(nameof(logger));
+        this._property = property;
+        this._logger = logger;
     }
 
     public void Check(string projectName, string projectFolder, XmlDocument project)

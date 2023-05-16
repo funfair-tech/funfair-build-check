@@ -10,11 +10,9 @@ public sealed class IsTransformWebConfigDisabledShouldBeTrueForWebLibraryProject
 {
     private readonly ILogger<IsTransformWebConfigDisabledShouldBeTrueForWebLibraryProjects> _logger;
 
-    //        <IsTransformWebConfigDisabled>true</IsTransformWebConfigDisabled>
-
     public IsTransformWebConfigDisabledShouldBeTrueForWebLibraryProjects(ILogger<IsTransformWebConfigDisabledShouldBeTrueForWebLibraryProjects> logger)
     {
-        this._logger = logger ?? throw new ArgumentNullException(nameof(logger));
+        this._logger = logger;
     }
 
     public void Check(string projectName, string projectFolder, XmlDocument project)

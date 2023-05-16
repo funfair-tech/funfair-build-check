@@ -1,4 +1,3 @@
-using System;
 using System.Xml;
 using FunFair.BuildCheck.Interfaces;
 using FunFair.BuildCheck.ProjectChecks.Helpers;
@@ -13,7 +12,7 @@ public sealed class ImportCommonProps : IProjectCheck
 
     public ImportCommonProps(IRepositorySettings repositorySettings, ILogger<ImportCommonProps> logger)
     {
-        this._logger = logger ?? throw new ArgumentNullException(nameof(logger));
+        this._logger = logger;
 
         this._projectImport = repositorySettings.ProjectImport;
     }

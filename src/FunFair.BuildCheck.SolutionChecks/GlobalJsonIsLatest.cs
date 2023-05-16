@@ -14,7 +14,7 @@ public sealed class GlobalJsonIsLatest : ISolutionCheck
 
     public GlobalJsonIsLatest(IRepositorySettings repositorySettings, ILogger<GlobalJsonIsLatest> logger)
     {
-        this._logger = logger ?? throw new ArgumentNullException(nameof(logger));
+        this._logger = logger;
         this._dotnetVersion = repositorySettings.DotNetSdkVersion;
     }
 

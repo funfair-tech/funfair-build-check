@@ -19,7 +19,7 @@ public sealed class LibrariesShouldBePackablePolicy : IProjectCheck
     public LibrariesShouldBePackablePolicy(IRepositorySettings repositorySettings, ILogger<LibrariesShouldBePackablePolicy> logger)
     {
         this._repositorySettings = repositorySettings;
-        this._logger = logger ?? throw new ArgumentNullException(nameof(logger));
+        this._logger = logger;
         this._isUnitTestBase = repositorySettings.IsUnitTestBase;
 
         string packable = repositorySettings.DotnetPackable ?? "NONE";

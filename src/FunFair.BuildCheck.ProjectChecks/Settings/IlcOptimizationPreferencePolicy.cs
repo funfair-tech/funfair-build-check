@@ -1,4 +1,3 @@
-using System;
 using System.Xml;
 using FunFair.BuildCheck.Interfaces;
 using FunFair.BuildCheck.ProjectChecks.Helpers;
@@ -14,7 +13,7 @@ public sealed class IlcOptimizationPreferencePolicy : IProjectCheck
 
     public IlcOptimizationPreferencePolicy(ILogger<IlcOptimizationPreferencePolicy> logger)
     {
-        this._logger = logger ?? throw new ArgumentNullException(nameof(logger));
+        this._logger = logger;
     }
 
     public void Check(string projectName, string projectFolder, XmlDocument project)

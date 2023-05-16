@@ -15,9 +15,9 @@ public abstract class ShouldUseAlternatePackage : IProjectCheck
 
     protected ShouldUseAlternatePackage(string matchPackageId, string usePackageId, ILogger logger)
     {
-        this._matchPackageId = matchPackageId ?? throw new ArgumentNullException(nameof(matchPackageId));
-        this._usePackageId = usePackageId ?? throw new ArgumentNullException(nameof(usePackageId));
-        this._logger = logger ?? throw new ArgumentNullException(nameof(logger));
+        this._matchPackageId = matchPackageId;
+        this._usePackageId = usePackageId;
+        this._logger = logger;
     }
 
     public void Check(string projectName, string projectFolder, XmlDocument project)

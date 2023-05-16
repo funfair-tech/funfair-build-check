@@ -17,9 +17,9 @@ public abstract class MustHaveAnalyzerPackage : IProjectCheck
 
     protected MustHaveAnalyzerPackage(string packageId, bool mustHave, ILogger logger)
     {
-        this._packageId = packageId ?? throw new ArgumentNullException(nameof(packageId));
+        this._packageId = packageId;
         this._mustHave = mustHave;
-        this._logger = logger ?? throw new ArgumentNullException(nameof(logger));
+        this._logger = logger;
     }
 
     public void Check(string projectName, string projectFolder, XmlDocument project)

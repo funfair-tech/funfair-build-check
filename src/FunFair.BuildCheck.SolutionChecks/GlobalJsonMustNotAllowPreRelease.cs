@@ -17,7 +17,7 @@ public sealed class GlobalJsonMustNotAllowPreRelease : ISolutionCheck
     public GlobalJsonMustNotAllowPreRelease(IRepositorySettings repositorySettings, ILogger<GlobalJsonMustNotAllowPreRelease> logger)
     {
         this._repositorySettings = repositorySettings;
-        this._logger = logger ?? throw new ArgumentNullException(nameof(logger));
+        this._logger = logger;
         string allowPreRelease = repositorySettings.DotNetAllowPreReleaseSdk;
 
         this._allowPreRelease = StringComparer.InvariantCultureIgnoreCase.Equals(x: allowPreRelease, y: "true");
@@ -56,8 +56,7 @@ public sealed class GlobalJsonMustNotAllowPreRelease : ISolutionCheck
 
                 if (!this._allowPreRelease && preReleaseAllowedInConfig)
                 {
-                    this._logger.LogError(
-                        $"global.json is using SDK pre-release policy of {FormatPolicy(preReleaseAllowedInConfig)} rather than {FormatPolicy(this._allowPreRelease)}");
+                    this._logger.LogError($"global.json is using SDK pre-release policy of {FormatPolicy(preReleaseAllowedInConfig)} rather than {FormatPolicy(this._allowPreRelease)}");
                 }
             }
             else

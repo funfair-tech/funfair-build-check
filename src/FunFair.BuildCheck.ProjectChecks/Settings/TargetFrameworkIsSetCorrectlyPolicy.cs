@@ -17,7 +17,7 @@ public sealed class TargetFrameworkIsSetCorrectlyPolicy : IProjectCheck
     public TargetFrameworkIsSetCorrectlyPolicy(IRepositorySettings repositorySettings, ILogger<TargetFrameworkIsSetCorrectlyPolicy> logger)
     {
         this._repositorySettings = repositorySettings;
-        this._logger = logger ?? throw new ArgumentNullException(nameof(logger));
+        this._logger = logger;
         this._expected = repositorySettings.DotnetTargetFramework;
     }
 

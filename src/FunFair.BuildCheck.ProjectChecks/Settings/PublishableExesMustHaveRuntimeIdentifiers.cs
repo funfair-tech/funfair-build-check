@@ -13,7 +13,7 @@ public sealed class PublishableExesMustHaveRuntimeIdentifiers : IProjectCheck
 
     public PublishableExesMustHaveRuntimeIdentifiers(ILogger<PublishableExesMustHaveRuntimeIdentifiers> logger)
     {
-        this._logger = logger ?? throw new ArgumentNullException(nameof(logger));
+        this._logger = logger;
     }
 
     public void Check(string projectName, string projectFolder, XmlDocument project)

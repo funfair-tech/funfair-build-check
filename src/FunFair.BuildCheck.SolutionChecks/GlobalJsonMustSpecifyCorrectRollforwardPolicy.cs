@@ -16,7 +16,7 @@ public sealed class GlobalJsonMustSpecifyCorrectRollforwardPolicy : ISolutionChe
     public GlobalJsonMustSpecifyCorrectRollforwardPolicy(IRepositorySettings repositorySettings, ILogger<GlobalJsonMustSpecifyCorrectRollforwardPolicy> logger)
     {
         this._repositorySettings = repositorySettings;
-        this._logger = logger ?? throw new ArgumentNullException(nameof(logger));
+        this._logger = logger;
     }
 
     public void Check(string solutionFileName)

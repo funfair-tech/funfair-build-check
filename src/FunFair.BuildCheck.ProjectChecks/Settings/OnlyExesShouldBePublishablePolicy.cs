@@ -19,7 +19,7 @@ public sealed class OnlyExesShouldBePublishablePolicy : IProjectCheck
     public OnlyExesShouldBePublishablePolicy(IRepositorySettings repositorySettings, ILogger<OnlyExesShouldBePublishablePolicy> logger)
     {
         this._repositorySettings = repositorySettings;
-        this._logger = logger ?? throw new ArgumentNullException(nameof(logger));
+        this._logger = logger;
         this._isUnitTestBase = repositorySettings.IsUnitTestBase;
 
         string packable = repositorySettings.DotnetPublishable ?? "NONE";

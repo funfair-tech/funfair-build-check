@@ -15,8 +15,8 @@ public sealed class XmlDocumentationFileRequiredPolicy : IProjectCheck
 
     public XmlDocumentationFileRequiredPolicy(IRepositorySettings repositorySettings, ILogger<XmlDocumentationFileRequiredPolicy> logger)
     {
-        this._repositorySettings = repositorySettings ?? throw new ArgumentNullException(nameof(repositorySettings));
-        this._logger = logger ?? throw new ArgumentNullException(nameof(logger));
+        this._repositorySettings = repositorySettings;
+        this._logger = logger;
     }
 
     public void Check(string projectName, string projectFolder, XmlDocument project)
