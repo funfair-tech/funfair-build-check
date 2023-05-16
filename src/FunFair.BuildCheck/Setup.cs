@@ -81,7 +81,10 @@ internal static class Setup
                        .AddProjectCheck<OnlyExesShouldBePublishablePolicy>()
                        .AddProjectCheck<RunAotCompilationPolicy>()
                        .AddProjectCheck<TargetFrameworkIsSetCorrectlyPolicy>()
-                       .AddProjectCheck<TieredCompilationPolicy>();
+                       .AddProjectCheck<TieredCompilationPolicy>()
+                       .AddProjectCheck<EnableMicrosoftExtensionsConfigurationBinderSourceGeneratorPolicy>()
+                       .AddProjectCheck<JsonSerializerIsReflectionEnabledByDefaultPolicy>()
+                       .AddProjectCheck<OptimizationPreferencePolicy>();
     }
 
     private static IServiceCollection PublishingSettings(this IServiceCollection services)

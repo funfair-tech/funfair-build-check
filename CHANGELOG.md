@@ -17,6 +17,9 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 - Dependencies - Updated Meziantou.Analyzer to 2.0.50
 - Dependencies - Updated FunFair.CodeAnalysis to 7.0.0.18
 - Dependencies - .NET 8 Preview 3
+- Added EnableMicrosoftExtensionsConfigurationBinderSourceGenerator Policy
+- Added JsonSerializerIsReflectionEnabledByDefault Policy
+- Added OptimizationPreference Policy
 ### Removed
 ### Deployment Changes
 
