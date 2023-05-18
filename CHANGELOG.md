@@ -20,6 +20,7 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 - Added JsonSerializerIsReflectionEnabledByDefault Policy
 - Added OptimizationPreference Policy
 - Dependencies - Updated Meziantou.Analyzer to 2.0.52
+- Dependencies - Updated Microsoft.VisualStudio.Threading.Analyzers to 17.6.40
 ### Removed
 ### Deployment Changes
 
