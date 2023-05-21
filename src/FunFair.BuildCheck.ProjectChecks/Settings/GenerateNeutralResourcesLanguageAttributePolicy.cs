@@ -18,6 +18,10 @@ public sealed class GenerateNeutralResourcesLanguageAttributePolicy : IProjectCh
 
     public void Check(string projectName, string projectFolder, XmlDocument project)
     {
-        ProjectValueHelpers.CheckValue(projectName: projectName, project: project, nodePresence: @"GenerateNeutralResourcesLanguageAttribute", requiredValue: EXPECTED, logger: this._logger);
+        ProjectValueHelpers.CheckValue(projectName: projectName,
+                                       project: project,
+                                       nodePresence: @"GenerateNeutralResourcesLanguageAttribute",
+                                       requiredValue: EXPECTED,
+                                       logger: this._logger);
     }
 }
