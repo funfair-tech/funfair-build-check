@@ -23,6 +23,7 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 - Dependencies - Updated Microsoft.VisualStudio.Threading.Analyzers to 17.6.40
 - Dependencies - Updated Microsoft.NET.Test.Sdk to 17.6.0
 - Dependencies - Updated NuGet to 6.6.0
+- Dependencies - Updated coverlet to 6.0.0
 ### Removed
 ### Deployment Changes
 
