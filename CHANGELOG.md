@@ -12,7 +12,6 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 - SDK - Updated DotNet SDK to 7.0.203
 - Dependencies - Updated Credfeto.Enumeration.Source.Generation to 1.0.9.588
 - Dependencies - Updated Roslynator.Analyzers to 4.3.0
-- Dependencies - Updated SonarAnalyzer.CSharp to 9.0.0.68202
 - Dependencies - Updated FunFair.Test.Common to 6.1.0.8
 - Dependencies - Updated FunFair.CodeAnalysis to 7.0.0.18
 - Dependencies - .NET 8 Preview 3
@@ -24,6 +23,7 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 - Dependencies - Updated NuGet to 6.6.0
 - Dependencies - Updated coverlet to 6.0.0
 - Dependencies - Updated Meziantou.Analyzer to 2.0.55
+- Dependencies - Updated SonarAnalyzer.CSharp to 9.1.0.70676
 ### Removed
 ### Deployment Changes
 
