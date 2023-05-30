@@ -1,5 +1,4 @@
 using System;
-using System.Linq;
 using System.Xml;
 using FunFair.BuildCheck.Interfaces;
 using FunFair.BuildCheck.ProjectChecks.Helpers;
@@ -33,8 +32,7 @@ public sealed class PublishableExesMustHaveRuntimeIdentifiers : IProjectCheck
         }
 
         string runtimeIdentifiers = project.GetRuntimeIdentifiers();
-        bool hasRuntimeIdentifiers = runtimeIdentifiers.Split(";")
-                                                       .Any(item => !string.IsNullOrWhiteSpace(item));
+        bool hasRuntimeIdentifiers = Array.Exists(runtimeIdentifiers.Split(";"), match: item => !string.IsNullOrWhiteSpace(item));
 
         if (!hasRuntimeIdentifiers)
         {
