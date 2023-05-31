@@ -22,8 +22,8 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 - Dependencies - Updated Microsoft.NET.Test.Sdk to 17.6.0
 - Dependencies - Updated NuGet to 6.6.0
 - Dependencies - Updated coverlet to 6.0.0
-- Dependencies - Updated Meziantou.Analyzer to 2.0.55
 - Dependencies - Updated SonarAnalyzer.CSharp to 9.1.0.70676
+- Dependencies - Updated Meziantou.Analyzer to 2.0.56
 ### Removed
 ### Deployment Changes
 
