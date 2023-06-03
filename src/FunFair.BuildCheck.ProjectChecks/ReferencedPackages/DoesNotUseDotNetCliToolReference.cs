@@ -18,7 +18,7 @@ public sealed class DoesNotUseDotNetCliToolReference : IProjectCheck
     {
         XmlNodeList? nodes = project.SelectNodes(xpath: "/Project/ItemGroup/DotNetCliToolReference");
 
-        if (nodes != null && nodes.Count != 0)
+        if (nodes is not null && nodes.Count != 0)
         {
             this._logger.ContainsDotNetCliToolReference(projectName);
         }

@@ -32,7 +32,7 @@ public sealed class GlobalJsonMustNotAllowPreRelease : ISolutionCheck
 
         string? solutionDir = Path.GetDirectoryName(solutionFileName);
 
-        if (solutionDir == null)
+        if (solutionDir is null)
         {
             return;
         }
@@ -50,14 +50,13 @@ public sealed class GlobalJsonMustNotAllowPreRelease : ISolutionCheck
         {
             GlobalJsonPacket? p = JsonSerializer.Deserialize(json: content, jsonTypeInfo: MustBeSerializable.Default.GlobalJsonPacket);
 
-            if (p?.Sdk?.AllowPrerelease != null)
+            if (p?.Sdk?.AllowPrerelease is not null)
             {
                 bool preReleaseAllowedInConfig = p.Sdk.AllowPrerelease.GetValueOrDefault(defaultValue: true);
 
                 if (!this._allowPreRelease && preReleaseAllowedInConfig)
                 {
-                    this._logger.LogError(
-                        $"global.json is using SDK pre-release policy of {FormatPolicy(preReleaseAllowedInConfig)} rather than {FormatPolicy(this._allowPreRelease)}");
+                    this._logger.LogError($"global.json is using SDK pre-release policy of {FormatPolicy(preReleaseAllowedInConfig)} rather than {FormatPolicy(this._allowPreRelease)}");
                 }
             }
             else

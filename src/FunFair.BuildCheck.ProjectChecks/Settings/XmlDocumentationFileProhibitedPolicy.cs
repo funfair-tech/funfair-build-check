@@ -24,7 +24,7 @@ public sealed class XmlDocumentationFileProhibitedPolicy : IProjectCheck
 
         XmlNodeList? nodes = project.SelectNodes("/Project/PropertyGroup/DocumentationFile");
 
-        if (nodes != null && nodes.Count != 0)
+        if (nodes is not null && nodes.Count != 0)
         {
             this._logger.LogError($"{projectName}: Should not have XML Documentation");
         }

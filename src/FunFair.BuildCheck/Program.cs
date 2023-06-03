@@ -210,7 +210,7 @@ internal static class Program
         {
             foreach (Match? match in ProjectReferenceRegex.Matches(line))
             {
-                if (match == null)
+                if (match is null)
                 {
                     continue;
                 }

@@ -28,7 +28,7 @@ public abstract class HasAppropriateAnalysisPackages : IProjectCheck
         bool foundSourcePackage = false;
         bool foundAnalyzerPackage = false;
 
-        if (nodes != null)
+        if (nodes is not null)
         {
             foreach (XmlElement reference in nodes.OfType<XmlElement>())
             {

@@ -25,7 +25,7 @@ public sealed class ShouldNotReferenceAllMetaPackagesInPackableProjects : IProje
 
         XmlNodeList? nodes = project.SelectNodes(xpath: "/Project/ItemGroup/PackageReference");
 
-        if (nodes == null)
+        if (nodes is null)
         {
             return;
         }

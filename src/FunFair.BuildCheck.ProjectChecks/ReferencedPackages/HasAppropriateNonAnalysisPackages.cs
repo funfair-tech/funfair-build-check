@@ -26,7 +26,7 @@ public abstract class HasAppropriateNonAnalysisPackages : IProjectCheck
         bool foundSourcePackage = false;
         bool foundRequiredPackage = false;
 
-        if (nodes != null)
+        if (nodes is not null)
         {
             foreach (XmlElement reference in nodes.OfType<XmlElement>())
             {

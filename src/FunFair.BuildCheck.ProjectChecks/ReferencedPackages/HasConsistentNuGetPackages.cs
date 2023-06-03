@@ -25,7 +25,7 @@ public sealed class HasConsistentNuGetPackages : IProjectCheck
     {
         XmlNodeList? nodes = project.SelectNodes(xpath: "/Project/ItemGroup/PackageReference");
 
-        if (nodes == null)
+        if (nodes is null)
         {
             return;
         }

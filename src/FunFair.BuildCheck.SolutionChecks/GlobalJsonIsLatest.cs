@@ -29,7 +29,7 @@ public sealed class GlobalJsonIsLatest : ISolutionCheck
 
         string? solutionDir = Path.GetDirectoryName(solutionFileName);
 
-        if (solutionDir == null)
+        if (solutionDir is null)
         {
             return;
         }

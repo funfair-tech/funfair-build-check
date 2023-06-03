@@ -26,7 +26,7 @@ public abstract class MustHaveRelatedPackage : IProjectCheck
         bool foundSourcePackage = false;
         bool foundRelatedPackage = false;
 
-        if (nodes != null)
+        if (nodes is not null)
         {
             foreach (XmlElement reference in nodes.OfType<XmlElement>())
             {

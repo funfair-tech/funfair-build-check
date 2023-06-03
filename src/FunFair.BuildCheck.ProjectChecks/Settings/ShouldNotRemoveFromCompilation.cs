@@ -23,7 +23,7 @@ public sealed class ShouldNotRemoveFromCompilation : IProjectCheck
     {
         XmlNodeList? nodes = project.SelectNodes("/Project/ItemGroup/Compile[@Remove]");
 
-        if (nodes == null)
+        if (nodes is null)
         {
             return;
         }

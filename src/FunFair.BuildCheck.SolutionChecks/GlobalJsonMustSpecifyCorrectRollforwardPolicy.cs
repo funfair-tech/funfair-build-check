@@ -28,7 +28,7 @@ public sealed class GlobalJsonMustSpecifyCorrectRollforwardPolicy : ISolutionChe
 
         string? solutionDir = Path.GetDirectoryName(solutionFileName);
 
-        if (solutionDir == null)
+        if (solutionDir is null)
         {
             return;
         }

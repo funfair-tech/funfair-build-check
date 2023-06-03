@@ -36,14 +36,14 @@ public sealed class MustNotDisableUnexpectedWarnings : IProjectCheck
         const string nodePresence = @"NoWarn";
         XmlNodeList? nodes = project.SelectNodes("/Project/PropertyGroup[not(@Condition)]/" + nodePresence);
 
-        if (nodes != null)
+        if (nodes is not null)
         {
             this.CheckGlobalConfiguration(projectName: projectName, nodes: nodes, allowedWarnings: allowedWarnings);
         }
 
         XmlNodeList? configurationGroups = project.SelectNodes(xpath: "/Project/PropertyGroup[@Condition]");
 
-        if (configurationGroups != null)
+        if (configurationGroups is not null)
         {
             this.CheckConfigurationGroup(projectName: projectName, configurationGroups: configurationGroups, nodePresence: nodePresence, allowedWarnings: allowedWarnings);
         }
@@ -55,7 +55,7 @@ public sealed class MustNotDisableUnexpectedWarnings : IProjectCheck
         {
             XmlNode? node = propertyGroup.SelectSingleNode(nodePresence);
 
-            if (node == null)
+            if (node is null)
             {
                 continue;
             }

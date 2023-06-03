@@ -32,7 +32,7 @@ public abstract class ShouldUseAlternatePackage : IProjectCheck
 
         string? awsProjectType = project.GetAwsProjectType();
 
-        if (awsProjectType != null && StringComparer.InvariantCultureIgnoreCase.Equals(x: awsProjectType, y: "Lambda"))
+        if (awsProjectType is not null && StringComparer.InvariantCultureIgnoreCase.Equals(x: awsProjectType, y: "Lambda"))
         {
             // Lambdas are effectively executables so can use whatever they want.
             return;
@@ -46,7 +46,7 @@ public abstract class ShouldUseAlternatePackage : IProjectCheck
 
         XmlNodeList? referenceNodes = project.SelectNodes("/Project/ItemGroup/PackageReference");
 
-        if (referenceNodes == null)
+        if (referenceNodes is null)
         {
             return;
         }

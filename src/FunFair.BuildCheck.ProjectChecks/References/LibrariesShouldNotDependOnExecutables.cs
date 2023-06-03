@@ -28,7 +28,7 @@ public sealed class LibrariesShouldNotDependOnExecutables : IProjectCheck
 
         XmlNodeList? nodes = project.SelectNodes("/Project/ItemGroup/ProjectReference");
 
-        if (nodes == null)
+        if (nodes is null)
         {
             return;
         }

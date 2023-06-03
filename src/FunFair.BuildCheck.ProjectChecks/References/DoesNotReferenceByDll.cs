@@ -18,7 +18,7 @@ public sealed class DoesNotReferenceByDll : IProjectCheck
     {
         XmlNodeList? references = project.SelectNodes(xpath: "/Project/ItemGroup/Reference");
 
-        if (references == null)
+        if (references is null)
         {
             return;
         }

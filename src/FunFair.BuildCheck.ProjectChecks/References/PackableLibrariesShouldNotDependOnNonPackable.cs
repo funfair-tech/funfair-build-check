@@ -33,7 +33,7 @@ public sealed class PackableLibrariesShouldNotDependOnNonPackable : IProjectChec
 
         XmlNodeList? nodes = project.SelectNodes("/Project/ItemGroup/ProjectReference");
 
-        if (nodes == null)
+        if (nodes is null)
         {
             return;
         }

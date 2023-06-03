@@ -17,7 +17,7 @@ public sealed class DoesNotUseRootNamespace : IProjectCheck
     {
         XmlNodeList? nodes = project.SelectNodes("/Project/PropertyGroup/RootNamespace");
 
-        if (nodes == null)
+        if (nodes is null)
         {
             return;
         }
