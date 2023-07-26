@@ -135,6 +135,7 @@ internal static class Setup
                        .AddProjectCheck<MustHaveToStringWithoutOverrideAnalyzerPackage>()
                        .AddProjectCheck<MustNotHaveFxCopAnalyzerPackage>()
                        .AddProjectCheck<MustUseOpenApiAnalyzers>()
+                       .AddProjectCheck<NuGetAuditPolicy>()
                        .AddEnumSourceGeneratorAnalyzerPackage(repositorySettings: repositorySettings)
                        .AddUnitTestAnalysers(repositorySettings: repositorySettings)
                        .AddFunFairCodeAnalysisRequirements(repositorySettings: repositorySettings);
