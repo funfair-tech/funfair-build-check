@@ -7,9 +7,11 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 
 ## [Unreleased]
 ### Added
+- Packages on new NuGet feed
 ### Fixed
 ### Changed
 ### Removed
+- Packages on MyGet feed as MyGet has disappeared completely
 ### Deployment Changes
 
 <!--
