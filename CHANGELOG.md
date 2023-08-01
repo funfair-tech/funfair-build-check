@@ -7,16 +7,20 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 
 ## [Unreleased]
 ### Added
-- Packages on new NuGet feed
 ### Fixed
 ### Changed
 ### Removed
-- Packages on MyGet feed as MyGet has disappeared completely
 ### Deployment Changes
 
 <!--
 Releases that have at least been deployed to staging, BUT NOT necessarily released to live.  Changes should be moved from [Unreleased] into here as they are merged into the appropriate release branch
 -->
+## [474.0.4] - 2023-08-01
+### Added
+- Packages on new NuGet feed
+### Removed
+- Packages on MyGet feed as MyGet has disappeared completely
+
 ## [474.0.3] - 2023-06-20
 ### Removed
 - Dotnet 8 preview
