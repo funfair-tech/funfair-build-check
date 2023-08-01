@@ -11,7 +11,7 @@ public sealed class NuGetAuditPolicy : IProjectCheck
 
     private readonly ILogger<NuGetAuditPolicy> _logger;
 
-    public AnalysisModePolicy(ILogger<NuGetAuditPolicy> logger)
+    public NuGetAuditPolicy(ILogger<NuGetAuditPolicy> logger)
     {
         this._logger = logger;
     }
