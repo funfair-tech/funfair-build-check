@@ -10,6 +10,7 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 ### Fixed
 ### Changed
 - Dependencies - Updated Microsoft.Extensions to 7.0.1
+- Dependencies - Updated NuGet to 6.6.1
 ### Removed
 ### Deployment Changes
 
