@@ -9,14 +9,17 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 ### Added
 ### Fixed
 ### Changed
-- Dependencies - Updated Microsoft.Extensions to 7.0.1
-- Dependencies - Updated NuGet to 6.6.1
 ### Removed
 ### Deployment Changes
 
 <!--
 Releases that have at least been deployed to staging, BUT NOT necessarily released to live.  Changes should be moved from [Unreleased] into here as they are merged into the appropriate release branch
 -->
+## [474.0.5] - 2023-08-02
+### Changed
+- Dependencies - Updated Microsoft.Extensions to 7.0.1
+- Dependencies - Updated NuGet to 6.6.1
+
 ## [474.0.4] - 2023-08-01
 ### Added
 - Packages on new NuGet feed
