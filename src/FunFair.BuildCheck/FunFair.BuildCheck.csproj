@@ -18,6 +18,7 @@
     <JsonSerializerIsReflectionEnabledByDefault>false</JsonSerializerIsReflectionEnabledByDefault>
     <LangVersion>latest</LangVersion>
     <NoWarn>1591</NoWarn>
+    <NuGetAudit>true</NuGetAudit>
     <Nullable>enable</Nullable>
     <OptimizationPreference>speed</OptimizationPreference>
     <OutputType>Exe</OutputType>
@@ -34,7 +35,6 @@
     <UseSystemResourceKeys>true</UseSystemResourceKeys>
     <ValidateExecutableReferencesMatchSelfContained>true</ValidateExecutableReferencesMatchSelfContained>
     <WarningsAsErrors />
-    <NuGetAudit>true</NuGetAudit>
   </PropertyGroup>
   <PropertyGroup>
     <Description>Dot net core build checking tool.</Description>
@@ -50,8 +50,8 @@
     <CodeAnalysisTreatWarningsAsErrors>true</CodeAnalysisTreatWarningsAsErrors>
     <EnableNETAnalyzers>true</EnableNETAnalyzers>
     <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
-    <NuGetAudit>true</NuGetAudit>
     <EnforceExtendedAnalyzerRules>false</EnforceExtendedAnalyzerRules>
+    <NuGetAudit>true</NuGetAudit>
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\FunFair.BuildCheck.ProjectChecks\FunFair.BuildCheck.ProjectChecks.csproj" />
