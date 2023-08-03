@@ -215,10 +215,8 @@ internal static class Program
                     continue;
                 }
 
-                string displayName = match.Groups[groupname: @"DisplayName"]
-                                          .Value;
-                string fileName = match.Groups[groupname: @"FileName"]
-                                       .Value;
+                string displayName = match.Groups[groupname: @"DisplayName"].Value;
+                string fileName = match.Groups[groupname: @"FileName"].Value;
 
                 Console.WriteLine($" * {displayName} = {fileName}");
 
