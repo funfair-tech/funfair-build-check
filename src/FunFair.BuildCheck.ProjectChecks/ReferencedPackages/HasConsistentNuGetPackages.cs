@@ -45,7 +45,7 @@ public sealed class HasConsistentNuGetPackages : IProjectCheck
 
             this._logger.LogDebug($"{projectName}: Found: {packageName} ({version})");
 
-            if (!NuGetVersion.TryParse(value: version, out NuGetVersion nuGetVersion))
+            if (!NuGetVersion.TryParse(value: version, out NuGetVersion? nuGetVersion))
             {
                 this._logger.LogError($"{projectName}: Package {packageName} could not parse version {version}.");
 
