@@ -20,6 +20,7 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 - Dependencies - Updated xunit to 2.5.0
 - Dependencies - Updated xunit.runner.visualstudio to 2.5.0
 - Dependencies - Updated FunFair.Test.Common to 6.1.5.120
+- Dependencies - Updated Microsoft.VisualStudio.Threading.Analyzers to 17.7.30
 ### Removed
 ### Deployment Changes
 
