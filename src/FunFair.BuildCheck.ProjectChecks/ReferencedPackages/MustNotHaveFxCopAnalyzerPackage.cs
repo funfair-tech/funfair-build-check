@@ -11,7 +11,7 @@ public sealed class MustNotHaveFxCopAnalyzerPackage : MustNotReferencePackages
     };
 
     public MustNotHaveFxCopAnalyzerPackage(ILogger<MustNotHaveFxCopAnalyzerPackage> logger)
-        : base(PackageIds, reason: ".net core 5 and later include this by default", logger: logger)
+        : base(packageIds: PackageIds, reason: ".net core 5 and later include this by default", logger: logger)
     {
     }
 }
