@@ -19,16 +19,16 @@ public sealed class MustSpecifyOutputType : IProjectCheck
     {
         const string msg = "Exe or Library";
 
-        static bool IsRequiredValue(string value)
-        {
-            if (string.IsNullOrWhiteSpace(value))
-            {
-                return false;
-            }
+        ProjectValueHelpers.CheckValue(projectName: projectName, project: project, nodePresence: @"OutputType", isRequiredValue: IsRequiredValue, msg: msg, logger: this._logger);
+    }
 
-            return StringComparer.InvariantCultureIgnoreCase.Equals(x: value, y: "Exe") || StringComparer.InvariantCultureIgnoreCase.Equals(x: value, y: "Library");
+    private static bool IsRequiredValue(string value)
+    {
+        if (string.IsNullOrWhiteSpace(value))
+        {
+            return false;
         }
 
-        ProjectValueHelpers.CheckValue(projectName: projectName, project: project, nodePresence: @"OutputType", isRequiredValue: IsRequiredValue, msg: msg, logger: this._logger);
+        return StringComparer.InvariantCultureIgnoreCase.Equals(x: value, y: "Exe") || StringComparer.InvariantCultureIgnoreCase.Equals(x: value, y: "Library");
     }
 }
