@@ -118,23 +118,23 @@
    color: "96f7d2"
    description: "Changes in FunFair.BuildCheck project"
 
- - name: "FunFair.BuildCheck.Helpers"
+ - name: "Helpers"
    color: "96f7d2"
    description: "Changes in FunFair.BuildCheck.Helpers project"
 
- - name: "FunFair.BuildCheck.Interfaces"
+ - name: "Interfaces"
    color: "96f7d2"
    description: "Changes in FunFair.BuildCheck.Interfaces project"
 
- - name: "FunFair.BuildCheck.ProjectChecks"
+ - name: "ProjectChecks"
    color: "96f7d2"
    description: "Changes in FunFair.BuildCheck.ProjectChecks project"
 
- - name: "FunFair.BuildCheck.SolutionChecks"
+ - name: "SolutionChecks"
    color: "96f7d2"
    description: "Changes in FunFair.BuildCheck.SolutionChecks project"
 
- - name: "FunFair.BuildCheck.Tests"
+ - name: "Tests"
    color: "0e8a16"
    description: "Changes in FunFair.BuildCheck.Tests project"
 
