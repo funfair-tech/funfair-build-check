@@ -34,15 +34,15 @@
  - any: [ '.github/workflows/*.yml' ]
 "FunFair.BuildCheck":
  - any: [ 'src/FunFair.BuildCheck/**/*' ]
-"FunFair.BuildCheck.Helpers":
+"Helpers":
  - any: [ 'src/FunFair.BuildCheck.Helpers/**/*' ]
-"FunFair.BuildCheck.Interfaces":
+"Interfaces":
  - any: [ 'src/FunFair.BuildCheck.Interfaces/**/*' ]
-"FunFair.BuildCheck.ProjectChecks":
+"ProjectChecks":
  - any: [ 'src/FunFair.BuildCheck.ProjectChecks/**/*' ]
-"FunFair.BuildCheck.SolutionChecks":
+"SolutionChecks":
  - any: [ 'src/FunFair.BuildCheck.SolutionChecks/**/*' ]
-"FunFair.BuildCheck.Tests":
+"Tests":
  - any: [ 'src/FunFair.BuildCheck.Tests/**/*' ]
 "prepublish":
  - any: [ 'src/prepublish/**/*' ]
