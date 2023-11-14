@@ -24,11 +24,11 @@ public sealed class MustSpecifyOutputType : IProjectCheck
 
     private static bool IsRequiredValue(string value)
     {
-        if (string.IsNullOrWhiteSpace(value))
-        {
-            return false;
-        }
+        return !string.IsNullOrWhiteSpace(value) && IsExeOrLibrary(value);
+    }
 
+    private static bool IsExeOrLibrary(string value)
+    {
         return StringComparer.InvariantCultureIgnoreCase.Equals(x: value, y: "Exe") || StringComparer.InvariantCultureIgnoreCase.Equals(x: value, y: "Library");
     }
 }
