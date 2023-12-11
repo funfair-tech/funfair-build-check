@@ -52,7 +52,7 @@ public sealed class GlobalJsonMustNotAllowPreRelease : ISolutionCheck
 
             if (p?.Sdk?.AllowPrerelease is not null)
             {
-                bool preReleaseAllowedInConfig = p.Sdk.AllowPrerelease.GetValueOrDefault(defaultValue: true);
+                bool preReleaseAllowedInConfig = p.Sdk.AllowPrerelease ?? true;
 
                 if (!this._allowPreRelease && preReleaseAllowedInConfig)
                 {
