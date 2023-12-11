@@ -30,7 +30,7 @@ public abstract class MustHaveRelatedPackage : IProjectCheck
         {
             foreach (XmlElement reference in nodes.OfType<XmlElement>())
             {
-                string packageName = reference.GetAttribute(name: @"Include");
+                string packageName = reference.GetAttribute(name: "Include");
 
                 if (string.IsNullOrWhiteSpace(packageName))
                 {

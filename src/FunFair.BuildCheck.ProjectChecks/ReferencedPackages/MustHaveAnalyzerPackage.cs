@@ -8,8 +8,8 @@ namespace FunFair.BuildCheck.ProjectChecks.ReferencedPackages;
 
 public abstract class MustHaveAnalyzerPackage : IProjectCheck
 {
-    private const string PACKAGE_PRIVATE_ASSETS = @"All";
-    private const string PACKAGE_EXCLUDE_ASSETS = @"runtime";
+    private const string PACKAGE_PRIVATE_ASSETS = "All";
+    private const string PACKAGE_EXCLUDE_ASSETS = "runtime";
     private readonly ILogger _logger;
     private readonly bool _mustHave;
 

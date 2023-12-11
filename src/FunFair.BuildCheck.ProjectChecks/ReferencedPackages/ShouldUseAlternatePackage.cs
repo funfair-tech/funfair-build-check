@@ -53,7 +53,7 @@ public abstract class ShouldUseAlternatePackage : IProjectCheck
 
         foreach (XmlElement referenceNode in referenceNodes.OfType<XmlElement>())
         {
-            string packageId = referenceNode.GetAttribute(@"Include");
+            string packageId = referenceNode.GetAttribute("Include");
 
             if (StringComparer.InvariantCultureIgnoreCase.Equals(x: packageId, y: this._matchPackageId))
             {

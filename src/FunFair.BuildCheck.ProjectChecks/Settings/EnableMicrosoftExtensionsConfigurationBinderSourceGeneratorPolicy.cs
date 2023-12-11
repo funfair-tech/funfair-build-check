@@ -7,7 +7,7 @@ namespace FunFair.BuildCheck.ProjectChecks.Settings;
 
 public sealed class EnableMicrosoftExtensionsConfigurationBinderSourceGeneratorPolicy : IProjectCheck
 {
-    private const string EXPECTED = @"true";
+    private const string EXPECTED = "true";
 
     private readonly ILogger<EnableMicrosoftExtensionsConfigurationBinderSourceGeneratorPolicy> _logger;
 
@@ -25,7 +25,7 @@ public sealed class EnableMicrosoftExtensionsConfigurationBinderSourceGeneratorP
 
         ProjectValueHelpers.CheckValue(projectName: projectName,
                                        project: project,
-                                       nodePresence: @"EnableMicrosoftExtensionsConfigurationBinderSourceGenerator",
+                                       nodePresence: "EnableMicrosoftExtensionsConfigurationBinderSourceGenerator",
                                        requiredValue: EXPECTED,
                                        logger: this._logger);
     }

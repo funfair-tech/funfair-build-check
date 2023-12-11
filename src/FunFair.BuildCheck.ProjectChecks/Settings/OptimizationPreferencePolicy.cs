@@ -7,7 +7,7 @@ namespace FunFair.BuildCheck.ProjectChecks.Settings;
 
 public sealed class OptimizationPreferencePolicy : IProjectCheck
 {
-    private const string EXPECTED = @"speed";
+    private const string EXPECTED = "speed";
 
     private readonly ILogger<OptimizationPreferencePolicy> _logger;
 
@@ -23,6 +23,6 @@ public sealed class OptimizationPreferencePolicy : IProjectCheck
             return;
         }
 
-        ProjectValueHelpers.CheckValue(projectName: projectName, project: project, nodePresence: @"OptimizationPreference", requiredValue: EXPECTED, logger: this._logger);
+        ProjectValueHelpers.CheckValue(projectName: projectName, project: project, nodePresence: "OptimizationPreference", requiredValue: EXPECTED, logger: this._logger);
     }
 }

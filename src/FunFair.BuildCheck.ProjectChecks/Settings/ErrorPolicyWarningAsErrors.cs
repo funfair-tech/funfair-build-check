@@ -16,8 +16,8 @@ public sealed class ErrorPolicyWarningAsErrors : IProjectCheck
 
     public void Check(string projectName, string projectFolder, XmlDocument project)
     {
-        ProjectValueHelpers.CheckNode(projectName: projectName, project: project, nodePresence: @"WarningsAsErrors", logger: this._logger);
+        ProjectValueHelpers.CheckNode(projectName: projectName, project: project, nodePresence: "WarningsAsErrors", logger: this._logger);
 
-        ProjectValueHelpers.CheckValue(projectName: projectName, project: project, nodePresence: @"TreatWarningsAsErrors", requiredValue: true, logger: this._logger);
+        ProjectValueHelpers.CheckValue(projectName: projectName, project: project, nodePresence: "TreatWarningsAsErrors", requiredValue: true, logger: this._logger);
     }
 }

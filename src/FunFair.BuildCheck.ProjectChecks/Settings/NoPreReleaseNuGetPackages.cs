@@ -9,7 +9,7 @@ namespace FunFair.BuildCheck.ProjectChecks.Settings;
 
 public sealed class NoPreReleaseNuGetPackages : IProjectCheck
 {
-    private const string PACKAGE_PRIVATE_ASSETS = @"All";
+    private const string PACKAGE_PRIVATE_ASSETS = "All";
     private readonly ICheckConfiguration _configuration;
     private readonly ILogger<NoPreReleaseNuGetPackages> _logger;
 
@@ -30,7 +30,7 @@ public sealed class NoPreReleaseNuGetPackages : IProjectCheck
 
         foreach (XmlElement reference in nodes.OfType<XmlElement>())
         {
-            string packageName = reference.GetAttribute(name: @"Include");
+            string packageName = reference.GetAttribute(name: "Include");
 
             if (string.IsNullOrWhiteSpace(packageName))
             {
@@ -55,7 +55,7 @@ public sealed class NoPreReleaseNuGetPackages : IProjectCheck
                 continue;
             }
 
-            string version = reference.GetAttribute(name: @"Version");
+            string version = reference.GetAttribute(name: "Version");
 
             this._logger.LogDebug($"{projectName}: Found: {packageName} ({version})");
 

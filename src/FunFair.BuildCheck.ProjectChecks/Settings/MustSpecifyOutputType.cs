@@ -19,7 +19,7 @@ public sealed class MustSpecifyOutputType : IProjectCheck
     {
         const string msg = "Exe or Library";
 
-        ProjectValueHelpers.CheckValue(projectName: projectName, project: project, nodePresence: @"OutputType", isRequiredValue: IsRequiredValue, msg: msg, logger: this._logger);
+        ProjectValueHelpers.CheckValue(projectName: projectName, project: project, nodePresence: "OutputType", isRequiredValue: IsRequiredValue, msg: msg, logger: this._logger);
     }
 
     private static bool IsRequiredValue(string value)

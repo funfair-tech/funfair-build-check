@@ -94,7 +94,7 @@ internal static class Program
 
     private static bool GetConfiguration(IConfigurationRoot configuration, out string solutionFileName, out bool warningsAsErrors, out bool preReleaseBuild)
     {
-        solutionFileName = configuration.GetValue<string>(key: @"solution") ?? string.Empty;
+        solutionFileName = configuration.GetValue<string>(key: "solution") ?? string.Empty;
         warningsAsErrors = false;
         preReleaseBuild = false;
 
@@ -114,14 +114,14 @@ internal static class Program
             return false;
         }
 
-        warningsAsErrors = configuration.GetValue<bool>(key: @"WarningAsErrors");
+        warningsAsErrors = configuration.GetValue<bool>(key: "WarningAsErrors");
 
         if (warningsAsErrors)
         {
             Console.WriteLine(value: "** Running with Warnings as Errors");
         }
 
-        preReleaseBuild = configuration.GetValue<bool>(key: @"PreReleaseBuild");
+        preReleaseBuild = configuration.GetValue<bool>(key: "PreReleaseBuild");
 
         if (!warningsAsErrors)
         {
@@ -136,7 +136,7 @@ internal static class Program
         return new ConfigurationBuilder().AddCommandLine(args: args,
                                                          new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
                                                          {
-                                                             { @"-Solution", @"solution" }, { @"-WarningAsErrors", @"WarningAsErrors" }, { @"-PreReleaseBuild", @"PreReleaseBuild" }
+                                                             { "-Solution", "solution" }, { "-WarningAsErrors", "WarningAsErrors" }, { "-PreReleaseBuild", "PreReleaseBuild" }
                                                          })
                                          .Build();
     }
@@ -215,8 +215,8 @@ internal static class Program
                     continue;
                 }
 
-                string displayName = match.Groups[groupname: @"DisplayName"].Value;
-                string fileName = match.Groups[groupname: @"FileName"].Value;
+                string displayName = match.Groups[groupname: "DisplayName"].Value;
+                string fileName = match.Groups[groupname: "FileName"].Value;
 
                 Console.WriteLine($" * {displayName} = {fileName}");
 

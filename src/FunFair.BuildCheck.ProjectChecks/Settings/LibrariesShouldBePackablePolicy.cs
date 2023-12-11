@@ -71,6 +71,6 @@ public sealed class LibrariesShouldBePackablePolicy : IProjectCheck
 
         bool packable = this._packablePolicy(arg1: isDotNetTool, arg2: isLibrary, arg3: isTestProject, arg4: projectName);
 
-        ProjectValueHelpers.CheckValue(projectName: projectName, project: project, nodePresence: @"IsPackable", requiredValue: packable, logger: this._logger);
+        ProjectValueHelpers.CheckValue(projectName: projectName, project: project, nodePresence: "IsPackable", requiredValue: packable, logger: this._logger);
     }
 }

@@ -7,7 +7,7 @@ namespace FunFair.BuildCheck.ProjectChecks.Settings;
 
 public sealed class ValidateExecutableReferencesMatchSelfContainedPolicy : IProjectCheck
 {
-    private const string EXPECTED = @"true";
+    private const string EXPECTED = "true";
 
     private readonly ILogger<ValidateExecutableReferencesMatchSelfContainedPolicy> _logger;
 
@@ -23,10 +23,6 @@ public sealed class ValidateExecutableReferencesMatchSelfContainedPolicy : IProj
             return;
         }
 
-        ProjectValueHelpers.CheckValue(projectName: projectName,
-                                       project: project,
-                                       nodePresence: @"ValidateExecutableReferencesMatchSelfContained",
-                                       requiredValue: EXPECTED,
-                                       logger: this._logger);
+        ProjectValueHelpers.CheckValue(projectName: projectName, project: project, nodePresence: "ValidateExecutableReferencesMatchSelfContained", requiredValue: EXPECTED, logger: this._logger);
     }
 }

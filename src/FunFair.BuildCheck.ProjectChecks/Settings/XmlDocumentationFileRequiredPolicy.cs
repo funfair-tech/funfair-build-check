@@ -40,7 +40,7 @@ public sealed class XmlDocumentationFileRequiredPolicy : IProjectCheck
             return;
         }
 
-        ProjectValueHelpers.CheckValue(projectName: projectName, project: project, nodePresence: @"DocumentationFile", requiredValue: EXPECTED, logger: this._logger);
+        ProjectValueHelpers.CheckValue(projectName: projectName, project: project, nodePresence: "DocumentationFile", requiredValue: EXPECTED, logger: this._logger);
     }
 
     private void CheckTestProject(string projectName, XmlDocument project)

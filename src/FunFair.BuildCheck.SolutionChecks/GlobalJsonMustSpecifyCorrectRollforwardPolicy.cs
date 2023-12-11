@@ -9,7 +9,7 @@ namespace FunFair.BuildCheck.SolutionChecks;
 
 public sealed class GlobalJsonMustSpecifyCorrectRollforwardPolicy : ISolutionCheck
 {
-    private const string ROLL_FORWARD_POLICY = @"latestPatch";
+    private const string ROLL_FORWARD_POLICY = "latestPatch";
     private readonly ILogger<GlobalJsonMustSpecifyCorrectRollforwardPolicy> _logger;
     private readonly IRepositorySettings _repositorySettings;
 
@@ -33,7 +33,7 @@ public sealed class GlobalJsonMustSpecifyCorrectRollforwardPolicy : ISolutionChe
             return;
         }
 
-        string file = Path.Combine(path1: solutionDir, path2: @"global.json");
+        string file = Path.Combine(path1: solutionDir, path2: "global.json");
 
         if (!File.Exists(file))
         {

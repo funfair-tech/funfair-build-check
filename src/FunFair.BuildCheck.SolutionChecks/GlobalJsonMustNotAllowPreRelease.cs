@@ -37,7 +37,7 @@ public sealed class GlobalJsonMustNotAllowPreRelease : ISolutionCheck
             return;
         }
 
-        string file = Path.Combine(path1: solutionDir, path2: @"global.json");
+        string file = Path.Combine(path1: solutionDir, path2: "global.json");
 
         if (!File.Exists(file))
         {
@@ -56,8 +56,7 @@ public sealed class GlobalJsonMustNotAllowPreRelease : ISolutionCheck
 
                 if (!this._allowPreRelease && preReleaseAllowedInConfig)
                 {
-                    this._logger.LogError(
-                        $"global.json is using SDK pre-release policy of {FormatPolicy(preReleaseAllowedInConfig)} rather than {FormatPolicy(this._allowPreRelease)}");
+                    this._logger.LogError($"global.json is using SDK pre-release policy of {FormatPolicy(preReleaseAllowedInConfig)} rather than {FormatPolicy(this._allowPreRelease)}");
                 }
             }
             else

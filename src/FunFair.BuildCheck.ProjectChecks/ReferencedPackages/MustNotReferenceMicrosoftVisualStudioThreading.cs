@@ -6,7 +6,7 @@ public sealed class MustNotReferenceMicrosoftVisualStudioThreading : MustNotRefe
 {
     private static readonly string[] PackageIds =
     {
-        @"Microsoft.VisualStudio.Threading"
+        "Microsoft.VisualStudio.Threading"
     };
 
     public MustNotReferenceMicrosoftVisualStudioThreading(ILogger<MustNotReferenceMicrosoftVisualStudioThreading> logger)
