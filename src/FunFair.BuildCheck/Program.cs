@@ -33,7 +33,7 @@ internal static class Program
     {
         try
         {
-            Console.WriteLine($"{typeof(Program).Namespace} {ExecutableVersionInformation.ProgramVersion()}");
+            Console.WriteLine($"{typeof(Program).Namespace} {ExecutableVersionInformation.ProgramVersion}");
 
             IConfigurationRoot configuration = GetCommandLineConfiguration(args);
 
@@ -157,24 +157,47 @@ internal static class Program
         IReadOnlyList<ISolutionCheck> solutionChecks = RegisteredSolutionChecks(services);
         IReadOnlyList<IProjectCheck> projectChecks = RegisteredProjectChecks(services);
 
-        foreach (ISolutionCheck check in solutionChecks)
-        {
-            check.Check(solutionFileName);
-        }
+        TestSolution(solutionFileName: solutionFileName, solutionChecks: solutionChecks);
 
         IReadOnlyList<SolutionProject> projects = services.GetRequiredService<IReadOnlyList<SolutionProject>>();
 
         foreach (SolutionProject project in projects)
         {
-            logging.LogInformation($"Checking Project: {project.DisplayName}:");
+            CheckProject(project: project, projectLoader: projectLoader, projectChecks: projectChecks, logging: logging);
+        }
+    }
 
-            XmlDocument doc = projectLoader.Load(project.FileName);
+    private static void TestSolution(string solutionFileName, IReadOnlyList<ISolutionCheck> solutionChecks)
+    {
+        foreach (ISolutionCheck check in solutionChecks)
+        {
+            check.Check(solutionFileName);
+        }
+    }
 
-            foreach (IProjectCheck check in projectChecks)
-            {
-                string projectFolder = Path.GetDirectoryName(project.FileName)!;
-                check.Check(projectName: project.DisplayName, projectFolder: projectFolder, project: doc);
-            }
+    private static void CheckProject(SolutionProject project, IProjectLoader projectLoader, IReadOnlyList<IProjectCheck> projectChecks, IDiagnosticLogger logging)
+    {
+        logging.LogInformation($"Checking Project: {project.DisplayName}:");
+
+        string? projectFolder = Path.GetDirectoryName(project.FileName);
+
+        if (string.IsNullOrEmpty(projectFolder))
+        {
+            logging.LogError($"Project: {project.FileName} could not get base path");
+
+            return;
+        }
+
+        XmlDocument doc = projectLoader.Load(project.FileName);
+
+        TestProject(projectChecks: projectChecks, project: project, projectFolder: projectFolder, doc: doc);
+    }
+
+    private static void TestProject(IReadOnlyList<IProjectCheck> projectChecks, SolutionProject project, string projectFolder, XmlDocument doc)
+    {
+        foreach (IProjectCheck check in projectChecks)
+        {
+            check.Check(projectName: project.DisplayName, projectFolder: projectFolder, project: doc);
         }
     }
 
@@ -199,7 +222,15 @@ internal static class Program
     {
         string[] text = await File.ReadAllLinesAsync(path: solution, cancellationToken: cancellationToken);
 
-        string basePath = Path.GetDirectoryName(solution)!;
+        string? basePath = Path.GetDirectoryName(solution);
+
+        if (string.IsNullOrEmpty(basePath))
+        {
+            Console.WriteLine($"Solution {solution} could not get base path");
+
+            return Array.Empty<SolutionProject>();
+        }
+
         Console.WriteLine($"Solution base path: {basePath}");
 
         List<SolutionProject> projects = new();
