@@ -23,6 +23,10 @@ public sealed class JsonSerializerIsReflectionEnabledByDefaultPolicy : IProjectC
             return;
         }
 
-        ProjectValueHelpers.CheckValue(projectName: projectName, project: project, nodePresence: "JsonSerializerIsReflectionEnabledByDefault", requiredValue: EXPECTED, logger: this._logger);
+        ProjectValueHelpers.CheckValue(projectName: projectName,
+                                       project: project,
+                                       nodePresence: "JsonSerializerIsReflectionEnabledByDefault",
+                                       requiredValue: EXPECTED,
+                                       logger: this._logger);
     }
 }

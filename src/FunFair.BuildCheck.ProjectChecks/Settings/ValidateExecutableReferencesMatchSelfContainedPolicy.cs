@@ -23,6 +23,10 @@ public sealed class ValidateExecutableReferencesMatchSelfContainedPolicy : IProj
             return;
         }
 
-        ProjectValueHelpers.CheckValue(projectName: projectName, project: project, nodePresence: "ValidateExecutableReferencesMatchSelfContained", requiredValue: EXPECTED, logger: this._logger);
+        ProjectValueHelpers.CheckValue(projectName: projectName,
+                                       project: project,
+                                       nodePresence: "ValidateExecutableReferencesMatchSelfContained",
+                                       requiredValue: EXPECTED,
+                                       logger: this._logger);
     }
 }

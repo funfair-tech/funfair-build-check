@@ -149,7 +149,12 @@ internal static class ProjectValueHelpers
         CheckValueCommon(projectName: projectName, project: project, nodePresence: nodePresence, isRequiredValue: isRequiredValue, requiredValueDisplayText: msg, logger: logger);
     }
 
-    private static void CheckValueCommon(string projectName, XmlDocument project, string nodePresence, Func<string, bool> isRequiredValue, string requiredValueDisplayText, ILogger logger)
+    private static void CheckValueCommon(string projectName,
+                                         XmlDocument project,
+                                         string nodePresence,
+                                         Func<string, bool> isRequiredValue,
+                                         string requiredValueDisplayText,
+                                         ILogger logger)
     {
         bool hasGlobalSetting = CheckGlobalSettings(project: project, nodePresence: nodePresence, isRequiredValue: isRequiredValue);
 
