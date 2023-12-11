@@ -7,7 +7,7 @@ namespace FunFair.BuildCheck.ProjectChecks.Settings;
 
 public sealed class TieredCompilationPolicy : IProjectCheck
 {
-    private const string EXPECTED = @"true";
+    private const string EXPECTED = "true";
 
     private readonly ILogger<TieredCompilationPolicy> _logger;
 
@@ -23,6 +23,6 @@ public sealed class TieredCompilationPolicy : IProjectCheck
             return;
         }
 
-        ProjectValueHelpers.CheckValue(projectName: projectName, project: project, nodePresence: @"TieredCompilation", requiredValue: EXPECTED, logger: this._logger);
+        ProjectValueHelpers.CheckValue(projectName: projectName, project: project, nodePresence: "TieredCompilation", requiredValue: EXPECTED, logger: this._logger);
     }
 }

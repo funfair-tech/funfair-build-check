@@ -23,7 +23,7 @@ public sealed class SymbolPackageFormatPolicy : IProjectCheck
 
         ProjectValueHelpers.CheckValue(projectName: projectName,
                                        project: project,
-                                       nodePresence: @"SymbolPackageFormat",
+                                       nodePresence: "SymbolPackageFormat",
                                        project.IsAnalyzerOrSourceGenerator()
                                            ? "symbols.nupkg"
                                            : "snupkg",

@@ -32,7 +32,7 @@ public sealed class HasConsistentNuGetPackages : IProjectCheck
 
         foreach (XmlElement reference in nodes.OfType<XmlElement>())
         {
-            string packageName = reference.GetAttribute(name: @"Include");
+            string packageName = reference.GetAttribute(name: "Include");
 
             if (string.IsNullOrWhiteSpace(packageName))
             {
@@ -41,7 +41,7 @@ public sealed class HasConsistentNuGetPackages : IProjectCheck
                 continue;
             }
 
-            string version = reference.GetAttribute(name: @"Version");
+            string version = reference.GetAttribute(name: "Version");
 
             this._logger.LogDebug($"{projectName}: Found: {packageName} ({version})");
 

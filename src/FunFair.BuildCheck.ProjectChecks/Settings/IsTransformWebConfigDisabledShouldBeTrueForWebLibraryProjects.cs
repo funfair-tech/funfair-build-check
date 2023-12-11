@@ -19,7 +19,7 @@ public sealed class IsTransformWebConfigDisabledShouldBeTrueForWebLibraryProject
     {
         string sdk = project.GetSdk();
 
-        if (!StringComparer.InvariantCultureIgnoreCase.Equals(x: sdk, y: @"Microsoft.NET.Sdk.Web"))
+        if (!StringComparer.InvariantCultureIgnoreCase.Equals(x: sdk, y: "Microsoft.NET.Sdk.Web"))
         {
             // not a web project
             return;
@@ -31,6 +31,6 @@ public sealed class IsTransformWebConfigDisabledShouldBeTrueForWebLibraryProject
             return;
         }
 
-        ProjectValueHelpers.CheckValue(projectName: projectName, project: project, nodePresence: @"IsTransformWebConfigDisabled", requiredValue: true, logger: this._logger);
+        ProjectValueHelpers.CheckValue(projectName: projectName, project: project, nodePresence: "IsTransformWebConfigDisabled", requiredValue: true, logger: this._logger);
     }
 }

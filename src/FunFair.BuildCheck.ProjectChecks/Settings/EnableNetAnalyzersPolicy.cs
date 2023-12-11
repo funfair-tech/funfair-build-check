@@ -7,7 +7,7 @@ namespace FunFair.BuildCheck.ProjectChecks.Settings;
 
 public sealed class EnableNetAnalyzersPolicy : IProjectCheck
 {
-    private const string EXPECTED = @"true";
+    private const string EXPECTED = "true";
 
     private readonly ILogger<EnableNetAnalyzersPolicy> _logger;
 
@@ -18,6 +18,6 @@ public sealed class EnableNetAnalyzersPolicy : IProjectCheck
 
     public void Check(string projectName, string projectFolder, XmlDocument project)
     {
-        ProjectValueHelpers.CheckValue(projectName: projectName, project: project, nodePresence: @"EnableNETAnalyzers", requiredValue: EXPECTED, logger: this._logger);
+        ProjectValueHelpers.CheckValue(projectName: projectName, project: project, nodePresence: "EnableNETAnalyzers", requiredValue: EXPECTED, logger: this._logger);
     }
 }

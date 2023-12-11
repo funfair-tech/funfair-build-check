@@ -33,7 +33,7 @@ public sealed class MustNotDisableUnexpectedWarnings : IProjectCheck
             ? AllowedTestProjectWarnings
             : AllowedWarnings;
 
-        const string nodePresence = @"NoWarn";
+        const string nodePresence = "NoWarn";
         XmlNodeList? nodes = project.SelectNodes("/Project/PropertyGroup[not(@Condition)]/" + nodePresence);
 
         if (nodes is not null)

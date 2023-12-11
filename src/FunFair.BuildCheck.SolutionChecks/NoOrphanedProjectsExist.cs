@@ -20,14 +20,32 @@ public sealed class NoOrphanedProjectsExist : ISolutionCheck
 
     public void Check(string solutionFileName)
     {
-        string basePath = Path.GetDirectoryName(solutionFileName)!;
+        string? basePath = Path.GetDirectoryName(solutionFileName);
+
+        if (string.IsNullOrEmpty(basePath))
+        {
+            this._logger.LogError($"Solution {solutionFileName} could not get base path");
+
+            return;
+        }
+
+        this.CheckProjects(basePath);
+    }
+
+    private void CheckProjects(string basePath)
+    {
         IReadOnlyList<string> projectFileNames = GetOrderedProjects(basePath);
 
         foreach (string project in projectFileNames.Where(this.ProjectIsInSolution))
         {
-            string solutionRelative = GetPathRelativeToSolution(basePath: basePath, project: project);
-            this._logger.LogError($"Project {solutionRelative} is not in solution, but in work folder");
+            this.CheckProject(basePath: basePath, project: project);
         }
+    }
+
+    private void CheckProject(string basePath, string project)
+    {
+        string solutionRelative = GetPathRelativeToSolution(basePath: basePath, project: project);
+        this._logger.LogError($"Project {solutionRelative} is not in solution, but in work folder");
     }
 
     private static string GetPathRelativeToSolution(string basePath, string project)

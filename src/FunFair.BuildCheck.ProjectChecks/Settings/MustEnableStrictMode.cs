@@ -16,6 +16,6 @@ public sealed class MustEnableStrictMode : IProjectCheck
 
     public void Check(string projectName, string projectFolder, XmlDocument project)
     {
-        ProjectValueHelpers.CheckValue(projectName: projectName, project: project, nodePresence: @"Features", requiredValue: "strict;flow-analysis", logger: this._logger);
+        ProjectValueHelpers.CheckValue(projectName: projectName, project: project, nodePresence: "Features", requiredValue: "strict;flow-analysis", logger: this._logger);
     }
 }

@@ -23,6 +23,6 @@ public sealed class MustEnableNullable : IProjectCheck
             return;
         }
 
-        ProjectValueHelpers.CheckValue(projectName: projectName, project: project, nodePresence: @"Nullable", requiredValue: "enable", logger: this._logger);
+        ProjectValueHelpers.CheckValue(projectName: projectName, project: project, nodePresence: "Nullable", requiredValue: "enable", logger: this._logger);
     }
 }

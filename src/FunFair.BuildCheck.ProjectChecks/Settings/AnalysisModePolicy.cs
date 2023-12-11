@@ -7,7 +7,7 @@ namespace FunFair.BuildCheck.ProjectChecks.Settings;
 
 public sealed class AnalysisModePolicy : IProjectCheck
 {
-    private const string EXPECTED = @"AllEnabledByDefault";
+    private const string EXPECTED = "AllEnabledByDefault";
 
     private readonly ILogger<AnalysisModePolicy> _logger;
 
@@ -18,6 +18,6 @@ public sealed class AnalysisModePolicy : IProjectCheck
 
     public void Check(string projectName, string projectFolder, XmlDocument project)
     {
-        ProjectValueHelpers.CheckValue(projectName: projectName, project: project, nodePresence: @"AnalysisMode", requiredValue: EXPECTED, logger: this._logger);
+        ProjectValueHelpers.CheckValue(projectName: projectName, project: project, nodePresence: "AnalysisMode", requiredValue: EXPECTED, logger: this._logger);
     }
 }

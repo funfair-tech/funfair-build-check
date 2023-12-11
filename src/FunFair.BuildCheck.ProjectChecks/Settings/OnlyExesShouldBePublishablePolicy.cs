@@ -42,10 +42,7 @@ public sealed class OnlyExesShouldBePublishablePolicy : IProjectCheck
         }
         else
         {
-            ImmutableHashSet<string> projects = packable.Split(",")
-                                                        .Select(p => p.Trim())
-                                                        .Where(p => !string.IsNullOrWhiteSpace(p))
-                                                        .ToImmutableHashSet(StringComparer.OrdinalIgnoreCase);
+            ImmutableHashSet<string> projects = GetProjects(packable);
 
             this._packablePolicy = (_, _, isTestProject, projectName) => !isTestProject && projects.Contains(projectName);
         }
@@ -67,6 +64,14 @@ public sealed class OnlyExesShouldBePublishablePolicy : IProjectCheck
 
         bool packable = this._packablePolicy(arg1: isDotNetTool, arg2: isExe, arg3: isTestProject, arg4: projectName);
 
-        ProjectValueHelpers.CheckValue(projectName: projectName, project: project, nodePresence: @"IsPublishable", requiredValue: packable, logger: this._logger);
+        ProjectValueHelpers.CheckValue(projectName: projectName, project: project, nodePresence: "IsPublishable", requiredValue: packable, logger: this._logger);
+    }
+
+    private static ImmutableHashSet<string> GetProjects(string packable)
+    {
+        return packable.Split(",")
+                       .Select(p => p.Trim())
+                       .Where(p => !string.IsNullOrWhiteSpace(p))
+                       .ToImmutableHashSet(StringComparer.OrdinalIgnoreCase);
     }
 }

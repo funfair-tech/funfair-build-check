@@ -8,7 +8,7 @@ namespace FunFair.BuildCheck.ProjectChecks.ReferencedPackages;
 
 public abstract class HasAppropriateAnalysisPackages : IProjectCheck
 {
-    private const string PACKAGE_PRIVATE_ASSETS = @"All";
+    private const string PACKAGE_PRIVATE_ASSETS = "All";
 
     private readonly string _detectPackageId;
     private readonly ILogger _logger;
@@ -32,7 +32,7 @@ public abstract class HasAppropriateAnalysisPackages : IProjectCheck
         {
             foreach (XmlElement reference in nodes.OfType<XmlElement>())
             {
-                string packageName = reference.GetAttribute(name: @"Include");
+                string packageName = reference.GetAttribute(name: "Include");
 
                 if (string.IsNullOrWhiteSpace(packageName))
                 {

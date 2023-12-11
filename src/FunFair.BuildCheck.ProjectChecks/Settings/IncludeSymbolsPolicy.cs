@@ -7,7 +7,7 @@ namespace FunFair.BuildCheck.ProjectChecks.Settings;
 
 public sealed class IncludeSymbolsPolicy : IProjectCheck
 {
-    private const string EXPECTED = @"true";
+    private const string EXPECTED = "true";
 
     private readonly ILogger<IncludeSymbolsPolicy> _logger;
 
@@ -23,6 +23,6 @@ public sealed class IncludeSymbolsPolicy : IProjectCheck
             return;
         }
 
-        ProjectValueHelpers.CheckValue(projectName: projectName, project: project, nodePresence: @"IncludeSymbols", requiredValue: EXPECTED, logger: this._logger);
+        ProjectValueHelpers.CheckValue(projectName: projectName, project: project, nodePresence: "IncludeSymbols", requiredValue: EXPECTED, logger: this._logger);
     }
 }

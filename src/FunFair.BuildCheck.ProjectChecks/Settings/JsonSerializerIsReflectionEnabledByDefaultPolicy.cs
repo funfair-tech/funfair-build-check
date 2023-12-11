@@ -7,7 +7,7 @@ namespace FunFair.BuildCheck.ProjectChecks.Settings;
 
 public sealed class JsonSerializerIsReflectionEnabledByDefaultPolicy : IProjectCheck
 {
-    private const string EXPECTED = @"false";
+    private const string EXPECTED = "false";
 
     private readonly ILogger<JsonSerializerIsReflectionEnabledByDefaultPolicy> _logger;
 
@@ -23,10 +23,6 @@ public sealed class JsonSerializerIsReflectionEnabledByDefaultPolicy : IProjectC
             return;
         }
 
-        ProjectValueHelpers.CheckValue(projectName: projectName,
-                                       project: project,
-                                       nodePresence: @"JsonSerializerIsReflectionEnabledByDefault",
-                                       requiredValue: EXPECTED,
-                                       logger: this._logger);
+        ProjectValueHelpers.CheckValue(projectName: projectName, project: project, nodePresence: "JsonSerializerIsReflectionEnabledByDefault", requiredValue: EXPECTED, logger: this._logger);
     }
 }

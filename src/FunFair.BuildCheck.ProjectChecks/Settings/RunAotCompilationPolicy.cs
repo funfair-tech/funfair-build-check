@@ -7,7 +7,7 @@ namespace FunFair.BuildCheck.ProjectChecks.Settings;
 
 public sealed class RunAotCompilationPolicy : IProjectCheck
 {
-    private const string EXPECTED = @"false";
+    private const string EXPECTED = "false";
 
     private readonly ILogger<RunAotCompilationPolicy> _logger;
 
@@ -18,6 +18,6 @@ public sealed class RunAotCompilationPolicy : IProjectCheck
 
     public void Check(string projectName, string projectFolder, XmlDocument project)
     {
-        ProjectValueHelpers.CheckValue(projectName: projectName, project: project, nodePresence: @"RunAOTCompilation", requiredValue: EXPECTED, logger: this._logger);
+        ProjectValueHelpers.CheckValue(projectName: projectName, project: project, nodePresence: "RunAOTCompilation", requiredValue: EXPECTED, logger: this._logger);
     }
 }

@@ -34,7 +34,7 @@ public sealed class GlobalJsonIsLatest : ISolutionCheck
             return;
         }
 
-        string file = Path.Combine(path1: solutionDir, path2: @"global.json");
+        string file = Path.Combine(path1: solutionDir, path2: "global.json");
 
         if (!File.Exists(file))
         {

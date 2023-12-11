@@ -32,7 +32,7 @@ public sealed class TargetFrameworkIsSetCorrectlyPolicy : IProjectCheck
         if (this._repositorySettings.IsCodeAnalysisSolution && !project.IsTestProject(projectName: projectName, logger: this._logger))
         {
             // Code analysis project has specific requirements
-            ProjectValueHelpers.CheckValue(projectName: projectName, project: project, nodePresence: @"TargetFramework", requiredValue: "netstandard2.0", logger: this._logger);
+            ProjectValueHelpers.CheckValue(projectName: projectName, project: project, nodePresence: "TargetFramework", requiredValue: "netstandard2.0", logger: this._logger);
 
             return;
         }
@@ -63,11 +63,11 @@ public sealed class TargetFrameworkIsSetCorrectlyPolicy : IProjectCheck
         {
             case 0: return;
             case 1:
-                ProjectValueHelpers.CheckValue(projectName: projectName, project: project, nodePresence: @"TargetFramework", frameworks[0], logger: this._logger);
+                ProjectValueHelpers.CheckValue(projectName: projectName, project: project, nodePresence: "TargetFramework", frameworks[0], logger: this._logger);
 
                 break;
             default:
-                ProjectValueHelpers.CheckValue(projectName: projectName, project: project, nodePresence: @"TargetFrameworks", requiredValue: this._expected, logger: this._logger);
+                ProjectValueHelpers.CheckValue(projectName: projectName, project: project, nodePresence: "TargetFrameworks", requiredValue: this._expected, logger: this._logger);
 
                 break;
         }

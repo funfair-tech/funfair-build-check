@@ -23,7 +23,7 @@ public sealed class EnforceExtendedAnalyzerRulesPolicy : IProjectCheck
 
         ProjectValueHelpers.CheckValue(projectName: projectName,
                                        project: project,
-                                       nodePresence: @"EnforceExtendedAnalyzerRules",
+                                       nodePresence: "EnforceExtendedAnalyzerRules",
                                        project.IsAnalyzerOrSourceGenerator()
                                            ? "true"
                                            : "false",

@@ -7,9 +7,9 @@ namespace FunFair.BuildCheck.ProjectChecks.ReferencedPackages;
 
 public sealed class MustHaveSourceLinkPackage : IProjectCheck
 {
-    private const string HISTORICAL_PACKAGE_ID = @"SourceLink.Create.CommandLine";
-    private const string PACKAGE_ID = @"Microsoft.SourceLink.GitHub";
-    private const string PACKAGE_PRIVATE_ASSETS = @"All";
+    private const string HISTORICAL_PACKAGE_ID = "SourceLink.Create.CommandLine";
+    private const string PACKAGE_ID = "Microsoft.SourceLink.GitHub";
+    private const string PACKAGE_PRIVATE_ASSETS = "All";
 
     private readonly ILogger<MustHaveSourceLinkPackage> _logger;
 
