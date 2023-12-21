@@ -130,6 +130,14 @@
    color: "96f7d2"
    description: "Changes in FunFair.BuildCheck.ProjectChecks project"
 
+ - name: "Runner"
+   color: "96f7d2"
+   description: "Changes in FunFair.BuildCheck.Runner project"
+
+ - name: "Runner.Tests"
+   color: "0e8a16"
+   description: "Changes in FunFair.BuildCheck.Runner.Tests project"
+
  - name: "SolutionChecks"
    color: "96f7d2"
    description: "Changes in FunFair.BuildCheck.SolutionChecks project"
