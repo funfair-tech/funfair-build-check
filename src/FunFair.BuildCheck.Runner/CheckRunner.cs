@@ -18,19 +18,19 @@ public static class CheckRunner
 {
     private static readonly Regex ProjectReferenceRegex = SourceGenerated.ProjectReferenceRegex();
 
-    public static async ValueTask<int> CheckAsync(string solutionFileName, string baseFolder, bool preReleaseBuild, bool warningsAsErrors, CancellationToken cancellationToken)
+    public static async ValueTask<int> CheckAsync(string solutionFileName, string baseFolder, bool preReleaseBuild, bool warningsAsErrors, ILogger logger, CancellationToken cancellationToken)
     {
         IReadOnlyList<SolutionProject> projects = await LoadProjectsAsync(solution: solutionFileName, cancellationToken: cancellationToken);
-        IServiceProvider services = Setup(warningsAsErrors: warningsAsErrors, preReleaseBuild: preReleaseBuild, projects: projects);
+        IServiceProvider services = Setup(warningsAsErrors: warningsAsErrors, preReleaseBuild: preReleaseBuild, projects: projects, logger: logger);
 
-        IDiagnosticLogger logging = services.GetRequiredService<IDiagnosticLogger>();
+        ITrackingLogger logging = services.GetRequiredService<ITrackingLogger>();
 
         PerformChecks(services: services, solutionFileName: solutionFileName, logging: logging);
 
         return (int)logging.Errors;
     }
 
-    private static void PerformChecks(IServiceProvider services, string solutionFileName, IDiagnosticLogger logging)
+    private static void PerformChecks(IServiceProvider services, string solutionFileName, ITrackingLogger logging)
     {
         IProjectLoader projectLoader = services.GetRequiredService<IProjectLoader>();
         IReadOnlyList<ISolutionCheck> solutionChecks = RegisteredSolutionChecks(services);
@@ -54,7 +54,7 @@ public static class CheckRunner
         }
     }
 
-    private static void CheckProject(SolutionProject project, IProjectLoader projectLoader, IReadOnlyList<IProjectCheck> projectChecks, IDiagnosticLogger logging)
+    private static void CheckProject(SolutionProject project, IProjectLoader projectLoader, IReadOnlyList<IProjectCheck> projectChecks, ITrackingLogger logging)
     {
         logging.LogInformation($"Checking Project: {project.DisplayName}:");
 
@@ -80,14 +80,14 @@ public static class CheckRunner
         }
     }
 
-    private static IServiceProvider Setup(bool warningsAsErrors, bool preReleaseBuild, IReadOnlyList<SolutionProject> projects)
+    private static IServiceProvider Setup(bool warningsAsErrors, bool preReleaseBuild, IReadOnlyList<SolutionProject> projects, ILogger logger)
     {
         IRepositorySettings repositorySettings = new RepositorySettings(projects);
-        DiagnosticLogger logger = new(warningsAsErrors);
+        TrackingLogger trackingLogger = new(warningsAsErrors: warningsAsErrors, logger: logger);
 
         return new ServiceCollection().AddSingleton(repositorySettings)
-                                      .AddSingleton<ILogger>(logger)
-                                      .AddSingleton<IDiagnosticLogger>(logger)
+                                      .AddSingleton<ILogger>(trackingLogger)
+                                      .AddSingleton<ITrackingLogger>(trackingLogger)
                                       .AddSingleton(typeof(ILogger<>), typeof(LoggerProxy<>))
                                       .AddSingleton(projects)
                                       .AddSingleton<IProjectLoader, ProjectLoader>()

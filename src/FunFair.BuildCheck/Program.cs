@@ -5,6 +5,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using FunFair.BuildCheck.Helpers;
 using FunFair.BuildCheck.Runner;
+using FunFair.BuildCheck.Services;
 using Microsoft.Extensions.Configuration;
 
 namespace FunFair.BuildCheck;
@@ -47,10 +48,13 @@ internal static class Program
                 return ERROR;
             }
 
+            IDiagnosticLogger logger = new DiagnosticLogger(warningsAsErrors: warningsAsErrors);
+
             int errors = await CheckRunner.CheckAsync(solutionFileName: solutionFileName,
                                                       baseFolder: baseFolder,
                                                       preReleaseBuild: preReleaseBuild,
                                                       warningsAsErrors: warningsAsErrors,
+                                                      logger: logger,
                                                       cancellationToken: CancellationToken.None);
 
             return ReportStatus(errors: errors, solutionFileName: solutionFileName);

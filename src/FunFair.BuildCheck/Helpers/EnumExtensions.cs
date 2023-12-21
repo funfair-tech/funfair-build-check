@@ -6,6 +6,6 @@ namespace FunFair.BuildCheck.Helpers;
 
 [EnumText(typeof(LogLevel))]
 [SuppressMessage(category: "ReSharper", checkId: "PartialTypeWithSinglePart", Justification = "Needed for generated code")]
-public static partial class EnumExtensions
+internal static partial class EnumExtensions
 {
 }

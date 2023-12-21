@@ -1,26 +1,19 @@
 using System;
-using System.Threading;
 using FunFair.BuildCheck.Helpers;
 using Microsoft.Extensions.Logging;
 
-namespace FunFair.BuildCheck.Runner.Services;
+namespace FunFair.BuildCheck.Services;
 
-public sealed class DiagnosticLogger : IDiagnosticLogger
+internal sealed class DiagnosticLogger : IDiagnosticLogger
 {
     private readonly bool _warningsAsErrors;
-    private long _errors;
 
     public DiagnosticLogger(bool warningsAsErrors)
     {
         this._warningsAsErrors = warningsAsErrors;
     }
 
-    public long Errors => this._errors;
-
-    public bool IsErrored => this.Errors > 0;
-
     public void Log<TState>(LogLevel logLevel, EventId eventId, TState state, Exception? exception, Func<TState, Exception?, string> formatter)
-
     {
         if (this.IsWarningAsError(logLevel))
         {
@@ -64,14 +57,9 @@ public sealed class DiagnosticLogger : IDiagnosticLogger
 
         string msg = formatter(arg1: state, arg2: exception);
 
-        Action<string> output = Console.WriteLine;
-
-        if (IsError(logLevel))
-        {
-            Interlocked.Increment(ref this._errors);
-
-            output = Console.Error.WriteLine;
-        }
+        Action<string> output = IsError(logLevel)
+            ? Console.Error.WriteLine
+            : Console.WriteLine;
 
         string status = logLevel.GetName()
                                 .ToUpperInvariant();
