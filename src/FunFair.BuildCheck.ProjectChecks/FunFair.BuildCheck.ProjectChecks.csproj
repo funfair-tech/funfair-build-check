@@ -47,6 +47,7 @@
     <EnableNETAnalyzers>true</EnableNETAnalyzers>
     <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
   </PropertyGroup>
+  <Import Project="$(SolutionDir)FunFair.props"/>
   <ItemGroup>
     <ProjectReference Include="..\FunFair.BuildCheck.Helpers\FunFair.BuildCheck.Helpers.csproj" />
     <ProjectReference Include="..\FunFair.BuildCheck.Interfaces\FunFair.BuildCheck.Interfaces.csproj" />
