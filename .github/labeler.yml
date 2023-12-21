@@ -40,6 +40,10 @@
  - any: [ 'src/FunFair.BuildCheck.Interfaces/**/*' ]
 "ProjectChecks":
  - any: [ 'src/FunFair.BuildCheck.ProjectChecks/**/*' ]
+"Runner":
+ - any: [ 'src/FunFair.BuildCheck.Runner/**/*' ]
+"Runner.Tests":
+ - any: [ 'src/FunFair.BuildCheck.Runner.Tests/**/*' ]
 "SolutionChecks":
  - any: [ 'src/FunFair.BuildCheck.SolutionChecks/**/*' ]
 "Tests":
