@@ -18,10 +18,21 @@ public static class CheckRunner
 {
     private static readonly Regex ProjectReferenceRegex = SourceGenerated.ProjectReferenceRegex();
 
-    public static async ValueTask<int> CheckAsync(string solutionFileName, string baseFolder, bool preReleaseBuild, bool warningsAsErrors, ILogger logger, CancellationToken cancellationToken)
+    public static async ValueTask<int> CheckAsync(string solutionFileName,
+                                                  bool preReleaseBuild,
+                                                  bool warningsAsErrors,
+                                                  IFrameworkSettings frameworkSettings,
+                                                  IProjectClassifier projectClassifier,
+                                                  ILogger logger,
+                                                  CancellationToken cancellationToken)
     {
         IReadOnlyList<SolutionProject> projects = await LoadProjectsAsync(solution: solutionFileName, cancellationToken: cancellationToken);
-        IServiceProvider services = Setup(warningsAsErrors: warningsAsErrors, preReleaseBuild: preReleaseBuild, projects: projects, logger: logger);
+        IServiceProvider services = Setup(warningsAsErrors: warningsAsErrors,
+                                          preReleaseBuild: preReleaseBuild,
+                                          projects: projects,
+                                          frameworkSettings: frameworkSettings,
+                                          projectClassifier: projectClassifier,
+                                          logger: logger);
 
         ITrackingLogger logging = services.GetRequiredService<ITrackingLogger>();
 
@@ -80,19 +91,25 @@ public static class CheckRunner
         }
     }
 
-    private static IServiceProvider Setup(bool warningsAsErrors, bool preReleaseBuild, IReadOnlyList<SolutionProject> projects, ILogger logger)
+    private static IServiceProvider Setup(bool warningsAsErrors,
+                                          bool preReleaseBuild,
+                                          IReadOnlyList<SolutionProject> projects,
+                                          IFrameworkSettings frameworkSettings,
+                                          IProjectClassifier projectClassifier,
+                                          ILogger logger)
     {
-        IRepositorySettings repositorySettings = new RepositorySettings(projects);
+        IRepositorySettings wrappedRepositorySettings = new RepositorySettings(projects: projects, frameworkSettings: frameworkSettings, projectClassifier: projectClassifier);
+
         TrackingLogger trackingLogger = new(warningsAsErrors: warningsAsErrors, logger: logger);
 
-        return new ServiceCollection().AddSingleton(repositorySettings)
+        return new ServiceCollection().AddSingleton(wrappedRepositorySettings)
                                       .AddSingleton<ILogger>(trackingLogger)
                                       .AddSingleton<ITrackingLogger>(trackingLogger)
                                       .AddSingleton(typeof(ILogger<>), typeof(LoggerProxy<>))
                                       .AddSingleton(projects)
                                       .AddSingleton<IProjectLoader, ProjectLoader>()
                                       .SetupSolutionChecks()
-                                      .SetupProjectChecks(repositorySettings: repositorySettings)
+                                      .SetupProjectChecks(repositorySettings: wrappedRepositorySettings)
                                       .AddSingleton<ICheckConfiguration>(new CheckConfiguration { PreReleaseBuild = preReleaseBuild })
                                       .BuildServiceProvider();
     }

@@ -4,6 +4,7 @@ using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using FunFair.BuildCheck.Helpers;
+using FunFair.BuildCheck.Interfaces;
 using FunFair.BuildCheck.Runner;
 using FunFair.BuildCheck.Services;
 using Microsoft.Extensions.Configuration;
@@ -49,11 +50,14 @@ internal static class Program
             }
 
             IDiagnosticLogger logger = new DiagnosticLogger(warningsAsErrors: warningsAsErrors);
+            IFrameworkSettings frameworkSettings = new FrameworkSettings();
+            IProjectClassifier projectClassifier = new ProjectClassifier();
 
             int errors = await CheckRunner.CheckAsync(solutionFileName: solutionFileName,
-                                                      baseFolder: baseFolder,
                                                       preReleaseBuild: preReleaseBuild,
                                                       warningsAsErrors: warningsAsErrors,
+                                                      frameworkSettings: frameworkSettings,
+                                                      projectClassifier: projectClassifier,
                                                       logger: logger,
                                                       cancellationToken: CancellationToken.None);
 
