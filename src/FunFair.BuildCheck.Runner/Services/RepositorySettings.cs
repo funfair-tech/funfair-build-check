@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using FunFair.BuildCheck.Interfaces;
 
-namespace FunFair.BuildCheck.Services;
+namespace FunFair.BuildCheck.Runner.Services;
 
 internal sealed class RepositorySettings : IRepositorySettings
 {

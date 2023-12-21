@@ -7,7 +7,7 @@ using FunFair.BuildCheck.ProjectChecks.Settings;
 using FunFair.BuildCheck.SolutionChecks;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace FunFair.BuildCheck;
+namespace FunFair.BuildCheck.Runner;
 
 internal static class Setup
 {

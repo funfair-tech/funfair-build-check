@@ -1,6 +1,6 @@
 using FunFair.BuildCheck.Interfaces;
 
-namespace FunFair.BuildCheck.Services;
+namespace FunFair.BuildCheck.Runner.Services;
 
 public sealed class CheckConfiguration : ICheckConfiguration
 {

@@ -1,6 +1,6 @@
 using System.Text.RegularExpressions;
 
-namespace FunFair.BuildCheck;
+namespace FunFair.BuildCheck.Runner;
 
 #if NET6_0
 internal static class SourceGenerated

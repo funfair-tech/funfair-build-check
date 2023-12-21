@@ -1,6 +1,6 @@
 using Microsoft.Extensions.Logging;
 
-namespace FunFair.BuildCheck;
+namespace FunFair.BuildCheck.Runner;
 
 public interface IDiagnosticLogger : ILogger
 {

@@ -3,7 +3,7 @@ using System.Xml;
 using FunFair.BuildCheck.Interfaces;
 using NonBlocking;
 
-namespace FunFair.BuildCheck.Services;
+namespace FunFair.BuildCheck.Runner.Services;
 
 public sealed class ProjectLoader : IProjectLoader
 {
@@ -16,12 +16,9 @@ public sealed class ProjectLoader : IProjectLoader
 
     public XmlDocument Load(string path)
     {
-        if (this._projects.TryGetValue(key: path, out XmlDocument? doc))
-        {
-            return doc;
-        }
-
-        return this._projects.GetOrAdd(key: path, LoadProject(path));
+        return this._projects.TryGetValue(key: path, out XmlDocument? doc)
+            ? doc
+            : this._projects.GetOrAdd(key: path, LoadProject(path));
     }
 
     private static XmlDocument LoadProject(string path)
