@@ -1,30 +1,31 @@
 using System;
-using FunFair.BuildCheck.Helpers;
+using System.Threading;
 using Microsoft.Extensions.Logging;
 
-namespace FunFair.BuildCheck.Services;
+namespace FunFair.BuildCheck.Runner.Services;
 
-internal sealed class DiagnosticLogger : IDiagnosticLogger
+internal sealed class TrackingLogger : ITrackingLogger
 {
+    private readonly ILogger _logger;
     private readonly bool _warningsAsErrors;
+    private long _errors;
 
-    public DiagnosticLogger(bool warningsAsErrors)
+    public TrackingLogger(bool warningsAsErrors, ILogger logger)
     {
         this._warningsAsErrors = warningsAsErrors;
+        this._logger = logger;
     }
 
+    public long Errors => this._errors;
+
+    public bool IsErrored => this.Errors > 0;
+
     public void Log<TState>(LogLevel logLevel, EventId eventId, TState state, Exception? exception, Func<TState, Exception?, string> formatter)
+
     {
         if (this.IsWarningAsError(logLevel))
         {
             this.OutputErrorMessage(eventId: eventId, state: state, exception: exception, formatter: formatter);
-
-            return;
-        }
-
-        if (logLevel == LogLevel.Information)
-        {
-            OutputInformationalMessage(state: state, exception: exception, formatter: formatter);
 
             return;
         }
@@ -55,22 +56,12 @@ internal sealed class DiagnosticLogger : IDiagnosticLogger
             return;
         }
 
-        string msg = formatter(arg1: state, arg2: exception);
+        if (IsError(logLevel))
+        {
+            Interlocked.Increment(ref this._errors);
+        }
 
-        Action<string> output = IsError(logLevel)
-            ? Console.Error.WriteLine
-            : Console.WriteLine;
-
-        string status = logLevel.GetName()
-                                .ToUpperInvariant();
-
-        output($"{status}: {msg}");
-    }
-
-    private static void OutputInformationalMessage<TState>(TState state, Exception? exception, Func<TState, Exception?, string> formatter)
-    {
-        string msg = formatter(arg1: state, arg2: exception);
-        Console.WriteLine(msg);
+        this._logger.Log(logLevel: logLevel, eventId: 0, state: state, exception: exception, formatter: formatter);
     }
 
     private static bool IsError(LogLevel logLevel)

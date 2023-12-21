@@ -55,6 +55,7 @@
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\FunFair.BuildCheck.ProjectChecks\FunFair.BuildCheck.ProjectChecks.csproj" />
+    <ProjectReference Include="..\FunFair.BuildCheck.Runner\FunFair.BuildCheck.Runner.csproj"/>
     <ProjectReference Include="..\FunFair.BuildCheck.SolutionChecks\FunFair.BuildCheck.SolutionChecks.csproj" />
   </ItemGroup>
   <ItemGroup>

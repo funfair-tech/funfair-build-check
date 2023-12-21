@@ -1,4 +1,4 @@
-﻿namespace FunFair.BuildCheck;
+﻿namespace FunFair.BuildCheck.Helpers;
 
 internal static class ExecutableVersionInformation
 {

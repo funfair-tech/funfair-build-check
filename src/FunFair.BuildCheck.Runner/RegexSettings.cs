@@ -1,7 +1,7 @@
 using System;
 using System.Text.RegularExpressions;
 
-namespace FunFair.BuildCheck;
+namespace FunFair.BuildCheck.Runner;
 
 internal static class RegexSettings
 {
