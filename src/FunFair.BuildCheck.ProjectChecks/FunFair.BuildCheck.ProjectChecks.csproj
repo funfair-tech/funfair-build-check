@@ -38,6 +38,8 @@
     <Company>FunFair</Company>
     <Description>Build check project checks.</Description>
     <NeutralLanguage>en</NeutralLanguage>
+    <PackageTags>FunFair BuildCheck, CSharp, Project Analyzer, analyzers, dotnet tool, tool</PackageTags>
+    <RepositoryUrl>https://github.com/funfair-tech/funfair-build-check</RepositoryUrl>
   </PropertyGroup>
   <PropertyGroup>
     <AnalysisLevel>latest</AnalysisLevel>
@@ -46,6 +48,7 @@
     <CodeAnalysisTreatWarningsAsErrors>true</CodeAnalysisTreatWarningsAsErrors>
     <EnableNETAnalyzers>true</EnableNETAnalyzers>
     <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
+    <EnforceExtendedAnalyzerRules>false</EnforceExtendedAnalyzerRules>
   </PropertyGroup>
   <Import Project="$(SolutionDir)FunFair.props"/>
   <ItemGroup>

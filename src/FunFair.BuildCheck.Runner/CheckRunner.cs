@@ -23,6 +23,7 @@ public static class CheckRunner
                                                   bool warningsAsErrors,
                                                   IFrameworkSettings frameworkSettings,
                                                   IProjectClassifier projectClassifier,
+                                                  Func<IServiceCollection, IServiceProvider> buildServiceProvider,
                                                   ILogger logger,
                                                   CancellationToken cancellationToken)
     {
@@ -32,6 +33,7 @@ public static class CheckRunner
                                           projects: projects,
                                           frameworkSettings: frameworkSettings,
                                           projectClassifier: projectClassifier,
+                                          buildServiceProvider: buildServiceProvider,
                                           logger: logger);
 
         ITrackingLogger logging = services.GetRequiredService<ITrackingLogger>();
@@ -100,22 +102,22 @@ public static class CheckRunner
                                           IReadOnlyList<SolutionProject> projects,
                                           IFrameworkSettings frameworkSettings,
                                           IProjectClassifier projectClassifier,
+                                          Func<IServiceCollection, IServiceProvider> buildServiceProvider,
                                           ILogger logger)
     {
         IRepositorySettings wrappedRepositorySettings = new RepositorySettings(projects: projects, frameworkSettings: frameworkSettings, projectClassifier: projectClassifier);
 
         TrackingLogger trackingLogger = new(warningsAsErrors: warningsAsErrors, logger: logger);
 
-        return new ServiceCollection().AddSingleton(wrappedRepositorySettings)
-                                      .AddSingleton<ILogger>(trackingLogger)
-                                      .AddSingleton<ITrackingLogger>(trackingLogger)
-                                      .AddSingleton(typeof(ILogger<>), typeof(LoggerProxy<>))
-                                      .AddSingleton(projects)
-                                      .AddSingleton<IProjectXmlLoader, ProjectXmlLoader>()
-                                      .SetupSolutionChecks()
-                                      .SetupProjectChecks(repositorySettings: wrappedRepositorySettings)
-                                      .AddSingleton<ICheckConfiguration>(new CheckConfiguration(preReleaseBuild: preReleaseBuild, allowPackageVersionMismatch: false))
-                                      .BuildServiceProvider();
+        return buildServiceProvider(new ServiceCollection().AddSingleton(wrappedRepositorySettings)
+                                                           .AddSingleton<ILogger>(trackingLogger)
+                                                           .AddSingleton<ITrackingLogger>(trackingLogger)
+                                                           .AddSingleton(typeof(ILogger<>), typeof(LoggerProxy<>))
+                                                           .AddSingleton(projects)
+                                                           .AddSingleton<IProjectXmlLoader, ProjectXmlLoader>()
+                                                           .SetupSolutionChecks()
+                                                           .SetupProjectChecks(repositorySettings: wrappedRepositorySettings)
+                                                           .AddSingleton<ICheckConfiguration>(new CheckConfiguration(preReleaseBuild: preReleaseBuild, allowPackageVersionMismatch: false)));
     }
 
     private static async Task<IReadOnlyList<SolutionProject>> LoadProjectsAsync(string solution, CancellationToken cancellationToken)

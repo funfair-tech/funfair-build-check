@@ -38,6 +38,8 @@
     <Company>FunFair</Company>
     <Description>Build check project checks.</Description>
     <NeutralLanguage>en</NeutralLanguage>
+    <PackageTags>FunFair BuildCheck, CSharp, Project Analyzer, analyzers, dotnet tool, tool</PackageTags>
+    <RepositoryUrl>https://github.com/funfair-tech/funfair-build-check</RepositoryUrl>
   </PropertyGroup>
   <PropertyGroup>
     <AnalysisLevel>latest</AnalysisLevel>
@@ -46,6 +48,7 @@
     <CodeAnalysisTreatWarningsAsErrors>true</CodeAnalysisTreatWarningsAsErrors>
     <EnableNETAnalyzers>true</EnableNETAnalyzers>
     <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
+    <EnforceExtendedAnalyzerRules>false</EnforceExtendedAnalyzerRules>
   </PropertyGroup>
   <Import Project="$(SolutionDir)FunFair.props"/>
   <ItemGroup>
@@ -55,7 +58,7 @@
   <ItemGroup>
     <PackageReference Include="NonBlocking" Version="2.1.2"/>
     <PackageReference Include="NuGet.Versioning" Version="6.8.0"/>
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="8.0.0"/>
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="8.0.0"/>
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="AsyncFixer" Version="1.6.0" PrivateAssets="All" ExcludeAssets="runtime"/>

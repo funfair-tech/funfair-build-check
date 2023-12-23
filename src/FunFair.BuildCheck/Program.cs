@@ -8,6 +8,7 @@ using FunFair.BuildCheck.Interfaces;
 using FunFair.BuildCheck.Runner;
 using FunFair.BuildCheck.Services;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace FunFair.BuildCheck;
 
@@ -58,6 +59,7 @@ internal static class Program
                                                       warningsAsErrors: warningsAsErrors,
                                                       frameworkSettings: frameworkSettings,
                                                       projectClassifier: projectClassifier,
+                                                      buildServiceProvider: services => services.BuildServiceProvider(),
                                                       logger: logger,
                                                       cancellationToken: CancellationToken.None);
 

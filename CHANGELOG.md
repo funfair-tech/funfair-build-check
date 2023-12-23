@@ -19,6 +19,8 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 - Dependencies - Updated SmartAnalyzers.CSharpExtensions.Annotations to 4.2.9
 - Dependencies - Updated Meziantou.Analyzer to 2.0.123
 - Dependencies - Updated TeamCity.VSTest.TestAdapter to 1.0.39
+- Used common base class for simple properygroup value checks
+- Made project loading async
 ### Removed
 ### Deployment Changes
 
