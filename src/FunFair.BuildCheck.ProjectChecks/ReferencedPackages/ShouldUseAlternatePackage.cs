@@ -11,7 +11,6 @@ namespace FunFair.BuildCheck.ProjectChecks.ReferencedPackages;
 
 public abstract class ShouldUseAlternatePackage : IProjectCheck
 {
-    private readonly ILogger _logger;
     private readonly string _matchPackageId;
     private readonly string _usePackageId;
 
@@ -19,8 +18,10 @@ public abstract class ShouldUseAlternatePackage : IProjectCheck
     {
         this._matchPackageId = matchPackageId;
         this._usePackageId = usePackageId;
-        this._logger = logger;
+        this.Logger = logger;
     }
+
+    protected ILogger Logger { get; }
 
     public ValueTask CheckAsync(string projectName, string projectFolder, XmlDocument project, CancellationToken cancellationToken)
     {
@@ -45,7 +46,7 @@ public abstract class ShouldUseAlternatePackage : IProjectCheck
             return ValueTask.CompletedTask;
         }
 
-        if (this.ShouldExclude(project: project, projectName: projectName, logger: this._logger))
+        if (this.ShouldExclude(project: project, projectName: projectName, logger: this.Logger))
         {
             // Test projects can use whatever they want.
             return ValueTask.CompletedTask;
@@ -64,7 +65,7 @@ public abstract class ShouldUseAlternatePackage : IProjectCheck
 
             if (StringComparer.InvariantCultureIgnoreCase.Equals(x: packageId, y: this._matchPackageId))
             {
-                this._logger.LogError($"Should use package {this._usePackageId} rather than {this._matchPackageId}");
+                this.Logger.LogError($"Should use package {this._usePackageId} rather than {this._matchPackageId}");
             }
         }
 
