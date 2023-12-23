@@ -24,6 +24,11 @@ public abstract class ShouldUseAlternatePackage : IProjectCheck
 
     public ValueTask CheckAsync(string projectName, string projectFolder, XmlDocument project, CancellationToken cancellationToken)
     {
+        if (!this.CanCheck(projectName: projectName, projectFolder: projectFolder, project: project))
+        {
+            return ValueTask.CompletedTask;
+        }
+
         string outputType = project.GetOutputType();
 
         if (StringComparer.InvariantCultureIgnoreCase.Equals(x: outputType, y: "Exe"))
@@ -64,6 +69,11 @@ public abstract class ShouldUseAlternatePackage : IProjectCheck
         }
 
         return ValueTask.CompletedTask;
+    }
+
+    protected virtual bool CanCheck(string projectName, string projectFolder, XmlDocument project)
+    {
+        return true;
     }
 
     protected virtual bool ShouldExclude(XmlDocument project, string projectName, ILogger logger)
