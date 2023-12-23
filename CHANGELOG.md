@@ -21,6 +21,7 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 - Used common base class for simple properygroup value checks
 - Made project loading async
 - Dependencies - Updated Meziantou.Analyzer to 2.0.127
+- Dependencies - Updated Philips.CodeAnalysis.MaintainabilityAnalyzers to 1.5.0
 ### Removed
 ### Deployment Changes
 
