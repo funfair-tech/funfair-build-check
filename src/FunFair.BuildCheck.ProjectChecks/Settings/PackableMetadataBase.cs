@@ -1,3 +1,5 @@
+using System.Threading;
+using System.Threading.Tasks;
 using System.Xml;
 using FunFair.BuildCheck.Interfaces;
 using FunFair.BuildCheck.ProjectChecks.Helpers;
@@ -16,16 +18,18 @@ public abstract class PackableMetadataBase : IProjectCheck
         this._logger = logger;
     }
 
-    public void Check(string projectName, string projectFolder, XmlDocument project)
+    public ValueTask CheckAsync(string projectName, string projectFolder, XmlDocument project, CancellationToken cancellationToken)
     {
         if (!project.IsPackable())
         {
-            return;
+            return ValueTask.CompletedTask;
         }
 
         if (!project.HasProperty(this._property))
         {
             this._logger.LogError($"Packable project {projectName} does not define {this._property}");
         }
+
+        return ValueTask.CompletedTask;
     }
 }

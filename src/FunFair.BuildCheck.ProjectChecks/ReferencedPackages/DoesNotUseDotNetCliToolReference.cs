@@ -1,3 +1,5 @@
+using System.Threading;
+using System.Threading.Tasks;
 using System.Xml;
 using FunFair.BuildCheck.Interfaces;
 using FunFair.BuildCheck.ProjectChecks.ReferencedPackages.LoggingExtensions;
@@ -14,7 +16,7 @@ public sealed class DoesNotUseDotNetCliToolReference : IProjectCheck
         this._logger = logger;
     }
 
-    public void Check(string projectName, string projectFolder, XmlDocument project)
+    public ValueTask CheckAsync(string projectName, string projectFolder, XmlDocument project, CancellationToken cancellationToken)
     {
         XmlNodeList? nodes = project.SelectNodes(xpath: "/Project/ItemGroup/DotNetCliToolReference");
 
@@ -22,5 +24,7 @@ public sealed class DoesNotUseDotNetCliToolReference : IProjectCheck
         {
             this._logger.ContainsDotNetCliToolReference(projectName);
         }
+
+        return ValueTask.CompletedTask;
     }
 }

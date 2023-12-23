@@ -1,5 +1,7 @@
 using System;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Xml;
 using FunFair.BuildCheck.Interfaces;
 using Microsoft.Extensions.Logging;
@@ -21,7 +23,7 @@ public abstract class HasAppropriateAnalysisPackages : IProjectCheck
         this._logger = logger;
     }
 
-    public void Check(string projectName, string projectFolder, XmlDocument project)
+    public ValueTask CheckAsync(string projectName, string projectFolder, XmlDocument project, CancellationToken cancellationToken)
     {
         XmlNodeList? nodes = project.SelectNodes(xpath: "/Project/ItemGroup/PackageReference");
 
@@ -63,5 +65,7 @@ public abstract class HasAppropriateAnalysisPackages : IProjectCheck
         {
             this._logger.LogError($"{projectName}: Found {this._detectPackageId} but did not find analyzer {this._mustIncludePackageId}.");
         }
+
+        return ValueTask.CompletedTask;
     }
 }

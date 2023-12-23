@@ -1,28 +1,18 @@
 using System.Xml;
-using FunFair.BuildCheck.Interfaces;
 using FunFair.BuildCheck.ProjectChecks.Helpers;
 using Microsoft.Extensions.Logging;
 
 namespace FunFair.BuildCheck.ProjectChecks.Settings;
 
-public sealed class EnablePackageValidationPolicy : IProjectCheck
+public sealed class EnablePackageValidationPolicy : SimplePropertyProjectCheckBase
 {
-    private const string EXPECTED = "true";
-
-    private readonly ILogger<EnablePackageValidationPolicy> _logger;
-
     public EnablePackageValidationPolicy(ILogger<EnablePackageValidationPolicy> logger)
+        : base(propertyName: "EnablePackageValidation", requiredValue: "true", logger: logger)
     {
-        this._logger = logger;
     }
 
-    public void Check(string projectName, string projectFolder, XmlDocument project)
+    protected override bool CanCheck(string projectName, string projectFolder, XmlDocument project)
     {
-        if (!project.IsPackable())
-        {
-            return;
-        }
-
-        ProjectValueHelpers.CheckValue(projectName: projectName, project: project, nodePresence: "EnablePackageValidation", requiredValue: EXPECTED, logger: this._logger);
+        return project.IsPackable();
     }
 }

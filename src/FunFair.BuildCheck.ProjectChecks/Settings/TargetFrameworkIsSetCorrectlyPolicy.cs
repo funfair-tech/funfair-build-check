@@ -1,5 +1,7 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Xml;
 using FunFair.BuildCheck.Interfaces;
 using FunFair.BuildCheck.ProjectChecks.Helpers;
@@ -21,12 +23,12 @@ public sealed class TargetFrameworkIsSetCorrectlyPolicy : IProjectCheck
         this._expected = repositorySettings.DotnetTargetFramework;
     }
 
-    public void Check(string projectName, string projectFolder, XmlDocument project)
+    public ValueTask CheckAsync(string projectName, string projectFolder, XmlDocument project, CancellationToken cancellationToken)
     {
         if (string.IsNullOrWhiteSpace(this._expected))
         {
             // no frameworks defined - allow any
-            return;
+            return ValueTask.CompletedTask;
         }
 
         if (this._repositorySettings.IsCodeAnalysisSolution && !project.IsTestProject(projectName: projectName, logger: this._logger))
@@ -34,7 +36,7 @@ public sealed class TargetFrameworkIsSetCorrectlyPolicy : IProjectCheck
             // Code analysis project has specific requirements
             ProjectValueHelpers.CheckValue(projectName: projectName, project: project, nodePresence: "TargetFramework", requiredValue: "netstandard2.0", logger: this._logger);
 
-            return;
+            return ValueTask.CompletedTask;
         }
 
         string sdk = project.GetSdk();
@@ -42,34 +44,34 @@ public sealed class TargetFrameworkIsSetCorrectlyPolicy : IProjectCheck
         if (string.IsNullOrWhiteSpace(sdk))
         {
             // no SDK don't know what do do.
-            return;
+            return ValueTask.CompletedTask;
         }
 
         if (!sdk.StartsWith(value: "Microsoft.NET.", comparisonType: StringComparison.OrdinalIgnoreCase))
         {
             // not a dotnet SDK so don't process this
-            return;
+            return ValueTask.CompletedTask;
         }
 
         if (string.IsNullOrEmpty(this._expected))
         {
             // no frameworks defined - allow any
-            return;
+            return ValueTask.CompletedTask;
         }
 
         string[] frameworks = this._expected.Split(";");
 
         switch (frameworks.Length)
         {
-            case 0: return;
+            case 0: return ValueTask.CompletedTask;
             case 1:
                 ProjectValueHelpers.CheckValue(projectName: projectName, project: project, nodePresence: "TargetFramework", frameworks[0], logger: this._logger);
 
-                break;
+                return ValueTask.CompletedTask;
             default:
                 ProjectValueHelpers.CheckValue(projectName: projectName, project: project, nodePresence: "TargetFrameworks", requiredValue: this._expected, logger: this._logger);
 
-                break;
+                return ValueTask.CompletedTask;
         }
     }
 }

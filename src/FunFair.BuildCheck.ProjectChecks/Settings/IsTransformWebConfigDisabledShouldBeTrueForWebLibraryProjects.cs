@@ -1,4 +1,6 @@
 using System;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Xml;
 using FunFair.BuildCheck.Interfaces;
 using FunFair.BuildCheck.ProjectChecks.Helpers;
@@ -15,22 +17,23 @@ public sealed class IsTransformWebConfigDisabledShouldBeTrueForWebLibraryProject
         this._logger = logger;
     }
 
-    public void Check(string projectName, string projectFolder, XmlDocument project)
+    public ValueTask CheckAsync(string projectName, string projectFolder, XmlDocument project, CancellationToken cancellationToken)
     {
         string sdk = project.GetSdk();
 
         if (!StringComparer.InvariantCultureIgnoreCase.Equals(x: sdk, y: "Microsoft.NET.Sdk.Web"))
         {
             // not a web project
-            return;
+            return ValueTask.CompletedTask;
         }
 
         if (!StringComparer.InvariantCultureIgnoreCase.Equals(project.GetOutputType(), y: "Library"))
         {
             // not a library
-            return;
+            return ValueTask.CompletedTask;
         }
 
         ProjectValueHelpers.CheckValue(projectName: projectName, project: project, nodePresence: "IsTransformWebConfigDisabled", requiredValue: true, logger: this._logger);
+        return ValueTask.CompletedTask;
     }
 }

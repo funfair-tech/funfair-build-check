@@ -1,4 +1,6 @@
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Xml;
 using FunFair.BuildCheck.Interfaces;
 using Microsoft.Extensions.Logging;
@@ -19,13 +21,13 @@ public sealed class ShouldNotRemoveFromCompilation : IProjectCheck
         this._logger = logger;
     }
 
-    public void Check(string projectName, string projectFolder, XmlDocument project)
+    public ValueTask CheckAsync(string projectName, string projectFolder, XmlDocument project, CancellationToken cancellationToken)
     {
         XmlNodeList? nodes = project.SelectNodes("/Project/ItemGroup/Compile[@Remove]");
 
         if (nodes is null)
         {
-            return;
+            return ValueTask.CompletedTask;
         }
 
         foreach (XmlElement reference in nodes.OfType<XmlElement>())
@@ -33,5 +35,7 @@ public sealed class ShouldNotRemoveFromCompilation : IProjectCheck
             string projectReference = reference.GetAttribute(name: "Remove");
             this._logger.LogError($"Removes {projectReference} from compilation");
         }
+
+        return ValueTask.CompletedTask;
     }
 }

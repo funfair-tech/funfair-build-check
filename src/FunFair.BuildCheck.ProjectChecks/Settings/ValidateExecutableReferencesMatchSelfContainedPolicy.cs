@@ -1,32 +1,18 @@
 using System.Xml;
-using FunFair.BuildCheck.Interfaces;
 using FunFair.BuildCheck.ProjectChecks.Helpers;
 using Microsoft.Extensions.Logging;
 
 namespace FunFair.BuildCheck.ProjectChecks.Settings;
 
-public sealed class ValidateExecutableReferencesMatchSelfContainedPolicy : IProjectCheck
+public sealed class ValidateExecutableReferencesMatchSelfContainedPolicy : SimplePropertyProjectCheckBase
 {
-    private const string EXPECTED = "true";
-
-    private readonly ILogger<ValidateExecutableReferencesMatchSelfContainedPolicy> _logger;
-
     public ValidateExecutableReferencesMatchSelfContainedPolicy(ILogger<ValidateExecutableReferencesMatchSelfContainedPolicy> logger)
+        : base(propertyName: "ValidateExecutableReferencesMatchSelfContained", requiredValue: "true", logger: logger)
     {
-        this._logger = logger;
     }
 
-    public void Check(string projectName, string projectFolder, XmlDocument project)
+    protected override bool CanCheck(string projectName, string projectFolder, XmlDocument project)
     {
-        if (!project.IsPublishable())
-        {
-            return;
-        }
-
-        ProjectValueHelpers.CheckValue(projectName: projectName,
-                                       project: project,
-                                       nodePresence: "ValidateExecutableReferencesMatchSelfContained",
-                                       requiredValue: EXPECTED,
-                                       logger: this._logger);
+        return project.IsPublishable();
     }
 }

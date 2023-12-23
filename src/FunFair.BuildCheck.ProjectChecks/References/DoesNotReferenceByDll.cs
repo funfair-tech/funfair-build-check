@@ -1,4 +1,6 @@
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Xml;
 using FunFair.BuildCheck.Interfaces;
 using Microsoft.Extensions.Logging;
@@ -14,13 +16,13 @@ public sealed class DoesNotReferenceByDll : IProjectCheck
         this._logger = logger;
     }
 
-    public void Check(string projectName, string projectFolder, XmlDocument project)
+    public ValueTask CheckAsync(string projectName, string projectFolder, XmlDocument project, CancellationToken cancellationToken)
     {
         XmlNodeList? references = project.SelectNodes(xpath: "/Project/ItemGroup/Reference");
 
         if (references is null)
         {
-            return;
+            return ValueTask.CompletedTask;
         }
 
         foreach (XmlElement reference in references.OfType<XmlElement>())
@@ -28,5 +30,7 @@ public sealed class DoesNotReferenceByDll : IProjectCheck
             string assembly = reference.GetAttribute(name: "Include");
             this._logger.LogError($"{projectName}: References {assembly} directly not using NuGet or a project reference.");
         }
+
+        return ValueTask.CompletedTask;
     }
 }

@@ -1,6 +1,8 @@
 using System;
 using System.IO;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Xml;
 using FunFair.BuildCheck.Interfaces;
 using FunFair.BuildCheck.ProjectChecks.Helpers;
@@ -11,15 +13,15 @@ namespace FunFair.BuildCheck.ProjectChecks.References;
 public sealed class PackableLibrariesShouldNotDependOnNonPackable : IProjectCheck
 {
     private readonly ILogger<PackableLibrariesShouldNotDependOnNonPackable> _logger;
-    private readonly IProjectLoader _projectLoader;
+    private readonly IProjectXmlLoader _projectXmlLoader;
 
-    public PackableLibrariesShouldNotDependOnNonPackable(IProjectLoader projectLoader, ILogger<PackableLibrariesShouldNotDependOnNonPackable> logger)
+    public PackableLibrariesShouldNotDependOnNonPackable(IProjectXmlLoader projectXmlLoader, ILogger<PackableLibrariesShouldNotDependOnNonPackable> logger)
     {
-        this._projectLoader = projectLoader;
+        this._projectXmlLoader = projectXmlLoader;
         this._logger = logger;
     }
 
-    public void Check(string projectName, string projectFolder, XmlDocument project)
+    public async ValueTask CheckAsync(string projectName, string projectFolder, XmlDocument project, CancellationToken cancellationToken)
     {
         if (!StringComparer.InvariantCultureIgnoreCase.Equals(x: "Library", project.GetOutputType()))
         {
@@ -52,7 +54,7 @@ public sealed class PackableLibrariesShouldNotDependOnNonPackable : IProjectChec
 
             referencedProject = i.FullName;
 
-            XmlDocument otherProject = this._projectLoader.Load(referencedProject);
+            XmlDocument otherProject = await this._projectXmlLoader.LoadAsync(referencedProject, cancellationToken);
 
             if (!otherProject.IsPackable())
             {

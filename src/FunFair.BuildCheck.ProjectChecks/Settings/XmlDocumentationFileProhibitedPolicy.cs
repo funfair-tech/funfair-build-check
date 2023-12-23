@@ -1,3 +1,5 @@
+using System.Threading;
+using System.Threading.Tasks;
 using System.Xml;
 using FunFair.BuildCheck.Interfaces;
 using Microsoft.Extensions.Logging;
@@ -15,11 +17,11 @@ public sealed class XmlDocumentationFileProhibitedPolicy : IProjectCheck
         this._logger = logger;
     }
 
-    public void Check(string projectName, string projectFolder, XmlDocument project)
+    public ValueTask CheckAsync(string projectName, string projectFolder, XmlDocument project, CancellationToken cancellationToken)
     {
         if (this._repositorySettings.XmlDocumentationRequired)
         {
-            return;
+            return ValueTask.CompletedTask;
         }
 
         XmlNodeList? nodes = project.SelectNodes("/Project/PropertyGroup/DocumentationFile");
@@ -28,5 +30,7 @@ public sealed class XmlDocumentationFileProhibitedPolicy : IProjectCheck
         {
             this._logger.LogError($"{projectName}: Should not have XML Documentation");
         }
+
+        return ValueTask.CompletedTask;
     }
 }

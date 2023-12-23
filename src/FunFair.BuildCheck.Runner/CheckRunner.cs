@@ -36,14 +36,14 @@ public static class CheckRunner
 
         ITrackingLogger logging = services.GetRequiredService<ITrackingLogger>();
 
-        PerformChecks(services: services, solutionFileName: solutionFileName, logging: logging);
+        await PerformChecksAsync(services: services, solutionFileName: solutionFileName, logging: logging, cancellationToken: cancellationToken);
 
         return (int)logging.Errors;
     }
 
-    private static void PerformChecks(IServiceProvider services, string solutionFileName, ITrackingLogger logging)
+    private static async ValueTask PerformChecksAsync(IServiceProvider services, string solutionFileName, ITrackingLogger logging, CancellationToken cancellationToken)
     {
-        IProjectLoader projectLoader = services.GetRequiredService<IProjectLoader>();
+        IProjectXmlLoader projectXmlLoader = services.GetRequiredService<IProjectXmlLoader>();
         IReadOnlyList<ISolutionCheck> solutionChecks = RegisteredSolutionChecks(services);
         IReadOnlyList<IProjectCheck> projectChecks = RegisteredProjectChecks(services);
 
@@ -53,7 +53,7 @@ public static class CheckRunner
 
         foreach (SolutionProject project in projects)
         {
-            CheckProject(project: project, projectLoader: projectLoader, projectChecks: projectChecks, logging: logging);
+            await CheckProjectAsync(project: project, projectXmlLoader: projectXmlLoader, projectChecks: projectChecks, logging: logging, cancellationToken: cancellationToken);
         }
     }
 
@@ -65,7 +65,11 @@ public static class CheckRunner
         }
     }
 
-    private static void CheckProject(SolutionProject project, IProjectLoader projectLoader, IReadOnlyList<IProjectCheck> projectChecks, ITrackingLogger logging)
+    private static async ValueTask CheckProjectAsync(SolutionProject project,
+                                                     IProjectXmlLoader projectXmlLoader,
+                                                     IReadOnlyList<IProjectCheck> projectChecks,
+                                                     ITrackingLogger logging,
+                                                     CancellationToken cancellationToken)
     {
         logging.LogInformation($"Checking Project: {project.DisplayName}:");
 
@@ -78,16 +82,16 @@ public static class CheckRunner
             return;
         }
 
-        XmlDocument doc = projectLoader.Load(project.FileName);
+        XmlDocument doc = await projectXmlLoader.LoadAsync(path: project.FileName, cancellationToken: cancellationToken);
 
-        TestProject(projectChecks: projectChecks, project: project, projectFolder: projectFolder, doc: doc);
+        await TestProjectAsync(projectChecks: projectChecks, project: project, projectFolder: projectFolder, doc: doc, cancellationToken: cancellationToken);
     }
 
-    private static void TestProject(IReadOnlyList<IProjectCheck> projectChecks, SolutionProject project, string projectFolder, XmlDocument doc)
+    private static async ValueTask TestProjectAsync(IReadOnlyList<IProjectCheck> projectChecks, SolutionProject project, string projectFolder, XmlDocument doc, CancellationToken cancellationToken)
     {
         foreach (IProjectCheck check in projectChecks)
         {
-            check.Check(projectName: project.DisplayName, projectFolder: projectFolder, project: doc);
+            await check.CheckAsync(projectName: project.DisplayName, projectFolder: projectFolder, project: doc, cancellationToken: cancellationToken);
         }
     }
 
@@ -107,10 +111,10 @@ public static class CheckRunner
                                       .AddSingleton<ITrackingLogger>(trackingLogger)
                                       .AddSingleton(typeof(ILogger<>), typeof(LoggerProxy<>))
                                       .AddSingleton(projects)
-                                      .AddSingleton<IProjectLoader, ProjectLoader>()
+                                      .AddSingleton<IProjectXmlLoader, ProjectXmlLoader>()
                                       .SetupSolutionChecks()
                                       .SetupProjectChecks(repositorySettings: wrappedRepositorySettings)
-                                      .AddSingleton<ICheckConfiguration>(new CheckConfiguration { PreReleaseBuild = preReleaseBuild })
+                                      .AddSingleton<ICheckConfiguration>(new CheckConfiguration(preReleaseBuild: preReleaseBuild, allowPackageVersionMismatch: false))
                                       .BuildServiceProvider();
     }
 

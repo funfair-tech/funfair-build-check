@@ -1,4 +1,6 @@
 using System;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Xml;
 using FunFair.BuildCheck.Interfaces;
 using FunFair.BuildCheck.ProjectChecks.Helpers;
@@ -19,11 +21,11 @@ public sealed class XmlDocumentationFileRequiredPolicy : IProjectCheck
         this._logger = logger;
     }
 
-    public void Check(string projectName, string projectFolder, XmlDocument project)
+    public ValueTask CheckAsync(string projectName, string projectFolder, XmlDocument project, CancellationToken cancellationToken)
     {
         if (!this._repositorySettings.XmlDocumentationRequired)
         {
-            return;
+            return ValueTask.CompletedTask;
         }
 
         bool testProject = project.IsTestProject(projectName: projectName, logger: this._logger);
@@ -37,10 +39,12 @@ public sealed class XmlDocumentationFileRequiredPolicy : IProjectCheck
         {
             this.CheckTestProject(projectName: projectName, project: project);
 
-            return;
+            return ValueTask.CompletedTask;
         }
 
         ProjectValueHelpers.CheckValue(projectName: projectName, project: project, nodePresence: "DocumentationFile", requiredValue: EXPECTED, logger: this._logger);
+
+        return ValueTask.CompletedTask;
     }
 
     private void CheckTestProject(string projectName, XmlDocument project)

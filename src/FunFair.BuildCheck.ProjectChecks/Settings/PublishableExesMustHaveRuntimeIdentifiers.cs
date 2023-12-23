@@ -1,4 +1,6 @@
 using System;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Xml;
 using FunFair.BuildCheck.Interfaces;
 using FunFair.BuildCheck.ProjectChecks.Helpers;
@@ -15,20 +17,20 @@ public sealed class PublishableExesMustHaveRuntimeIdentifiers : IProjectCheck
         this._logger = logger;
     }
 
-    public void Check(string projectName, string projectFolder, XmlDocument project)
+    public ValueTask CheckAsync(string projectName, string projectFolder, XmlDocument project, CancellationToken cancellationToken)
     {
         bool isExe = StringComparer.InvariantCultureIgnoreCase.Equals(x: "Exe", project.GetOutputType());
 
         if (!isExe)
         {
-            return;
+            return ValueTask.CompletedTask;
         }
 
         bool isPublishable = project.IsPublishable();
 
         if (!isPublishable)
         {
-            return;
+            return ValueTask.CompletedTask;
         }
 
         string runtimeIdentifiers = project.GetRuntimeIdentifiers();
@@ -38,5 +40,7 @@ public sealed class PublishableExesMustHaveRuntimeIdentifiers : IProjectCheck
         {
             this._logger.LogError($"{projectName} Should specify RuntimeIdentifiers as it is publishable");
         }
+
+        return ValueTask.CompletedTask;
     }
 }

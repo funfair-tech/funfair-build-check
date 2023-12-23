@@ -1,4 +1,6 @@
 using System;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Xml;
 using FunFair.BuildCheck.Interfaces;
 using FunFair.BuildCheck.ProjectChecks.Helpers;
@@ -22,11 +24,11 @@ public abstract class MustHaveAnalyzerPackage : IProjectCheck
         this._logger = logger;
     }
 
-    public void Check(string projectName, string projectFolder, XmlDocument project)
+    public ValueTask CheckAsync(string projectName, string projectFolder, XmlDocument project, CancellationToken cancellationToken)
     {
         if (!this._mustHave)
         {
-            return;
+            return ValueTask.CompletedTask;
         }
 
         bool packageExists = CheckReference(packageId: this._packageId, project: project);
@@ -50,6 +52,8 @@ public abstract class MustHaveAnalyzerPackage : IProjectCheck
         {
             this._logger.LogError($"{projectName}: Does not reference {this._packageId} using NuGet");
         }
+
+        return ValueTask.CompletedTask;
     }
 
     private static bool IsPackageExcluded(string packageId)

@@ -1,3 +1,5 @@
+using System.Threading;
+using System.Threading.Tasks;
 using System.Xml;
 using FunFair.BuildCheck.Interfaces;
 using FunFair.BuildCheck.ProjectChecks.Helpers;
@@ -14,11 +16,11 @@ public sealed class EnforceExtendedAnalyzerRulesPolicy : IProjectCheck
         this._logger = logger;
     }
 
-    public void Check(string projectName, string projectFolder, XmlDocument project)
+    public ValueTask CheckAsync(string projectName, string projectFolder, XmlDocument project, CancellationToken cancellationToken)
     {
         if (!project.IsPackable())
         {
-            return;
+            return ValueTask.CompletedTask;
         }
 
         ProjectValueHelpers.CheckValue(projectName: projectName,
@@ -28,5 +30,7 @@ public sealed class EnforceExtendedAnalyzerRulesPolicy : IProjectCheck
                                            ? "true"
                                            : "false",
                                        logger: this._logger);
+
+        return ValueTask.CompletedTask;
     }
 }

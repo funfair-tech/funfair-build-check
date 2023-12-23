@@ -1,5 +1,7 @@
 using System;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Xml;
 using FunFair.BuildCheck.Interfaces;
 using Microsoft.Extensions.Logging;
@@ -19,13 +21,13 @@ public sealed class NoPreReleaseNuGetPackages : IProjectCheck
         this._logger = logger;
     }
 
-    public void Check(string projectName, string projectFolder, XmlDocument project)
+    public ValueTask CheckAsync(string projectName, string projectFolder, XmlDocument project, CancellationToken cancellationToken)
     {
         XmlNodeList? nodes = project.SelectNodes(xpath: "/Project/ItemGroup/PackageReference");
 
         if (nodes is null)
         {
-            return;
+            return ValueTask.CompletedTask;
         }
 
         foreach (XmlElement reference in nodes.OfType<XmlElement>())
@@ -71,5 +73,7 @@ public sealed class NoPreReleaseNuGetPackages : IProjectCheck
                 this._logger.LogError($"{projectName}: Package {packageName} uses pre-release version {version}.");
             }
         }
+
+        return ValueTask.CompletedTask;
     }
 }

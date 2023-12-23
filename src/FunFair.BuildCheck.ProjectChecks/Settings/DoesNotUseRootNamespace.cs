@@ -1,3 +1,5 @@
+using System.Threading;
+using System.Threading.Tasks;
 using System.Xml;
 using FunFair.BuildCheck.Interfaces;
 using Microsoft.Extensions.Logging;
@@ -13,20 +15,22 @@ public sealed class DoesNotUseRootNamespace : IProjectCheck
         this._logger = logger;
     }
 
-    public void Check(string projectName, string projectFolder, XmlDocument project)
+    public ValueTask CheckAsync(string projectName, string projectFolder, XmlDocument project, CancellationToken cancellationToken)
     {
         XmlNodeList? nodes = project.SelectNodes("/Project/PropertyGroup/RootNamespace");
 
         if (nodes is null)
         {
-            return;
+            return ValueTask.CompletedTask;
         }
 
         if (nodes.Count == 0)
         {
-            return;
+            return ValueTask.CompletedTask;
         }
 
         this._logger.LogError($"{projectName} Uses the RootNamepace setting to rename the namespace, when it should not");
+
+        return ValueTask.CompletedTask;
     }
 }

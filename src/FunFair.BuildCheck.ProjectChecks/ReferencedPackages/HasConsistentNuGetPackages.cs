@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Xml;
 using FunFair.BuildCheck.Interfaces;
 using Microsoft.Extensions.Logging;
@@ -10,24 +12,26 @@ namespace FunFair.BuildCheck.ProjectChecks.ReferencedPackages;
 
 public sealed class HasConsistentNuGetPackages : IProjectCheck
 {
+    private readonly ICheckConfiguration _checkConfiguration;
     private readonly ILogger<HasConsistentNuGetPackages> _logger;
 
     private readonly Dictionary<string, NuGetVersion> _packages;
 
-    public HasConsistentNuGetPackages(ILogger<HasConsistentNuGetPackages> logger)
+    public HasConsistentNuGetPackages(ICheckConfiguration checkConfiguration, ILogger<HasConsistentNuGetPackages> logger)
     {
+        this._checkConfiguration = checkConfiguration;
         this._logger = logger;
 
         this._packages = new(StringComparer.OrdinalIgnoreCase);
     }
 
-    public void Check(string projectName, string projectFolder, XmlDocument project)
+    public ValueTask CheckAsync(string projectName, string projectFolder, XmlDocument project, CancellationToken cancellationToken)
     {
         XmlNodeList? nodes = project.SelectNodes(xpath: "/Project/ItemGroup/PackageReference");
 
         if (nodes is null)
         {
-            return;
+            return ValueTask.CompletedTask;
         }
 
         foreach (XmlElement reference in nodes.OfType<XmlElement>())
@@ -60,12 +64,21 @@ public sealed class HasConsistentNuGetPackages : IProjectCheck
             }
             else if (currentVersion != nuGetVersion)
             {
-                this._logger.LogError($"{projectName}: Uses {packageName} version {nuGetVersion} when it should be using previously seen {currentVersion}.");
+                if (this._checkConfiguration.AllowPackageVersionMismatch)
+                {
+                    this._logger.LogInformation($"{projectName}: Uses {packageName} version {nuGetVersion} when it should be using previously seen {currentVersion}.");
+                }
+                else
+                {
+                    this._logger.LogError($"{projectName}: Uses {packageName} version {nuGetVersion} when it should be using previously seen {currentVersion}.");
+                }
 
                 continue;
             }
 
             this._logger.LogInformation($"{projectName}: Uses {packageName} version {nuGetVersion}.");
         }
+
+        return ValueTask.CompletedTask;
     }
 }

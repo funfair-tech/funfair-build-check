@@ -1,5 +1,7 @@
 using System;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Xml;
 using FunFair.BuildCheck.Interfaces;
 using FunFair.BuildCheck.ProjectChecks.Helpers;
@@ -16,18 +18,18 @@ public sealed class ShouldNotReferenceAllMetaPackagesInPackableProjects : IProje
         this._logger = logger;
     }
 
-    public void Check(string projectName, string projectFolder, XmlDocument project)
+    public ValueTask CheckAsync(string projectName, string projectFolder, XmlDocument project, CancellationToken cancellationToken)
     {
         if (!project.IsPackable())
         {
-            return;
+            return ValueTask.CompletedTask;
         }
 
         XmlNodeList? nodes = project.SelectNodes(xpath: "/Project/ItemGroup/PackageReference");
 
         if (nodes is null)
         {
-            return;
+            return ValueTask.CompletedTask;
         }
 
         foreach (XmlElement reference in nodes.OfType<XmlElement>())
@@ -45,5 +47,7 @@ public sealed class ShouldNotReferenceAllMetaPackagesInPackableProjects : IProje
                     $"{projectName}: References meta-package {packageName} rather than the individual packages -> It needs to use individual packages to control the nuget dependencies for users of the published package.");
             }
         }
+
+        return ValueTask.CompletedTask;
     }
 }

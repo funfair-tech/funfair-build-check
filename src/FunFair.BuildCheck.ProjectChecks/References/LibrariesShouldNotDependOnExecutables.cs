@@ -1,6 +1,8 @@
 using System;
 using System.IO;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Xml;
 using FunFair.BuildCheck.Interfaces;
 using FunFair.BuildCheck.ProjectChecks.Helpers;
@@ -11,15 +13,15 @@ namespace FunFair.BuildCheck.ProjectChecks.References;
 public sealed class LibrariesShouldNotDependOnExecutables : IProjectCheck
 {
     private readonly ILogger<LibrariesShouldNotDependOnExecutables> _logger;
-    private readonly IProjectLoader _projectLoader;
+    private readonly IProjectXmlLoader _projectXmlLoader;
 
-    public LibrariesShouldNotDependOnExecutables(IProjectLoader projectLoader, ILogger<LibrariesShouldNotDependOnExecutables> logger)
+    public LibrariesShouldNotDependOnExecutables(IProjectXmlLoader projectXmlLoader, ILogger<LibrariesShouldNotDependOnExecutables> logger)
     {
-        this._projectLoader = projectLoader;
+        this._projectXmlLoader = projectXmlLoader;
         this._logger = logger;
     }
 
-    public void Check(string projectName, string projectFolder, XmlDocument project)
+    public async ValueTask CheckAsync(string projectName, string projectFolder, XmlDocument project, CancellationToken cancellationToken)
     {
         if (!StringComparer.InvariantCultureIgnoreCase.Equals(x: "Library", project.GetOutputType()))
         {
@@ -47,7 +49,7 @@ public sealed class LibrariesShouldNotDependOnExecutables : IProjectCheck
 
             referencedProject = i.FullName;
 
-            XmlDocument otherProject = this._projectLoader.Load(referencedProject);
+            XmlDocument otherProject = await this._projectXmlLoader.LoadAsync(path: referencedProject, cancellationToken: cancellationToken);
 
             string otherOutputType = otherProject.GetOutputType();
 

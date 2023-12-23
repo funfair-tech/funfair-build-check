@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Xml;
 using FunFair.BuildCheck.Interfaces;
 using Microsoft.Extensions.Logging;
@@ -17,7 +19,7 @@ public sealed class ReferencesNugetPackageOnlyOnce : IProjectCheck
         this._logger = logger;
     }
 
-    public void Check(string projectName, string projectFolder, XmlDocument project)
+    public ValueTask CheckAsync(string projectName, string projectFolder, XmlDocument project, CancellationToken cancellationToken)
     {
         HashSet<string> packageReferences = new(StringComparer.OrdinalIgnoreCase);
 
@@ -25,7 +27,7 @@ public sealed class ReferencesNugetPackageOnlyOnce : IProjectCheck
 
         if (nodes is null)
         {
-            return;
+            return ValueTask.CompletedTask;
         }
 
         foreach (XmlElement reference in nodes.OfType<XmlElement>())
@@ -60,5 +62,7 @@ public sealed class ReferencesNugetPackageOnlyOnce : IProjectCheck
                 this._logger.LogError($"{projectName}: Already references package {packageName}.");
             }
         }
+
+        return ValueTask.CompletedTask;
     }
 }

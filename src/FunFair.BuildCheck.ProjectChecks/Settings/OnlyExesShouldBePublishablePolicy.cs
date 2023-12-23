@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Immutable;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Xml;
 using FunFair.BuildCheck.Interfaces;
 using FunFair.BuildCheck.ProjectChecks.Helpers;
@@ -48,11 +50,11 @@ public sealed class OnlyExesShouldBePublishablePolicy : IProjectCheck
         }
     }
 
-    public void Check(string projectName, string projectFolder, XmlDocument project)
+    public ValueTask CheckAsync(string projectName, string projectFolder, XmlDocument project, CancellationToken cancellationToken)
     {
         if (string.IsNullOrWhiteSpace(this._repositorySettings.DotnetPublishable))
         {
-            return;
+            return ValueTask.CompletedTask;
         }
 
         bool isTestProject = project.IsTestProject(projectName: projectName, logger: this._logger) &&
@@ -65,6 +67,8 @@ public sealed class OnlyExesShouldBePublishablePolicy : IProjectCheck
         bool packable = this._packablePolicy(arg1: isDotNetTool, arg2: isExe, arg3: isTestProject, arg4: projectName);
 
         ProjectValueHelpers.CheckValue(projectName: projectName, project: project, nodePresence: "IsPublishable", requiredValue: packable, logger: this._logger);
+
+        return ValueTask.CompletedTask;
     }
 
     private static ImmutableHashSet<string> GetProjects(string packable)

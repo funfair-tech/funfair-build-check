@@ -1,5 +1,7 @@
 using System.IO;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Xml;
 using FunFair.BuildCheck.Helpers;
 using FunFair.BuildCheck.Interfaces;
@@ -16,13 +18,13 @@ public sealed class ReferencedProjectsMustExist : IProjectCheck
         this._logger = logger;
     }
 
-    public void Check(string projectName, string projectFolder, XmlDocument project)
+    public ValueTask CheckAsync(string projectName, string projectFolder, XmlDocument project, CancellationToken cancellationToken)
     {
         XmlNodeList? nodes = project.SelectNodes("/Project/ItemGroup/ProjectReference");
 
         if (nodes is null)
         {
-            return;
+            return ValueTask.CompletedTask;
         }
 
         foreach (XmlElement reference in nodes.OfType<XmlElement>())
@@ -37,5 +39,7 @@ public sealed class ReferencedProjectsMustExist : IProjectCheck
                 this._logger.LogError($"Project {projectName} references {referencedProject} that does not exist.");
             }
         }
+
+        return ValueTask.CompletedTask;
     }
 }

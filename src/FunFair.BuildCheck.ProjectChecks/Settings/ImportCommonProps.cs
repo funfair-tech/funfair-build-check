@@ -1,3 +1,5 @@
+using System.Threading;
+using System.Threading.Tasks;
 using System.Xml;
 using FunFair.BuildCheck.Interfaces;
 using FunFair.BuildCheck.ProjectChecks.Helpers;
@@ -17,16 +19,16 @@ public sealed class ImportCommonProps : IProjectCheck
         this._projectImport = repositorySettings.ProjectImport;
     }
 
-    public void Check(string projectName, string projectFolder, XmlDocument project)
+    public ValueTask CheckAsync(string projectName, string projectFolder, XmlDocument project, CancellationToken cancellationToken)
     {
         if (string.IsNullOrWhiteSpace(this._projectImport))
         {
-            return;
+            return ValueTask.CompletedTask;
         }
 
         if (!project.IsPackable())
         {
-            return;
+            return ValueTask.CompletedTask;
         }
 
         bool found = project.HasProjectImport(this._projectImport);
@@ -35,5 +37,7 @@ public sealed class ImportCommonProps : IProjectCheck
         {
             this._logger.LogError($"Packable project {projectName} should <Import Project=\"{this._projectImport}\" />");
         }
+
+        return ValueTask.CompletedTask;
     }
 }

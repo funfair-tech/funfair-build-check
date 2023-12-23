@@ -1,5 +1,7 @@
 using System;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Xml;
 using FunFair.BuildCheck.Interfaces;
 using FunFair.BuildCheck.ProjectChecks.Helpers;
@@ -20,14 +22,14 @@ public abstract class ShouldUseAlternatePackage : IProjectCheck
         this._logger = logger;
     }
 
-    public void Check(string projectName, string projectFolder, XmlDocument project)
+    public ValueTask CheckAsync(string projectName, string projectFolder, XmlDocument project, CancellationToken cancellationToken)
     {
         string outputType = project.GetOutputType();
 
         if (StringComparer.InvariantCultureIgnoreCase.Equals(x: outputType, y: "Exe"))
         {
             // Executables can use whatever they want.
-            return;
+            return ValueTask.CompletedTask;
         }
 
         string? awsProjectType = project.GetAwsProjectType();
@@ -35,20 +37,20 @@ public abstract class ShouldUseAlternatePackage : IProjectCheck
         if (awsProjectType is not null && StringComparer.InvariantCultureIgnoreCase.Equals(x: awsProjectType, y: "Lambda"))
         {
             // Lambdas are effectively executables so can use whatever they want.
-            return;
+            return ValueTask.CompletedTask;
         }
 
         if (this.ShouldExclude(project: project, projectName: projectName, logger: this._logger))
         {
             // Test projects can use whatever they want.
-            return;
+            return ValueTask.CompletedTask;
         }
 
         XmlNodeList? referenceNodes = project.SelectNodes("/Project/ItemGroup/PackageReference");
 
         if (referenceNodes is null)
         {
-            return;
+            return ValueTask.CompletedTask;
         }
 
         foreach (XmlElement referenceNode in referenceNodes.OfType<XmlElement>())
@@ -60,6 +62,8 @@ public abstract class ShouldUseAlternatePackage : IProjectCheck
                 this._logger.LogError($"Should use package {this._usePackageId} rather than {this._matchPackageId}");
             }
         }
+
+        return ValueTask.CompletedTask;
     }
 
     protected virtual bool ShouldExclude(XmlDocument project, string projectName, ILogger logger)

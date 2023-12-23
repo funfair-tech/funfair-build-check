@@ -1,4 +1,6 @@
 using System;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Xml;
 using FunFair.BuildCheck.Interfaces;
 using FunFair.BuildCheck.ProjectChecks.Helpers;
@@ -15,11 +17,13 @@ public sealed class MustSpecifyOutputType : IProjectCheck
         this._logger = logger;
     }
 
-    public void Check(string projectName, string projectFolder, XmlDocument project)
+    public ValueTask CheckAsync(string projectName, string projectFolder, XmlDocument project, CancellationToken cancellationToken)
     {
         const string msg = "Exe or Library";
 
         ProjectValueHelpers.CheckValue(projectName: projectName, project: project, nodePresence: "OutputType", isRequiredValue: IsRequiredValue, msg: msg, logger: this._logger);
+
+        return ValueTask.CompletedTask;
     }
 
     private static bool IsRequiredValue(string value)
