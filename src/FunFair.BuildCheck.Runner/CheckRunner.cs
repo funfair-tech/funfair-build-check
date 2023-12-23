@@ -120,7 +120,7 @@ public static class CheckRunner
                                                            .AddSingleton<ICheckConfiguration>(new CheckConfiguration(preReleaseBuild: preReleaseBuild, allowPackageVersionMismatch: false)));
     }
 
-    private static async Task<IReadOnlyList<SolutionProject>> LoadProjectsAsync(string solution, CancellationToken cancellationToken)
+    private static async ValueTask<IReadOnlyList<SolutionProject>> LoadProjectsAsync(string solution, CancellationToken cancellationToken)
     {
         string[] text = await File.ReadAllLinesAsync(path: solution, cancellationToken: cancellationToken);
 
