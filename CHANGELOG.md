@@ -9,6 +9,8 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 ### Added
 ### Fixed
 ### Changed
+
+- Passed in ICheckConfiguration into the check runner
 ### Removed
 ### Deployment Changes
 

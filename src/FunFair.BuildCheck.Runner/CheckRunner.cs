@@ -19,20 +19,20 @@ public static class CheckRunner
     private static readonly Regex ProjectReferenceRegex = SourceGenerated.ProjectReferenceRegex();
 
     public static async ValueTask<int> CheckAsync(string solutionFileName,
-                                                  bool preReleaseBuild,
                                                   bool warningsAsErrors,
                                                   IFrameworkSettings frameworkSettings,
                                                   IProjectClassifier projectClassifier,
+                                                  ICheckConfiguration checkConfiguration,
                                                   Func<IServiceCollection, IServiceProvider> buildServiceProvider,
                                                   ILogger logger,
                                                   CancellationToken cancellationToken)
     {
         IReadOnlyList<SolutionProject> projects = await LoadProjectsAsync(solution: solutionFileName, cancellationToken: cancellationToken);
         IServiceProvider services = Setup(warningsAsErrors: warningsAsErrors,
-                                          preReleaseBuild: preReleaseBuild,
                                           projects: projects,
                                           frameworkSettings: frameworkSettings,
                                           projectClassifier: projectClassifier,
+                                          checkConfiguration: checkConfiguration,
                                           buildServiceProvider: buildServiceProvider,
                                           logger: logger);
 
@@ -89,11 +89,7 @@ public static class CheckRunner
         await TestProjectAsync(projectChecks: projectChecks, project: project, projectFolder: projectFolder, doc: doc, cancellationToken: cancellationToken);
     }
 
-    private static async ValueTask TestProjectAsync(IReadOnlyList<IProjectCheck> projectChecks,
-                                                    SolutionProject project,
-                                                    string projectFolder,
-                                                    XmlDocument doc,
-                                                    CancellationToken cancellationToken)
+    private static async ValueTask TestProjectAsync(IReadOnlyList<IProjectCheck> projectChecks, SolutionProject project, string projectFolder, XmlDocument doc, CancellationToken cancellationToken)
     {
         foreach (IProjectCheck check in projectChecks)
         {
@@ -102,10 +98,10 @@ public static class CheckRunner
     }
 
     private static IServiceProvider Setup(bool warningsAsErrors,
-                                          bool preReleaseBuild,
                                           IReadOnlyList<SolutionProject> projects,
                                           IFrameworkSettings frameworkSettings,
                                           IProjectClassifier projectClassifier,
+                                          ICheckConfiguration checkConfiguration,
                                           Func<IServiceCollection, IServiceProvider> buildServiceProvider,
                                           ILogger logger)
     {
@@ -121,8 +117,7 @@ public static class CheckRunner
                                                            .AddSingleton<IProjectXmlLoader, ProjectXmlLoader>()
                                                            .SetupSolutionChecks()
                                                            .SetupProjectChecks(repositorySettings: wrappedRepositorySettings)
-                                                           .AddSingleton<ICheckConfiguration>(
-                                                               new CheckConfiguration(preReleaseBuild: preReleaseBuild, allowPackageVersionMismatch: false)));
+                                                           .AddSingleton(checkConfiguration));
     }
 
     private static async ValueTask<IReadOnlyList<SolutionProject>> LoadProjectsAsync(string solution, CancellationToken cancellationToken)

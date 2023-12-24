@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using FunFair.BuildCheck.Helpers;
 using FunFair.BuildCheck.Interfaces;
 using FunFair.BuildCheck.Runner;
+using FunFair.BuildCheck.Runner.Services;
 using FunFair.BuildCheck.Services;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -55,10 +56,10 @@ internal static class Program
             IProjectClassifier projectClassifier = new ProjectClassifier();
 
             int errors = await CheckRunner.CheckAsync(solutionFileName: solutionFileName,
-                                                      preReleaseBuild: preReleaseBuild,
                                                       warningsAsErrors: warningsAsErrors,
                                                       frameworkSettings: frameworkSettings,
                                                       projectClassifier: projectClassifier,
+                                                      new CheckConfiguration(preReleaseBuild: preReleaseBuild, allowPackageVersionMismatch: false),
                                                       buildServiceProvider: services => services.BuildServiceProvider(),
                                                       logger: logger,
                                                       cancellationToken: CancellationToken.None);
