@@ -34,6 +34,7 @@ public sealed class IsTransformWebConfigDisabledShouldBeTrueForWebLibraryProject
         }
 
         ProjectValueHelpers.CheckValue(projectName: projectName, project: project, nodePresence: "IsTransformWebConfigDisabled", requiredValue: true, logger: this._logger);
+
         return ValueTask.CompletedTask;
     }
 }

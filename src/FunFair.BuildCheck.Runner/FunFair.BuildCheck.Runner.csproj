@@ -56,9 +56,9 @@
     <ProjectReference Include="..\FunFair.BuildCheck.SolutionChecks\FunFair.BuildCheck.SolutionChecks.csproj" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="8.0.0" />
     <PackageReference Include="NonBlocking" Version="2.1.2" />
     <PackageReference Include="NuGet.Versioning" Version="6.8.0" />
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="8.0.0" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="AsyncFixer" Version="1.6.0" PrivateAssets="All" ExcludeAssets="runtime" />

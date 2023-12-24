@@ -9,6 +9,6 @@ public static class PathHelpers
         return path.Replace(Path.DirectorySeparatorChar == '\\'
                                 ? '/'
                                 : '\\',
-                            Path.DirectorySeparatorChar);
+                            newChar: Path.DirectorySeparatorChar);
     }
 }

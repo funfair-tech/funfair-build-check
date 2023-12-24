@@ -54,7 +54,7 @@ public sealed class PackableLibrariesShouldNotDependOnNonPackable : IProjectChec
 
             referencedProject = i.FullName;
 
-            XmlDocument otherProject = await this._projectXmlLoader.LoadAsync(referencedProject, cancellationToken);
+            XmlDocument otherProject = await this._projectXmlLoader.LoadAsync(path: referencedProject, cancellationToken: cancellationToken);
 
             if (!otherProject.IsPackable())
             {
