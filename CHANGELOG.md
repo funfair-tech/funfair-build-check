@@ -9,14 +9,16 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 ### Added
 ### Fixed
 ### Changed
-
-- Passed in ICheckConfiguration into the check runner
 ### Removed
 ### Deployment Changes
 
 <!--
 Releases that have at least been deployed to staging, BUT NOT necessarily released to live.  Changes should be moved from [Unreleased] into here as they are merged into the appropriate release branch
 -->
+## [474.0.17] - 2023-12-24
+### Changed
+- Passed in ICheckConfiguration into the check runner
+
 ## [474.0.16] - 2023-12-24
 ### Changed
 - Dependencies - Updated Roslynator.Analyzers to 4.7.0
