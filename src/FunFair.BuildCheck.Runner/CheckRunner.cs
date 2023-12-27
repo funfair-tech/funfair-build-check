@@ -89,7 +89,11 @@ public static class CheckRunner
         await TestProjectAsync(projectChecks: projectChecks, project: project, projectFolder: projectFolder, doc: doc, cancellationToken: cancellationToken);
     }
 
-    private static async ValueTask TestProjectAsync(IReadOnlyList<IProjectCheck> projectChecks, SolutionProject project, string projectFolder, XmlDocument doc, CancellationToken cancellationToken)
+    private static async ValueTask TestProjectAsync(IReadOnlyList<IProjectCheck> projectChecks,
+                                                    SolutionProject project,
+                                                    string projectFolder,
+                                                    XmlDocument doc,
+                                                    CancellationToken cancellationToken)
     {
         foreach (IProjectCheck check in projectChecks)
         {
