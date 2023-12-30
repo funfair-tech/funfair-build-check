@@ -4,6 +4,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Xml;
 using FunFair.BuildCheck.Interfaces;
+using FunFair.BuildCheck.ProjectChecks.ReferencedPackages.LoggingExtensions;
 using Microsoft.Extensions.Logging;
 
 namespace FunFair.BuildCheck.ProjectChecks.ReferencedPackages;
@@ -38,7 +39,7 @@ public abstract class HasAppropriateAnalysisPackages : IProjectCheck
 
                 if (string.IsNullOrWhiteSpace(packageName))
                 {
-                    this._logger.LogError($"{projectName}: Contains bad reference to packages.");
+                    this._logger.ContainsBadReferenceToPackages(projectName);
 
                     continue;
                 }
@@ -55,7 +56,9 @@ public abstract class HasAppropriateAnalysisPackages : IProjectCheck
 
                     if (string.IsNullOrWhiteSpace(assets) || assets != PACKAGE_PRIVATE_ASSETS)
                     {
-                        this._logger.LogError($"{projectName}: Does not reference {this._mustIncludePackageId} with a PrivateAssets=\"{PACKAGE_PRIVATE_ASSETS}\" attribute");
+                        this._logger.DoesNotReferenceMustIncludePackageIdWithAPrivateAssetsAttribute(projectName: projectName,
+                                                                                                     privateAssets: PACKAGE_PRIVATE_ASSETS,
+                                                                                                     mustIncludePackageId: this._mustIncludePackageId);
                     }
                 }
             }
@@ -63,7 +66,7 @@ public abstract class HasAppropriateAnalysisPackages : IProjectCheck
 
         if (foundSourcePackage && !foundAnalyzerPackage)
         {
-            this._logger.LogError($"{projectName}: Found {this._detectPackageId} but did not find analyzer {this._mustIncludePackageId}.");
+            this._logger.DidNotFindMustIncludePackageForDetectedPackage(projectName: projectName, detectPackageId: this._detectPackageId, mustIncludePackageId: this._mustIncludePackageId);
         }
 
         return ValueTask.CompletedTask;
