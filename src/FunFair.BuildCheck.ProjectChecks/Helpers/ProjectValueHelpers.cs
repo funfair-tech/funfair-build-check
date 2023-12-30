@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Xml;
+using FunFair.BuildCheck.ProjectChecks.Helpers.LoggingExtensions;
 using Microsoft.Extensions.Logging;
 
 namespace FunFair.BuildCheck.ProjectChecks.Helpers;
@@ -58,7 +59,7 @@ internal static class ProjectValueHelpers
 
             if (string.IsNullOrWhiteSpace(packageName))
             {
-                logger.LogError($"{projectName}: Contains bad reference to packages.");
+                logger.ContainsBadReferenceToPackages(projectName);
 
                 continue;
             }
@@ -114,13 +115,13 @@ internal static class ProjectValueHelpers
                 }
 
                 string configuration = propertyGroup.GetAttribute(name: "Condition");
-                logger.LogError($"{projectName}: Configuration {configuration} should specify {nodePresence}");
+                logger.ConfigurationShouldSpecifyNodePrescence(projectName: projectName, configuration: configuration, nodePresence: nodePresence);
             }
         }
 
         if (!hasGlobalSetting && configurationGroups?.Count == 0)
         {
-            logger.LogError($"{projectName}: Should specify {nodePresence}.");
+            logger.ProjectShouldSpecifyNodePrescence(projectName: projectName, nodePresence: nodePresence);
         }
     }
 
@@ -149,12 +150,7 @@ internal static class ProjectValueHelpers
         CheckValueCommon(projectName: projectName, project: project, nodePresence: nodePresence, isRequiredValue: isRequiredValue, requiredValueDisplayText: msg, logger: logger);
     }
 
-    private static void CheckValueCommon(string projectName,
-                                         XmlDocument project,
-                                         string nodePresence,
-                                         Func<string, bool> isRequiredValue,
-                                         string requiredValueDisplayText,
-                                         ILogger logger)
+    private static void CheckValueCommon(string projectName, XmlDocument project, string nodePresence, Func<string, bool> isRequiredValue, string requiredValueDisplayText, ILogger logger)
     {
         bool hasGlobalSetting = CheckGlobalSettings(project: project, nodePresence: nodePresence, isRequiredValue: isRequiredValue);
 
@@ -173,7 +169,7 @@ internal static class ProjectValueHelpers
 
         if (!hasGlobalSetting && configurationGroups?.Count == 0)
         {
-            logger.LogError($"{projectName}: Should specify {nodePresence} as {requiredValueDisplayText}.");
+            logger.ProjectShouldSpecifyNodePrescenceAsValue(projectName: projectName, nodePresence: nodePresence, requiredValueDisplayText: requiredValueDisplayText);
         }
     }
 
@@ -194,7 +190,7 @@ internal static class ProjectValueHelpers
                 if (!hasGlobalSetting)
                 {
                     string configuration = propertyGroup.GetAttribute(name: "Condition");
-                    logger.LogError($"{projectName}: Configuration {configuration} should specify {nodePresence}.");
+                    logger.ConfigurationShouldSpecifyNodePrescence(projectName: projectName, configuration: configuration, nodePresence: nodePresence);
                 }
             }
             else
@@ -206,7 +202,10 @@ internal static class ProjectValueHelpers
                     if (!hasGlobalSetting)
                     {
                         string configuration = propertyGroup.GetAttribute(name: "Condition");
-                        logger.LogError($"{projectName}: Configuration {configuration} should specify {nodePresence} as {requiredValueDisplayText}.");
+                        logger.ConfigurationShouldSpecifyNodePrescenceAsValue(projectName: projectName,
+                                                                              configuration: configuration,
+                                                                              nodePresence: nodePresence,
+                                                                              requiredValueDisplayText: requiredValueDisplayText);
                     }
                 }
             }
