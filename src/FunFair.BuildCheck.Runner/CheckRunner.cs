@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using System.Xml;
 using FunFair.BuildCheck.Helpers;
 using FunFair.BuildCheck.Interfaces;
+using FunFair.BuildCheck.Runner.LoggingExtensions;
 using FunFair.BuildCheck.Runner.Services;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -73,13 +74,13 @@ public static class CheckRunner
                                                      ITrackingLogger logging,
                                                      CancellationToken cancellationToken)
     {
-        logging.LogInformation($"Checking Project: {project.DisplayName}:");
+        logging.LogCheckingProject(project.DisplayName);
 
         string? projectFolder = Path.GetDirectoryName(project.FileName);
 
         if (string.IsNullOrEmpty(projectFolder))
         {
-            logging.LogError($"Project: {project.FileName} could not get base path");
+            logging.LogCouldNotGetBasePathOfProject(project.FileName);
 
             return;
         }
@@ -89,11 +90,7 @@ public static class CheckRunner
         await TestProjectAsync(projectChecks: projectChecks, project: project, projectFolder: projectFolder, doc: doc, cancellationToken: cancellationToken);
     }
 
-    private static async ValueTask TestProjectAsync(IReadOnlyList<IProjectCheck> projectChecks,
-                                                    SolutionProject project,
-                                                    string projectFolder,
-                                                    XmlDocument doc,
-                                                    CancellationToken cancellationToken)
+    private static async ValueTask TestProjectAsync(IReadOnlyList<IProjectCheck> projectChecks, SolutionProject project, string projectFolder, XmlDocument doc, CancellationToken cancellationToken)
     {
         foreach (IProjectCheck check in projectChecks)
         {
