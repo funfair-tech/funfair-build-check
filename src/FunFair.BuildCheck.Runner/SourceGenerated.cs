@@ -2,18 +2,12 @@ using System.Text.RegularExpressions;
 
 namespace FunFair.BuildCheck.Runner;
 
-#if NET6_0
-internal static class SourceGenerated
-{
-    public static Regex ProjectReferenceRegex()
-    {
-        return new(pattern: RegexSettings.ProjectReferenceRegex, options: RegexSettings.ProjectReferenceOptions, matchTimeout: RegexSettings.TimeoutTimeSpan);
-    }
-}
-#else
 internal static partial class SourceGenerated
 {
-    [GeneratedRegex(pattern: RegexSettings.ProjectReferenceRegex, options: RegexSettings.ProjectReferenceOptions, matchTimeoutMilliseconds: RegexSettings.TimeoutMilliseconds)]
-    public static partial Regex ProjectReferenceRegex();
+    private const int TIMEOUT_MILLISECONDS = 5000;
+
+    private const RegexOptions PROJECT_REFERENCE_OPTIONS = RegexOptions.Compiled | RegexOptions.ExplicitCapture;
+
+    private const string PROJECT_REFERENCE_REGEX =
+        "^Project\\(\"[{(]?[0-9A-F]{8}[-]?([0-9A-F]{4}[-]?){3}[0-9A-F]{12}[)}]\"\\)\\s*=\\s*\"(?<DisplayName>.*?)\",\\s*\"(?<FileName>.*?\\.csproj)\",\\s*\"[{(]?[0-9A-F]{8}[-]?([0-9A-F]{4}[-]?){3}[0-9A-F]{12}[)}]\"$";
 }
-#endif
