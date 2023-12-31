@@ -3,6 +3,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Xml;
 using FunFair.BuildCheck.Interfaces;
+using FunFair.BuildCheck.ProjectChecks.ReferencedPackages.LoggingExtensions;
 using Microsoft.Extensions.Logging;
 
 namespace FunFair.BuildCheck.ProjectChecks.ReferencedPackages;
@@ -33,19 +34,19 @@ public sealed class MustHaveSourceLinkPackage : IProjectCheck
 
         if (!packageExists && !historicalPackageExists)
         {
-            this._logger.LogError($"{projectName}: Does not reference {PACKAGE_ID} or {HISTORICAL_PACKAGE_ID} using NuGet");
+            this._logger.DoesNotReferencePackageOrHistoricalPackage(projectName: projectName, packageId: PACKAGE_ID, historicalPackageId: HISTORICAL_PACKAGE_ID);
         }
 
         if (packageExists && historicalPackageExists)
         {
-            this._logger.LogError($"{projectName}: References both {PACKAGE_ID} and {HISTORICAL_PACKAGE_ID}");
+            this._logger.ReferencesBothPackageAndHistoricalPackage(projectName: projectName, packageId: PACKAGE_ID, historicalPackageId: HISTORICAL_PACKAGE_ID);
         }
 
         if (packageExists)
         {
             if (!CheckPrivateAssets(packageId: PACKAGE_ID, project: project))
             {
-                this._logger.LogError($"{projectName}: Does not reference {PACKAGE_ID} with a PrivateAssets=\"{PACKAGE_PRIVATE_ASSETS}\" attribute");
+                this._logger.DoesNotReferenceMustIncludePackageIdWithAPrivateAssetsAttribute(projectName: projectName, privateAssets: PACKAGE_ID, mustIncludePackageId: PACKAGE_PRIVATE_ASSETS);
             }
         }
 
@@ -53,7 +54,9 @@ public sealed class MustHaveSourceLinkPackage : IProjectCheck
         {
             if (!CheckPrivateAssets(packageId: HISTORICAL_PACKAGE_ID, project: project))
             {
-                this._logger.LogError($"{projectName}: Does not reference {HISTORICAL_PACKAGE_ID} with a PrivateAssets=\"{PACKAGE_PRIVATE_ASSETS}\" attribute");
+                this._logger.DoesNotReferenceMustIncludePackageIdWithAPrivateAssetsAttribute(projectName: projectName,
+                                                                                             privateAssets: HISTORICAL_PACKAGE_ID,
+                                                                                             mustIncludePackageId: PACKAGE_PRIVATE_ASSETS);
             }
         }
 

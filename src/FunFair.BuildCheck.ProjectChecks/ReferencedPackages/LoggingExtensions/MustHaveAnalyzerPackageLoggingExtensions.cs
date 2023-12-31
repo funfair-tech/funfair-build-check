@@ -2,7 +2,7 @@ using Microsoft.Extensions.Logging;
 
 namespace FunFair.BuildCheck.ProjectChecks.ReferencedPackages.LoggingExtensions;
 
-public static partial class MustHaveAnalyzerPackage
+public static partial class MustHaveAnalyzerPackageLoggingExtensions
 {
     [LoggerMessage(EventId = 1, Level = LogLevel.Error, Message = "{projectName}: Does not reference {this._packageId} with a PrivateAssets=\"{privateAssets}\" attribute")]
     public static partial void DoesNotUsePrivateAssetsAttribute(this ILogger logger, string projectName, string packageName, string privateAssets);
