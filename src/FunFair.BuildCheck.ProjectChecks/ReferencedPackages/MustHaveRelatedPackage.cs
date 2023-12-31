@@ -4,6 +4,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Xml;
 using FunFair.BuildCheck.Interfaces;
+using FunFair.BuildCheck.ProjectChecks.ReferencedPackages.LoggingExtensions;
 using Microsoft.Extensions.Logging;
 
 namespace FunFair.BuildCheck.ProjectChecks.ReferencedPackages;
@@ -36,7 +37,7 @@ public abstract class MustHaveRelatedPackage : IProjectCheck
 
                 if (string.IsNullOrWhiteSpace(packageName))
                 {
-                    this._logger.LogError($"{projectName}: Contains bad reference to packages.");
+                    this._logger.ContainsBadReferenceToPackages(projectName);
 
                     continue;
                 }
@@ -55,7 +56,7 @@ public abstract class MustHaveRelatedPackage : IProjectCheck
 
         if (foundSourcePackage && !foundRelatedPackage)
         {
-            this._logger.LogError($"{projectName}: Found {this._detectPackageId} but did not find required {this._mustIncludePackageId}.");
+            this._logger.DidNotFindRelatedPackageForDetectedPackage(projectName: projectName, detectPackageId: this._detectPackageId, mustIncludePackageId: this._mustIncludePackageId);
         }
 
         return ValueTask.CompletedTask;
