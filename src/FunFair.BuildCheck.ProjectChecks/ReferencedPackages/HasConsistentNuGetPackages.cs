@@ -5,6 +5,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Xml;
 using FunFair.BuildCheck.Interfaces;
+using FunFair.BuildCheck.ProjectChecks.ReferencedPackages.LoggingExtensions;
 using Microsoft.Extensions.Logging;
 using NuGet.Versioning;
 
@@ -40,18 +41,18 @@ public sealed class HasConsistentNuGetPackages : IProjectCheck
 
             if (string.IsNullOrWhiteSpace(packageName))
             {
-                this._logger.LogError($"{projectName}: Contains bad reference to packages.");
+                this._logger.ContainsBadReferenceToPackages(projectName);
 
                 continue;
             }
 
             string version = reference.GetAttribute(name: "Version");
 
-            this._logger.LogDebug($"{projectName}: Found: {packageName} ({version})");
+            this._logger.FoundPackageVersion(projectName: projectName, packageName: packageName, version: version);
 
             if (!NuGetVersion.TryParse(value: version, out NuGetVersion? nuGetVersion))
             {
-                this._logger.LogError($"{projectName}: Package {packageName} could not parse version {version}.");
+                this._logger.CouldNotParsePackageVersion(projectName: projectName, packageName: packageName, version: version);
 
                 continue;
             }
@@ -66,17 +67,17 @@ public sealed class HasConsistentNuGetPackages : IProjectCheck
             {
                 if (this._checkConfiguration.AllowPackageVersionMismatch)
                 {
-                    this._logger.LogInformation($"{projectName}: Uses {packageName} version {nuGetVersion} when it should be using previously seen {currentVersion}.");
+                    this._logger.UsingInconsistentPackageVersionInfo(projectName: projectName, packageName: packageName, installedVersion: nuGetVersion, currentVersion: currentVersion);
                 }
                 else
                 {
-                    this._logger.LogError($"{projectName}: Uses {packageName} version {nuGetVersion} when it should be using previously seen {currentVersion}.");
+                    this._logger.UsingInconsistentPackageVersionError(projectName: projectName, packageName: packageName, installedVersion: nuGetVersion, currentVersion: currentVersion);
                 }
 
                 continue;
             }
 
-            this._logger.LogInformation($"{projectName}: Uses {packageName} version {nuGetVersion}.");
+            this._logger.UsingPackageAtVersion(projectName: projectName, packageName: packageName, installedVersion: nuGetVersion);
         }
 
         return ValueTask.CompletedTask;

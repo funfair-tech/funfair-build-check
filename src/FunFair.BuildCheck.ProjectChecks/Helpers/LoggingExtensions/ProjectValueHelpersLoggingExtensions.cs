@@ -4,9 +4,6 @@ namespace FunFair.BuildCheck.ProjectChecks.Helpers.LoggingExtensions;
 
 internal static partial class ProjectValueHelpersLoggingExtensions
 {
-    [LoggerMessage(EventId = 0, Level = LogLevel.Error, Message = "{projectName}: Contains bad reference to packages.")]
-    public static partial void ContainsBadReferenceToPackages(this ILogger logger, string projectName);
-
     [LoggerMessage(EventId = 1, Level = LogLevel.Error, Message = "{projectName}: Configuration {configuration} should specify {nodePresence}")]
     public static partial void ConfigurationShouldSpecifyNodePrescence(this ILogger logger, string projectName, string configuration, string nodePresence);
 
