@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using System.Xml;
 using FunFair.BuildCheck.Interfaces;
 using FunFair.BuildCheck.ProjectChecks.Helpers;
+using FunFair.BuildCheck.ProjectChecks.ReferencedPackages.LoggingExtensions;
 using Microsoft.Extensions.Logging;
 
 namespace FunFair.BuildCheck.ProjectChecks.ReferencedPackages;
@@ -37,20 +38,20 @@ public abstract class MustHaveAnalyzerPackage : IProjectCheck
         {
             if (!CheckPrivateAssets(packageId: this._packageId, project: project))
             {
-                this._logger.LogError($"{projectName}: Does not reference {this._packageId} with a PrivateAssets=\"{PACKAGE_PRIVATE_ASSETS}\" attribute");
+                this._logger.DoesNotUsePrivateAssetsAttribute(projectName: projectName, packageName: this._packageId, privateAssets: PACKAGE_PRIVATE_ASSETS);
             }
 
             if (!(project.IsFunFairTestProject() && IsPackageExcluded(packageId: this._packageId)))
             {
                 if (!CheckExcludeAssets(packageId: this._packageId, project: project))
                 {
-                    this._logger.LogError($"{projectName}: Does not reference {this._packageId} with a ExcludeAssets=\"{PACKAGE_EXCLUDE_ASSETS}\" attribute");
+                    this._logger.DoesNotUsePrivateAssetsAttribute(projectName: projectName, packageName: this._packageId, privateAssets: PACKAGE_PRIVATE_ASSETS);
                 }
             }
         }
         else
         {
-            this._logger.LogError($"{projectName}: Does not reference {this._packageId} using NuGet");
+            this._logger.DoesNotUseNuGet(projectName: projectName, packageName: this._packageId);
         }
 
         return ValueTask.CompletedTask;
