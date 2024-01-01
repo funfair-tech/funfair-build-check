@@ -38,20 +38,20 @@ public abstract class MustHaveAnalyzerPackage : IProjectCheck
         {
             if (!CheckPrivateAssets(packageId: this._packageId, project: project))
             {
-                this._logger.DoesNotUsePrivateAssetsAttribute(projectName: projectName, packageName: this._packageId, privateAssets: PACKAGE_PRIVATE_ASSETS);
+                this._logger.DoesNotUsePrivateAssetsAttribute(projectName: projectName, packageId: this._packageId, privateAssets: PACKAGE_PRIVATE_ASSETS);
             }
 
             if (!(project.IsFunFairTestProject() && IsPackageExcluded(packageId: this._packageId)))
             {
                 if (!CheckExcludeAssets(packageId: this._packageId, project: project))
                 {
-                    this._logger.DoesNotUsePrivateAssetsAttribute(projectName: projectName, packageName: this._packageId, privateAssets: PACKAGE_PRIVATE_ASSETS);
+                    this._logger.DoesNotUsePrivateAssetsAttribute(projectName: projectName, packageId: this._packageId, privateAssets: PACKAGE_PRIVATE_ASSETS);
                 }
             }
         }
         else
         {
-            this._logger.DoesNotUseNuGet(projectName: projectName, packageName: this._packageId);
+            this._logger.DoesNotUseNuGet(projectName: projectName, packageId: this._packageId);
         }
 
         return ValueTask.CompletedTask;

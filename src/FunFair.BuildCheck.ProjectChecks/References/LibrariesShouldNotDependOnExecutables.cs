@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Xml;
 using FunFair.BuildCheck.Interfaces;
 using FunFair.BuildCheck.ProjectChecks.Helpers;
+using FunFair.BuildCheck.ProjectChecks.References.LoggingExtensions;
 using Microsoft.Extensions.Logging;
 
 namespace FunFair.BuildCheck.ProjectChecks.References;
@@ -55,7 +56,7 @@ public sealed class LibrariesShouldNotDependOnExecutables : IProjectCheck
 
             if (StringComparer.InvariantCultureIgnoreCase.Equals(x: "Exe", y: otherOutputType))
             {
-                this._logger.LogError($"Library project {projectName} references exe {referencedProject}");
+                this._logger.LibraryReferencesExecutable(projectName: projectName, referencedProject: referencedProject);
             }
         }
     }

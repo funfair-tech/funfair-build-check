@@ -29,7 +29,7 @@ public sealed class DoesNotReferenceByDll : IProjectCheck
         foreach (XmlElement reference in references.OfType<XmlElement>())
         {
             string assembly = reference.GetAttribute(name: "Include");
-            this._logger.ReferencesAssmbyDirectlyRatherThanThroughReference(projectName: projectName, packageId: assembly);
+            this._logger.ReferencesAssemblyDirectlyRatherThanThroughReference(projectName: projectName, assembly: assembly);
         }
 
         return ValueTask.CompletedTask;
