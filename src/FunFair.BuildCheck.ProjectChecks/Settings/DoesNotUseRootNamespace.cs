@@ -2,6 +2,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Xml;
 using FunFair.BuildCheck.Interfaces;
+using FunFair.BuildCheck.ProjectChecks.Settings.LoggingExtensions;
 using Microsoft.Extensions.Logging;
 
 namespace FunFair.BuildCheck.ProjectChecks.Settings;
@@ -29,7 +30,7 @@ public sealed class DoesNotUseRootNamespace : IProjectCheck
             return ValueTask.CompletedTask;
         }
 
-        this._logger.LogError($"{projectName} Uses the RootNamepace setting to rename the namespace, when it should not");
+        this._logger.UsesRootNamespace(projectName);
 
         return ValueTask.CompletedTask;
     }
