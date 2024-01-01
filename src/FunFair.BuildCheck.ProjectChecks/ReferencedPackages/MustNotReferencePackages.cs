@@ -3,6 +3,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Xml;
 using FunFair.BuildCheck.Interfaces;
+using FunFair.BuildCheck.ProjectChecks.ReferencedPackages.LoggingExtensions;
 using Microsoft.Extensions.Logging;
 
 namespace FunFair.BuildCheck.ProjectChecks.ReferencedPackages;
@@ -28,7 +29,7 @@ public abstract class MustNotReferencePackages : IProjectCheck
 
             if (packageExists)
             {
-                this._logger.LogError($"{projectName}: References obsoleted package {packageId} using NuGet. {this._reason}");
+                this._logger.ReferencesObsoletedPackageUsingNuGet(projectName: projectName, packageId: packageId, reason: this._reason);
             }
         }
 

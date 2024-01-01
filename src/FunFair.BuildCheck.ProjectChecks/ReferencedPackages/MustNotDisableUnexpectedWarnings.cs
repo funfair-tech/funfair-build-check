@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Xml;
 using FunFair.BuildCheck.Interfaces;
 using FunFair.BuildCheck.ProjectChecks.Helpers;
+using FunFair.BuildCheck.ProjectChecks.ReferencedPackages.LoggingExtensions;
 using Microsoft.Extensions.Logging;
 
 namespace FunFair.BuildCheck.ProjectChecks.ReferencedPackages;
@@ -85,7 +86,7 @@ public sealed class MustNotDisableUnexpectedWarnings : IProjectCheck
 
                 if (!allowedWarnings.Contains(value: warning, comparer: StringComparer.OrdinalIgnoreCase))
                 {
-                    this._logger.LogError($"{projectName}: Configuration {configuration} hides warning {warning}.");
+                    this._logger.ConfigurationHidesWarning(projectName: projectName, configuration: configuration, warning: warning);
                 }
             }
         }
@@ -120,7 +121,7 @@ public sealed class MustNotDisableUnexpectedWarnings : IProjectCheck
             {
                 if (!allowedWarnings.Contains(value: warning, comparer: StringComparer.OrdinalIgnoreCase))
                 {
-                    this._logger.LogError($"{projectName}: Global Configuration hides warning {warning}.");
+                    this._logger.GlobalConfigurationHidesWarning(projectName: projectName, warning: warning);
                 }
             }
         }

@@ -5,6 +5,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Xml;
 using FunFair.BuildCheck.Interfaces;
+using FunFair.BuildCheck.ProjectChecks.ReferencedPackages.LoggingExtensions;
 using Microsoft.Extensions.Logging;
 
 namespace FunFair.BuildCheck.ProjectChecks.ReferencedPackages;
@@ -36,7 +37,7 @@ public sealed class ReferencesNugetPackageOnlyOnce : IProjectCheck
 
             if (string.IsNullOrWhiteSpace(packageName))
             {
-                this._logger.LogError($"{projectName}: Contains bad reference to packages.");
+                this._logger.ContainsBadReferenceToPackages(projectName);
 
                 continue;
             }
@@ -59,7 +60,7 @@ public sealed class ReferencesNugetPackageOnlyOnce : IProjectCheck
 
             if (!packageReferences.Add(packageName))
             {
-                this._logger.LogError($"{projectName}: Already references package {packageName}.");
+                this._logger.AlreadyReferencesPackage(projectName: projectName, packageId: packageName);
             }
         }
 
