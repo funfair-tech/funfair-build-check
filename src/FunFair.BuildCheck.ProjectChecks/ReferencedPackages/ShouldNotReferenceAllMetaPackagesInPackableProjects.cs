@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using System.Xml;
 using FunFair.BuildCheck.Interfaces;
 using FunFair.BuildCheck.ProjectChecks.Helpers;
+using FunFair.BuildCheck.ProjectChecks.ReferencedPackages.LoggingExtensions;
 using Microsoft.Extensions.Logging;
 
 namespace FunFair.BuildCheck.ProjectChecks.ReferencedPackages;
@@ -43,8 +44,7 @@ public sealed class ShouldNotReferenceAllMetaPackagesInPackableProjects : IProje
 
             if (packageName.EndsWith(value: ".All", comparisonType: StringComparison.OrdinalIgnoreCase))
             {
-                this._logger.LogError(
-                    $"{projectName}: References meta-package {packageName} rather than the individual packages -> It needs to use individual packages to control the nuget dependencies for users of the published package.");
+                this._logger.DoNotReferenceMetaPackageInPackableProjects(projectName: projectName, packageId: packageName);
             }
         }
 
