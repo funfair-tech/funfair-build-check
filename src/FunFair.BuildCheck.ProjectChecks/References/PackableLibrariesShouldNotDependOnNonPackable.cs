@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Xml;
 using FunFair.BuildCheck.Interfaces;
 using FunFair.BuildCheck.ProjectChecks.Helpers;
+using FunFair.BuildCheck.ProjectChecks.References.LoggingExtensions;
 using Microsoft.Extensions.Logging;
 
 namespace FunFair.BuildCheck.ProjectChecks.References;
@@ -58,7 +59,7 @@ public sealed class PackableLibrariesShouldNotDependOnNonPackable : IProjectChec
 
             if (!otherProject.IsPackable())
             {
-                this._logger.LogError($"Packable Library project {projectName} references non-packable project {referencedProject}");
+                this._logger.PackableProjectReferencesNonPackableProject(projectName: projectName, referencedProject: referencedProject);
             }
         }
     }

@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using System.Xml;
 using FunFair.BuildCheck.Helpers;
 using FunFair.BuildCheck.Interfaces;
+using FunFair.BuildCheck.ProjectChecks.References.LoggingExtensions;
 using Microsoft.Extensions.Logging;
 
 namespace FunFair.BuildCheck.ProjectChecks.References;
@@ -36,7 +37,7 @@ public sealed class ReferencedProjectsMustExist : IProjectCheck
 
             if (!i.Exists)
             {
-                this._logger.LogError($"Project {projectName} references {referencedProject} that does not exist.");
+                this._logger.ReferencesProjectThatDoesNotExist(projectName: projectName, referencedProject: referencedProject);
             }
         }
 
