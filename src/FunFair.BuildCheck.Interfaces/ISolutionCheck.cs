@@ -1,6 +1,9 @@
+using System.Threading;
+using System.Threading.Tasks;
+
 namespace FunFair.BuildCheck.Interfaces;
 
 public interface ISolutionCheck
 {
-    void Check(string solutionFileName);
+    ValueTask CheckAsync(string solutionFileName, CancellationToken cancellationToken);
 }

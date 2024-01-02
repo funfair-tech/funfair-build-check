@@ -50,7 +50,7 @@ public static class CheckRunner
         IReadOnlyList<ISolutionCheck> solutionChecks = RegisteredSolutionChecks(services);
         IReadOnlyList<IProjectCheck> projectChecks = RegisteredProjectChecks(services);
 
-        TestSolution(solutionFileName: solutionFileName, solutionChecks: solutionChecks);
+        await TestSolutionAsync(solutionFileName: solutionFileName, solutionChecks: solutionChecks, cancellationToken: cancellationToken);
 
         IReadOnlyList<SolutionProject> projects = services.GetRequiredService<IReadOnlyList<SolutionProject>>();
 
@@ -60,11 +60,11 @@ public static class CheckRunner
         }
     }
 
-    private static void TestSolution(string solutionFileName, IReadOnlyList<ISolutionCheck> solutionChecks)
+    private static async ValueTask TestSolutionAsync(string solutionFileName, IReadOnlyList<ISolutionCheck> solutionChecks, CancellationToken cancellationToken)
     {
         foreach (ISolutionCheck check in solutionChecks)
         {
-            check.Check(solutionFileName);
+            await check.CheckAsync(solutionFileName: solutionFileName, cancellationToken: cancellationToken);
         }
     }
 

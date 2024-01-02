@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 using FunFair.BuildCheck.Interfaces;
 using FunFair.BuildCheck.SolutionChecks.LoggingExtensions;
 using Microsoft.Extensions.Logging;
@@ -19,7 +21,7 @@ public sealed class NoOrphanedProjectsExist : ISolutionCheck
         this._logger = logger;
     }
 
-    public void Check(string solutionFileName)
+    public ValueTask CheckAsync(string solutionFileName, CancellationToken cancellationToken)
     {
         string? basePath = Path.GetDirectoryName(solutionFileName);
 
@@ -27,10 +29,12 @@ public sealed class NoOrphanedProjectsExist : ISolutionCheck
         {
             this._logger.CouldNotGetBasePath(solutionFileName);
 
-            return;
+            return ValueTask.CompletedTask;
         }
 
         this.CheckProjects(solutionFileName: solutionFileName, basePath: basePath);
+
+        return ValueTask.CompletedTask;
     }
 
     private void CheckProjects(string solutionFileName, string basePath)

@@ -1,6 +1,8 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 using FunFair.BuildCheck.Helpers;
 using FunFair.BuildCheck.Interfaces;
 using FunFair.BuildCheck.SolutionChecks.LoggingExtensions;
@@ -19,7 +21,7 @@ public sealed class AllProjectsExist : ISolutionCheck
         this._logger = logger;
     }
 
-    public void Check(string solutionFileName)
+    public ValueTask CheckAsync(string solutionFileName, CancellationToken cancellationToken)
     {
         this._logger.CheckingSolution(solutionFileName);
 
@@ -27,6 +29,8 @@ public sealed class AllProjectsExist : ISolutionCheck
         {
             this._logger.ProjectDoesNotExist(solutionFileName: solutionFileName, projectFileName: projectFileName);
         }
+
+        return ValueTask.CompletedTask;
     }
 
     private IEnumerable<string> GetMissingProjectFileNames()

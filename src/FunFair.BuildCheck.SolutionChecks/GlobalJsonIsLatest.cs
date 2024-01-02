@@ -1,6 +1,8 @@
 using System;
 using System.IO;
 using System.Text.Json;
+using System.Threading;
+using System.Threading.Tasks;
 using FunFair.BuildCheck.Interfaces;
 using FunFair.BuildCheck.SolutionChecks.LoggingExtensions;
 using FunFair.BuildCheck.SolutionChecks.Models;
@@ -19,7 +21,7 @@ public sealed class GlobalJsonIsLatest : ISolutionCheck
         this._dotnetVersion = repositorySettings.DotNetSdkVersion;
     }
 
-    public void Check(string solutionFileName)
+    public async ValueTask CheckAsync(string solutionFileName, CancellationToken cancellationToken)
     {
         if (string.IsNullOrWhiteSpace(this._dotnetVersion))
         {
@@ -42,7 +44,7 @@ public sealed class GlobalJsonIsLatest : ISolutionCheck
             return;
         }
 
-        string content = File.ReadAllText(file);
+        string content = await File.ReadAllTextAsync(file, cancellationToken);
 
         try
         {

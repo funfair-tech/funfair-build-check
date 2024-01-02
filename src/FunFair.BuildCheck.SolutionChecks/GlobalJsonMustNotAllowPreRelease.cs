@@ -1,6 +1,8 @@
 using System;
 using System.IO;
 using System.Text.Json;
+using System.Threading;
+using System.Threading.Tasks;
 using FunFair.BuildCheck.Interfaces;
 using FunFair.BuildCheck.SolutionChecks.LoggingExtensions;
 using FunFair.BuildCheck.SolutionChecks.Models;
@@ -24,7 +26,7 @@ public sealed class GlobalJsonMustNotAllowPreRelease : ISolutionCheck
         this._allowPreRelease = StringComparer.InvariantCultureIgnoreCase.Equals(x: allowPreRelease, y: "true");
     }
 
-    public void Check(string solutionFileName)
+    public async ValueTask CheckAsync(string solutionFileName, CancellationToken cancellationToken)
     {
         if (string.IsNullOrWhiteSpace(this._repositorySettings.DotNetSdkVersion))
         {
@@ -45,7 +47,7 @@ public sealed class GlobalJsonMustNotAllowPreRelease : ISolutionCheck
             return;
         }
 
-        string content = File.ReadAllText(file);
+        string content = await File.ReadAllTextAsync(path: file, cancellationToken: cancellationToken);
 
         try
         {
