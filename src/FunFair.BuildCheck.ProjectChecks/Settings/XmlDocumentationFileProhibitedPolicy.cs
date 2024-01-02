@@ -2,6 +2,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Xml;
 using FunFair.BuildCheck.Interfaces;
+using FunFair.BuildCheck.ProjectChecks.Settings.LoggingExtensions;
 using Microsoft.Extensions.Logging;
 
 namespace FunFair.BuildCheck.ProjectChecks.Settings;
@@ -28,7 +29,7 @@ public sealed class XmlDocumentationFileProhibitedPolicy : IProjectCheck
 
         if (nodes is not null && nodes.Count != 0)
         {
-            this._logger.LogError($"{projectName}: Should not have XML Documentation");
+            this._logger.ShouldNotHaveXmlDocumentation(projectName);
         }
 
         return ValueTask.CompletedTask;

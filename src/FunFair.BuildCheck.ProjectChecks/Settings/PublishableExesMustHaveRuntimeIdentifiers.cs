@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using System.Xml;
 using FunFair.BuildCheck.Interfaces;
 using FunFair.BuildCheck.ProjectChecks.Helpers;
+using FunFair.BuildCheck.ProjectChecks.Settings.LoggingExtensions;
 using Microsoft.Extensions.Logging;
 
 namespace FunFair.BuildCheck.ProjectChecks.Settings;
@@ -38,7 +39,7 @@ public sealed class PublishableExesMustHaveRuntimeIdentifiers : IProjectCheck
 
         if (!hasRuntimeIdentifiers)
         {
-            this._logger.LogError($"{projectName} Should specify RuntimeIdentifiers as it is publishable");
+            this._logger.ShouldDefineRuntimeIdentifiers(projectName);
         }
 
         return ValueTask.CompletedTask;

@@ -4,6 +4,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Xml;
 using FunFair.BuildCheck.Interfaces;
+using FunFair.BuildCheck.ProjectChecks.ReferencedPackages.LoggingExtensions;
+using FunFair.BuildCheck.ProjectChecks.Settings.LoggingExtensions;
 using Microsoft.Extensions.Logging;
 using NuGet.Versioning;
 
@@ -36,7 +38,7 @@ public sealed class NoPreReleaseNuGetPackages : IProjectCheck
 
             if (string.IsNullOrWhiteSpace(packageName))
             {
-                this._logger.LogError($"{projectName}: Contains bad reference to packages.");
+                this._logger.ContainsBadReferenceToPackages(projectName);
 
                 continue;
             }
@@ -59,18 +61,18 @@ public sealed class NoPreReleaseNuGetPackages : IProjectCheck
 
             string version = reference.GetAttribute(name: "Version");
 
-            this._logger.LogDebug($"{projectName}: Found: {packageName} ({version})");
+            this._logger.FoundNuGetPackageAtVersion(projectName: projectName, packageId: packageName, version: version);
 
             if (!NuGetVersion.TryParse(value: version, out NuGetVersion? nuGetVersion))
             {
-                this._logger.LogError($"{projectName}: Package {packageName} could not parse version {version}.");
+                this._logger.CouldNotParseVersion(projectName: projectName, packageId: packageName, version: version);
 
                 continue;
             }
 
             if (nuGetVersion.IsPrerelease && !this._configuration.PreReleaseBuild)
             {
-                this._logger.LogError($"{projectName}: Package {packageName} uses pre-release version {version}.");
+                this._logger.UsesPreReleaseVersion(projectName: projectName, packageId: packageName, version: version);
             }
         }
 

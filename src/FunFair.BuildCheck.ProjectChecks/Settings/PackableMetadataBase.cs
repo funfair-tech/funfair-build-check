@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using System.Xml;
 using FunFair.BuildCheck.Interfaces;
 using FunFair.BuildCheck.ProjectChecks.Helpers;
+using FunFair.BuildCheck.ProjectChecks.Settings.LoggingExtensions;
 using Microsoft.Extensions.Logging;
 
 namespace FunFair.BuildCheck.ProjectChecks.Settings;
@@ -27,7 +28,7 @@ public abstract class PackableMetadataBase : IProjectCheck
 
         if (!project.HasProperty(this._property))
         {
-            this._logger.LogError($"Packable project {projectName} does not define {this._property}");
+            this._logger.PackableProjectDoesNotDefineProperty(projectName, this._property);
         }
 
         return ValueTask.CompletedTask;

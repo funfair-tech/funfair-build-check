@@ -3,6 +3,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Xml;
 using FunFair.BuildCheck.Interfaces;
+using FunFair.BuildCheck.ProjectChecks.Settings.LoggingExtensions;
 using Microsoft.Extensions.Logging;
 
 namespace FunFair.BuildCheck.ProjectChecks.Settings;
@@ -33,7 +34,7 @@ public sealed class ShouldNotRemoveFromCompilation : IProjectCheck
         foreach (XmlElement reference in nodes.OfType<XmlElement>())
         {
             string projectReference = reference.GetAttribute(name: "Remove");
-            this._logger.LogError($"Removes {projectReference} from compilation");
+            this._logger.RemovesProjectReferenceFromCompilation(projectName, projectReference);
         }
 
         return ValueTask.CompletedTask;

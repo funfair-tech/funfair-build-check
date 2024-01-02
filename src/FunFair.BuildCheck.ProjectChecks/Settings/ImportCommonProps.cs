@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using System.Xml;
 using FunFair.BuildCheck.Interfaces;
 using FunFair.BuildCheck.ProjectChecks.Helpers;
+using FunFair.BuildCheck.ProjectChecks.Settings.LoggingExtensions;
 using Microsoft.Extensions.Logging;
 
 namespace FunFair.BuildCheck.ProjectChecks.Settings;
@@ -35,7 +36,7 @@ public sealed class ImportCommonProps : IProjectCheck
 
         if (!found)
         {
-            this._logger.LogError($"Packable project {projectName} should <Import Project=\"{this._projectImport}\" />");
+            this._logger.PackableProjectShouldImportProject(projectName, this._projectImport);
         }
 
         return ValueTask.CompletedTask;

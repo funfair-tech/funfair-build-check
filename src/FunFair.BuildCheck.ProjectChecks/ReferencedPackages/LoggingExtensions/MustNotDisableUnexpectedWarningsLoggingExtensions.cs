@@ -2,7 +2,7 @@ using Microsoft.Extensions.Logging;
 
 namespace FunFair.BuildCheck.ProjectChecks.ReferencedPackages.LoggingExtensions;
 
-public static partial class MustNotDisableUnexpectedWarningsLoggingExtensions
+internal static partial class MustNotDisableUnexpectedWarningsLoggingExtensions
 {
     [LoggerMessage(EventId = 1, Level = LogLevel.Error, Message = "{projectName}: Configuration {configuration} hides warning {warning}.")]
     public static partial void ConfigurationHidesWarning(this ILogger<MustNotDisableUnexpectedWarnings> logger, string projectName, string configuration, string warning);
