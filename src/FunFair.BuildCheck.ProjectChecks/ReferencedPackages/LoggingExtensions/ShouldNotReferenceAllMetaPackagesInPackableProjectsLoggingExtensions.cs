@@ -2,7 +2,7 @@ using Microsoft.Extensions.Logging;
 
 namespace FunFair.BuildCheck.ProjectChecks.ReferencedPackages.LoggingExtensions;
 
-public static partial class ShouldNotReferenceAllMetaPackagesInPackableProjectsLoggingExtensions
+internal static partial class ShouldNotReferenceAllMetaPackagesInPackableProjectsLoggingExtensions
 {
     [LoggerMessage(EventId = 1,
                    Level = LogLevel.Error,

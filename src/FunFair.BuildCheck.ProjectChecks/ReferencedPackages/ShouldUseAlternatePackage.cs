@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using System.Xml;
 using FunFair.BuildCheck.Interfaces;
 using FunFair.BuildCheck.ProjectChecks.Helpers;
+using FunFair.BuildCheck.ProjectChecks.ReferencedPackages.LoggingExtensions;
 using Microsoft.Extensions.Logging;
 
 namespace FunFair.BuildCheck.ProjectChecks.ReferencedPackages;
@@ -65,7 +66,7 @@ public abstract class ShouldUseAlternatePackage : IProjectCheck
 
             if (StringComparer.InvariantCultureIgnoreCase.Equals(x: packageId, y: this._matchPackageId))
             {
-                this.Logger.LogError($"Should use package {this._usePackageId} rather than {this._matchPackageId}");
+                this.Logger.UseAlternatePackageIdForMatchedPackageId(projectName: projectName, usePackageId: this._usePackageId, matchPackageId: this._matchPackageId);
             }
         }
 
