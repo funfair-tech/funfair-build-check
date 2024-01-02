@@ -54,7 +54,7 @@ public abstract class HasAppropriateAnalysisPackages : IProjectCheck
                     foundAnalyzerPackage = true;
                     string assets = reference.GetAttribute(name: "PrivateAssets");
 
-                    if (string.IsNullOrWhiteSpace(assets) || assets != PACKAGE_PRIVATE_ASSETS)
+                    if (string.IsNullOrWhiteSpace(assets) || !StringComparer.Ordinal.Equals(assets, PACKAGE_PRIVATE_ASSETS))
                     {
                         this._logger.DoesNotReferenceMustIncludePackageIdWithAPrivateAssetsAttribute(projectName: projectName,
                                                                                                      privateAssets: PACKAGE_PRIVATE_ASSETS,

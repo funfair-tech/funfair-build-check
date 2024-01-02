@@ -78,7 +78,7 @@ public sealed class MustNotDisableUnexpectedWarnings : IProjectCheck
 
             foreach (string warning in warnings)
             {
-                if (warning == "$(NoWarn)")
+                if (StringComparer.Ordinal.Equals(warning, "$(NoWarn)"))
                 {
                     // skip references to global configs
                     continue;

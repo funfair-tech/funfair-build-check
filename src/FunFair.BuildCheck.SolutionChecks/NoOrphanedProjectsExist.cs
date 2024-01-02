@@ -60,7 +60,7 @@ public sealed class NoOrphanedProjectsExist : ISolutionCheck
 
     private bool ProjectIsInSolution(string project)
     {
-        return this._projects.All(x => x.FileName != project);
+        return this._projects.All(x => !StringComparer.Ordinal.Equals(x: x.FileName, y: project));
     }
 
     private static IReadOnlyList<string> GetOrderedProjects(string basePath)
