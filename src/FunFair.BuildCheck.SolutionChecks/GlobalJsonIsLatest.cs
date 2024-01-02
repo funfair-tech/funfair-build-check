@@ -44,7 +44,7 @@ public sealed class GlobalJsonIsLatest : ISolutionCheck
             return;
         }
 
-        string content = await File.ReadAllTextAsync(file, cancellationToken);
+        string content = await File.ReadAllTextAsync(path: file, cancellationToken: cancellationToken);
 
         try
         {

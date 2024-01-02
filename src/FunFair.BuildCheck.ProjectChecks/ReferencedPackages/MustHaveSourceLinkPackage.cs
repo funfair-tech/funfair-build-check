@@ -46,7 +46,9 @@ public sealed class MustHaveSourceLinkPackage : IProjectCheck
         {
             if (!CheckPrivateAssets(packageId: PACKAGE_ID, project: project))
             {
-                this._logger.DoesNotReferenceMustIncludePackageIdWithAPrivateAssetsAttribute(projectName: projectName, privateAssets: PACKAGE_ID, mustIncludePackageId: PACKAGE_PRIVATE_ASSETS);
+                this._logger.DoesNotReferenceMustIncludePackageIdWithAPrivateAssetsAttribute(projectName: projectName,
+                                                                                             privateAssets: PACKAGE_ID,
+                                                                                             mustIncludePackageId: PACKAGE_PRIVATE_ASSETS);
             }
         }
 

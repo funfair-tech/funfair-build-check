@@ -56,7 +56,9 @@ public abstract class HasAppropriateNonAnalysisPackages : IProjectCheck
 
         if (foundSourcePackage && !foundRequiredPackage)
         {
-            this._logger.DidNotFindMustIncludePackageForDetectedPackage(projectName: projectName, detectPackageId: this._detectPackageId, mustIncludePackageId: this._mustIncludePackageId);
+            this._logger.DidNotFindMustIncludePackageForDetectedPackage(projectName: projectName,
+                                                                        detectPackageId: this._detectPackageId,
+                                                                        mustIncludePackageId: this._mustIncludePackageId);
         }
 
         return ValueTask.CompletedTask;

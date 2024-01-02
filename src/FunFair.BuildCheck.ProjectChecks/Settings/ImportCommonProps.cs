@@ -36,7 +36,7 @@ public sealed class ImportCommonProps : IProjectCheck
 
         if (!found)
         {
-            this._logger.PackableProjectShouldImportProject(projectName, this._projectImport);
+            this._logger.PackableProjectShouldImportProject(projectName: projectName, projectImport: this._projectImport);
         }
 
         return ValueTask.CompletedTask;
