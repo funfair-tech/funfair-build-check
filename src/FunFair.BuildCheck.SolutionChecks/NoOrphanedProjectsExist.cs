@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using FunFair.BuildCheck.Interfaces;
+using FunFair.BuildCheck.SolutionChecks.LoggingExtensions;
 using Microsoft.Extensions.Logging;
 
 namespace FunFair.BuildCheck.SolutionChecks;
@@ -24,28 +25,28 @@ public sealed class NoOrphanedProjectsExist : ISolutionCheck
 
         if (string.IsNullOrEmpty(basePath))
         {
-            this._logger.LogError($"Solution {solutionFileName} could not get base path");
+            this._logger.CouldNotGetBasePath(solutionFileName);
 
             return;
         }
 
-        this.CheckProjects(basePath);
+        this.CheckProjects(solutionFileName: solutionFileName, basePath: basePath);
     }
 
-    private void CheckProjects(string basePath)
+    private void CheckProjects(string solutionFileName, string basePath)
     {
         IReadOnlyList<string> projectFileNames = GetOrderedProjects(basePath);
 
         foreach (string project in projectFileNames.Where(this.ProjectIsInSolution))
         {
-            this.CheckProject(basePath: basePath, project: project);
+            this.CheckProject(solutionFileName: solutionFileName, basePath: basePath, project: project);
         }
     }
 
-    private void CheckProject(string basePath, string project)
+    private void CheckProject(string solutionFileName, string basePath, string project)
     {
         string solutionRelative = GetPathRelativeToSolution(basePath: basePath, project: project);
-        this._logger.LogError($"Project {solutionRelative} is not in solution, but in work folder");
+        this._logger.ProjectIsNotInSolutionButInWorkFolder(solutionFileName: solutionFileName, projectFileName: solutionRelative);
     }
 
     private static string GetPathRelativeToSolution(string basePath, string project)

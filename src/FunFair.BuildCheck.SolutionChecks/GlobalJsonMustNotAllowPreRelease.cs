@@ -2,6 +2,7 @@ using System;
 using System.IO;
 using System.Text.Json;
 using FunFair.BuildCheck.Interfaces;
+using FunFair.BuildCheck.SolutionChecks.LoggingExtensions;
 using FunFair.BuildCheck.SolutionChecks.Models;
 using Microsoft.Extensions.Logging;
 
@@ -56,18 +57,17 @@ public sealed class GlobalJsonMustNotAllowPreRelease : ISolutionCheck
 
                 if (!this._allowPreRelease && preReleaseAllowedInConfig)
                 {
-                    this._logger.LogError(
-                        $"global.json is using SDK pre-release policy of {FormatPolicy(preReleaseAllowedInConfig)} rather than {FormatPolicy(this._allowPreRelease)}");
+                    this._logger.UsingIncorrectPreReleasePolicy(solutionFileName: solutionFileName, FormatPolicy(preReleaseAllowedInConfig), FormatPolicy(this._allowPreRelease));
                 }
             }
             else
             {
-                this._logger.LogError(message: "global.json does not specify a SDK pre-release policy");
+                this._logger.DoesNotSpecifyADotNetSdkPreReleasePolicy(solutionFileName);
             }
         }
         catch (Exception exception)
         {
-            this._logger.LogError(new(exception.HResult), exception: exception, $"Failed to read {file} : {exception.Message}");
+            this._logger.FailedToReadGlobalJson(solutionFileName: solutionFileName, file: file, message: exception.Message, exception: exception);
         }
     }
 

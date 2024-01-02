@@ -2,6 +2,7 @@ using System;
 using System.IO;
 using System.Text.Json;
 using FunFair.BuildCheck.Interfaces;
+using FunFair.BuildCheck.SolutionChecks.LoggingExtensions;
 using FunFair.BuildCheck.SolutionChecks.Models;
 using Microsoft.Extensions.Logging;
 
@@ -22,7 +23,7 @@ public sealed class GlobalJsonIsLatest : ISolutionCheck
     {
         if (string.IsNullOrWhiteSpace(this._dotnetVersion))
         {
-            this._logger.LogInformation(message: "Not checking global.json as DOTNET_CORE_SDK_VERSION is not defined");
+            this._logger.NotCheckingGlobalJson(solutionFileName);
 
             return;
         }
@@ -51,17 +52,17 @@ public sealed class GlobalJsonIsLatest : ISolutionCheck
             {
                 if (!StringComparer.InvariantCultureIgnoreCase.Equals(x: p.Sdk.Version, y: this._dotnetVersion))
                 {
-                    this._logger.LogError($"global.json is using SDK {p.Sdk.Version} rather than {this._dotnetVersion}");
+                    this._logger.UsingIncorrectDotNetSdkVersion(solutionFileName: solutionFileName, projectVersion: p.Sdk.Version, dotnetVersion: this._dotnetVersion);
                 }
             }
             else
             {
-                this._logger.LogError(message: "global.json does not specify a SDK version");
+                this._logger.DoesNotSpecifyADotNetSdkVersion(solutionFileName);
             }
         }
         catch (Exception exception)
         {
-            this._logger.LogError(new(exception.HResult), exception: exception, $"Failed to read {file} : {exception.Message}");
+            this._logger.FailedToReadGlobalJson(solutionFileName: solutionFileName, file: file, message: exception.Message, exception: exception);
         }
     }
 }

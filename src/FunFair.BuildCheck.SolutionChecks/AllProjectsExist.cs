@@ -3,6 +3,7 @@ using System.IO;
 using System.Linq;
 using FunFair.BuildCheck.Helpers;
 using FunFair.BuildCheck.Interfaces;
+using FunFair.BuildCheck.SolutionChecks.LoggingExtensions;
 using Microsoft.Extensions.Logging;
 
 namespace FunFair.BuildCheck.SolutionChecks;
@@ -20,12 +21,17 @@ public sealed class AllProjectsExist : ISolutionCheck
 
     public void Check(string solutionFileName)
     {
-        this._logger.LogInformation($"Checking Solution: {solutionFileName}");
+        this._logger.CheckingSolution(solutionFileName);
 
-        foreach (string projectFileName in this._projects.Select(project => project.FileName)
-                                               .Where(projectFileName => !File.Exists(PathHelpers.ConvertToNative(projectFileName))))
+        foreach (string projectFileName in this.GetMissingProjectFileNames())
         {
-            this._logger.LogError($"Project {projectFileName} does not exist");
+            this._logger.ProjectDoesNotExist(solutionFileName: solutionFileName, projectFileName: projectFileName);
         }
+    }
+
+    private IEnumerable<string> GetMissingProjectFileNames()
+    {
+        return this._projects.Select(project => project.FileName)
+                   .Where(projectFileName => !File.Exists(PathHelpers.ConvertToNative(projectFileName)));
     }
 }

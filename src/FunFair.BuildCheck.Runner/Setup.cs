@@ -14,7 +14,7 @@ internal static class Setup
     public static IServiceCollection SetupSolutionChecks(this IServiceCollection services)
     {
         return services.AddSolutionCheck<GlobalJsonIsLatest>()
-                       .AddSolutionCheck<GlobalJsonMustSpecifyCorrectRollforwardPolicy>()
+                       .AddSolutionCheck<GlobalJsonMustSpecifyCorrectRollForwardPolicy>()
                        .AddSolutionCheck<GlobalJsonMustNotAllowPreRelease>()
                        .AddSolutionCheck<AllProjectsExist>()
                        .AddSolutionCheck<NoOrphanedProjectsExist>();
