@@ -8,4 +8,5 @@ namespace FunFair.BuildCheck.Helpers;
 [SuppressMessage(category: "ReSharper", checkId: "PartialTypeWithSinglePart", Justification = "Needed for generated code")]
 internal static partial class EnumExtensions
 {
+    // Code generated in partial class
 }
