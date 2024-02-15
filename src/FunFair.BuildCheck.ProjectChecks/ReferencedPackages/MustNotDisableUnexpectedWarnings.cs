@@ -13,11 +13,11 @@ namespace FunFair.BuildCheck.ProjectChecks.ReferencedPackages;
 
 public sealed class MustNotDisableUnexpectedWarnings : IProjectCheck
 {
-    private static readonly IReadOnlyList<string> AllowedWarnings = new[]
-                                                                    {
-                                                                        // Xml Docs
-                                                                        "1591"
-                                                                    };
+    private static readonly IReadOnlyList<string> AllowedWarnings =
+    [
+        // Xml Docs
+        "1591"
+    ];
 
     private static readonly IReadOnlyList<string> AllowedTestProjectWarnings = Array.Empty<string>();
 
