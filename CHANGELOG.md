@@ -11,7 +11,6 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 ### Changed
 - Dependencies - Updated Nullable.Extended.Analyzer to 1.15.6169
 - Dependencies - Updated Microsoft.Extensions to 8.0.1
-- Dependencies - Updated xunit to 2.6.6
 - Dependencies - Updated Roslynator.Analyzers to 4.10.0
 - Dependencies - Updated ThisAssembly.AssemblyInfo to 1.4.3
 - Dependencies - Updated SonarAnalyzer.CSharp to 9.19.0.84025
@@ -26,6 +25,7 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 - SDK - Updated DotNet SDK to 8.0.200
 - Dependencies - Updated xunit.analyzers to 1.11.0
 - Dependencies - Updated xunit.runner.visualstudio to 2.5.7
+- Dependencies - Updated xunit to 2.7.0
 ### Removed
 ### Deployment Changes
 
