@@ -7,11 +7,19 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 
 ## [Unreleased]
 ### Added
+### Fixed
+### Changed
+### Removed
+### Deployment Changes
 
+<!--
+Releases that have at least been deployed to staging, BUT NOT necessarily released to live.  Changes should be moved from [Unreleased] into here as they are merged into the appropriate release branch
+-->
+## [474.0.18] - 2024-02-26
+### Added
 - Publishable check for EnableRequestDelegateGenerator
 - Publishable check for PublishTrimmed when EnableTrimAnalyzer=true
 - Check for EnableTrimAnalyzer=true|false
-### Fixed
 ### Changed
 - Dependencies - Updated Nullable.Extended.Analyzer to 1.15.6169
 - Dependencies - Updated Microsoft.Extensions to 8.0.1
@@ -32,12 +40,7 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 - Dependencies - Updated coverlet to 6.0.1
 - Dependencies - Updated TeamCity.VSTest.TestAdapter to 1.0.40
 - Dependencies - Updated Meziantou.Analyzer to 2.0.145
-### Removed
-### Deployment Changes
 
-<!--
-Releases that have at least been deployed to staging, BUT NOT necessarily released to live.  Changes should be moved from [Unreleased] into here as they are merged into the appropriate release branch
--->
 ## [474.0.17] - 2023-12-24
 ### Changed
 - Passed in ICheckConfiguration into the check runner
