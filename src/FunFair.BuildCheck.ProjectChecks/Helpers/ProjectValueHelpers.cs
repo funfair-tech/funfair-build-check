@@ -151,12 +151,7 @@ internal static class ProjectValueHelpers
         CheckValueCommon(projectName: projectName, project: project, nodePresence: nodePresence, isRequiredValue: isRequiredValue, requiredValueDisplayText: msg, logger: logger);
     }
 
-    private static void CheckValueCommon(string projectName,
-                                         XmlDocument project,
-                                         string nodePresence,
-                                         Func<string, bool> isRequiredValue,
-                                         string requiredValueDisplayText,
-                                         ILogger logger)
+    private static void CheckValueCommon(string projectName, XmlDocument project, string nodePresence, Func<string, bool> isRequiredValue, string requiredValueDisplayText, ILogger logger)
     {
         bool hasGlobalSetting = CheckGlobalSettings(project: project, nodePresence: nodePresence, isRequiredValue: isRequiredValue);
 
@@ -340,21 +335,29 @@ internal static class ProjectValueHelpers
 
     public static string? GetAwsProjectType(this XmlDocument project)
     {
-        XmlNode? outputTypeNode = project.SelectSingleNode("/Project/PropertyGroup/AWSProjectType");
-
-        return outputTypeNode?.InnerText;
+        return project.GetProperty("AWSProjectType");
     }
 
-    public static bool HasProperty(this XmlDocument project, string property)
+    public static string? GetProperty(this XmlDocument project, string property)
     {
         XmlNode? outputTypeNode = project.SelectSingleNode("/Project/PropertyGroup/" + property);
 
         if (outputTypeNode is not null)
         {
-            return !string.IsNullOrWhiteSpace(outputTypeNode.InnerText);
+            if (!string.IsNullOrWhiteSpace(outputTypeNode.InnerText))
+            {
+                return outputTypeNode.InnerText;
+            }
         }
 
-        return false;
+        return null;
+    }
+
+    public static bool HasProperty(this XmlDocument project, string property)
+    {
+        string? value = project.GetProperty(property);
+
+        return !string.IsNullOrWhiteSpace(value);
     }
 
     public static bool IsFunFairTestProject(this XmlDocument project)

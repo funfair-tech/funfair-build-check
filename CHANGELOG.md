@@ -7,6 +7,10 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 
 ## [Unreleased]
 ### Added
+
+- Publishable check for EnableRequestDelegateGenerator
+- Publishable check for PublishTrimmed when EnableTrimAnalyzer=true
+- Check for EnableTrimAnalyzer=true|false
 ### Fixed
 ### Changed
 - Dependencies - Updated Nullable.Extended.Analyzer to 1.15.6169

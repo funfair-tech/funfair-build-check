@@ -93,6 +93,8 @@ internal static class Setup
                        .AddProjectCheck<IlcGenerateStackTraceDataPolicy>()
                        .AddProjectCheck<IlcOptimizationPreferencePolicy>()
                        .AddProjectCheck<PublishableExesMustHaveRuntimeIdentifiers>()
+                       .AddProjectCheck<PublishableProjectsThatPassTrimAnalyzerShouldHavePublishedTrimmedSetPolicy>()
+                       .AddProjectCheck<PublishableProjectsShouldEnableRequestDelegateGeneratorPolicy>()
                        .AddProjectCheck<TieredPgoPolicy>()
                        .AddProjectCheck<UseSystemResourceKeysPolicy>()
                        .AddProjectCheck<ValidateExecutableReferencesMatchSelfContainedPolicy>();
@@ -136,6 +138,7 @@ internal static class Setup
                        .AddProjectCheck<MustNotHaveFxCopAnalyzerPackage>()
                        .AddProjectCheck<MustUseOpenApiAnalyzers>()
                        .AddProjectCheck<NuGetAuditPolicy>()
+                       .AddProjectCheck<ProjectsShouldHaveTrimAnalyzerConfiguredPolicy>()
                        .AddEnumSourceGeneratorAnalyzerPackage(repositorySettings: repositorySettings)
                        .AddUnitTestAnalysers(repositorySettings: repositorySettings)
                        .AddFunFairCodeAnalysisRequirements(repositorySettings: repositorySettings);
