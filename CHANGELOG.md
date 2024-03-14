@@ -15,6 +15,7 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 - Dependencies - Updated Credfeto.Enumeration.Source.Generation to 1.1.4.303
 - SDK - Updated DotNet SDK to 8.0.202
 - Dependencies - Updated coverlet to 6.0.2
+- Dependencies - Updated Microsoft.Extensions to 8.0.1
 ### Removed
 ### Deployment Changes
 
