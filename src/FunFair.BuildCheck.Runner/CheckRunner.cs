@@ -90,11 +90,7 @@ public static class CheckRunner
         await TestProjectAsync(projectChecks: projectChecks, project: project, projectFolder: projectFolder, doc: doc, cancellationToken: cancellationToken);
     }
 
-    private static async ValueTask TestProjectAsync(IReadOnlyList<IProjectCheck> projectChecks,
-                                                    SolutionProject project,
-                                                    string projectFolder,
-                                                    XmlDocument doc,
-                                                    CancellationToken cancellationToken)
+    private static async ValueTask TestProjectAsync(IReadOnlyList<IProjectCheck> projectChecks, SolutionProject project, string projectFolder, XmlDocument doc, CancellationToken cancellationToken)
     {
         foreach (IProjectCheck check in projectChecks)
         {
@@ -110,7 +106,7 @@ public static class CheckRunner
                                           Func<IServiceCollection, IServiceProvider> buildServiceProvider,
                                           ILogger logger)
     {
-        IRepositorySettings wrappedRepositorySettings = new RepositorySettings(projects: projects, frameworkSettings: frameworkSettings, projectClassifier: projectClassifier);
+        IRepositorySettings wrappedRepositorySettings = new RepositorySettings(frameworkSettings: frameworkSettings, projectClassifier: projectClassifier, projects: projects);
 
         TrackingLogger trackingLogger = new(warningsAsErrors: warningsAsErrors, logger: logger);
 
@@ -161,7 +157,7 @@ public static class CheckRunner
                 string fullPath = Path.Combine(path1: basePath, PathHelpers.ConvertToNative(fileName));
                 Console.WriteLine($"    - {fullPath}");
 
-                projects.Add(new(displayName: displayName, fileName: fullPath));
+                projects.Add(new(fileName: fullPath, displayName: displayName));
             }
         }
 
