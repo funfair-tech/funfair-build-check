@@ -1,52 +1,50 @@
-"C#":
- - any: [ './**/*.cs', './**/*.csproj' ]
-"C# Project":
- - any: [ './**/*.csproj' ]
-"C# Solution":
- - any: [ './**/*.sln' ]
-"Powershell":
- - any: [ './**/*.ps1', './**/*.psm1' ]
-"SQL":
- - any: [ 'db/**/*', './**/*.sql' ]
-"Solidity":
- - any: [ './**/*.sol' ]
-"unit-tests":
- - any: [ 'src/*.Tests.*/**/*', 'src/*.Tests/**/*', 'src/*.Tests.Integration.*/**/*', 'src/*.Tests.Integration/**/*' ]
 ".NET update":
- - any: [ 'src/global.json' ]
-"Config Change":
- - any: [ 'src/**/*.json', '!src/global.json' ]
-"Static Code Analysis Rules":
- - any: [ 'src/CodeAnalysis.ruleset' ]
-"Migration Script":
- - any: [ 'tools/MigrationScripts/**/*' ]
-"Legal Text":
- - any: [ 'tools/LegalText/**/*' ]
+ - any: [ ''src/global.json'' ]
+"C#":
+ - any: [ ''./**/*.cs', './**/*.csproj'' ]
+"C# Project":
+ - any: [ ''./**/*.csproj'' ]
+"C# Solution":
+ - any: [ ''./**/*.sln'' ]
 "Change Log":
- - any: [ 'CHANGELOG.md' ]
-"Read Me":
- - any: [ 'README.md' ]
-"Setup":
- - any: [ 'SETUP.md' ]
-"Markdown":
- - any: [ './**/*.md' ]
+ - any: [ ''CHANGELOG.md'' ]
+"Config Change":
+ - any: [ ''src/**/*.json', '!src/global.json'' ]
+"funfair-buildcheck":
+ - any: [ ''src/$FunFair.BuildCheck/**/*'' ]
+"funfair-buildcheck-helpers":
+ - any: [ ''src/$FunFair.BuildCheck.Helpers/**/*'' ]
+"funfair-buildcheck-interfaces":
+ - any: [ ''src/$FunFair.BuildCheck.Interfaces/**/*'' ]
+"funfair-buildcheck-projectchecks":
+ - any: [ ''src/$FunFair.BuildCheck.ProjectChecks/**/*'' ]
+"funfair-buildcheck-runner":
+ - any: [ ''src/$FunFair.BuildCheck.Runner/**/*'' ]
+"funfair-buildcheck-runner-tests":
+ - any: [ ''src/$FunFair.BuildCheck.Runner.Tests/**/*'' ]
+"funfair-buildcheck-solutionchecks":
+ - any: [ ''src/$FunFair.BuildCheck.SolutionChecks/**/*'' ]
+"funfair-buildcheck-tests":
+ - any: [ ''src/$FunFair.BuildCheck.Tests/**/*'' ]
 "github-actions":
- - any: [ '.github/workflows/*.yml' ]
-"FunFair.BuildCheck":
- - any: [ 'src/FunFair.BuildCheck/**/*' ]
-"Helpers":
- - any: [ 'src/FunFair.BuildCheck.Helpers/**/*' ]
-"Interfaces":
- - any: [ 'src/FunFair.BuildCheck.Interfaces/**/*' ]
-"ProjectChecks":
- - any: [ 'src/FunFair.BuildCheck.ProjectChecks/**/*' ]
-"Runner":
- - any: [ 'src/FunFair.BuildCheck.Runner/**/*' ]
-"Runner.Tests":
- - any: [ 'src/FunFair.BuildCheck.Runner.Tests/**/*' ]
-"SolutionChecks":
- - any: [ 'src/FunFair.BuildCheck.SolutionChecks/**/*' ]
-"Tests":
- - any: [ 'src/FunFair.BuildCheck.Tests/**/*' ]
-"prepublish":
- - any: [ 'src/prepublish/**/*' ]
+ - any: [ ''.github/workflows/*.yml'' ]
+"Legal Text":
+ - any: [ ''tools/LegalText/**/*'' ]
+"Markdown":
+ - any: [ ''./**/*.md'' ]
+"Migration Script":
+ - any: [ ''tools/MigrationScripts/**/*'' ]
+"Powershell":
+ - any: [ ''./**/*.ps1', './**/*.psm1'' ]
+"Read Me":
+ - any: [ ''README.md'' ]
+"Setup":
+ - any: [ ''SETUP.md'' ]
+"Solidity":
+ - any: [ ''./**/*.sol'' ]
+"SQL":
+ - any: [ ''./**/*.sql', 'db/**/*'' ]
+"Static Code Analysis Rules":
+ - any: [ ''src/CodeAnalysis.ruleset'' ]
+"unit-tests":
+ - any: [ ''src/*.Tests.*/**/*', 'src/*.Tests.Integration.*/**/*', 'src/*.Tests.Integration/**/*', 'src/*.Tests/**/*'' ]
