@@ -196,6 +196,8 @@ roslynator_object_creation_type_style=implicit_when_type_is_obvious
 #roslynator_use_var_instead_of_implicit_object_creation = true|false
 roslynator_use_var_instead_of_implicit_object_creation=false
 
+# Use tuple to swap values
+dotnet_diagnostic.IDE0180.severity = error
 # Remove unnecessary lambda expression
 dotnet_diagnostic.IDE0200.severity = error
 # Use UTF-8 string literal
