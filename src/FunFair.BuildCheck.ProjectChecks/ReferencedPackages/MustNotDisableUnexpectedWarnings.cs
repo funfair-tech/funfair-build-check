@@ -19,7 +19,7 @@ public sealed class MustNotDisableUnexpectedWarnings : IProjectCheck
         "1591"
     ];
 
-    private static readonly IReadOnlyList<string> AllowedTestProjectWarnings = Array.Empty<string>();
+    private static readonly IReadOnlyList<string> AllowedTestProjectWarnings = [];
 
     private readonly ILogger<MustNotDisableUnexpectedWarnings> _logger;
 
@@ -129,13 +129,15 @@ public sealed class MustNotDisableUnexpectedWarnings : IProjectCheck
 
     private static IReadOnlyList<string> ExtractWarnings(string value)
     {
-        return value.Split(separator: ";")
-                    .Where(predicate: HasContent)
-                    .SelectMany(selector: s => s.Split(separator: ",")
-                                                .Where(predicate: HasContent))
-                    .Where(predicate: s => !string.IsNullOrWhiteSpace(s))
-                    .OrderBy(keySelector: s => s, comparer: StringComparer.OrdinalIgnoreCase)
-                    .ToArray();
+        return
+        [
+            ..value.Split(separator: ";")
+                   .Where(predicate: HasContent)
+                   .SelectMany(selector: s => s.Split(separator: ",")
+                                               .Where(predicate: HasContent))
+                   .Where(predicate: s => !string.IsNullOrWhiteSpace(s))
+                   .OrderBy(keySelector: s => s, comparer: StringComparer.OrdinalIgnoreCase)
+        ];
     }
 
     private static bool HasContent(string t)

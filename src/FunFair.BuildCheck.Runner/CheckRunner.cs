@@ -131,43 +131,36 @@ public static class CheckRunner
         {
             Console.WriteLine($"Solution {solution} could not get base path");
 
-            return Array.Empty<SolutionProject>();
+            return [];
         }
 
         Console.WriteLine($"Solution base path: {basePath}");
 
-        List<SolutionProject> projects = new();
-
         Console.WriteLine(value: "Looking for projects...");
 
-        foreach (string line in text)
+        return
+        [
+            .. text.SelectMany(line => ProjectReferenceRegex.Matches(line)
+                                                            .Select(ExtractProject))
+        ];
+
+        SolutionProject ExtractProject(Match match)
         {
-            foreach (Match? match in ProjectReferenceRegex.Matches(line))
-            {
-                if (match is null)
-                {
-                    continue;
-                }
+            string displayName = match.Groups[groupname: "DisplayName"].Value;
+            string fileName = match.Groups[groupname: "FileName"].Value;
 
-                string displayName = match.Groups[groupname: "DisplayName"].Value;
-                string fileName = match.Groups[groupname: "FileName"].Value;
+            Console.WriteLine($" * {displayName} = {fileName}");
 
-                Console.WriteLine($" * {displayName} = {fileName}");
+            string fullPath = Path.Combine(path1: basePath, PathHelpers.ConvertToNative(fileName));
+            Console.WriteLine($"    - {fullPath}");
 
-                string fullPath = Path.Combine(path1: basePath, PathHelpers.ConvertToNative(fileName));
-                Console.WriteLine($"    - {fullPath}");
-
-                projects.Add(new(fileName: fullPath, displayName: displayName));
-            }
+            return new(fileName: fullPath, displayName: displayName);
         }
-
-        return projects.ToArray();
     }
 
     private static IReadOnlyList<ISolutionCheck> RegisteredSolutionChecks(IServiceProvider services)
     {
-        return services.GetServices<ISolutionCheck>()
-                       .ToArray();
+        return [..services.GetServices<ISolutionCheck>()];
     }
 
     private static IReadOnlyList<IProjectCheck> RegisteredProjectChecks(IServiceProvider services)

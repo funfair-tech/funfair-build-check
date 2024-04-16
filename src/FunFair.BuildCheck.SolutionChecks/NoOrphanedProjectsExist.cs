@@ -65,9 +65,11 @@ public sealed class NoOrphanedProjectsExist : ISolutionCheck
 
     private static IReadOnlyList<string> GetOrderedProjects(string basePath)
     {
-        return GetProjects(basePath)
-               .OrderBy(keySelector: Ordering, comparer: StringComparer.Ordinal)
-               .ToArray();
+        return
+        [
+            ..GetProjects(basePath)
+                .OrderBy(keySelector: Ordering, comparer: StringComparer.Ordinal)
+        ];
     }
 
     private static IEnumerable<string> GetProjects(string basePath)

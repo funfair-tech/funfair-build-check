@@ -9,6 +9,7 @@ ProjectSection(SolutionItems) = preProject
 	..\CHANGELOG.md = ..\CHANGELOG.md
 	..\README.md = ..\README.md
 	FunFair.props = FunFair.props
+	..\.editorconfig = ..\.editorconfig
 EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FunFair.BuildCheck.Tests", "FunFair.BuildCheck.Tests\FunFair.BuildCheck.Tests.csproj", "{6D6E75A7-5520-4B6C-94A4-82988B73F3A3}"
