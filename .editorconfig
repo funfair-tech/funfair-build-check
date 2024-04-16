@@ -215,7 +215,6 @@ dotnet_diagnostic.IDE0304.severity = error
 # Use collection expression for fluent
 dotnet_diagnostic.IDE0305.severity = error
 
-
 [*.{appxmanifest,asax,ascx,aspx,build,cshtml,dtd,fs,fsi,fsscript,fsx,master,ml,mli,nuspec,razor,resw,resx,skin,vb,xaml,xamlx,xoml,xsd}]
 indent_style=space
 indent_size=4
