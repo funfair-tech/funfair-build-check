@@ -11,6 +11,9 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 ### Changed
 - Dependencies - Updated SmartAnalyzers.CSharpExtensions.Annotations to 4.2.10
 ### Removed
+
+- Removed test link to coverlet
+- Removed test link to teamcity test adapter
 ### Deployment Changes
 
 <!--

@@ -167,9 +167,8 @@ internal static class Setup
 
         return services.AddProjectCheck<UsingNSubstituteMustIncludeAnalyzer>()
                        .AddProjectCheck<UsingXUnitMustIncludeVisualStudioTestPlatform>()
-                       .AddProjectCheck<UsingXUnitMustIncludeTeamCityTestAdapter>()
-                       .AddProjectCheck<UsingXUnitMustIncludeCoverletCollector>()
-                       .AddProjectCheck<UsingXUnitMustIncludeCoverletMsBuild>()
+                       .AddProjectCheck<MustNotReferenceTeamCityTestAdapter>()
+                       .AddProjectCheck<MustNotUseReferenceCoverlet>()
                        .AddProjectCheck<UsingXUnitMustIncludeAnalyzer>();
     }
 
