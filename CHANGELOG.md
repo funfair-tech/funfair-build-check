@@ -10,6 +10,7 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 ### Fixed
 ### Changed
 - Dependencies - Updated SmartAnalyzers.CSharpExtensions.Annotations to 4.2.10
+- Dependencies - Updated Credfeto.Enumeration to 1.1.6.354
 ### Removed
 
 - Removed test link to coverlet
