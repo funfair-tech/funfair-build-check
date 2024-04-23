@@ -151,12 +151,7 @@ internal static class ProjectValueHelpers
         CheckValueCommon(projectName: projectName, project: project, nodePresence: nodePresence, isRequiredValue: isRequiredValue, requiredValueDisplayText: msg, logger: logger);
     }
 
-    private static void CheckValueCommon(string projectName,
-                                         XmlDocument project,
-                                         string nodePresence,
-                                         Func<string, bool> isRequiredValue,
-                                         string requiredValueDisplayText,
-                                         ILogger logger)
+    private static void CheckValueCommon(string projectName, XmlDocument project, string nodePresence, Func<string, bool> isRequiredValue, string requiredValueDisplayText, ILogger logger)
     {
         bool hasGlobalSetting = CheckGlobalSettings(project: project, nodePresence: nodePresence, isRequiredValue: isRequiredValue);
 
@@ -191,30 +186,34 @@ internal static class ProjectValueHelpers
         {
             XmlNode? node = propertyGroup.SelectSingleNode(nodePresence);
 
+            Check(node: node, propertyGroup: propertyGroup);
+        }
+
+        void Check(XmlNode? node, XmlElement propertyGroup)
+        {
             if (node is null)
             {
-                if (!hasGlobalSetting)
+                if (hasGlobalSetting)
                 {
-                    string configuration = propertyGroup.GetAttribute(name: "Condition");
-                    logger.ConfigurationShouldSpecifyNodePrescence(projectName: projectName, configuration: configuration, nodePresence: nodePresence);
+                    return;
                 }
-            }
-            else
-            {
-                string value = GetTextValue(node);
 
-                if (!isRequiredValue(value))
-                {
-                    if (!hasGlobalSetting)
-                    {
-                        string configuration = propertyGroup.GetAttribute(name: "Condition");
-                        logger.ConfigurationShouldSpecifyNodePrescenceAsValue(projectName: projectName,
-                                                                              configuration: configuration,
-                                                                              nodePresence: nodePresence,
-                                                                              requiredValueDisplayText: requiredValueDisplayText);
-                    }
-                }
+                logger.ConfigurationShouldSpecifyNodePrescence(projectName: projectName, propertyGroup.GetAttribute(name: "Condition"), nodePresence: nodePresence);
+
+                return;
             }
+
+            string value = GetTextValue(node);
+
+            if (isRequiredValue(value) || hasGlobalSetting)
+            {
+                return;
+            }
+
+            logger.ConfigurationShouldSpecifyNodePrescenceAsValue(projectName: projectName,
+                                                                  propertyGroup.GetAttribute(name: "Condition"),
+                                                                  nodePresence: nodePresence,
+                                                                  requiredValueDisplayText: requiredValueDisplayText);
         }
     }
 
