@@ -11,6 +11,7 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 ### Changed
 - SDK - Updated DotNet SDK to 8.0.300
 - Dependencies - Updated Credfeto.Enumeration to 1.1.7.384
+- Dependencies - Updated Meziantou.Analyzer to 2.0.150
 ### Removed
 ### Deployment Changes
 
