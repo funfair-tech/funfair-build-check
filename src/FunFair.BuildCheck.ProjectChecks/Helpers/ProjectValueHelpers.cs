@@ -17,7 +17,6 @@ internal static class ProjectValueHelpers
         "xunit.runner.visualstudio",
         "NSubstitute",
         "Microsoft.NET.Test.Sdk",
-        "TeamCity.VSTest.TestAdapter",
         "FunFair.Test.Common"
     ];
 
