@@ -10,6 +10,4 @@ namespace FunFair.BuildCheck.SolutionChecks.Models;
                              IncludeFields = false)]
 [JsonSerializable(typeof(GlobalJsonPacket))]
 [SuppressMessage(category: "ReSharper", checkId: "PartialTypeWithSinglePart", Justification = "Required for " + nameof(JsonSerializerContext) + " code generation")]
-internal sealed partial class MustBeSerializable : JsonSerializerContext
-{
-}
+internal sealed partial class MustBeSerializable : JsonSerializerContext;
