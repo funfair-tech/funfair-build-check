@@ -138,6 +138,7 @@ internal static class Setup
                        .AddProjectCheck<MustNotHaveFxCopAnalyzerPackage>()
                        .AddProjectCheck<MustUseOpenApiAnalyzers>()
                        .AddProjectCheck<NuGetAuditPolicy>()
+                       .AddProjectCheck<NuGetAuditLevelPolicy>()
                        .AddProjectCheck<ProjectsShouldHaveTrimAnalyzerConfiguredPolicy>()
                        .AddEnumSourceGeneratorAnalyzerPackage(repositorySettings: repositorySettings)
                        .AddUnitTestAnalysers(repositorySettings: repositorySettings)

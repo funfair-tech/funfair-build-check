@@ -7,6 +7,7 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 
 ## [Unreleased]
 ### Added
+- Check of NuGetAuditLevel
 ### Fixed
 ### Changed
 - Dependencies - Updated Credfeto.Enumeration to 1.1.7.384

@@ -20,6 +20,7 @@
     <LangVersion>latest</LangVersion>
     <NoWarn>1591</NoWarn>
     <NuGetAudit>true</NuGetAudit>
+    <NuGetAuditLevel>low</NuGetAuditLevel>
     <Nullable>enable</Nullable>
     <OptimizationPreference>speed</OptimizationPreference>
     <OutputType>Exe</OutputType>
@@ -52,7 +53,6 @@
     <EnableNETAnalyzers>true</EnableNETAnalyzers>
     <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
     <EnforceExtendedAnalyzerRules>false</EnforceExtendedAnalyzerRules>
-    <NuGetAudit>true</NuGetAudit>
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\FunFair.BuildCheck.ProjectChecks\FunFair.BuildCheck.ProjectChecks.csproj" />
