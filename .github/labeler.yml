@@ -1,50 +1,50 @@
 ".NET update":
- - any: [ ''src/global.json'' ]
+ - any: [ 'src/global.json' ]
 "C#":
- - any: [ ''./**/*.cs', './**/*.csproj'' ]
+ - any: [ './**/*.cs', './**/*.csproj' ]
 "C# Project":
- - any: [ ''./**/*.csproj'' ]
+ - any: [ './**/*.csproj' ]
 "C# Solution":
- - any: [ ''./**/*.sln'' ]
+ - any: [ './**/*.sln' ]
 "Change Log":
- - any: [ ''CHANGELOG.md'' ]
+ - any: [ 'CHANGELOG.md' ]
 "Config Change":
- - any: [ ''src/**/*.json', '!src/global.json'' ]
+ - any: [ 'src/**/*.json', '!src/global.json' ]
 "funfair-buildcheck":
- - any: [ ''src/$FunFair.BuildCheck/**/*'' ]
+ - any: [ 'src/$FunFair.BuildCheck/**/*' ]
 "funfair-buildcheck-helpers":
- - any: [ ''src/$FunFair.BuildCheck.Helpers/**/*'' ]
+ - any: [ 'src/$FunFair.BuildCheck.Helpers/**/*' ]
 "funfair-buildcheck-interfaces":
- - any: [ ''src/$FunFair.BuildCheck.Interfaces/**/*'' ]
+ - any: [ 'src/$FunFair.BuildCheck.Interfaces/**/*' ]
 "funfair-buildcheck-projectchecks":
- - any: [ ''src/$FunFair.BuildCheck.ProjectChecks/**/*'' ]
+ - any: [ 'src/$FunFair.BuildCheck.ProjectChecks/**/*' ]
 "funfair-buildcheck-runner":
- - any: [ ''src/$FunFair.BuildCheck.Runner/**/*'' ]
+ - any: [ 'src/$FunFair.BuildCheck.Runner/**/*' ]
 "funfair-buildcheck-runner-tests":
- - any: [ ''src/$FunFair.BuildCheck.Runner.Tests/**/*'' ]
+ - any: [ 'src/$FunFair.BuildCheck.Runner.Tests/**/*' ]
 "funfair-buildcheck-solutionchecks":
- - any: [ ''src/$FunFair.BuildCheck.SolutionChecks/**/*'' ]
+ - any: [ 'src/$FunFair.BuildCheck.SolutionChecks/**/*' ]
 "funfair-buildcheck-tests":
- - any: [ ''src/$FunFair.BuildCheck.Tests/**/*'' ]
+ - any: [ 'src/$FunFair.BuildCheck.Tests/**/*' ]
 "github-actions":
- - any: [ ''.github/workflows/*.yml'' ]
+ - any: [ '.github/workflows/*.yml' ]
 "Legal Text":
- - any: [ ''tools/LegalText/**/*'' ]
+ - any: [ 'tools/LegalText/**/*' ]
 "Markdown":
- - any: [ ''./**/*.md'' ]
+ - any: [ './**/*.md' ]
 "Migration Script":
- - any: [ ''tools/MigrationScripts/**/*'' ]
+ - any: [ 'tools/MigrationScripts/**/*' ]
 "Powershell":
- - any: [ ''./**/*.ps1', './**/*.psm1'' ]
+ - any: [ './**/*.ps1', './**/*.psm1' ]
 "Read Me":
- - any: [ ''README.md'' ]
+ - any: [ 'README.md' ]
 "Setup":
- - any: [ ''SETUP.md'' ]
+ - any: [ 'SETUP.md' ]
 "Solidity":
- - any: [ ''./**/*.sol'' ]
+ - any: [ './**/*.sol' ]
 "SQL":
- - any: [ ''./**/*.sql', 'db/**/*'' ]
+ - any: [ './**/*.sql', 'db/**/*' ]
 "Static Code Analysis Rules":
- - any: [ ''src/CodeAnalysis.ruleset'' ]
+ - any: [ 'src/CodeAnalysis.ruleset' ]
 "unit-tests":
- - any: [ ''src/*.Tests.*/**/*', 'src/*.Tests.Integration.*/**/*', 'src/*.Tests.Integration/**/*', 'src/*.Tests/**/*'' ]
+ - any: [ 'src/*.Tests.*/**/*', 'src/*.Tests.Integration.*/**/*', 'src/*.Tests.Integration/**/*', 'src/*.Tests/**/*' ]
