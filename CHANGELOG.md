@@ -16,6 +16,7 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 - Dependencies - Updated SonarAnalyzer.CSharp to 9.31.0.96804
 - Dependencies - Updated NuGet to 6.10.2
 - SDK - Updated DotNet SDK to 8.0.400
+- Dependencies - Updated Microsoft.VisualStudio.Threading.Analyzers to 17.11.20
 ### Removed
 ### Deployment Changes
 
