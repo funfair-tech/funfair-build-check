@@ -74,8 +74,8 @@ public sealed class OnlyExesShouldBePublishablePolicy : IProjectCheck
     private static ImmutableHashSet<string> GetProjects(string packable)
     {
         return packable.Split(",")
-                       .Select(p => p.Trim())
-                       .Where(p => !string.IsNullOrWhiteSpace(p))
+                       .Select(static p => p.Trim())
+                       .Where(static p => !string.IsNullOrWhiteSpace(p))
                        .ToImmutableHashSet(StringComparer.OrdinalIgnoreCase);
     }
 }

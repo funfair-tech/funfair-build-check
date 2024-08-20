@@ -165,7 +165,6 @@ public static class CheckRunner
 
     private static IReadOnlyList<IProjectCheck> RegisteredProjectChecks(IServiceProvider services)
     {
-        return services.GetServices<IProjectCheck>()
-                       .ToArray();
+        return [..services.GetServices<IProjectCheck>()];
     }
 }

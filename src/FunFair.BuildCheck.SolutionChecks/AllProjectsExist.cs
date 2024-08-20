@@ -35,7 +35,7 @@ public sealed class AllProjectsExist : ISolutionCheck
 
     private IEnumerable<string> GetMissingProjectFileNames()
     {
-        return this._projects.Select(project => project.FileName)
-                   .Where(projectFileName => !File.Exists(PathHelpers.ConvertToNative(projectFileName)));
+        return this._projects.Select(static project => project.FileName)
+                   .Where(static projectFileName => !File.Exists(PathHelpers.ConvertToNative(projectFileName)));
     }
 }
