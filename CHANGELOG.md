@@ -18,6 +18,7 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 - Dependencies - Updated Microsoft.NET.Test.Sdk to 17.11.0
 - Dependencies - Updated FunFair.CodeAnalysis to 7.0.22.521
 - Dependencies - Updated FunFair.Test.Common to 6.1.67.620
+- SDK - Update DotNet to 9.0 RC1
 ### Removed
 ### Deployment Changes
 
