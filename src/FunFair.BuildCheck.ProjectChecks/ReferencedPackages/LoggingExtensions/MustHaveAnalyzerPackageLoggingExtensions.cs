@@ -1,3 +1,5 @@
+using Microsoft.Extensions.Logging;
+
 namespace FunFair.BuildCheck.ProjectChecks.ReferencedPackages.LoggingExtensions;
 
 internal static partial class MustHaveAnalyzerPackageLoggingExtensions
