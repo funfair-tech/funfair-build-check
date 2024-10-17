@@ -10,7 +10,6 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 ### Fixed
 ### Changed
 - Dependencies - Updated ThisAssembly.AssemblyInfo to 1.5.0
-- Dependencies - Updated Meziantou.Analyzer to 2.0.163
 - Dependencies - Updated Microsoft.VisualStudio.Threading.Analyzers to 17.11.20
 - Dependencies - Updated SonarAnalyzer.CSharp to 9.32.0.97167
 - Dependencies - Updated NuGet to 6.11.0
@@ -20,6 +19,7 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 - SDK - Updated DotNet SDK to 9.0.100-rc.2.24474.11
 - Dependencies - Updated Credfeto.Version.Information.Generator to 1.0.1.11
 - Dependencies - Updated FunFair.CodeAnalysis to 7.0.23.533
+- Dependencies - Updated Meziantou.Analyzer to 2.0.170
 ### Removed
 ### Deployment Changes
 
