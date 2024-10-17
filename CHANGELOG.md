@@ -21,6 +21,7 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 - Dependencies - Updated FunFair.CodeAnalysis to 7.0.23.533
 - Dependencies - Updated Meziantou.Analyzer to 2.0.170
 - Dependencies - Updated Roslynator.Analyzers to 4.12.8
+- Dependencies - Updated xunit.analyzers to 1.16.0
 ### Removed
 ### Deployment Changes
 
