@@ -29,7 +29,7 @@ internal static class Program
     {
         try
         {
-            Console.WriteLine($"{VersionInformation.Product} {VersionInformation.FileVersion}");
+            Console.WriteLine($"{VersionInformation.Product} {VersionInformation.Version}");
 
             IConfigurationRoot configuration = GetCommandLineConfiguration(args);
 
