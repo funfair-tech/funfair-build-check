@@ -23,6 +23,7 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 - Dependencies - Updated xunit.analyzers to 1.16.0
 - Dependencies - Updated xunit to 2.9.2
 - Dependencies - Updated FunFair.Test.Common to 6.1.69.630
+- Dependencies - Updated Microsoft.Extensions to 8.0.2
 ### Removed
 ### Deployment Changes
 
