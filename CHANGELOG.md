@@ -19,6 +19,7 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 - Dependencies - Updated FunFair.Test.Common to 6.1.67.620
 - SDK - Update DotNet to 9.0 RC1
 - SDK - Updated DotNet SDK to 9.0.100-rc.2.24474.11
+- Dependencies - Updated xunit.analyzers to 1.16.0
 ### Removed
 ### Deployment Changes
 
