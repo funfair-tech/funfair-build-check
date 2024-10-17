@@ -55,6 +55,7 @@ internal static class Setup
                        .AddProjectCheck<ShouldUseAbstractionsFileProvidersPackage>()
                        .AddProjectCheck<ShouldUseAbstractionsLoggingPackage>()
                        .AddProjectCheck<ShouldUseNSubstituteRatherThanMoqPackage>()
+                       .AddProjectCheck<ShouldUseCredfetoVersionInformationGeneratorRatherThanThisAssemblyAssemblyInfo>()
                        .AddProjectCheck<UsingJwtAuthenticationMustIncludeIdentityModelJwt>();
     }
 
