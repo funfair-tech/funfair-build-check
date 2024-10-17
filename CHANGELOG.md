@@ -14,11 +14,11 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 - Dependencies - Updated Microsoft.VisualStudio.Threading.Analyzers to 17.11.20
 - Dependencies - Updated SonarAnalyzer.CSharp to 9.32.0.97167
 - Dependencies - Updated NuGet to 6.11.0
-- SDK - Updated DotNet SDK to 8.0.401
 - Dependencies - Updated Microsoft.NET.Test.Sdk to 17.11.0
 - Dependencies - Updated FunFair.CodeAnalysis to 7.0.22.521
 - Dependencies - Updated FunFair.Test.Common to 6.1.67.620
 - SDK - Update DotNet to 9.0 RC1
+- SDK - Updated DotNet SDK to 9.0.100-rc.2.24474.11
 ### Removed
 ### Deployment Changes
 
