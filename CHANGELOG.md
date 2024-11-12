@@ -10,7 +10,6 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 ### Fixed
 ### Changed
 - Dependencies - Updated ThisAssembly.AssemblyInfo to 1.5.0
-- Dependencies - Updated Microsoft.VisualStudio.Threading.Analyzers to 17.11.20
 - Dependencies - Updated SonarAnalyzer.CSharp to 9.32.0.97167
 - SDK - Update DotNet to 9.0 RC1
 - Dependencies - Updated xunit to 2.9.2
@@ -26,6 +25,7 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 - Dependencies - Updated Microsoft.Extensions to 9.0.0
 - Dependencies - Updated Credfeto.Enumeration to 1.1.23.685
 - SDK - Updated DotNet SDK to 9.0.100
+- Dependencies - Updated Microsoft.VisualStudio.Threading.Analyzers to 17.12.19
 ### Removed
 ### Deployment Changes
 
