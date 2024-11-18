@@ -131,12 +131,12 @@ public sealed class MustNotDisableUnexpectedWarnings : IProjectCheck
     {
         return
         [
-            ..value.Split(separator: ";")
+            ..value.Split(separator: ';')
                    .Where(predicate: HasContent)
-                   .SelectMany(selector: static s => s.Split(separator: ",")
+                   .SelectMany(selector: static s => s.Split(separator: ',')
                                                       .Where(predicate: HasContent))
                    .Where(predicate: static s => !string.IsNullOrWhiteSpace(s))
-                   .OrderBy(keySelector: static s => s, comparer: StringComparer.OrdinalIgnoreCase)
+                   .Order(StringComparer.OrdinalIgnoreCase)
         ];
     }
 
