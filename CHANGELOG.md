@@ -13,7 +13,6 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 - Dependencies - Updated SonarAnalyzer.CSharp to 9.32.0.97167
 - SDK - Update DotNet to 9.0 RC1
 - Dependencies - Updated xunit to 2.9.2
-- Dependencies - Updated Microsoft.NET.Test.Sdk to 17.11.1
 - Dependencies - Updated Roslynator.Analyzers to 4.12.9
 - Dependencies - Updated NSubstitute to 5.3.0
 - Dependencies - Updated xunit.analyzers to 1.17.0
@@ -26,6 +25,7 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 - Dependencies - Updated Credfeto.Version.Information.Generator to 1.0.12.127
 - Dependencies - Updated Meziantou.Analyzer to 2.0.180
 - Dependencies - Updated FunFair.Test.Common to 6.1.239.979
+- Dependencies - Updated Microsoft.NET.Test.Sdk to 17.12.0
 ### Removed
 ### Deployment Changes
 
