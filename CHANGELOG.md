@@ -24,8 +24,8 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 - Dependencies - Updated Microsoft.NET.Test.Sdk to 17.12.0
 - Dependencies - Updated SonarAnalyzer.CSharp to 10.3.0.106239
 - Dependencies - Updated Meziantou.Analyzer to 2.0.182
-- Dependencies - Updated Credfeto.Version.Information.Generator to 1.0.23.166
 - Dependencies - Updated Credfeto.Enumeration to 1.2.36.738
+- Dependencies - Updated Credfeto.Version.Information.Generator to 1.0.24.168
 ### Removed
 ### Deployment Changes
 
