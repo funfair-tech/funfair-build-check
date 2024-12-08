@@ -125,7 +125,6 @@ internal static class Setup
                        .AddProjectCheck<EnforceExtendedAnalyzerRulesPolicy>()
                        .AddProjectCheck<ErrorPolicyWarningAsErrors>()
                        .AddProjectCheck<MustHaveAsyncAnalyzerPackage>()
-                       .AddProjectCheck<MustHaveCodecrackerCSharpAnalyzerPackage>()
                        .AddProjectCheck<MustHaveMeziantouAnalyzerPackage>()
                        .AddProjectCheck<MustHaveDuplicateCodeAnalyzerPackage>()
                        .AddProjectCheck<MustHaveSecurityCodeScanAnalyzerPackage>()
