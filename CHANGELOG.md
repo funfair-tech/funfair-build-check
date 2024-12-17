@@ -7,9 +7,18 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 
 ## [Unreleased]
 ### Added
+### Fixed
+### Changed
+### Removed
+### Deployment Changes
+
+<!--
+Releases that have at least been deployed to staging, BUT NOT necessarily released to live.  Changes should be moved from [Unreleased] into here as they are merged into the appropriate release branch
+-->
+## [474.0.22] - 2024-12-17
+### Added
 - Check for projects having the Microsoft SBOM tool
 - Check for GenerateSBOM setting on packable projects
-### Fixed
 ### Changed
 - Dependencies - Updated ThisAssembly.AssemblyInfo to 1.5.0
 - SDK - Update DotNet to 9.0 RC1
@@ -28,12 +37,7 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 - Dependencies - Updated Credfeto.Enumeration to 1.2.40.746
 - Dependencies - Updated Credfeto.Version.Information.Generator to 1.0.28.176
 - SDK - Updated DotNet SDK to 9.0.101
-### Removed
-### Deployment Changes
 
-<!--
-Releases that have at least been deployed to staging, BUT NOT necessarily released to live.  Changes should be moved from [Unreleased] into here as they are merged into the appropriate release branch
--->
 ## [474.0.21] - 2024-07-12
 ### Added
 - Check of NuGetAuditLevel
