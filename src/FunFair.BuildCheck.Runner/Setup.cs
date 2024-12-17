@@ -85,7 +85,8 @@ internal static class Setup
                        .AddProjectCheck<TieredCompilationPolicy>()
                        .AddProjectCheck<EnableMicrosoftExtensionsConfigurationBinderSourceGeneratorPolicy>()
                        .AddProjectCheck<JsonSerializerIsReflectionEnabledByDefaultPolicy>()
-                       .AddProjectCheck<OptimizationPreferencePolicy>();
+                       .AddProjectCheck<OptimizationPreferencePolicy>()
+                       .AddProjectCheck<GenerateSbomPolicy>();
     }
 
     private static IServiceCollection PublishingSettings(this IServiceCollection services)
