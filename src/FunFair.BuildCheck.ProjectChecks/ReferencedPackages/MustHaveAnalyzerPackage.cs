@@ -25,9 +25,19 @@ public abstract class MustHaveAnalyzerPackage : IProjectCheck
         this._logger = logger;
     }
 
+    protected virtual bool CanCheck(string projectName, string projectFolder, XmlDocument project)
+    {
+        return true;
+    }
+
     public ValueTask CheckAsync(string projectName, string projectFolder, XmlDocument project, CancellationToken cancellationToken)
     {
         if (!this._mustHave)
+        {
+            return ValueTask.CompletedTask;
+        }
+
+        if (!this.CanCheck(projectName, projectFolder, project))
         {
             return ValueTask.CompletedTask;
         }

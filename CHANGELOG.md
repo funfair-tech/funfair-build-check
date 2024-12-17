@@ -7,6 +7,7 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 
 ## [Unreleased]
 ### Added
+- Check for projects having the Microsoft SBOM tool
 ### Fixed
 ### Changed
 - Dependencies - Updated ThisAssembly.AssemblyInfo to 1.5.0
