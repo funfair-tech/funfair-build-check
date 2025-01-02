@@ -12,12 +12,12 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 - Dependencies - Updated Roslynator.Analyzers to 4.12.10
 - Dependencies - Updated xunit.analyzers to 1.18.0
 - Dependencies - Updated xunit.runner.visualstudio to 3.0.0
-- Dependencies - Updated Credfeto.Version.Information.Generator to 1.0.32.207
 - Dependencies - Updated Meziantou.Analyzer to 2.0.184
 - Dependencies - Updated Nullable.Extended.Analyzer to 1.15.6495
 - Dependencies - Updated SonarAnalyzer.CSharp to 10.4.0.108396
 - Dependencies - Updated FunFair.Test.Common to 6.1.241.1032
 - Dependencies - Updated Credfeto.Enumeration to 1.2.45.800
+- Dependencies - Updated Credfeto.Version.Information.Generator to 1.0.33.225
 ### Removed
 ### Deployment Changes
 
