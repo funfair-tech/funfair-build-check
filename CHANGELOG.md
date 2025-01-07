@@ -19,6 +19,7 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 - Dependencies - Updated Credfeto.Enumeration to 1.2.50.814
 - Dependencies - Updated Credfeto.Version.Information.Generator to 1.0.38.239
 - Dependencies - Updated FunFair.CodeAnalysis to 7.0.53.833
+- Dependencies - Updated Microsoft.Sbom.Targets to 3.0.1
 ### Removed
 ### Deployment Changes
 
