@@ -22,6 +22,7 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 - Dependencies - Updated xunit.analyzers to 1.19.0
 - Dependencies - Updated xunit.runner.visualstudio to 3.0.1
 - Dependencies - Updated FunFair.Test.Common to 6.1.245.1069
+- Dependencies - Updated Microsoft.Extensions to 9.0.1
 ### Removed
 ### Deployment Changes
 
