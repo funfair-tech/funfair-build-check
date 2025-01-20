@@ -48,7 +48,7 @@
     <NuGetAuditSuppress Include="https://github.com/advisories/GHSA-xhfc-gr8f-ffwc" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\FunFair.BuildCheck.Runner\FunFair.BuildCheck.Runner.csproj" />
+    <!--    <ProjectReference Include="..\FunFair.BuildCheck.Runner\FunFair.BuildCheck.Runner.csproj" />-->
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="FunFair.Test.Common" Version="6.1.247.1082" />
