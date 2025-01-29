@@ -9,7 +9,6 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 ### Added
 ### Fixed
 ### Changed
-- Dependencies - Updated Roslynator.Analyzers to 4.12.10
 - Dependencies - Updated Nullable.Extended.Analyzer to 1.15.6495
 - Dependencies - Updated Microsoft.Sbom.Targets to 3.0.1
 - Dependencies - Updated xunit to 2.9.3
@@ -23,6 +22,7 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 - Dependencies - Updated FunFair.CodeAnalysis to 7.0.64.879
 - Dependencies - Updated FunFair.Test.Common to 6.1.253.1102
 - Dependencies - Updated Credfeto.Enumeration to 1.2.64.889
+- Dependencies - Updated Roslynator.Analyzers to 4.12.11
 ### Removed
 ### Deployment Changes
 
