@@ -11,7 +11,6 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 ### Changed
 - Dependencies - Updated Nullable.Extended.Analyzer to 1.15.6495
 - Dependencies - Updated xunit to 2.9.3
-- SDK - Updated DotNet SDK to 9.0.102
 - Dependencies - Updated Meziantou.Analyzer to 2.0.186
 - Dependencies - Updated Microsoft.Extensions to 9.0.1
 - Dependencies - Updated Roslynator.Analyzers to 4.12.11
@@ -23,6 +22,7 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 - Dependencies - Updated xunit.analyzers to 1.20.0
 - Dependencies - Updated xunit.runner.visualstudio to 3.0.2
 - Dependencies - Updated FunFair.Test.Common to 6.1.257.1137
+- SDK - Updated DotNet SDK to 9.0.200
 ### Removed
 ### Deployment Changes
 
