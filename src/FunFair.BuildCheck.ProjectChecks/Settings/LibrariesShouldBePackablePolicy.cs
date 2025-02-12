@@ -61,8 +61,9 @@ public sealed class LibrariesShouldBePackablePolicy : IProjectCheck
             return ValueTask.CompletedTask;
         }
 
-        bool isTestProject = project.IsTestProject(projectName: projectName, logger: this._logger) &&
-                             (this._isUnitTestBase && projectName.EndsWith(value: ".Tests", comparisonType: StringComparison.OrdinalIgnoreCase) || !this._isUnitTestBase);
+        bool isTestProject =
+            project.IsTestProject(projectName: projectName, logger: this._logger)
+            && (this._isUnitTestBase && projectName.EndsWith(value: ".Tests", comparisonType: StringComparison.OrdinalIgnoreCase) || !this._isUnitTestBase);
 
         bool isDotNetTool = project.IsDotNetTool();
 
@@ -77,9 +78,6 @@ public sealed class LibrariesShouldBePackablePolicy : IProjectCheck
 
     private static ImmutableHashSet<string> GetProjects(string packable)
     {
-        return packable.Split(",")
-                       .Select(static p => p.Trim())
-                       .Where(static p => !string.IsNullOrWhiteSpace(p))
-                       .ToImmutableHashSet(StringComparer.OrdinalIgnoreCase);
+        return packable.Split(",").Select(static p => p.Trim()).Where(static p => !string.IsNullOrWhiteSpace(p)).ToImmutableHashSet(StringComparer.OrdinalIgnoreCase);
     }
 }

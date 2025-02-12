@@ -11,14 +11,7 @@ namespace FunFair.BuildCheck.ProjectChecks.Helpers;
 
 internal static class ProjectValueHelpers
 {
-    private static readonly IReadOnlyList<string> PackagesForTestProjectDetection =
-    [
-        "xunit",
-        "xunit.runner.visualstudio",
-        "NSubstitute",
-        "Microsoft.NET.Test.Sdk",
-        "FunFair.Test.Common"
-    ];
+    private static readonly IReadOnlyList<string> PackagesForTestProjectDetection = ["xunit", "xunit.runner.visualstudio", "NSubstitute", "Microsoft.NET.Test.Sdk", "FunFair.Test.Common"];
 
     public static bool IsDotNetTool(this XmlDocument project)
     {
@@ -127,22 +120,26 @@ internal static class ProjectValueHelpers
 
     public static void CheckValue(string projectName, XmlDocument project, string nodePresence, bool requiredValue, ILogger logger)
     {
-        CheckValueCommon(projectName: projectName,
-                         project: project,
-                         nodePresence: nodePresence,
-                         isRequiredValue: v => IsRequiredValue(requiredValue: requiredValue, value: v),
-                         requiredValue.ToString(CultureInfo.InvariantCulture),
-                         logger: logger);
+        CheckValueCommon(
+            projectName: projectName,
+            project: project,
+            nodePresence: nodePresence,
+            isRequiredValue: v => IsRequiredValue(requiredValue: requiredValue, value: v),
+            requiredValue.ToString(CultureInfo.InvariantCulture),
+            logger: logger
+        );
     }
 
     public static void CheckValue(string projectName, XmlDocument project, string nodePresence, string requiredValue, ILogger logger)
     {
-        CheckValueCommon(projectName: projectName,
-                         project: project,
-                         nodePresence: nodePresence,
-                         isRequiredValue: v => IsRequiredValue(requiredValue: requiredValue, value: v),
-                         requiredValueDisplayText: requiredValue,
-                         logger: logger);
+        CheckValueCommon(
+            projectName: projectName,
+            project: project,
+            nodePresence: nodePresence,
+            isRequiredValue: v => IsRequiredValue(requiredValue: requiredValue, value: v),
+            requiredValueDisplayText: requiredValue,
+            logger: logger
+        );
     }
 
     public static void CheckValue(string projectName, XmlDocument project, string nodePresence, Func<string, bool> isRequiredValue, string msg, ILogger logger)
@@ -150,12 +147,7 @@ internal static class ProjectValueHelpers
         CheckValueCommon(projectName: projectName, project: project, nodePresence: nodePresence, isRequiredValue: isRequiredValue, requiredValueDisplayText: msg, logger: logger);
     }
 
-    private static void CheckValueCommon(string projectName,
-                                         XmlDocument project,
-                                         string nodePresence,
-                                         Func<string, bool> isRequiredValue,
-                                         string requiredValueDisplayText,
-                                         ILogger logger)
+    private static void CheckValueCommon(string projectName, XmlDocument project, string nodePresence, Func<string, bool> isRequiredValue, string requiredValueDisplayText, ILogger logger)
     {
         bool hasGlobalSetting = CheckGlobalSettings(project: project, nodePresence: nodePresence, isRequiredValue: isRequiredValue);
 
@@ -163,13 +155,15 @@ internal static class ProjectValueHelpers
 
         if (configurationGroups is not null)
         {
-            CheckConditionalSettings(projectName: projectName,
-                                     nodePresence: nodePresence,
-                                     isRequiredValue: isRequiredValue,
-                                     requiredValueDisplayText: requiredValueDisplayText,
-                                     configurationGroups: configurationGroups,
-                                     hasGlobalSetting: hasGlobalSetting,
-                                     logger: logger);
+            CheckConditionalSettings(
+                projectName: projectName,
+                nodePresence: nodePresence,
+                isRequiredValue: isRequiredValue,
+                requiredValueDisplayText: requiredValueDisplayText,
+                configurationGroups: configurationGroups,
+                hasGlobalSetting: hasGlobalSetting,
+                logger: logger
+            );
         }
 
         if (!hasGlobalSetting && configurationGroups?.Count == 0)
@@ -178,13 +172,15 @@ internal static class ProjectValueHelpers
         }
     }
 
-    private static void CheckConditionalSettings(string projectName,
-                                                 string nodePresence,
-                                                 Func<string, bool> isRequiredValue,
-                                                 string requiredValueDisplayText,
-                                                 XmlNodeList configurationGroups,
-                                                 bool hasGlobalSetting,
-                                                 ILogger logger)
+    private static void CheckConditionalSettings(
+        string projectName,
+        string nodePresence,
+        Func<string, bool> isRequiredValue,
+        string requiredValueDisplayText,
+        XmlNodeList configurationGroups,
+        bool hasGlobalSetting,
+        ILogger logger
+    )
     {
         foreach (XmlElement propertyGroup in configurationGroups.OfType<XmlElement>())
         {
@@ -214,10 +210,12 @@ internal static class ProjectValueHelpers
                 return;
             }
 
-            logger.ConfigurationShouldSpecifyNodePrescenceAsValue(projectName: projectName,
-                                                                  propertyGroup.GetAttribute(name: "Condition"),
-                                                                  nodePresence: nodePresence,
-                                                                  requiredValueDisplayText: requiredValueDisplayText);
+            logger.ConfigurationShouldSpecifyNodePrescenceAsValue(
+                projectName: projectName,
+                propertyGroup.GetAttribute(name: "Condition"),
+                nodePresence: nodePresence,
+                requiredValueDisplayText: requiredValueDisplayText
+            );
         }
     }
 
@@ -282,9 +280,7 @@ internal static class ProjectValueHelpers
 
         if (outputTypeNode is not null)
         {
-            return string.IsNullOrWhiteSpace(outputTypeNode.InnerText)
-                ? defaultType
-                : outputTypeNode.InnerText;
+            return string.IsNullOrWhiteSpace(outputTypeNode.InnerText) ? defaultType : outputTypeNode.InnerText;
         }
 
         return defaultType;
@@ -333,9 +329,10 @@ internal static class ProjectValueHelpers
 
         if (imports is not null)
         {
-            found = imports.OfType<XmlElement>()
-                           .Select(import => import.GetAttribute(name: "Project"))
-                           .Any(candidate => StringComparer.InvariantCultureIgnoreCase.Equals(x: candidate, y: projectImport));
+            found = imports
+                .OfType<XmlElement>()
+                .Select(import => import.GetAttribute(name: "Project"))
+                .Any(candidate => StringComparer.InvariantCultureIgnoreCase.Equals(x: candidate, y: projectImport));
         }
 
         return found;

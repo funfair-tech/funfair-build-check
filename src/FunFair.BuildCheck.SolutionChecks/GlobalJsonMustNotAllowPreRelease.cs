@@ -75,8 +75,6 @@ public sealed class GlobalJsonMustNotAllowPreRelease : ISolutionCheck
 
     private static string FormatPolicy(bool preReleaseAllowed)
     {
-        return preReleaseAllowed
-            ? "Pre-Release Allowed"
-            : "Production Only";
+        return preReleaseAllowed ? "Pre-Release Allowed" : "Production Only";
     }
 }

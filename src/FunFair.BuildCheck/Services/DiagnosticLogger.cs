@@ -1,5 +1,4 @@
 using System;
-using FunFair.BuildCheck.Helpers;
 using Microsoft.Extensions.Logging;
 
 namespace FunFair.BuildCheck.Services;

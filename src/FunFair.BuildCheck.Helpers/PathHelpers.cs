@@ -6,9 +6,6 @@ public static class PathHelpers
 {
     public static string ConvertToNative(string path)
     {
-        return path.Replace(Path.DirectorySeparatorChar == '\\'
-                                ? '/'
-                                : '\\',
-                            newChar: Path.DirectorySeparatorChar);
+        return path.Replace(Path.DirectorySeparatorChar == '\\' ? '/' : '\\', newChar: Path.DirectorySeparatorChar);
     }
 }

@@ -21,7 +21,6 @@ internal sealed class TrackingLogger : ITrackingLogger
     public bool IsErrored => this.Errors > 0;
 
     public void Log<TState>(LogLevel logLevel, EventId eventId, TState state, Exception? exception, Func<TState, Exception?, string> formatter)
-
     {
         if (this.IsWarningAsError(logLevel))
         {

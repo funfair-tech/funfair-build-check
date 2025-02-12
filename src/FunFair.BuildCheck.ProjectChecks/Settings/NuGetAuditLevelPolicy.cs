@@ -20,9 +20,7 @@ public sealed class NuGetAuditLevelPolicy : IProjectCheck
 
     public ValueTask CheckAsync(string projectName, string projectFolder, XmlDocument project, CancellationToken cancellationToken)
     {
-        string requiredLevel = project.IsTestProject(projectName: projectName, logger: this._logger)
-            ? TEST_PROJECT_LEVEL
-            : PRODUCTION_PROJECT_LEVEL;
+        string requiredLevel = project.IsTestProject(projectName: projectName, logger: this._logger) ? TEST_PROJECT_LEVEL : PRODUCTION_PROJECT_LEVEL;
 
         ProjectValueHelpers.CheckValue(projectName: projectName, project: project, nodePresence: "NuGetAuditLevel", requiredValue: requiredLevel, logger: this._logger);
 

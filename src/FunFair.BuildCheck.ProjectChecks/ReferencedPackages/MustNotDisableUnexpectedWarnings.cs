@@ -16,7 +16,7 @@ public sealed class MustNotDisableUnexpectedWarnings : IProjectCheck
     private static readonly IReadOnlyList<string> AllowedWarnings =
     [
         // Xml Docs
-        "1591"
+        "1591",
     ];
 
     private static readonly IReadOnlyList<string> AllowedTestProjectWarnings = [];
@@ -32,9 +32,7 @@ public sealed class MustNotDisableUnexpectedWarnings : IProjectCheck
     {
         bool isTestProject = project.IsTestProject(projectName: projectName, logger: this._logger);
 
-        IReadOnlyList<string> allowedWarnings = isTestProject
-            ? AllowedTestProjectWarnings
-            : AllowedWarnings;
+        IReadOnlyList<string> allowedWarnings = isTestProject ? AllowedTestProjectWarnings : AllowedWarnings;
 
         const string nodePresence = "NoWarn";
         XmlNodeList? nodes = project.SelectNodes("/Project/PropertyGroup[not(@Condition)]/" + nodePresence);
@@ -131,12 +129,12 @@ public sealed class MustNotDisableUnexpectedWarnings : IProjectCheck
     {
         return
         [
-            ..value.Split(separator: ';')
-                   .Where(predicate: HasContent)
-                   .SelectMany(selector: static s => s.Split(separator: ',')
-                                                      .Where(predicate: HasContent))
-                   .Where(predicate: static s => !string.IsNullOrWhiteSpace(s))
-                   .Order(StringComparer.OrdinalIgnoreCase)
+            .. value
+                .Split(separator: ';')
+                .Where(predicate: HasContent)
+                .SelectMany(selector: static s => s.Split(separator: ',').Where(predicate: HasContent))
+                .Where(predicate: static s => !string.IsNullOrWhiteSpace(s))
+                .Order(StringComparer.OrdinalIgnoreCase),
         ];
     }
 

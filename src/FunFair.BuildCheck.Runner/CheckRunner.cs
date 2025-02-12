@@ -19,23 +19,27 @@ public static class CheckRunner
 {
     private static readonly Regex ProjectReferenceRegex = SourceGenerated.ProjectReferenceRegex();
 
-    public static async ValueTask<int> CheckAsync(string solutionFileName,
-                                                  bool warningsAsErrors,
-                                                  IFrameworkSettings frameworkSettings,
-                                                  IProjectClassifier projectClassifier,
-                                                  ICheckConfiguration checkConfiguration,
-                                                  Func<IServiceCollection, IServiceProvider> buildServiceProvider,
-                                                  ILogger logger,
-                                                  CancellationToken cancellationToken)
+    public static async ValueTask<int> CheckAsync(
+        string solutionFileName,
+        bool warningsAsErrors,
+        IFrameworkSettings frameworkSettings,
+        IProjectClassifier projectClassifier,
+        ICheckConfiguration checkConfiguration,
+        Func<IServiceCollection, IServiceProvider> buildServiceProvider,
+        ILogger logger,
+        CancellationToken cancellationToken
+    )
     {
         IReadOnlyList<SolutionProject> projects = await LoadProjectsAsync(solution: solutionFileName, cancellationToken: cancellationToken);
-        IServiceProvider services = Setup(warningsAsErrors: warningsAsErrors,
-                                          projects: projects,
-                                          frameworkSettings: frameworkSettings,
-                                          projectClassifier: projectClassifier,
-                                          checkConfiguration: checkConfiguration,
-                                          buildServiceProvider: buildServiceProvider,
-                                          logger: logger);
+        IServiceProvider services = Setup(
+            warningsAsErrors: warningsAsErrors,
+            projects: projects,
+            frameworkSettings: frameworkSettings,
+            projectClassifier: projectClassifier,
+            checkConfiguration: checkConfiguration,
+            buildServiceProvider: buildServiceProvider,
+            logger: logger
+        );
 
         ITrackingLogger logging = services.GetRequiredService<ITrackingLogger>();
 
@@ -68,11 +72,13 @@ public static class CheckRunner
         }
     }
 
-    private static async ValueTask CheckProjectAsync(SolutionProject project,
-                                                     IProjectXmlLoader projectXmlLoader,
-                                                     IReadOnlyList<IProjectCheck> projectChecks,
-                                                     ITrackingLogger logging,
-                                                     CancellationToken cancellationToken)
+    private static async ValueTask CheckProjectAsync(
+        SolutionProject project,
+        IProjectXmlLoader projectXmlLoader,
+        IReadOnlyList<IProjectCheck> projectChecks,
+        ITrackingLogger logging,
+        CancellationToken cancellationToken
+    )
     {
         logging.LogCheckingProject(project.DisplayName);
 
@@ -90,11 +96,7 @@ public static class CheckRunner
         await TestProjectAsync(projectChecks: projectChecks, project: project, projectFolder: projectFolder, doc: doc, cancellationToken: cancellationToken);
     }
 
-    private static async ValueTask TestProjectAsync(IReadOnlyList<IProjectCheck> projectChecks,
-                                                    SolutionProject project,
-                                                    string projectFolder,
-                                                    XmlDocument doc,
-                                                    CancellationToken cancellationToken)
+    private static async ValueTask TestProjectAsync(IReadOnlyList<IProjectCheck> projectChecks, SolutionProject project, string projectFolder, XmlDocument doc, CancellationToken cancellationToken)
     {
         foreach (IProjectCheck check in projectChecks)
         {
@@ -102,27 +104,32 @@ public static class CheckRunner
         }
     }
 
-    private static IServiceProvider Setup(bool warningsAsErrors,
-                                          IReadOnlyList<SolutionProject> projects,
-                                          IFrameworkSettings frameworkSettings,
-                                          IProjectClassifier projectClassifier,
-                                          ICheckConfiguration checkConfiguration,
-                                          Func<IServiceCollection, IServiceProvider> buildServiceProvider,
-                                          ILogger logger)
+    private static IServiceProvider Setup(
+        bool warningsAsErrors,
+        IReadOnlyList<SolutionProject> projects,
+        IFrameworkSettings frameworkSettings,
+        IProjectClassifier projectClassifier,
+        ICheckConfiguration checkConfiguration,
+        Func<IServiceCollection, IServiceProvider> buildServiceProvider,
+        ILogger logger
+    )
     {
         IRepositorySettings wrappedRepositorySettings = new RepositorySettings(frameworkSettings: frameworkSettings, projectClassifier: projectClassifier, projects: projects);
 
         TrackingLogger trackingLogger = new(warningsAsErrors: warningsAsErrors, logger: logger);
 
-        return buildServiceProvider(new ServiceCollection().AddSingleton(wrappedRepositorySettings)
-                                                           .AddSingleton<ILogger>(trackingLogger)
-                                                           .AddSingleton<ITrackingLogger>(trackingLogger)
-                                                           .AddSingleton(typeof(ILogger<>), typeof(LoggerProxy<>))
-                                                           .AddSingleton(projects)
-                                                           .AddSingleton<IProjectXmlLoader, ProjectXmlLoader>()
-                                                           .SetupSolutionChecks()
-                                                           .SetupProjectChecks(repositorySettings: wrappedRepositorySettings)
-                                                           .AddSingleton(checkConfiguration));
+        return buildServiceProvider(
+            new ServiceCollection()
+                .AddSingleton(wrappedRepositorySettings)
+                .AddSingleton<ILogger>(trackingLogger)
+                .AddSingleton<ITrackingLogger>(trackingLogger)
+                .AddSingleton(typeof(ILogger<>), typeof(LoggerProxy<>))
+                .AddSingleton(projects)
+                .AddSingleton<IProjectXmlLoader, ProjectXmlLoader>()
+                .SetupSolutionChecks()
+                .SetupProjectChecks(repositorySettings: wrappedRepositorySettings)
+                .AddSingleton(checkConfiguration)
+        );
     }
 
     private static async ValueTask<IReadOnlyList<SolutionProject>> LoadProjectsAsync(string solution, CancellationToken cancellationToken)
@@ -142,11 +149,7 @@ public static class CheckRunner
 
         Console.WriteLine(value: "Looking for projects...");
 
-        return
-        [
-            .. text.SelectMany(line => ProjectReferenceRegex.Matches(line)
-                                                            .Select(ExtractProject))
-        ];
+        return [.. text.SelectMany(line => ProjectReferenceRegex.Matches(line).Select(ExtractProject))];
 
         SolutionProject ExtractProject(Match match)
         {
@@ -164,11 +167,11 @@ public static class CheckRunner
 
     private static IReadOnlyList<ISolutionCheck> RegisteredSolutionChecks(IServiceProvider services)
     {
-        return [..services.GetServices<ISolutionCheck>()];
+        return [.. services.GetServices<ISolutionCheck>()];
     }
 
     private static IReadOnlyList<IProjectCheck> RegisteredProjectChecks(IServiceProvider services)
     {
-        return [..services.GetServices<IProjectCheck>()];
+        return [.. services.GetServices<IProjectCheck>()];
     }
 }

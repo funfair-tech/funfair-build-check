@@ -21,9 +21,7 @@ public sealed class ProjectXmlLoader : IProjectXmlLoader
 
     public ValueTask<XmlDocument> LoadAsync(string path, CancellationToken cancellationToken)
     {
-        return this.TryGetFromCache(path: path, out XmlDocument? document)
-            ? ValueTask.FromResult(document)
-            : this.LoadPotentiallyCachedAsync(path: path, cancellationToken: cancellationToken);
+        return this.TryGetFromCache(path: path, out XmlDocument? document) ? ValueTask.FromResult(document) : this.LoadPotentiallyCachedAsync(path: path, cancellationToken: cancellationToken);
     }
 
     private bool TryGetFromCache(string path, [NotNullWhen(true)] out XmlDocument? document)

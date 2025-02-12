@@ -56,9 +56,7 @@ public abstract class MustHaveRelatedPackage : IProjectCheck
 
         if (foundSourcePackage && !foundRelatedPackage)
         {
-            this._logger.DidNotFindRelatedPackageForDetectedPackage(projectName: projectName,
-                                                                    detectPackageId: this._detectPackageId,
-                                                                    mustIncludePackageId: this._mustIncludePackageId);
+            this._logger.DidNotFindRelatedPackageForDetectedPackage(projectName: projectName, detectPackageId: this._detectPackageId, mustIncludePackageId: this._mustIncludePackageId);
         }
 
         return ValueTask.CompletedTask;

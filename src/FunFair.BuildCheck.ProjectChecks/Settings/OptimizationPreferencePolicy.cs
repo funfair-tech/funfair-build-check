@@ -7,9 +7,7 @@ namespace FunFair.BuildCheck.ProjectChecks.Settings;
 public sealed class OptimizationPreferencePolicy : SimplePropertyProjectCheckBase
 {
     public OptimizationPreferencePolicy(ILogger<OptimizationPreferencePolicy> logger)
-        : base(propertyName: "OptimizationPreference", requiredValue: "speed", logger: logger)
-    {
-    }
+        : base(propertyName: "OptimizationPreference", requiredValue: "speed", logger: logger) { }
 
     protected override bool CanCheck(string projectName, string projectFolder, XmlDocument project)
     {

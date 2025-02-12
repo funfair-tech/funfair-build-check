@@ -23,7 +23,8 @@ public sealed class ShouldUseAbstractionsDependencyInjectionPackage : ShouldUseA
 
     private bool IsUnitTestBaseProject(string projectName, XmlDocument project)
     {
-        return this._repositorySettings.IsUnitTestBase && project.IsTestProject(projectName: projectName, logger: this.Logger) &&
-               !projectName.EndsWith(value: ".Tests", comparisonType: StringComparison.OrdinalIgnoreCase);
+        return this._repositorySettings.IsUnitTestBase
+            && project.IsTestProject(projectName: projectName, logger: this.Logger)
+            && !projectName.EndsWith(value: ".Tests", comparisonType: StringComparison.OrdinalIgnoreCase);
     }
 }

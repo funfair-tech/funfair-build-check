@@ -69,8 +69,8 @@ public abstract class MustHaveAnalyzerPackage : IProjectCheck
 
     private static bool IsPackageExcluded(string packageId)
     {
-        return StringComparer.InvariantCultureIgnoreCase.Equals(x: packageId, y: "Microsoft.NET.Test.Sdk") ||
-               StringComparer.InvariantCultureIgnoreCase.Equals(x: packageId, y: "xunit.runner.visualstudio");
+        return StringComparer.InvariantCultureIgnoreCase.Equals(x: packageId, y: "Microsoft.NET.Test.Sdk")
+            || StringComparer.InvariantCultureIgnoreCase.Equals(x: packageId, y: "xunit.runner.visualstudio");
     }
 
     private static bool CheckReference(string packageId, XmlDocument project)

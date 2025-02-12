@@ -7,9 +7,7 @@ namespace FunFair.BuildCheck.ProjectChecks.ReferencedPackages;
 public sealed class ShouldUseAbstractionsCachingPackage : ShouldUseAlternatePackage
 {
     public ShouldUseAbstractionsCachingPackage(ILogger<ShouldUseAbstractionsCachingPackage> logger)
-        : base(matchPackageId: "Microsoft.Extensions.Caching.Memory", usePackageId: "Microsoft.Extensions.Caching.Abstractions", logger: logger)
-    {
-    }
+        : base(matchPackageId: "Microsoft.Extensions.Caching.Memory", usePackageId: "Microsoft.Extensions.Caching.Abstractions", logger: logger) { }
 
     protected override bool ShouldExclude(XmlDocument project, string projectName, ILogger logger)
     {

@@ -67,17 +67,11 @@ public sealed class HasConsistentNuGetPackages : IProjectCheck
             {
                 if (this._checkConfiguration.AllowPackageVersionMismatch)
                 {
-                    this._logger.UsingInconsistentPackageVersionInfo(projectName: projectName,
-                                                                     packageName: packageName,
-                                                                     installedVersion: nuGetVersion,
-                                                                     currentVersion: currentVersion);
+                    this._logger.UsingInconsistentPackageVersionInfo(projectName: projectName, packageName: packageName, installedVersion: nuGetVersion, currentVersion: currentVersion);
                 }
                 else
                 {
-                    this._logger.UsingInconsistentPackageVersionError(projectName: projectName,
-                                                                      packageName: packageName,
-                                                                      installedVersion: nuGetVersion,
-                                                                      currentVersion: currentVersion);
+                    this._logger.UsingInconsistentPackageVersionError(projectName: projectName, packageName: packageName, installedVersion: nuGetVersion, currentVersion: currentVersion);
                 }
 
                 continue;

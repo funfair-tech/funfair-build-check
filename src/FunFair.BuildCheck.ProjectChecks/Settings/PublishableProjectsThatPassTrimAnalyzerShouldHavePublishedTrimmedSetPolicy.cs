@@ -6,9 +6,7 @@ namespace FunFair.BuildCheck.ProjectChecks.Settings;
 public sealed class PublishableProjectsThatPassTrimAnalyzerShouldHavePublishedTrimmedSetPolicy : SimplePropertyProjectCheckBase
 {
     public PublishableProjectsThatPassTrimAnalyzerShouldHavePublishedTrimmedSetPolicy(ILogger<PublishableProjectsThatPassTrimAnalyzerShouldHavePublishedTrimmedSetPolicy> logger)
-        : base(propertyName: "PublishTrimmed", requiredValue: "true", logger: logger)
-    {
-    }
+        : base(propertyName: "PublishTrimmed", requiredValue: "true", logger: logger) { }
 
     protected override bool CanCheck(string projectName, string projectFolder, XmlDocument project)
     {

@@ -63,7 +63,8 @@ public sealed class TargetFrameworkIsSetCorrectlyPolicy : IProjectCheck
 
         switch (frameworks.Length)
         {
-            case 0: return ValueTask.CompletedTask;
+            case 0:
+                return ValueTask.CompletedTask;
             case 1:
                 ProjectValueHelpers.CheckValue(projectName: projectName, project: project, nodePresence: "TargetFramework", frameworks[0], logger: this._logger);
 

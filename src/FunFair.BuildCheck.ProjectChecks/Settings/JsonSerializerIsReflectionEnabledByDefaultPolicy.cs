@@ -7,9 +7,7 @@ namespace FunFair.BuildCheck.ProjectChecks.Settings;
 public sealed class JsonSerializerIsReflectionEnabledByDefaultPolicy : SimplePropertyProjectCheckBase
 {
     public JsonSerializerIsReflectionEnabledByDefaultPolicy(ILogger<JsonSerializerIsReflectionEnabledByDefaultPolicy> logger)
-        : base(propertyName: "JsonSerializerIsReflectionEnabledByDefault", requiredValue: "false", logger: logger)
-    {
-    }
+        : base(propertyName: "JsonSerializerIsReflectionEnabledByDefault", requiredValue: "false", logger: logger) { }
 
     protected override bool CanCheck(string projectName, string projectFolder, XmlDocument project)
     {

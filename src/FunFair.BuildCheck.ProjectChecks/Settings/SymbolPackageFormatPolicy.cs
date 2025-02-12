@@ -23,13 +23,13 @@ public sealed class SymbolPackageFormatPolicy : IProjectCheck
             return ValueTask.CompletedTask;
         }
 
-        ProjectValueHelpers.CheckValue(projectName: projectName,
-                                       project: project,
-                                       nodePresence: "SymbolPackageFormat",
-                                       project.IsAnalyzerOrSourceGenerator()
-                                           ? "symbols.nupkg"
-                                           : "snupkg",
-                                       logger: this._logger);
+        ProjectValueHelpers.CheckValue(
+            projectName: projectName,
+            project: project,
+            nodePresence: "SymbolPackageFormat",
+            project.IsAnalyzerOrSourceGenerator() ? "symbols.nupkg" : "snupkg",
+            logger: this._logger
+        );
 
         return ValueTask.CompletedTask;
     }

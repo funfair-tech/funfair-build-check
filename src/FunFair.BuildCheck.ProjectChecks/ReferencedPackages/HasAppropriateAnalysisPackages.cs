@@ -56,9 +56,11 @@ public abstract class HasAppropriateAnalysisPackages : IProjectCheck
 
                     if (string.IsNullOrWhiteSpace(assets) || !StringComparer.Ordinal.Equals(x: assets, y: PACKAGE_PRIVATE_ASSETS))
                     {
-                        this._logger.DoesNotReferenceMustIncludePackageIdWithAPrivateAssetsAttribute(projectName: projectName,
-                                                                                                     privateAssets: PACKAGE_PRIVATE_ASSETS,
-                                                                                                     mustIncludePackageId: this._mustIncludePackageId);
+                        this._logger.DoesNotReferenceMustIncludePackageIdWithAPrivateAssetsAttribute(
+                            projectName: projectName,
+                            privateAssets: PACKAGE_PRIVATE_ASSETS,
+                            mustIncludePackageId: this._mustIncludePackageId
+                        );
                     }
                 }
             }
@@ -66,9 +68,7 @@ public abstract class HasAppropriateAnalysisPackages : IProjectCheck
 
         if (foundSourcePackage && !foundAnalyzerPackage)
         {
-            this._logger.DidNotFindMustIncludePackageForDetectedPackage(projectName: projectName,
-                                                                        detectPackageId: this._detectPackageId,
-                                                                        mustIncludePackageId: this._mustIncludePackageId);
+            this._logger.DidNotFindMustIncludePackageForDetectedPackage(projectName: projectName, detectPackageId: this._detectPackageId, mustIncludePackageId: this._mustIncludePackageId);
         }
 
         return ValueTask.CompletedTask;

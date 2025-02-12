@@ -23,13 +23,13 @@ public sealed class EnforceExtendedAnalyzerRulesPolicy : IProjectCheck
             return ValueTask.CompletedTask;
         }
 
-        ProjectValueHelpers.CheckValue(projectName: projectName,
-                                       project: project,
-                                       nodePresence: "EnforceExtendedAnalyzerRules",
-                                       project.IsAnalyzerOrSourceGenerator()
-                                           ? "true"
-                                           : "false",
-                                       logger: this._logger);
+        ProjectValueHelpers.CheckValue(
+            projectName: projectName,
+            project: project,
+            nodePresence: "EnforceExtendedAnalyzerRules",
+            project.IsAnalyzerOrSourceGenerator() ? "true" : "false",
+            logger: this._logger
+        );
 
         return ValueTask.CompletedTask;
     }
