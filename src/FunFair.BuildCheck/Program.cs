@@ -55,17 +55,14 @@ internal static class Program
             IFrameworkSettings frameworkSettings = new FrameworkSettings();
             IProjectClassifier projectClassifier = new ProjectClassifier();
 
-            int errors = await CheckRunner.CheckAsync(
-                solutionFileName: 
-                                                      ningsAsErrors,
-                fram
-                                                      ctClassifier: projectClassifier,
-    
-                                                      ReleaseBuild, allowPackageVersionMism
-                                                      vices => services.BuildServiceProvider(),
-                logger: logger,
-                cancellationToken: CancellationToken.None
-            );
+            int errors = await CheckRunner.CheckAsync(solutionFileName: solutionFileName,
+                                                      warningsAsErrors: warningsAsErrors,
+                                                      frameworkSettings: frameworkSettings,
+                                                      projectClassifier: projectClassifier,
+                                                      new CheckConfiguration(preReleaseBuild: preReleaseBuild, allowPackageVersionMismatch: false),
+                                                      buildServiceProvider: services => services.BuildServiceProvider(),
+                                                      logger: logger,
+                                                      cancellationToken: CancellationToken.None);
 
             return ReportStatus(errors: errors, solutionFileName: solutionFileName);
         }
@@ -82,7 +79,9 @@ internal static class Program
         if (errors != 0)
         {
             Console.WriteLine();
-            Console.WriteLine(errors > 1 ? $"Found {errors} Errors" : $"Found {errors} Error");
+            Console.WriteLine(errors > 1
+                                  ? $"Found {errors} Errors"
+                                  : $"Found {errors} Error");
 
             return errors;
         }
@@ -136,17 +135,12 @@ internal static class Program
 
     private static IConfigurationRoot GetCommandLineConfiguration(string[] args)
     {
-        return new ConfigurationBuilder()
-            .AddCommandLine(
-                args: args,
-                new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
-                {
-                    { "-Solution", "solution" },
-                    { "-WarningAsErrors", "WarningAsErrors" },
-                    { "-PreReleaseBuild", "PreReleaseBuild" },
-                }
-            )
-            .Build();
+        return new ConfigurationBuilder().AddCommandLine(args: args,
+                                                         new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
+                                                         {
+                                                             { "-Solution", "solution" }, { "-WarningAsErrors", "WarningAsErrors" }, { "-PreReleaseBuild", "PreReleaseBuild" }
+                                                         })
+                                         .Build();
     }
 
     private static void OutputSolutionFileName(string solutionFileName)
