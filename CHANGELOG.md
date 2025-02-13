@@ -13,7 +13,6 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 ### Changed
 - Dependencies - Updated Nullable.Extended.Analyzer to 1.15.6495
 - Dependencies - Updated xunit to 2.9.3
-- Dependencies - Updated Microsoft.Extensions to 9.0.1
 - Dependencies - Updated SonarAnalyzer.CSharp to 10.6.0.109712
 - Dependencies - Updated Credfeto.Enumeration to 1.2.66.909
 - Dependencies - Updated Microsoft.Sbom.Targets to 3.1.0
@@ -26,6 +25,7 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 - Dependencies - Updated Meziantou.Analyzer to 2.0.187
 - Dependencies - Updated Microsoft.VisualStudio.Threading.Analyzers to 17.13.2
 - Dependencies - Updated Roslynator.Analyzers to 4.13.0
+- Dependencies - Updated Microsoft.Extensions to 9.0.2
 ### Removed
 ### Deployment Changes
 
