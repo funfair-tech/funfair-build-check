@@ -16,15 +16,25 @@ public sealed class LibrariesShouldNotDependOnExecutables : IProjectCheck
     private readonly ILogger<LibrariesShouldNotDependOnExecutables> _logger;
     private readonly IProjectXmlLoader _projectXmlLoader;
 
-    public LibrariesShouldNotDependOnExecutables(IProjectXmlLoader projectXmlLoader, ILogger<LibrariesShouldNotDependOnExecutables> logger)
+    public LibrariesShouldNotDependOnExecutables(
+        IProjectXmlLoader projectXmlLoader,
+        ILogger<LibrariesShouldNotDependOnExecutables> logger
+    )
     {
         this._projectXmlLoader = projectXmlLoader;
         this._logger = logger;
     }
 
-    public async ValueTask CheckAsync(string projectName, string projectFolder, XmlDocument project, CancellationToken cancellationToken)
+    public async ValueTask CheckAsync(
+        string projectName,
+        string projectFolder,
+        XmlDocument project,
+        CancellationToken cancellationToken
+    )
     {
-        if (!StringComparer.InvariantCultureIgnoreCase.Equals(x: "Library", project.GetOutputType()))
+        if (
+            !StringComparer.InvariantCultureIgnoreCase.Equals(x: "Library", project.GetOutputType())
+        )
         {
             return;
         }
@@ -50,13 +60,19 @@ public sealed class LibrariesShouldNotDependOnExecutables : IProjectCheck
 
             referencedProject = i.FullName;
 
-            XmlDocument otherProject = await this._projectXmlLoader.LoadAsync(path: referencedProject, cancellationToken: cancellationToken);
+            XmlDocument otherProject = await this._projectXmlLoader.LoadAsync(
+                path: referencedProject,
+                cancellationToken: cancellationToken
+            );
 
             string otherOutputType = otherProject.GetOutputType();
 
             if (StringComparer.InvariantCultureIgnoreCase.Equals(x: "Exe", y: otherOutputType))
             {
-                this._logger.LibraryReferencesExecutable(projectName: projectName, referencedProject: referencedProject);
+                this._logger.LibraryReferencesExecutable(
+                    projectName: projectName,
+                    referencedProject: referencedProject
+                );
             }
         }
     }

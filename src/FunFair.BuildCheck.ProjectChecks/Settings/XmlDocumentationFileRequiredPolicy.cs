@@ -11,18 +11,27 @@ namespace FunFair.BuildCheck.ProjectChecks.Settings;
 
 public sealed class XmlDocumentationFileRequiredPolicy : IProjectCheck
 {
-    private const string EXPECTED = @"bin\$(Configuration)\$(TargetFramework)\$(MSBuildProjectName).xml";
+    private const string EXPECTED =
+        @"bin\$(Configuration)\$(TargetFramework)\$(MSBuildProjectName).xml";
     private readonly ILogger<XmlDocumentationFileRequiredPolicy> _logger;
 
     private readonly IRepositorySettings _repositorySettings;
 
-    public XmlDocumentationFileRequiredPolicy(IRepositorySettings repositorySettings, ILogger<XmlDocumentationFileRequiredPolicy> logger)
+    public XmlDocumentationFileRequiredPolicy(
+        IRepositorySettings repositorySettings,
+        ILogger<XmlDocumentationFileRequiredPolicy> logger
+    )
     {
         this._repositorySettings = repositorySettings;
         this._logger = logger;
     }
 
-    public ValueTask CheckAsync(string projectName, string projectFolder, XmlDocument project, CancellationToken cancellationToken)
+    public ValueTask CheckAsync(
+        string projectName,
+        string projectFolder,
+        XmlDocument project,
+        CancellationToken cancellationToken
+    )
     {
         if (!this._repositorySettings.XmlDocumentationRequired)
         {
@@ -33,7 +42,10 @@ public sealed class XmlDocumentationFileRequiredPolicy : IProjectCheck
 
         if (testProject && this._repositorySettings.IsUnitTestBase)
         {
-            testProject = projectName.EndsWith(value: ".Tests", comparisonType: StringComparison.OrdinalIgnoreCase);
+            testProject = projectName.EndsWith(
+                value: ".Tests",
+                comparisonType: StringComparison.OrdinalIgnoreCase
+            );
         }
 
         if (testProject)
@@ -43,7 +55,13 @@ public sealed class XmlDocumentationFileRequiredPolicy : IProjectCheck
             return ValueTask.CompletedTask;
         }
 
-        ProjectValueHelpers.CheckValue(projectName: projectName, project: project, nodePresence: "DocumentationFile", requiredValue: EXPECTED, logger: this._logger);
+        ProjectValueHelpers.CheckValue(
+            projectName: projectName,
+            project: project,
+            nodePresence: "DocumentationFile",
+            requiredValue: EXPECTED,
+            logger: this._logger
+        );
 
         return ValueTask.CompletedTask;
     }

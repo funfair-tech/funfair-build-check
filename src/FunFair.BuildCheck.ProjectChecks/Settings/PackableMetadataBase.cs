@@ -19,7 +19,12 @@ public abstract class PackableMetadataBase : IProjectCheck
         this._logger = logger;
     }
 
-    public ValueTask CheckAsync(string projectName, string projectFolder, XmlDocument project, CancellationToken cancellationToken)
+    public ValueTask CheckAsync(
+        string projectName,
+        string projectFolder,
+        XmlDocument project,
+        CancellationToken cancellationToken
+    )
     {
         if (!project.IsPackable())
         {
@@ -28,7 +33,10 @@ public abstract class PackableMetadataBase : IProjectCheck
 
         if (!project.HasProperty(this._property))
         {
-            this._logger.PackableProjectDoesNotDefineProperty(projectName: projectName, property: this._property);
+            this._logger.PackableProjectDoesNotDefineProperty(
+                projectName: projectName,
+                property: this._property
+            );
         }
 
         return ValueTask.CompletedTask;

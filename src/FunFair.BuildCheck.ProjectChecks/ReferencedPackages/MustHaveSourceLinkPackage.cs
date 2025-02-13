@@ -21,32 +21,55 @@ public sealed class MustHaveSourceLinkPackage : IProjectCheck
         this._logger = logger;
     }
 
-    public ValueTask CheckAsync(string projectName, string projectFolder, XmlDocument project, CancellationToken cancellationToken)
+    public ValueTask CheckAsync(
+        string projectName,
+        string projectFolder,
+        XmlDocument project,
+        CancellationToken cancellationToken
+    )
     {
-        if (project.SelectSingleNode(xpath: "/Project/ItemGroup/PackageReference[@Include='xunit']") is XmlElement)
+        if (
+            project.SelectSingleNode(xpath: "/Project/ItemGroup/PackageReference[@Include='xunit']")
+            is XmlElement
+        )
         {
             // has an xunit reference so is a unit test project, don't force sourcelink
             return ValueTask.CompletedTask;
         }
 
         bool packageExists = CheckReference(packageId: PACKAGE_ID, project: project);
-        bool historicalPackageExists = CheckReference(packageId: HISTORICAL_PACKAGE_ID, project: project);
+        bool historicalPackageExists = CheckReference(
+            packageId: HISTORICAL_PACKAGE_ID,
+            project: project
+        );
 
         if (!packageExists && !historicalPackageExists)
         {
-            this._logger.DoesNotReferencePackageOrHistoricalPackage(projectName: projectName, packageId: PACKAGE_ID, historicalPackageId: HISTORICAL_PACKAGE_ID);
+            this._logger.DoesNotReferencePackageOrHistoricalPackage(
+                projectName: projectName,
+                packageId: PACKAGE_ID,
+                historicalPackageId: HISTORICAL_PACKAGE_ID
+            );
         }
 
         if (packageExists && historicalPackageExists)
         {
-            this._logger.ReferencesBothPackageAndHistoricalPackage(projectName: projectName, packageId: PACKAGE_ID, historicalPackageId: HISTORICAL_PACKAGE_ID);
+            this._logger.ReferencesBothPackageAndHistoricalPackage(
+                projectName: projectName,
+                packageId: PACKAGE_ID,
+                historicalPackageId: HISTORICAL_PACKAGE_ID
+            );
         }
 
         if (packageExists)
         {
             if (!CheckPrivateAssets(packageId: PACKAGE_ID, project: project))
             {
-                this._logger.DoesNotReferenceMustIncludePackageIdWithAPrivateAssetsAttribute(projectName: projectName, privateAssets: PACKAGE_ID, mustIncludePackageId: PACKAGE_PRIVATE_ASSETS);
+                this._logger.DoesNotReferenceMustIncludePackageIdWithAPrivateAssetsAttribute(
+                    projectName: projectName,
+                    privateAssets: PACKAGE_ID,
+                    mustIncludePackageId: PACKAGE_PRIVATE_ASSETS
+                );
             }
         }
 
@@ -67,14 +90,22 @@ public sealed class MustHaveSourceLinkPackage : IProjectCheck
 
     private static bool CheckReference(string packageId, XmlDocument project)
     {
-        XmlElement? reference = project.SelectSingleNode("/Project/ItemGroup/PackageReference[@Include='" + packageId + "']") as XmlElement;
+        XmlElement? reference =
+            project.SelectSingleNode(
+                "/Project/ItemGroup/PackageReference[@Include='" + packageId + "']"
+            ) as XmlElement;
 
         return reference is not null;
     }
 
     private static bool CheckPrivateAssets(string packageId, XmlDocument project)
     {
-        if (project.SelectSingleNode("/Project/ItemGroup/PackageReference[@Include='" + packageId + "']") is not XmlElement reference)
+        if (
+            project.SelectSingleNode(
+                "/Project/ItemGroup/PackageReference[@Include='" + packageId + "']"
+            )
+            is not XmlElement reference
+        )
         {
             return false;
         }
@@ -93,6 +124,10 @@ public sealed class MustHaveSourceLinkPackage : IProjectCheck
             assets = privateAssets.InnerText;
         }
 
-        return !string.IsNullOrEmpty(assets) && StringComparer.InvariantCultureIgnoreCase.Equals(x: assets, y: PACKAGE_PRIVATE_ASSETS);
+        return !string.IsNullOrEmpty(assets)
+            && StringComparer.InvariantCultureIgnoreCase.Equals(
+                x: assets,
+                y: PACKAGE_PRIVATE_ASSETS
+            );
     }
 }

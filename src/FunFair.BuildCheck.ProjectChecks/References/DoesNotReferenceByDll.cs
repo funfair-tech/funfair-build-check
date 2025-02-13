@@ -17,7 +17,12 @@ public sealed class DoesNotReferenceByDll : IProjectCheck
         this._logger = logger;
     }
 
-    public ValueTask CheckAsync(string projectName, string projectFolder, XmlDocument project, CancellationToken cancellationToken)
+    public ValueTask CheckAsync(
+        string projectName,
+        string projectFolder,
+        XmlDocument project,
+        CancellationToken cancellationToken
+    )
     {
         XmlNodeList? references = project.SelectNodes(xpath: "/Project/ItemGroup/Reference");
 
@@ -29,7 +34,10 @@ public sealed class DoesNotReferenceByDll : IProjectCheck
         foreach (XmlElement reference in references.OfType<XmlElement>())
         {
             string assembly = reference.GetAttribute(name: "Include");
-            this._logger.ReferencesAssemblyDirectlyRatherThanThroughReference(projectName: projectName, assembly: assembly);
+            this._logger.ReferencesAssemblyDirectlyRatherThanThroughReference(
+                projectName: projectName,
+                assembly: assembly
+            );
         }
 
         return ValueTask.CompletedTask;

@@ -15,7 +15,10 @@ public sealed class NoOrphanedProjectsExist : ISolutionCheck
     private readonly ILogger<NoOrphanedProjectsExist> _logger;
     private readonly IReadOnlyList<SolutionProject> _projects;
 
-    public NoOrphanedProjectsExist(IReadOnlyList<SolutionProject> projects, ILogger<NoOrphanedProjectsExist> logger)
+    public NoOrphanedProjectsExist(
+        IReadOnlyList<SolutionProject> projects,
+        ILogger<NoOrphanedProjectsExist> logger
+    )
     {
         this._projects = projects;
         this._logger = logger;
@@ -43,14 +46,21 @@ public sealed class NoOrphanedProjectsExist : ISolutionCheck
 
         foreach (string project in projectFileNames.Where(this.ProjectIsInSolution))
         {
-            this.CheckProject(solutionFileName: solutionFileName, basePath: basePath, project: project);
+            this.CheckProject(
+                solutionFileName: solutionFileName,
+                basePath: basePath,
+                project: project
+            );
         }
     }
 
     private void CheckProject(string solutionFileName, string basePath, string project)
     {
         string solutionRelative = GetPathRelativeToSolution(basePath: basePath, project: project);
-        this._logger.ProjectIsNotInSolutionButInWorkFolder(solutionFileName: solutionFileName, projectFileName: solutionRelative);
+        this._logger.ProjectIsNotInSolutionButInWorkFolder(
+            solutionFileName: solutionFileName,
+            projectFileName: solutionRelative
+        );
     }
 
     private static string GetPathRelativeToSolution(string basePath, string project)
@@ -65,12 +75,20 @@ public sealed class NoOrphanedProjectsExist : ISolutionCheck
 
     private static IReadOnlyList<string> GetOrderedProjects(string basePath)
     {
-        return [.. GetProjects(basePath).OrderBy(keySelector: Ordering, comparer: StringComparer.Ordinal)];
+        return
+        [
+            .. GetProjects(basePath)
+                .OrderBy(keySelector: Ordering, comparer: StringComparer.Ordinal),
+        ];
     }
 
     private static IEnumerable<string> GetProjects(string basePath)
     {
-        return Directory.EnumerateFiles(path: basePath, searchPattern: "*.csproj", searchOption: SearchOption.AllDirectories);
+        return Directory.EnumerateFiles(
+            path: basePath,
+            searchPattern: "*.csproj",
+            searchOption: SearchOption.AllDirectories
+        );
     }
 
     private static string Ordering(string name)

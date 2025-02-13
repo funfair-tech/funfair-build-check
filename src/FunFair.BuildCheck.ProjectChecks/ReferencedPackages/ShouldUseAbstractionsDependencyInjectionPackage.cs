@@ -10,8 +10,15 @@ public sealed class ShouldUseAbstractionsDependencyInjectionPackage : ShouldUseA
 {
     private readonly IRepositorySettings _repositorySettings;
 
-    public ShouldUseAbstractionsDependencyInjectionPackage(IRepositorySettings repositorySettings, ILogger<ShouldUseAbstractionsDependencyInjectionPackage> logger)
-        : base(matchPackageId: "Microsoft.Extensions.DependencyInjection", usePackageId: "Microsoft.Extensions.DependencyInjection.Abstractions", logger: logger)
+    public ShouldUseAbstractionsDependencyInjectionPackage(
+        IRepositorySettings repositorySettings,
+        ILogger<ShouldUseAbstractionsDependencyInjectionPackage> logger
+    )
+        : base(
+            matchPackageId: "Microsoft.Extensions.DependencyInjection",
+            usePackageId: "Microsoft.Extensions.DependencyInjection.Abstractions",
+            logger: logger
+        )
     {
         this._repositorySettings = repositorySettings;
     }
@@ -25,6 +32,9 @@ public sealed class ShouldUseAbstractionsDependencyInjectionPackage : ShouldUseA
     {
         return this._repositorySettings.IsUnitTestBase
             && project.IsTestProject(projectName: projectName, logger: this.Logger)
-            && !projectName.EndsWith(value: ".Tests", comparisonType: StringComparison.OrdinalIgnoreCase);
+            && !projectName.EndsWith(
+                value: ".Tests",
+                comparisonType: StringComparison.OrdinalIgnoreCase
+            );
     }
 }

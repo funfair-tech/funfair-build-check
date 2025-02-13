@@ -12,12 +12,19 @@ public sealed class IsTransformWebConfigDisabledShouldBeTrueForWebLibraryProject
 {
     private readonly ILogger<IsTransformWebConfigDisabledShouldBeTrueForWebLibraryProjects> _logger;
 
-    public IsTransformWebConfigDisabledShouldBeTrueForWebLibraryProjects(ILogger<IsTransformWebConfigDisabledShouldBeTrueForWebLibraryProjects> logger)
+    public IsTransformWebConfigDisabledShouldBeTrueForWebLibraryProjects(
+        ILogger<IsTransformWebConfigDisabledShouldBeTrueForWebLibraryProjects> logger
+    )
     {
         this._logger = logger;
     }
 
-    public ValueTask CheckAsync(string projectName, string projectFolder, XmlDocument project, CancellationToken cancellationToken)
+    public ValueTask CheckAsync(
+        string projectName,
+        string projectFolder,
+        XmlDocument project,
+        CancellationToken cancellationToken
+    )
     {
         string sdk = project.GetSdk();
 
@@ -27,13 +34,21 @@ public sealed class IsTransformWebConfigDisabledShouldBeTrueForWebLibraryProject
             return ValueTask.CompletedTask;
         }
 
-        if (!StringComparer.InvariantCultureIgnoreCase.Equals(project.GetOutputType(), y: "Library"))
+        if (
+            !StringComparer.InvariantCultureIgnoreCase.Equals(project.GetOutputType(), y: "Library")
+        )
         {
             // not a library
             return ValueTask.CompletedTask;
         }
 
-        ProjectValueHelpers.CheckValue(projectName: projectName, project: project, nodePresence: "IsTransformWebConfigDisabled", requiredValue: true, logger: this._logger);
+        ProjectValueHelpers.CheckValue(
+            projectName: projectName,
+            project: project,
+            nodePresence: "IsTransformWebConfigDisabled",
+            requiredValue: true,
+            logger: this._logger
+        );
 
         return ValueTask.CompletedTask;
     }

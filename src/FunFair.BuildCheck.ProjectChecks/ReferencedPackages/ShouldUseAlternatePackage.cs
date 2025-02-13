@@ -24,9 +24,16 @@ public abstract class ShouldUseAlternatePackage : IProjectCheck
 
     protected ILogger Logger { get; }
 
-    public ValueTask CheckAsync(string projectName, string projectFolder, XmlDocument project, CancellationToken cancellationToken)
+    public ValueTask CheckAsync(
+        string projectName,
+        string projectFolder,
+        XmlDocument project,
+        CancellationToken cancellationToken
+    )
     {
-        if (!this.CanCheck(projectName: projectName, projectFolder: projectFolder, project: project))
+        if (
+            !this.CanCheck(projectName: projectName, projectFolder: projectFolder, project: project)
+        )
         {
             return ValueTask.CompletedTask;
         }
@@ -41,7 +48,10 @@ public abstract class ShouldUseAlternatePackage : IProjectCheck
 
         string? awsProjectType = project.GetAwsProjectType();
 
-        if (awsProjectType is not null && StringComparer.InvariantCultureIgnoreCase.Equals(x: awsProjectType, y: "Lambda"))
+        if (
+            awsProjectType is not null
+            && StringComparer.InvariantCultureIgnoreCase.Equals(x: awsProjectType, y: "Lambda")
+        )
         {
             // Lambdas are effectively executables so can use whatever they want.
             return ValueTask.CompletedTask;
@@ -64,9 +74,18 @@ public abstract class ShouldUseAlternatePackage : IProjectCheck
         {
             string packageId = referenceNode.GetAttribute("Include");
 
-            if (StringComparer.InvariantCultureIgnoreCase.Equals(x: packageId, y: this._matchPackageId))
+            if (
+                StringComparer.InvariantCultureIgnoreCase.Equals(
+                    x: packageId,
+                    y: this._matchPackageId
+                )
+            )
             {
-                this.Logger.UseAlternatePackageIdForMatchedPackageId(projectName: projectName, usePackageId: this._usePackageId, matchPackageId: this._matchPackageId);
+                this.Logger.UseAlternatePackageIdForMatchedPackageId(
+                    projectName: projectName,
+                    usePackageId: this._usePackageId,
+                    matchPackageId: this._matchPackageId
+                );
             }
         }
 

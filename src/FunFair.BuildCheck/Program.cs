@@ -22,7 +22,9 @@ internal static class Program
     {
         Console.WriteLine();
         Console.WriteLine(value: "Usage:");
-        Console.WriteLine($"{typeof(Program).Namespace} -Solution D:\\Source\\Solution.sln [-WarningAsErrors true|false] [-PreReleaseBuild true|false]");
+        Console.WriteLine(
+            $"{typeof(Program).Namespace} -Solution D:\\Source\\Solution.sln [-WarningAsErrors true|false] [-PreReleaseBuild true|false]"
+        );
     }
 
     public static async Task<int> Main(string[] args)
@@ -33,7 +35,14 @@ internal static class Program
 
             IConfigurationRoot configuration = GetCommandLineConfiguration(args);
 
-            if (!GetConfiguration(configuration: configuration, out string solutionFileName, out bool warningsAsErrors, out bool preReleaseBuild))
+            if (
+                !GetConfiguration(
+                    configuration: configuration,
+                    out string solutionFileName,
+                    out bool warningsAsErrors,
+                    out bool preReleaseBuild
+                )
+            )
             {
                 Usage();
 
@@ -55,14 +64,19 @@ internal static class Program
             IFrameworkSettings frameworkSettings = new FrameworkSettings();
             IProjectClassifier projectClassifier = new ProjectClassifier();
 
-            int errors = await CheckRunner.CheckAsync(solutionFileName: solutionFileName,
-                                                      warningsAsErrors: warningsAsErrors,
-                                                      frameworkSettings: frameworkSettings,
-                                                      projectClassifier: projectClassifier,
-                                                      new CheckConfiguration(preReleaseBuild: preReleaseBuild, allowPackageVersionMismatch: false),
-                                                      buildServiceProvider: services => services.BuildServiceProvider(),
-                                                      logger: logger,
-                                                      cancellationToken: CancellationToken.None);
+            int errors = await CheckRunner.CheckAsync(
+                solutionFileName: solutionFileName,
+                warningsAsErrors: warningsAsErrors,
+                frameworkSettings: frameworkSettings,
+                projectClassifier: projectClassifier,
+                new CheckConfiguration(
+                    preReleaseBuild: preReleaseBuild,
+                    allowPackageVersionMismatch: false
+                ),
+                buildServiceProvider: services => services.BuildServiceProvider(),
+                logger: logger,
+                cancellationToken: CancellationToken.None
+            );
 
             return ReportStatus(errors: errors, solutionFileName: solutionFileName);
         }
@@ -79,9 +93,7 @@ internal static class Program
         if (errors != 0)
         {
             Console.WriteLine();
-            Console.WriteLine(errors > 1
-                                  ? $"Found {errors} Errors"
-                                  : $"Found {errors} Error");
+            Console.WriteLine(errors > 1 ? $"Found {errors} Errors" : $"Found {errors} Error");
 
             return errors;
         }
@@ -94,7 +106,12 @@ internal static class Program
         return SUCCESS;
     }
 
-    private static bool GetConfiguration(IConfigurationRoot configuration, out string solutionFileName, out bool warningsAsErrors, out bool preReleaseBuild)
+    private static bool GetConfiguration(
+        IConfigurationRoot configuration,
+        out string solutionFileName,
+        out bool warningsAsErrors,
+        out bool preReleaseBuild
+    )
     {
         solutionFileName = configuration.GetValue<string>(key: "solution") ?? string.Empty;
         warningsAsErrors = false;
@@ -135,12 +152,17 @@ internal static class Program
 
     private static IConfigurationRoot GetCommandLineConfiguration(string[] args)
     {
-        return new ConfigurationBuilder().AddCommandLine(args: args,
-                                                         new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
-                                                         {
-                                                             { "-Solution", "solution" }, { "-WarningAsErrors", "WarningAsErrors" }, { "-PreReleaseBuild", "PreReleaseBuild" }
-                                                         })
-                                         .Build();
+        return new ConfigurationBuilder()
+            .AddCommandLine(
+                args: args,
+                new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
+                {
+                    { "-Solution", "solution" },
+                    { "-WarningAsErrors", "WarningAsErrors" },
+                    { "-PreReleaseBuild", "PreReleaseBuild" },
+                }
+            )
+            .Build();
     }
 
     private static void OutputSolutionFileName(string solutionFileName)
@@ -149,7 +171,9 @@ internal static class Program
 
         if (!string.IsNullOrWhiteSpace(env))
         {
-            Console.WriteLine($"##teamcity[setParameter name='env.SOLUTION_FILENAME' value='{solutionFileName}']");
+            Console.WriteLine(
+                $"##teamcity[setParameter name='env.SOLUTION_FILENAME' value='{solutionFileName}']"
+            );
         }
     }
 }

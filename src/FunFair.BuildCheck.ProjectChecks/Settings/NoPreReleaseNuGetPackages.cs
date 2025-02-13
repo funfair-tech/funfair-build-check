@@ -17,13 +17,21 @@ public sealed class NoPreReleaseNuGetPackages : IProjectCheck
     private readonly ICheckConfiguration _configuration;
     private readonly ILogger<NoPreReleaseNuGetPackages> _logger;
 
-    public NoPreReleaseNuGetPackages(ICheckConfiguration configuration, ILogger<NoPreReleaseNuGetPackages> logger)
+    public NoPreReleaseNuGetPackages(
+        ICheckConfiguration configuration,
+        ILogger<NoPreReleaseNuGetPackages> logger
+    )
     {
         this._configuration = configuration;
         this._logger = logger;
     }
 
-    public ValueTask CheckAsync(string projectName, string projectFolder, XmlDocument project, CancellationToken cancellationToken)
+    public ValueTask CheckAsync(
+        string projectName,
+        string projectFolder,
+        XmlDocument project,
+        CancellationToken cancellationToken
+    )
     {
         XmlNodeList? nodes = project.SelectNodes(xpath: "/Project/ItemGroup/PackageReference");
 
@@ -48,34 +56,67 @@ public sealed class NoPreReleaseNuGetPackages : IProjectCheck
 
             if (string.IsNullOrEmpty(privateAssets))
             {
-                if (reference.SelectSingleNode(xpath: "PrivateAssets") is XmlElement privateAssetsElement)
+                if (
+                    reference.SelectSingleNode(xpath: "PrivateAssets")
+                    is XmlElement privateAssetsElement
+                )
                 {
                     privateAssets = privateAssetsElement.InnerText;
                 }
             }
 
-            if (!string.IsNullOrEmpty(privateAssets) && StringComparer.OrdinalIgnoreCase.Equals(x: privateAssets, y: PACKAGE_PRIVATE_ASSETS))
-            {
-                continue;
-            }
-
-            string version = reference.GetAttribute(name: "Version");
-
-            this._logger.FoundNuGetPackageAtVersion(projectName: projectName, packageId: packageName, version: version);
-
-            if (!NuGetVersion.TryParse(value: version, out NuGetVersion? nuGetVersion))
-            {
-                this._logger.CouldNotParseVersion(projectName: projectName, packageId: packageName, version: version);
-
-                continue;
-            }
-
-            if (nuGetVersion.IsPrerelease && !this._configuration.PreReleaseBuild)
-            {
-                this._logger.UsesPreReleaseVersion(projectName: projectName, packageId: packageName, version: version);
-            }
+            this.CheckReference(
+                projectName: projectName,
+                privateAssets: privateAssets,
+                reference: reference,
+                packageName: packageName
+            );
         }
 
         return ValueTask.CompletedTask;
+    }
+
+    private void CheckReference(
+        string projectName,
+        string privateAssets,
+        XmlElement reference,
+        string packageName
+    )
+    {
+        if (
+            !string.IsNullOrEmpty(privateAssets)
+            && StringComparer.OrdinalIgnoreCase.Equals(x: privateAssets, y: PACKAGE_PRIVATE_ASSETS)
+        )
+        {
+            return;
+        }
+
+        string version = reference.GetAttribute(name: "Version");
+
+        this._logger.FoundNuGetPackageAtVersion(
+            projectName: projectName,
+            packageId: packageName,
+            version: version
+        );
+
+        if (!NuGetVersion.TryParse(value: version, out NuGetVersion? nuGetVersion))
+        {
+            this._logger.CouldNotParseVersion(
+                projectName: projectName,
+                packageId: packageName,
+                version: version
+            );
+
+            return;
+        }
+
+        if (nuGetVersion.IsPrerelease && !this._configuration.PreReleaseBuild)
+        {
+            this._logger.UsesPreReleaseVersion(
+                projectName: projectName,
+                packageId: packageName,
+                version: version
+            );
+        }
     }
 }

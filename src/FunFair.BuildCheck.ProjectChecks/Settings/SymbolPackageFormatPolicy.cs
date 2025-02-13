@@ -16,7 +16,12 @@ public sealed class SymbolPackageFormatPolicy : IProjectCheck
         this._logger = logger;
     }
 
-    public ValueTask CheckAsync(string projectName, string projectFolder, XmlDocument project, CancellationToken cancellationToken)
+    public ValueTask CheckAsync(
+        string projectName,
+        string projectFolder,
+        XmlDocument project,
+        CancellationToken cancellationToken
+    )
     {
         if (!project.IsPackable())
         {

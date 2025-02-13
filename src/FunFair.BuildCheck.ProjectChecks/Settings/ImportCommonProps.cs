@@ -13,14 +13,22 @@ public sealed class ImportCommonProps : IProjectCheck
     private readonly ILogger<ImportCommonProps> _logger;
     private readonly string _projectImport;
 
-    public ImportCommonProps(IRepositorySettings repositorySettings, ILogger<ImportCommonProps> logger)
+    public ImportCommonProps(
+        IRepositorySettings repositorySettings,
+        ILogger<ImportCommonProps> logger
+    )
     {
         this._logger = logger;
 
         this._projectImport = repositorySettings.ProjectImport;
     }
 
-    public ValueTask CheckAsync(string projectName, string projectFolder, XmlDocument project, CancellationToken cancellationToken)
+    public ValueTask CheckAsync(
+        string projectName,
+        string projectFolder,
+        XmlDocument project,
+        CancellationToken cancellationToken
+    )
     {
         if (string.IsNullOrWhiteSpace(this._projectImport))
         {
@@ -36,7 +44,10 @@ public sealed class ImportCommonProps : IProjectCheck
 
         if (!found)
         {
-            this._logger.PackableProjectShouldImportProject(projectName: projectName, projectImport: this._projectImport);
+            this._logger.PackableProjectShouldImportProject(
+                projectName: projectName,
+                projectImport: this._projectImport
+            );
         }
 
         return ValueTask.CompletedTask;

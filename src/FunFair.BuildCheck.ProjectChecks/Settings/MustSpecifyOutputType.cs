@@ -17,11 +17,23 @@ public sealed class MustSpecifyOutputType : IProjectCheck
         this._logger = logger;
     }
 
-    public ValueTask CheckAsync(string projectName, string projectFolder, XmlDocument project, CancellationToken cancellationToken)
+    public ValueTask CheckAsync(
+        string projectName,
+        string projectFolder,
+        XmlDocument project,
+        CancellationToken cancellationToken
+    )
     {
         const string msg = "Exe or Library";
 
-        ProjectValueHelpers.CheckValue(projectName: projectName, project: project, nodePresence: "OutputType", isRequiredValue: IsRequiredValue, msg: msg, logger: this._logger);
+        ProjectValueHelpers.CheckValue(
+            projectName: projectName,
+            project: project,
+            nodePresence: "OutputType",
+            isRequiredValue: IsRequiredValue,
+            msg: msg,
+            logger: this._logger
+        );
 
         return ValueTask.CompletedTask;
     }
@@ -33,6 +45,7 @@ public sealed class MustSpecifyOutputType : IProjectCheck
 
     private static bool IsExeOrLibrary(string value)
     {
-        return StringComparer.InvariantCultureIgnoreCase.Equals(x: value, y: "Exe") || StringComparer.InvariantCultureIgnoreCase.Equals(x: value, y: "Library");
+        return StringComparer.InvariantCultureIgnoreCase.Equals(x: value, y: "Exe")
+            || StringComparer.InvariantCultureIgnoreCase.Equals(x: value, y: "Library");
     }
 }

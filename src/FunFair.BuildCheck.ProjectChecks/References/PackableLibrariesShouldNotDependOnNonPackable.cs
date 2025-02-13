@@ -16,15 +16,25 @@ public sealed class PackableLibrariesShouldNotDependOnNonPackable : IProjectChec
     private readonly ILogger<PackableLibrariesShouldNotDependOnNonPackable> _logger;
     private readonly IProjectXmlLoader _projectXmlLoader;
 
-    public PackableLibrariesShouldNotDependOnNonPackable(IProjectXmlLoader projectXmlLoader, ILogger<PackableLibrariesShouldNotDependOnNonPackable> logger)
+    public PackableLibrariesShouldNotDependOnNonPackable(
+        IProjectXmlLoader projectXmlLoader,
+        ILogger<PackableLibrariesShouldNotDependOnNonPackable> logger
+    )
     {
         this._projectXmlLoader = projectXmlLoader;
         this._logger = logger;
     }
 
-    public async ValueTask CheckAsync(string projectName, string projectFolder, XmlDocument project, CancellationToken cancellationToken)
+    public async ValueTask CheckAsync(
+        string projectName,
+        string projectFolder,
+        XmlDocument project,
+        CancellationToken cancellationToken
+    )
     {
-        if (!StringComparer.InvariantCultureIgnoreCase.Equals(x: "Library", project.GetOutputType()))
+        if (
+            !StringComparer.InvariantCultureIgnoreCase.Equals(x: "Library", project.GetOutputType())
+        )
         {
             return;
         }
@@ -55,11 +65,17 @@ public sealed class PackableLibrariesShouldNotDependOnNonPackable : IProjectChec
 
             referencedProject = i.FullName;
 
-            XmlDocument otherProject = await this._projectXmlLoader.LoadAsync(path: referencedProject, cancellationToken: cancellationToken);
+            XmlDocument otherProject = await this._projectXmlLoader.LoadAsync(
+                path: referencedProject,
+                cancellationToken: cancellationToken
+            );
 
             if (!otherProject.IsPackable())
             {
-                this._logger.PackableProjectReferencesNonPackableProject(projectName: projectName, referencedProject: referencedProject);
+                this._logger.PackableProjectReferencesNonPackableProject(
+                    projectName: projectName,
+                    referencedProject: referencedProject
+                );
             }
         }
     }

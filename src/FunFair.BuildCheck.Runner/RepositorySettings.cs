@@ -9,14 +9,19 @@ internal sealed class RepositorySettings : IRepositorySettings
     private readonly IProjectClassifier _projectClassifier;
     private readonly IReadOnlyList<SolutionProject> _projects;
 
-    public RepositorySettings(IFrameworkSettings frameworkSettings, IProjectClassifier projectClassifier, IReadOnlyList<SolutionProject> projects)
+    public RepositorySettings(
+        IFrameworkSettings frameworkSettings,
+        IProjectClassifier projectClassifier,
+        IReadOnlyList<SolutionProject> projects
+    )
     {
         this._frameworkSettings = frameworkSettings;
         this._projectClassifier = projectClassifier;
         this._projects = projects;
     }
 
-    public bool IsCodeAnalysisSolution => this._projectClassifier.IsCodeAnalysisSolution(this._projects);
+    public bool IsCodeAnalysisSolution =>
+        this._projectClassifier.IsCodeAnalysisSolution(this._projects);
 
     public bool IsNullableGloballyEnforced => this._frameworkSettings.IsNullableGloballyEnforced;
 
@@ -36,5 +41,6 @@ internal sealed class RepositorySettings : IRepositorySettings
 
     public bool XmlDocumentationRequired => this._frameworkSettings.XmlDocumentationRequired;
 
-    public bool MustHaveEnumSourceGeneratorAnalyzerPackage => this._projectClassifier.MustHaveEnumSourceGeneratorAnalyzerPackage(this._projects);
+    public bool MustHaveEnumSourceGeneratorAnalyzerPackage =>
+        this._projectClassifier.MustHaveEnumSourceGeneratorAnalyzerPackage(this._projects);
 }

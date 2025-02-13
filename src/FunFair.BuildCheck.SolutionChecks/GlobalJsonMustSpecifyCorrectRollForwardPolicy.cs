@@ -4,6 +4,7 @@ using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using FunFair.BuildCheck.Interfaces;
+using FunFair.BuildCheck.SolutionChecks.Helpers;
 using FunFair.BuildCheck.SolutionChecks.LoggingExtensions;
 using FunFair.BuildCheck.SolutionChecks.Models;
 using Microsoft.Extensions.Logging;
@@ -16,7 +17,10 @@ public sealed class GlobalJsonMustSpecifyCorrectRollForwardPolicy : ISolutionChe
     private readonly ILogger<GlobalJsonMustSpecifyCorrectRollForwardPolicy> _logger;
     private readonly IRepositorySettings _repositorySettings;
 
-    public GlobalJsonMustSpecifyCorrectRollForwardPolicy(IRepositorySettings repositorySettings, ILogger<GlobalJsonMustSpecifyCorrectRollForwardPolicy> logger)
+    public GlobalJsonMustSpecifyCorrectRollForwardPolicy(
+        IRepositorySettings repositorySettings,
+        ILogger<GlobalJsonMustSpecifyCorrectRollForwardPolicy> logger
+    )
     {
         this._repositorySettings = repositorySettings;
         this._logger = logger;
@@ -29,31 +33,42 @@ public sealed class GlobalJsonMustSpecifyCorrectRollForwardPolicy : ISolutionChe
             return;
         }
 
-        string? solutionDir = Path.GetDirectoryName(solutionFileName);
-
-        if (solutionDir is null)
+        if (
+            !GlobalJsonHelpers.GetFileNameForSolution(
+                solutionFileName: solutionFileName,
+                out string? file
+            )
+        )
         {
             return;
         }
 
-        string file = Path.Combine(path1: solutionDir, path2: "global.json");
-
-        if (!File.Exists(file))
-        {
-            return;
-        }
-
-        string content = await File.ReadAllTextAsync(path: file, cancellationToken: cancellationToken);
+        string content = await File.ReadAllTextAsync(
+            path: file,
+            cancellationToken: cancellationToken
+        );
 
         try
         {
-            GlobalJsonPacket? p = JsonSerializer.Deserialize(json: content, jsonTypeInfo: MustBeSerializable.Default.GlobalJsonPacket);
+            GlobalJsonPacket? p = JsonSerializer.Deserialize(
+                json: content,
+                jsonTypeInfo: MustBeSerializable.Default.GlobalJsonPacket
+            );
 
             if (!string.IsNullOrWhiteSpace(p?.Sdk?.RollForward))
             {
-                if (!StringComparer.InvariantCulture.Equals(x: p.Sdk.RollForward, y: ROLL_FORWARD_POLICY))
+                if (
+                    !StringComparer.InvariantCulture.Equals(
+                        x: p.Sdk.RollForward,
+                        y: ROLL_FORWARD_POLICY
+                    )
+                )
                 {
-                    this._logger.UsingIncorrectRollForwardPolicy(solutionFileName: solutionFileName, projectPolicy: p.Sdk.RollForward, expectedPolicy: ROLL_FORWARD_POLICY);
+                    this._logger.UsingIncorrectRollForwardPolicy(
+                        solutionFileName: solutionFileName,
+                        projectPolicy: p.Sdk.RollForward,
+                        expectedPolicy: ROLL_FORWARD_POLICY
+                    );
                 }
             }
             else
@@ -63,7 +78,12 @@ public sealed class GlobalJsonMustSpecifyCorrectRollForwardPolicy : ISolutionChe
         }
         catch (Exception exception)
         {
-            this._logger.FailedToReadGlobalJson(solutionFileName: solutionFileName, file: file, message: exception.Message, exception: exception);
+            this._logger.FailedToReadGlobalJson(
+                solutionFileName: solutionFileName,
+                file: file,
+                message: exception.Message,
+                exception: exception
+            );
         }
     }
 }

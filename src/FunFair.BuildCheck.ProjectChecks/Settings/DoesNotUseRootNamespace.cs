@@ -16,7 +16,12 @@ public sealed class DoesNotUseRootNamespace : IProjectCheck
         this._logger = logger;
     }
 
-    public ValueTask CheckAsync(string projectName, string projectFolder, XmlDocument project, CancellationToken cancellationToken)
+    public ValueTask CheckAsync(
+        string projectName,
+        string projectFolder,
+        XmlDocument project,
+        CancellationToken cancellationToken
+    )
     {
         XmlNodeList? nodes = project.SelectNodes("/Project/PropertyGroup/RootNamespace");
 

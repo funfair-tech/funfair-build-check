@@ -17,14 +17,23 @@ public abstract class HasAppropriateAnalysisPackages : IProjectCheck
     private readonly ILogger _logger;
     private readonly string _mustIncludePackageId;
 
-    protected HasAppropriateAnalysisPackages(string detectPackageId, string mustIncludePackageId, ILogger logger)
+    protected HasAppropriateAnalysisPackages(
+        string detectPackageId,
+        string mustIncludePackageId,
+        ILogger logger
+    )
     {
         this._detectPackageId = detectPackageId;
         this._mustIncludePackageId = mustIncludePackageId;
         this._logger = logger;
     }
 
-    public ValueTask CheckAsync(string projectName, string projectFolder, XmlDocument project, CancellationToken cancellationToken)
+    public ValueTask CheckAsync(
+        string projectName,
+        string projectFolder,
+        XmlDocument project,
+        CancellationToken cancellationToken
+    )
     {
         XmlNodeList? nodes = project.SelectNodes(xpath: "/Project/ItemGroup/PackageReference");
 
@@ -35,42 +44,74 @@ public abstract class HasAppropriateAnalysisPackages : IProjectCheck
         {
             foreach (XmlElement reference in nodes.OfType<XmlElement>())
             {
-                string packageName = reference.GetAttribute(name: "Include");
-
-                if (string.IsNullOrWhiteSpace(packageName))
-                {
-                    this._logger.ContainsBadReferenceToPackages(projectName);
-
-                    continue;
-                }
-
-                if (StringComparer.InvariantCultureIgnoreCase.Equals(x: this._detectPackageId, y: packageName))
-                {
-                    foundSourcePackage = true;
-                }
-
-                if (StringComparer.InvariantCultureIgnoreCase.Equals(x: this._mustIncludePackageId, y: packageName))
-                {
-                    foundAnalyzerPackage = true;
-                    string assets = reference.GetAttribute(name: "PrivateAssets");
-
-                    if (string.IsNullOrWhiteSpace(assets) || !StringComparer.Ordinal.Equals(x: assets, y: PACKAGE_PRIVATE_ASSETS))
-                    {
-                        this._logger.DoesNotReferenceMustIncludePackageIdWithAPrivateAssetsAttribute(
-                            projectName: projectName,
-                            privateAssets: PACKAGE_PRIVATE_ASSETS,
-                            mustIncludePackageId: this._mustIncludePackageId
-                        );
-                    }
-                }
+                this.CheckPackageReference(
+                    projectName: projectName,
+                    reference: reference,
+                    foundSourcePackage: ref foundSourcePackage,
+                    foundAnalyzerPackage: ref foundAnalyzerPackage
+                );
             }
         }
 
         if (foundSourcePackage && !foundAnalyzerPackage)
         {
-            this._logger.DidNotFindMustIncludePackageForDetectedPackage(projectName: projectName, detectPackageId: this._detectPackageId, mustIncludePackageId: this._mustIncludePackageId);
+            this._logger.DidNotFindMustIncludePackageForDetectedPackage(
+                projectName: projectName,
+                detectPackageId: this._detectPackageId,
+                mustIncludePackageId: this._mustIncludePackageId
+            );
         }
 
         return ValueTask.CompletedTask;
+    }
+
+    private void CheckPackageReference(
+        string projectName,
+        XmlElement reference,
+        ref bool foundSourcePackage,
+        ref bool foundAnalyzerPackage
+    )
+    {
+        string packageName = reference.GetAttribute(name: "Include");
+
+        if (string.IsNullOrWhiteSpace(packageName))
+        {
+            this._logger.ContainsBadReferenceToPackages(projectName);
+
+            return;
+        }
+
+        if (
+            StringComparer.InvariantCultureIgnoreCase.Equals(
+                x: this._detectPackageId,
+                y: packageName
+            )
+        )
+        {
+            foundSourcePackage = true;
+        }
+
+        if (
+            StringComparer.InvariantCultureIgnoreCase.Equals(
+                x: this._mustIncludePackageId,
+                y: packageName
+            )
+        )
+        {
+            foundAnalyzerPackage = true;
+            string assets = reference.GetAttribute(name: "PrivateAssets");
+
+            if (
+                string.IsNullOrWhiteSpace(assets)
+                || !StringComparer.Ordinal.Equals(x: assets, y: PACKAGE_PRIVATE_ASSETS)
+            )
+            {
+                this._logger.DoesNotReferenceMustIncludePackageIdWithAPrivateAssetsAttribute(
+                    projectName: projectName,
+                    privateAssets: PACKAGE_PRIVATE_ASSETS,
+                    mustIncludePackageId: this._mustIncludePackageId
+                );
+            }
+        }
     }
 }

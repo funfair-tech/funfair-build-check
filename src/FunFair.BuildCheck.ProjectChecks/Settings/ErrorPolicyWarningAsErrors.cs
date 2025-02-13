@@ -16,11 +16,27 @@ public sealed class ErrorPolicyWarningAsErrors : IProjectCheck
         this._logger = logger;
     }
 
-    public ValueTask CheckAsync(string projectName, string projectFolder, XmlDocument project, CancellationToken cancellationToken)
+    public ValueTask CheckAsync(
+        string projectName,
+        string projectFolder,
+        XmlDocument project,
+        CancellationToken cancellationToken
+    )
     {
-        ProjectValueHelpers.CheckNode(projectName: projectName, project: project, nodePresence: "WarningsAsErrors", logger: this._logger);
+        ProjectValueHelpers.CheckNode(
+            projectName: projectName,
+            project: project,
+            nodePresence: "WarningsAsErrors",
+            logger: this._logger
+        );
 
-        ProjectValueHelpers.CheckValue(projectName: projectName, project: project, nodePresence: "TreatWarningsAsErrors", requiredValue: true, logger: this._logger);
+        ProjectValueHelpers.CheckValue(
+            projectName: projectName,
+            project: project,
+            nodePresence: "TreatWarningsAsErrors",
+            requiredValue: true,
+            logger: this._logger
+        );
 
         return ValueTask.CompletedTask;
     }

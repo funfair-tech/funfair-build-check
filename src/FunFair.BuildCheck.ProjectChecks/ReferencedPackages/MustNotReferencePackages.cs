@@ -14,14 +14,23 @@ public abstract class MustNotReferencePackages : IProjectCheck
     private readonly IReadOnlyList<string> _packageIds;
     private readonly string _reason;
 
-    protected MustNotReferencePackages(IReadOnlyList<string> packageIds, string reason, ILogger logger)
+    protected MustNotReferencePackages(
+        IReadOnlyList<string> packageIds,
+        string reason,
+        ILogger logger
+    )
     {
         this._packageIds = packageIds;
         this._reason = reason;
         this._logger = logger;
     }
 
-    public ValueTask CheckAsync(string projectName, string projectFolder, XmlDocument project, CancellationToken cancellationToken)
+    public ValueTask CheckAsync(
+        string projectName,
+        string projectFolder,
+        XmlDocument project,
+        CancellationToken cancellationToken
+    )
     {
         foreach (string packageId in this._packageIds)
         {
@@ -29,7 +38,11 @@ public abstract class MustNotReferencePackages : IProjectCheck
 
             if (packageExists)
             {
-                this._logger.ReferencesObsoletedPackageUsingNuGet(projectName: projectName, packageId: packageId, reason: this._reason);
+                this._logger.ReferencesObsoletedPackageUsingNuGet(
+                    projectName: projectName,
+                    packageId: packageId,
+                    reason: this._reason
+                );
             }
         }
 
@@ -38,6 +51,8 @@ public abstract class MustNotReferencePackages : IProjectCheck
 
     private static bool CheckReference(string packageId, XmlDocument project)
     {
-        return project.SelectSingleNode("/Project/ItemGroup/PackageReference[@Include='" + packageId + "']") is XmlElement;
+        return project.SelectSingleNode(
+                "/Project/ItemGroup/PackageReference[@Include='" + packageId + "']"
+            ) is XmlElement;
     }
 }

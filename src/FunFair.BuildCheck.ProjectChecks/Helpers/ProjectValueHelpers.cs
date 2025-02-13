@@ -11,7 +11,14 @@ namespace FunFair.BuildCheck.ProjectChecks.Helpers;
 
 internal static class ProjectValueHelpers
 {
-    private static readonly IReadOnlyList<string> PackagesForTestProjectDetection = ["xunit", "xunit.runner.visualstudio", "NSubstitute", "Microsoft.NET.Test.Sdk", "FunFair.Test.Common"];
+    private static readonly IReadOnlyList<string> PackagesForTestProjectDetection =
+    [
+        "xunit",
+        "xunit.runner.visualstudio",
+        "NSubstitute",
+        "Microsoft.NET.Test.Sdk",
+        "FunFair.Test.Common",
+    ];
 
     public static bool IsDotNetTool(this XmlDocument project)
     {
@@ -19,7 +26,11 @@ internal static class ProjectValueHelpers
 
         if (outputTypeNode is not null)
         {
-            return !string.IsNullOrWhiteSpace(outputTypeNode.InnerText) && StringComparer.InvariantCultureIgnoreCase.Equals(x: outputTypeNode.InnerText, y: "True");
+            return !string.IsNullOrWhiteSpace(outputTypeNode.InnerText)
+                && StringComparer.InvariantCultureIgnoreCase.Equals(
+                    x: outputTypeNode.InnerText,
+                    y: "True"
+                );
         }
 
         return false;
@@ -57,7 +68,11 @@ internal static class ProjectValueHelpers
                 continue;
             }
 
-            if (PackagesForTestProjectDetection.Any(x => StringComparer.InvariantCultureIgnoreCase.Equals(x: x, y: packageName)))
+            if (
+                PackagesForTestProjectDetection.Any(x =>
+                    StringComparer.InvariantCultureIgnoreCase.Equals(x: x, y: packageName)
+                )
+            )
             {
                 return true;
             }
@@ -66,10 +81,17 @@ internal static class ProjectValueHelpers
         return false;
     }
 
-    public static void CheckNode(string projectName, XmlDocument project, string nodePresence, ILogger logger)
+    public static void CheckNode(
+        string projectName,
+        XmlDocument project,
+        string nodePresence,
+        ILogger logger
+    )
     {
         bool hasGlobalSetting = false;
-        XmlNodeList? nodes = project.SelectNodes("/Project/PropertyGroup[not(@Condition)]/" + nodePresence);
+        XmlNodeList? nodes = project.SelectNodes(
+            "/Project/PropertyGroup[not(@Condition)]/" + nodePresence
+        );
 
         if (nodes is not null)
         {
@@ -89,7 +111,9 @@ internal static class ProjectValueHelpers
             }
         }
 
-        XmlNodeList? configurationGroups = project.SelectNodes(xpath: "/Project/PropertyGroup[@Condition]");
+        XmlNodeList? configurationGroups = project.SelectNodes(
+            xpath: "/Project/PropertyGroup[@Condition]"
+        );
 
         if (configurationGroups is not null)
         {
@@ -108,17 +132,30 @@ internal static class ProjectValueHelpers
                 }
 
                 string configuration = propertyGroup.GetAttribute(name: "Condition");
-                logger.ConfigurationShouldSpecifyNodePrescence(projectName: projectName, configuration: configuration, nodePresence: nodePresence);
+                logger.ConfigurationShouldSpecifyNodePrescence(
+                    projectName: projectName,
+                    configuration: configuration,
+                    nodePresence: nodePresence
+                );
             }
         }
 
         if (!hasGlobalSetting && configurationGroups?.Count == 0)
         {
-            logger.ProjectShouldSpecifyNodePrescence(projectName: projectName, nodePresence: nodePresence);
+            logger.ProjectShouldSpecifyNodePrescence(
+                projectName: projectName,
+                nodePresence: nodePresence
+            );
         }
     }
 
-    public static void CheckValue(string projectName, XmlDocument project, string nodePresence, bool requiredValue, ILogger logger)
+    public static void CheckValue(
+        string projectName,
+        XmlDocument project,
+        string nodePresence,
+        bool requiredValue,
+        ILogger logger
+    )
     {
         CheckValueCommon(
             projectName: projectName,
@@ -130,7 +167,13 @@ internal static class ProjectValueHelpers
         );
     }
 
-    public static void CheckValue(string projectName, XmlDocument project, string nodePresence, string requiredValue, ILogger logger)
+    public static void CheckValue(
+        string projectName,
+        XmlDocument project,
+        string nodePresence,
+        string requiredValue,
+        ILogger logger
+    )
     {
         CheckValueCommon(
             projectName: projectName,
@@ -142,16 +185,43 @@ internal static class ProjectValueHelpers
         );
     }
 
-    public static void CheckValue(string projectName, XmlDocument project, string nodePresence, Func<string, bool> isRequiredValue, string msg, ILogger logger)
+    public static void CheckValue(
+        string projectName,
+        XmlDocument project,
+        string nodePresence,
+        Func<string, bool> isRequiredValue,
+        string msg,
+        ILogger logger
+    )
     {
-        CheckValueCommon(projectName: projectName, project: project, nodePresence: nodePresence, isRequiredValue: isRequiredValue, requiredValueDisplayText: msg, logger: logger);
+        CheckValueCommon(
+            projectName: projectName,
+            project: project,
+            nodePresence: nodePresence,
+            isRequiredValue: isRequiredValue,
+            requiredValueDisplayText: msg,
+            logger: logger
+        );
     }
 
-    private static void CheckValueCommon(string projectName, XmlDocument project, string nodePresence, Func<string, bool> isRequiredValue, string requiredValueDisplayText, ILogger logger)
+    private static void CheckValueCommon(
+        string projectName,
+        XmlDocument project,
+        string nodePresence,
+        Func<string, bool> isRequiredValue,
+        string requiredValueDisplayText,
+        ILogger logger
+    )
     {
-        bool hasGlobalSetting = CheckGlobalSettings(project: project, nodePresence: nodePresence, isRequiredValue: isRequiredValue);
+        bool hasGlobalSetting = CheckGlobalSettings(
+            project: project,
+            nodePresence: nodePresence,
+            isRequiredValue: isRequiredValue
+        );
 
-        XmlNodeList? configurationGroups = project.SelectNodes(xpath: "/Project/PropertyGroup[@Condition]");
+        XmlNodeList? configurationGroups = project.SelectNodes(
+            xpath: "/Project/PropertyGroup[@Condition]"
+        );
 
         if (configurationGroups is not null)
         {
@@ -168,7 +238,11 @@ internal static class ProjectValueHelpers
 
         if (!hasGlobalSetting && configurationGroups?.Count == 0)
         {
-            logger.ProjectShouldSpecifyNodePrescenceAsValue(projectName: projectName, nodePresence: nodePresence, requiredValueDisplayText: requiredValueDisplayText);
+            logger.ProjectShouldSpecifyNodePrescenceAsValue(
+                projectName: projectName,
+                nodePresence: nodePresence,
+                requiredValueDisplayText: requiredValueDisplayText
+            );
         }
     }
 
@@ -198,7 +272,11 @@ internal static class ProjectValueHelpers
                     return;
                 }
 
-                logger.ConfigurationShouldSpecifyNodePrescence(projectName: projectName, propertyGroup.GetAttribute(name: "Condition"), nodePresence: nodePresence);
+                logger.ConfigurationShouldSpecifyNodePrescence(
+                    projectName: projectName,
+                    propertyGroup.GetAttribute(name: "Condition"),
+                    nodePresence: nodePresence
+                );
 
                 return;
             }
@@ -219,10 +297,16 @@ internal static class ProjectValueHelpers
         }
     }
 
-    private static bool CheckGlobalSettings(XmlDocument project, string nodePresence, Func<string, bool> isRequiredValue)
+    private static bool CheckGlobalSettings(
+        XmlDocument project,
+        string nodePresence,
+        Func<string, bool> isRequiredValue
+    )
     {
         bool hasGlobalSetting = false;
-        XmlNodeList? nodes = project.SelectNodes("/Project/PropertyGroup[not(@Condition)]/" + nodePresence);
+        XmlNodeList? nodes = project.SelectNodes(
+            "/Project/PropertyGroup[not(@Condition)]/" + nodePresence
+        );
 
         if (nodes is not null)
         {
@@ -264,14 +348,19 @@ internal static class ProjectValueHelpers
 
     private static bool IsRequiredValue(string requiredValue, string value)
     {
-        return !string.IsNullOrWhiteSpace(value) && StringComparer.InvariantCultureIgnoreCase.Equals(x: value, y: requiredValue);
+        return !string.IsNullOrWhiteSpace(value)
+            && StringComparer.InvariantCultureIgnoreCase.Equals(x: value, y: requiredValue);
     }
 
     public static string GetOutputType(this XmlDocument project)
     {
         const string defaultType = "Library";
 
-        return GetStringProperty(project: project, path: "/Project/PropertyGroup/OutputType", defaultType: defaultType);
+        return GetStringProperty(
+            project: project,
+            path: "/Project/PropertyGroup/OutputType",
+            defaultType: defaultType
+        );
     }
 
     private static string GetStringProperty(XmlDocument project, string path, string defaultType)
@@ -280,7 +369,9 @@ internal static class ProjectValueHelpers
 
         if (outputTypeNode is not null)
         {
-            return string.IsNullOrWhiteSpace(outputTypeNode.InnerText) ? defaultType : outputTypeNode.InnerText;
+            return string.IsNullOrWhiteSpace(outputTypeNode.InnerText)
+                ? defaultType
+                : outputTypeNode.InnerText;
         }
 
         return defaultType;
@@ -290,19 +381,31 @@ internal static class ProjectValueHelpers
     {
         const string defaultType = "";
 
-        return GetStringProperty(project: project, path: "/Project/PropertyGroup/RuntimeIdentifiers", defaultType: defaultType);
+        return GetStringProperty(
+            project: project,
+            path: "/Project/PropertyGroup/RuntimeIdentifiers",
+            defaultType: defaultType
+        );
     }
 
     public static bool IsPackable(this XmlDocument project)
     {
-        string value = GetStringProperty(project: project, path: "/Project/PropertyGroup/IsPackable", defaultType: "true");
+        string value = GetStringProperty(
+            project: project,
+            path: "/Project/PropertyGroup/IsPackable",
+            defaultType: "true"
+        );
 
         return StringComparer.InvariantCultureIgnoreCase.Equals(x: value, y: "true");
     }
 
     public static bool IsPublishable(this XmlDocument project)
     {
-        string value = GetStringProperty(project: project, path: "/Project/PropertyGroup/IsPublishable", defaultType: "true");
+        string value = GetStringProperty(
+            project: project,
+            path: "/Project/PropertyGroup/IsPublishable",
+            defaultType: "true"
+        );
 
         return StringComparer.InvariantCultureIgnoreCase.Equals(x: value, y: "true");
     }
@@ -332,7 +435,9 @@ internal static class ProjectValueHelpers
             found = imports
                 .OfType<XmlElement>()
                 .Select(import => import.GetAttribute(name: "Project"))
-                .Any(candidate => StringComparer.InvariantCultureIgnoreCase.Equals(x: candidate, y: projectImport));
+                .Any(candidate =>
+                    StringComparer.InvariantCultureIgnoreCase.Equals(x: candidate, y: projectImport)
+                );
         }
 
         return found;
@@ -371,7 +476,11 @@ internal static class ProjectValueHelpers
 
         if (outputTypeNode is not null)
         {
-            return !string.IsNullOrWhiteSpace(outputTypeNode.InnerText) && StringComparer.InvariantCultureIgnoreCase.Equals(x: outputTypeNode.InnerText, y: "true");
+            return !string.IsNullOrWhiteSpace(outputTypeNode.InnerText)
+                && StringComparer.InvariantCultureIgnoreCase.Equals(
+                    x: outputTypeNode.InnerText,
+                    y: "true"
+                );
         }
 
         return false;

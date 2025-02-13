@@ -14,12 +14,19 @@ public sealed class ShouldNotReferenceAllMetaPackagesInPackableProjects : IProje
 {
     private readonly ILogger<ShouldNotReferenceAllMetaPackagesInPackableProjects> _logger;
 
-    public ShouldNotReferenceAllMetaPackagesInPackableProjects(ILogger<ShouldNotReferenceAllMetaPackagesInPackableProjects> logger)
+    public ShouldNotReferenceAllMetaPackagesInPackableProjects(
+        ILogger<ShouldNotReferenceAllMetaPackagesInPackableProjects> logger
+    )
     {
         this._logger = logger;
     }
 
-    public ValueTask CheckAsync(string projectName, string projectFolder, XmlDocument project, CancellationToken cancellationToken)
+    public ValueTask CheckAsync(
+        string projectName,
+        string projectFolder,
+        XmlDocument project,
+        CancellationToken cancellationToken
+    )
     {
         if (!project.IsPackable())
         {
@@ -42,9 +49,17 @@ public sealed class ShouldNotReferenceAllMetaPackagesInPackableProjects : IProje
                 continue;
             }
 
-            if (packageName.EndsWith(value: ".All", comparisonType: StringComparison.OrdinalIgnoreCase))
+            if (
+                packageName.EndsWith(
+                    value: ".All",
+                    comparisonType: StringComparison.OrdinalIgnoreCase
+                )
+            )
             {
-                this._logger.DoNotReferenceMetaPackageInPackableProjects(projectName: projectName, packageId: packageName);
+                this._logger.DoNotReferenceMetaPackageInPackableProjects(
+                    projectName: projectName,
+                    packageId: packageName
+                );
             }
         }
 

@@ -14,16 +14,26 @@ public sealed class ProjectsShouldHaveTrimAnalyzerConfiguredPolicy : IProjectChe
 
     private readonly ILogger<ProjectsShouldHaveTrimAnalyzerConfiguredPolicy> _logger;
 
-    public ProjectsShouldHaveTrimAnalyzerConfiguredPolicy(ILogger<ProjectsShouldHaveTrimAnalyzerConfiguredPolicy> logger)
+    public ProjectsShouldHaveTrimAnalyzerConfiguredPolicy(
+        ILogger<ProjectsShouldHaveTrimAnalyzerConfiguredPolicy> logger
+    )
     {
         this._logger = logger;
     }
 
-    public ValueTask CheckAsync(string projectName, string projectFolder, XmlDocument project, CancellationToken cancellationToken)
+    public ValueTask CheckAsync(
+        string projectName,
+        string projectFolder,
+        XmlDocument project,
+        CancellationToken cancellationToken
+    )
     {
         if (!project.HasProperty(SETTING))
         {
-            this._logger.ProjectShouldConfigureTrimAnalyzer(projectName: projectName, property: SETTING);
+            this._logger.ProjectShouldConfigureTrimAnalyzer(
+                projectName: projectName,
+                property: SETTING
+            );
         }
 
         return ValueTask.CompletedTask;

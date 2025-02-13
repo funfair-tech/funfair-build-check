@@ -3,9 +3,12 @@ using Microsoft.Extensions.Logging;
 
 namespace FunFair.BuildCheck.ProjectChecks.Settings;
 
-public sealed class PublishableProjectsThatPassTrimAnalyzerShouldHavePublishedTrimmedSetPolicy : SimplePropertyProjectCheckBase
+public sealed class PublishableProjectsThatPassTrimAnalyzerShouldHavePublishedTrimmedSetPolicy
+    : SimplePropertyProjectCheckBase
 {
-    public PublishableProjectsThatPassTrimAnalyzerShouldHavePublishedTrimmedSetPolicy(ILogger<PublishableProjectsThatPassTrimAnalyzerShouldHavePublishedTrimmedSetPolicy> logger)
+    public PublishableProjectsThatPassTrimAnalyzerShouldHavePublishedTrimmedSetPolicy(
+        ILogger<PublishableProjectsThatPassTrimAnalyzerShouldHavePublishedTrimmedSetPolicy> logger
+    )
         : base(propertyName: "PublishTrimmed", requiredValue: "true", logger: logger) { }
 
     protected override bool CanCheck(string projectName, string projectFolder, XmlDocument project)

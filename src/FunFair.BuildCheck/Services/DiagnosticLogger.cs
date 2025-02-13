@@ -13,11 +13,22 @@ internal sealed class DiagnosticLogger : IDiagnosticLogger
         this._warningsAsErrors = warningsAsErrors;
     }
 
-    public void Log<TState>(LogLevel logLevel, EventId eventId, TState state, Exception? exception, Func<TState, Exception?, string> formatter)
+    public void Log<TState>(
+        LogLevel logLevel,
+        EventId eventId,
+        TState state,
+        Exception? exception,
+        Func<TState, Exception?, string> formatter
+    )
     {
         if (this.IsWarningAsError(logLevel))
         {
-            this.OutputErrorMessage(eventId: eventId, state: state, exception: exception, formatter: formatter);
+            this.OutputErrorMessage(
+                eventId: eventId,
+                state: state,
+                exception: exception,
+                formatter: formatter
+            );
 
             return;
         }
@@ -29,7 +40,12 @@ internal sealed class DiagnosticLogger : IDiagnosticLogger
             return;
         }
 
-        this.OutputMessageWithStatus(logLevel: logLevel, state: state, exception: exception, formatter: formatter);
+        this.OutputMessageWithStatus(
+            logLevel: logLevel,
+            state: state,
+            exception: exception,
+            formatter: formatter
+        );
     }
 
     public bool IsEnabled(LogLevel logLevel)
@@ -43,12 +59,28 @@ internal sealed class DiagnosticLogger : IDiagnosticLogger
         return new DisposableScope();
     }
 
-    private void OutputErrorMessage<TState>(in EventId eventId, TState state, Exception? exception, Func<TState, Exception?, string> formatter)
+    private void OutputErrorMessage<TState>(
+        in EventId eventId,
+        TState state,
+        Exception? exception,
+        Func<TState, Exception?, string> formatter
+    )
     {
-        this.Log(logLevel: LogLevel.Error, eventId: eventId, state: state, exception: exception, formatter: formatter);
+        this.Log(
+            logLevel: LogLevel.Error,
+            eventId: eventId,
+            state: state,
+            exception: exception,
+            formatter: formatter
+        );
     }
 
-    private void OutputMessageWithStatus<TState>(LogLevel logLevel, TState state, Exception? exception, Func<TState, Exception?, string> formatter)
+    private void OutputMessageWithStatus<TState>(
+        LogLevel logLevel,
+        TState state,
+        Exception? exception,
+        Func<TState, Exception?, string> formatter
+    )
     {
         if (!this.IsEnabled(logLevel))
         {
@@ -57,17 +89,18 @@ internal sealed class DiagnosticLogger : IDiagnosticLogger
 
         string msg = formatter(arg1: state, arg2: exception);
 
-        Action<string> output = IsError(logLevel)
-            ? Console.Error.WriteLine
-            : Console.WriteLine;
+        Action<string> output = IsError(logLevel) ? Console.Error.WriteLine : Console.WriteLine;
 
-        string status = logLevel.GetName()
-                                .ToUpperInvariant();
+        string status = logLevel.GetName().ToUpperInvariant();
 
         output($"{status}: {msg}");
     }
 
-    private static void OutputInformationalMessage<TState>(TState state, Exception? exception, Func<TState, Exception?, string> formatter)
+    private static void OutputInformationalMessage<TState>(
+        TState state,
+        Exception? exception,
+        Func<TState, Exception?, string> formatter
+    )
     {
         string msg = formatter(arg1: state, arg2: exception);
         Console.WriteLine(msg);

@@ -30,7 +30,12 @@ public abstract class MustHaveAnalyzerPackage : IProjectCheck
         return true;
     }
 
-    public ValueTask CheckAsync(string projectName, string projectFolder, XmlDocument project, CancellationToken cancellationToken)
+    public ValueTask CheckAsync(
+        string projectName,
+        string projectFolder,
+        XmlDocument project,
+        CancellationToken cancellationToken
+    )
     {
         if (!this._mustHave)
         {
@@ -48,14 +53,22 @@ public abstract class MustHaveAnalyzerPackage : IProjectCheck
         {
             if (!CheckPrivateAssets(packageId: this._packageId, project: project))
             {
-                this._logger.DoesNotUsePrivateAssetsAttribute(projectName: projectName, packageId: this._packageId, privateAssets: PACKAGE_PRIVATE_ASSETS);
+                this._logger.DoesNotUsePrivateAssetsAttribute(
+                    projectName: projectName,
+                    packageId: this._packageId,
+                    privateAssets: PACKAGE_PRIVATE_ASSETS
+                );
             }
 
             if (!(project.IsFunFairTestProject() && IsPackageExcluded(packageId: this._packageId)))
             {
                 if (!CheckExcludeAssets(packageId: this._packageId, project: project))
                 {
-                    this._logger.DoesNotUsePrivateAssetsAttribute(projectName: projectName, packageId: this._packageId, privateAssets: PACKAGE_PRIVATE_ASSETS);
+                    this._logger.DoesNotUsePrivateAssetsAttribute(
+                        projectName: projectName,
+                        packageId: this._packageId,
+                        privateAssets: PACKAGE_PRIVATE_ASSETS
+                    );
                 }
             }
         }
@@ -69,18 +82,31 @@ public abstract class MustHaveAnalyzerPackage : IProjectCheck
 
     private static bool IsPackageExcluded(string packageId)
     {
-        return StringComparer.InvariantCultureIgnoreCase.Equals(x: packageId, y: "Microsoft.NET.Test.Sdk")
-            || StringComparer.InvariantCultureIgnoreCase.Equals(x: packageId, y: "xunit.runner.visualstudio");
+        return StringComparer.InvariantCultureIgnoreCase.Equals(
+                x: packageId,
+                y: "Microsoft.NET.Test.Sdk"
+            )
+            || StringComparer.InvariantCultureIgnoreCase.Equals(
+                x: packageId,
+                y: "xunit.runner.visualstudio"
+            );
     }
 
     private static bool CheckReference(string packageId, XmlDocument project)
     {
-        return project.SelectSingleNode("/Project/ItemGroup/PackageReference[@Include='" + packageId + "']") is XmlElement;
+        return project.SelectSingleNode(
+                "/Project/ItemGroup/PackageReference[@Include='" + packageId + "']"
+            ) is XmlElement;
     }
 
     private static bool CheckPrivateAssets(string packageId, XmlDocument project)
     {
-        if (project.SelectSingleNode("/Project/ItemGroup/PackageReference[@Include='" + packageId + "']") is not XmlElement reference)
+        if (
+            project.SelectSingleNode(
+                "/Project/ItemGroup/PackageReference[@Include='" + packageId + "']"
+            )
+            is not XmlElement reference
+        )
         {
             return false;
         }
@@ -99,12 +125,18 @@ public abstract class MustHaveAnalyzerPackage : IProjectCheck
             assets = privateAssets.InnerText;
         }
 
-        return !string.IsNullOrEmpty(assets) && StringComparer.OrdinalIgnoreCase.Equals(x: assets, y: PACKAGE_PRIVATE_ASSETS);
+        return !string.IsNullOrEmpty(assets)
+            && StringComparer.OrdinalIgnoreCase.Equals(x: assets, y: PACKAGE_PRIVATE_ASSETS);
     }
 
     private static bool CheckExcludeAssets(string packageId, XmlDocument project)
     {
-        if (project.SelectSingleNode("/Project/ItemGroup/PackageReference[@Include='" + packageId + "']") is not XmlElement reference)
+        if (
+            project.SelectSingleNode(
+                "/Project/ItemGroup/PackageReference[@Include='" + packageId + "']"
+            )
+            is not XmlElement reference
+        )
         {
             return false;
         }
@@ -123,6 +155,7 @@ public abstract class MustHaveAnalyzerPackage : IProjectCheck
             assets = privateAssets.InnerText;
         }
 
-        return !string.IsNullOrEmpty(assets) && StringComparer.OrdinalIgnoreCase.Equals(x: assets, y: PACKAGE_EXCLUDE_ASSETS);
+        return !string.IsNullOrEmpty(assets)
+            && StringComparer.OrdinalIgnoreCase.Equals(x: assets, y: PACKAGE_EXCLUDE_ASSETS);
     }
 }

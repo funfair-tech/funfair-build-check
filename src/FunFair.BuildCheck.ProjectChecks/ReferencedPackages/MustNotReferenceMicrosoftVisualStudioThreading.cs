@@ -6,6 +6,8 @@ public sealed class MustNotReferenceMicrosoftVisualStudioThreading : MustNotRefe
 {
     private static readonly string[] PackageIds = ["Microsoft.VisualStudio.Threading"];
 
-    public MustNotReferenceMicrosoftVisualStudioThreading(ILogger<MustNotReferenceMicrosoftVisualStudioThreading> logger)
+    public MustNotReferenceMicrosoftVisualStudioThreading(
+        ILogger<MustNotReferenceMicrosoftVisualStudioThreading> logger
+    )
         : base(packageIds: PackageIds, reason: "Obsoleted with .net core 3.1", logger: logger) { }
 }

@@ -6,5 +6,10 @@ namespace FunFair.BuildCheck.Interfaces;
 
 public interface IProjectCheck
 {
-    ValueTask CheckAsync(string projectName, string projectFolder, XmlDocument project, CancellationToken cancellationToken);
+    ValueTask CheckAsync(
+        string projectName,
+        string projectFolder,
+        XmlDocument project,
+        CancellationToken cancellationToken
+    );
 }

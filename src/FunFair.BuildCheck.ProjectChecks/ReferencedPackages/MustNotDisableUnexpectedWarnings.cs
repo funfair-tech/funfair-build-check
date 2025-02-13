@@ -28,31 +28,56 @@ public sealed class MustNotDisableUnexpectedWarnings : IProjectCheck
         this._logger = logger;
     }
 
-    public ValueTask CheckAsync(string projectName, string projectFolder, XmlDocument project, CancellationToken cancellationToken)
+    public ValueTask CheckAsync(
+        string projectName,
+        string projectFolder,
+        XmlDocument project,
+        CancellationToken cancellationToken
+    )
     {
         bool isTestProject = project.IsTestProject(projectName: projectName, logger: this._logger);
 
-        IReadOnlyList<string> allowedWarnings = isTestProject ? AllowedTestProjectWarnings : AllowedWarnings;
+        IReadOnlyList<string> allowedWarnings = isTestProject
+            ? AllowedTestProjectWarnings
+            : AllowedWarnings;
 
         const string nodePresence = "NoWarn";
-        XmlNodeList? nodes = project.SelectNodes("/Project/PropertyGroup[not(@Condition)]/" + nodePresence);
+        XmlNodeList? nodes = project.SelectNodes(
+            "/Project/PropertyGroup[not(@Condition)]/" + nodePresence
+        );
 
         if (nodes is not null)
         {
-            this.CheckGlobalConfiguration(projectName: projectName, nodes: nodes, allowedWarnings: allowedWarnings);
+            this.CheckGlobalConfiguration(
+                projectName: projectName,
+                nodes: nodes,
+                allowedWarnings: allowedWarnings
+            );
         }
 
-        XmlNodeList? configurationGroups = project.SelectNodes(xpath: "/Project/PropertyGroup[@Condition]");
+        XmlNodeList? configurationGroups = project.SelectNodes(
+            xpath: "/Project/PropertyGroup[@Condition]"
+        );
 
         if (configurationGroups is not null)
         {
-            this.CheckConfigurationGroup(projectName: projectName, configurationGroups: configurationGroups, nodePresence: nodePresence, allowedWarnings: allowedWarnings);
+            this.CheckConfigurationGroup(
+                projectName: projectName,
+                configurationGroups: configurationGroups,
+                nodePresence: nodePresence,
+                allowedWarnings: allowedWarnings
+            );
         }
 
         return ValueTask.CompletedTask;
     }
 
-    private void CheckConfigurationGroup(string projectName, XmlNodeList configurationGroups, string nodePresence, IReadOnlyList<string> allowedWarnings)
+    private void CheckConfigurationGroup(
+        string projectName,
+        XmlNodeList configurationGroups,
+        string nodePresence,
+        IReadOnlyList<string> allowedWarnings
+    )
     {
         foreach (XmlElement propertyGroup in configurationGroups.OfType<XmlElement>())
         {
@@ -82,15 +107,28 @@ public sealed class MustNotDisableUnexpectedWarnings : IProjectCheck
                     continue;
                 }
 
-                if (!allowedWarnings.Contains(value: warning, comparer: StringComparer.OrdinalIgnoreCase))
+                if (
+                    !allowedWarnings.Contains(
+                        value: warning,
+                        comparer: StringComparer.OrdinalIgnoreCase
+                    )
+                )
                 {
-                    this._logger.ConfigurationHidesWarning(projectName: projectName, configuration: configuration, warning: warning);
+                    this._logger.ConfigurationHidesWarning(
+                        projectName: projectName,
+                        configuration: configuration,
+                        warning: warning
+                    );
                 }
             }
         }
     }
 
-    private void CheckGlobalConfiguration(string projectName, XmlNodeList nodes, IReadOnlyList<string> allowedWarnings)
+    private void CheckGlobalConfiguration(
+        string projectName,
+        XmlNodeList nodes,
+        IReadOnlyList<string> allowedWarnings
+    )
     {
         foreach (XmlElement item in nodes.OfType<XmlElement>())
         {
@@ -117,9 +155,17 @@ public sealed class MustNotDisableUnexpectedWarnings : IProjectCheck
 
             foreach (string warning in warnings)
             {
-                if (!allowedWarnings.Contains(value: warning, comparer: StringComparer.OrdinalIgnoreCase))
+                if (
+                    !allowedWarnings.Contains(
+                        value: warning,
+                        comparer: StringComparer.OrdinalIgnoreCase
+                    )
+                )
                 {
-                    this._logger.GlobalConfigurationHidesWarning(projectName: projectName, warning: warning);
+                    this._logger.GlobalConfigurationHidesWarning(
+                        projectName: projectName,
+                        warning: warning
+                    );
                 }
             }
         }
@@ -132,7 +178,9 @@ public sealed class MustNotDisableUnexpectedWarnings : IProjectCheck
             .. value
                 .Split(separator: ';')
                 .Where(predicate: HasContent)
-                .SelectMany(selector: static s => s.Split(separator: ',').Where(predicate: HasContent))
+                .SelectMany(selector: static s =>
+                    s.Split(separator: ',').Where(predicate: HasContent)
+                )
                 .Where(predicate: static s => !string.IsNullOrWhiteSpace(s))
                 .Order(StringComparer.OrdinalIgnoreCase),
         ];

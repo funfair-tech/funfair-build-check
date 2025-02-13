@@ -15,14 +15,23 @@ public abstract class HasAppropriateNonAnalysisPackages : IProjectCheck
     private readonly ILogger _logger;
     private readonly string _mustIncludePackageId;
 
-    protected HasAppropriateNonAnalysisPackages(string detectPackageId, string mustIncludePackageId, ILogger logger)
+    protected HasAppropriateNonAnalysisPackages(
+        string detectPackageId,
+        string mustIncludePackageId,
+        ILogger logger
+    )
     {
         this._detectPackageId = detectPackageId;
         this._mustIncludePackageId = mustIncludePackageId;
         this._logger = logger;
     }
 
-    public ValueTask CheckAsync(string projectName, string projectFolder, XmlDocument project, CancellationToken cancellationToken)
+    public ValueTask CheckAsync(
+        string projectName,
+        string projectFolder,
+        XmlDocument project,
+        CancellationToken cancellationToken
+    )
     {
         XmlNodeList? nodes = project.SelectNodes(xpath: "/Project/ItemGroup/PackageReference");
 
@@ -42,12 +51,22 @@ public abstract class HasAppropriateNonAnalysisPackages : IProjectCheck
                     continue;
                 }
 
-                if (StringComparer.InvariantCultureIgnoreCase.Equals(x: this._detectPackageId, y: packageName))
+                if (
+                    StringComparer.InvariantCultureIgnoreCase.Equals(
+                        x: this._detectPackageId,
+                        y: packageName
+                    )
+                )
                 {
                     foundSourcePackage = true;
                 }
 
-                if (StringComparer.InvariantCultureIgnoreCase.Equals(x: this._mustIncludePackageId, y: packageName))
+                if (
+                    StringComparer.InvariantCultureIgnoreCase.Equals(
+                        x: this._mustIncludePackageId,
+                        y: packageName
+                    )
+                )
                 {
                     foundRequiredPackage = true;
                 }
@@ -56,7 +75,11 @@ public abstract class HasAppropriateNonAnalysisPackages : IProjectCheck
 
         if (foundSourcePackage && !foundRequiredPackage)
         {
-            this._logger.DidNotFindMustIncludePackageForDetectedPackage(projectName: projectName, detectPackageId: this._detectPackageId, mustIncludePackageId: this._mustIncludePackageId);
+            this._logger.DidNotFindMustIncludePackageForDetectedPackage(
+                projectName: projectName,
+                detectPackageId: this._detectPackageId,
+                mustIncludePackageId: this._mustIncludePackageId
+            );
         }
 
         return ValueTask.CompletedTask;

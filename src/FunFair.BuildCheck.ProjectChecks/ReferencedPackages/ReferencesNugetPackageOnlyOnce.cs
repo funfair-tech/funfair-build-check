@@ -20,7 +20,12 @@ public sealed class ReferencesNugetPackageOnlyOnce : IProjectCheck
         this._logger = logger;
     }
 
-    public ValueTask CheckAsync(string projectName, string projectFolder, XmlDocument project, CancellationToken cancellationToken)
+    public ValueTask CheckAsync(
+        string projectName,
+        string projectFolder,
+        XmlDocument project,
+        CancellationToken cancellationToken
+    )
     {
         HashSet<string> packageReferences = new(StringComparer.OrdinalIgnoreCase);
 
@@ -47,20 +52,32 @@ public sealed class ReferencesNugetPackageOnlyOnce : IProjectCheck
 
             if (string.IsNullOrEmpty(privateAssets))
             {
-                if (reference.SelectSingleNode(xpath: "PrivateAssets") is XmlElement privateAssetsElement)
+                if (
+                    reference.SelectSingleNode(xpath: "PrivateAssets")
+                    is XmlElement privateAssetsElement
+                )
                 {
                     privateAssets = privateAssetsElement.InnerText;
                 }
             }
 
-            if (!string.IsNullOrEmpty(privateAssets) && StringComparer.OrdinalIgnoreCase.Equals(x: privateAssets, y: PACKAGE_PRIVATE_ASSETS))
+            if (
+                !string.IsNullOrEmpty(privateAssets)
+                && StringComparer.OrdinalIgnoreCase.Equals(
+                    x: privateAssets,
+                    y: PACKAGE_PRIVATE_ASSETS
+                )
+            )
             {
                 continue;
             }
 
             if (!packageReferences.Add(packageName))
             {
-                this._logger.AlreadyReferencesPackage(projectName: projectName, packageId: packageName);
+                this._logger.AlreadyReferencesPackage(
+                    projectName: projectName,
+                    packageId: packageName
+                );
             }
         }
 

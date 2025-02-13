@@ -18,7 +18,10 @@ public sealed class HasConsistentNuGetPackages : IProjectCheck
 
     private readonly Dictionary<string, NuGetVersion> _packages;
 
-    public HasConsistentNuGetPackages(ICheckConfiguration checkConfiguration, ILogger<HasConsistentNuGetPackages> logger)
+    public HasConsistentNuGetPackages(
+        ICheckConfiguration checkConfiguration,
+        ILogger<HasConsistentNuGetPackages> logger
+    )
     {
         this._checkConfiguration = checkConfiguration;
         this._logger = logger;
@@ -26,7 +29,12 @@ public sealed class HasConsistentNuGetPackages : IProjectCheck
         this._packages = new(StringComparer.OrdinalIgnoreCase);
     }
 
-    public ValueTask CheckAsync(string projectName, string projectFolder, XmlDocument project, CancellationToken cancellationToken)
+    public ValueTask CheckAsync(
+        string projectName,
+        string projectFolder,
+        XmlDocument project,
+        CancellationToken cancellationToken
+    )
     {
         XmlNodeList? nodes = project.SelectNodes(xpath: "/Project/ItemGroup/PackageReference");
 
@@ -48,38 +56,84 @@ public sealed class HasConsistentNuGetPackages : IProjectCheck
 
             string version = reference.GetAttribute(name: "Version");
 
-            this._logger.FoundPackageVersion(projectName: projectName, packageName: packageName, version: version);
+            this._logger.FoundPackageVersion(
+                projectName: projectName,
+                packageName: packageName,
+                version: version
+            );
 
-            if (!NuGetVersion.TryParse(value: version, out NuGetVersion? nuGetVersion))
-            {
-                this._logger.CouldNotParsePackageVersion(projectName: projectName, packageName: packageName, version: version);
-
-                continue;
-            }
-
-            string packageAsKey = packageName.ToLowerInvariant();
-
-            if (!this._packages.TryGetValue(key: packageAsKey, out NuGetVersion? currentVersion))
-            {
-                this._packages.Add(key: packageAsKey, value: nuGetVersion);
-            }
-            else if (currentVersion != nuGetVersion)
-            {
-                if (this._checkConfiguration.AllowPackageVersionMismatch)
-                {
-                    this._logger.UsingInconsistentPackageVersionInfo(projectName: projectName, packageName: packageName, installedVersion: nuGetVersion, currentVersion: currentVersion);
-                }
-                else
-                {
-                    this._logger.UsingInconsistentPackageVersionError(projectName: projectName, packageName: packageName, installedVersion: nuGetVersion, currentVersion: currentVersion);
-                }
-
-                continue;
-            }
-
-            this._logger.UsingPackageAtVersion(projectName: projectName, packageName: packageName, installedVersion: nuGetVersion);
+            this.CheckPackageReference(
+                projectName: projectName,
+                packageName: packageName,
+                version: version
+            );
         }
 
         return ValueTask.CompletedTask;
+    }
+
+    private void CheckPackageReference(string projectName, string packageName, string version)
+    {
+        if (!NuGetVersion.TryParse(value: version, out NuGetVersion? nuGetVersion))
+        {
+            this._logger.CouldNotParsePackageVersion(
+                projectName: projectName,
+                packageName: packageName,
+                version: version
+            );
+
+            return;
+        }
+
+        string packageAsKey = packageName.ToLowerInvariant();
+
+        if (!this._packages.TryGetValue(key: packageAsKey, out NuGetVersion? currentVersion))
+        {
+            this._packages.Add(key: packageAsKey, value: nuGetVersion);
+        }
+        else if (currentVersion != nuGetVersion)
+        {
+            this.LogVersionMismatch(
+                projectName: projectName,
+                packageName: packageName,
+                nuGetVersion: nuGetVersion,
+                currentVersion: currentVersion
+            );
+
+            return;
+        }
+
+        this._logger.UsingPackageAtVersion(
+            projectName: projectName,
+            packageName: packageName,
+            installedVersion: nuGetVersion
+        );
+    }
+
+    private void LogVersionMismatch(
+        string projectName,
+        string packageName,
+        NuGetVersion nuGetVersion,
+        NuGetVersion currentVersion
+    )
+    {
+        if (this._checkConfiguration.AllowPackageVersionMismatch)
+        {
+            this._logger.UsingInconsistentPackageVersionInfo(
+                projectName: projectName,
+                packageName: packageName,
+                installedVersion: nuGetVersion,
+                currentVersion: currentVersion
+            );
+        }
+        else
+        {
+            this._logger.UsingInconsistentPackageVersionError(
+                projectName: projectName,
+                packageName: packageName,
+                installedVersion: nuGetVersion,
+                currentVersion: currentVersion
+            );
+        }
     }
 }
