@@ -1,7 +1,6 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Xml;
 using FunFair.BuildCheck.Interfaces;
 using FunFair.BuildCheck.ProjectChecks.Helpers;
 using FunFair.BuildCheck.ProjectChecks.Settings.LoggingExtensions;
@@ -20,12 +19,7 @@ public sealed class PublishableExesMustHaveRuntimeIdentifiers : IProjectCheck
         this._logger = logger;
     }
 
-    public ValueTask CheckAsync(
-        string projectName,
-        string projectFolder,
-        XmlDocument project,
-        CancellationToken cancellationToken
-    )
+    public ValueTask CheckAsync(ProjectContext project, CancellationToken cancellationToken)
     {
         bool isExe = StringComparer.InvariantCultureIgnoreCase.Equals(
             x: "Exe",
@@ -52,7 +46,7 @@ public sealed class PublishableExesMustHaveRuntimeIdentifiers : IProjectCheck
 
         if (!hasRuntimeIdentifiers)
         {
-            this._logger.ShouldDefineRuntimeIdentifiers(projectName);
+            this._logger.ShouldDefineRuntimeIdentifiers(project.Name);
         }
 
         return ValueTask.CompletedTask;

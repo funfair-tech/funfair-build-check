@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Xml;
 using FunFair.BuildCheck.Interfaces;
 using FunFair.BuildCheck.ProjectChecks.Helpers;
 using Microsoft.Extensions.Logging;
@@ -31,12 +30,7 @@ public sealed class TargetFrameworkIsSetCorrectlyPolicy : IProjectCheck
         this._expected = repositorySettings.DotnetTargetFramework;
     }
 
-    public ValueTask CheckAsync(
-        string projectName,
-        string projectFolder,
-        XmlDocument project,
-        CancellationToken cancellationToken
-    )
+    public ValueTask CheckAsync(ProjectContext project, CancellationToken cancellationToken)
     {
         if (string.IsNullOrWhiteSpace(this._expected))
         {
@@ -46,12 +40,11 @@ public sealed class TargetFrameworkIsSetCorrectlyPolicy : IProjectCheck
 
         if (
             this._repositorySettings.IsCodeAnalysisSolution
-            && !project.IsTestProject(projectName: projectName, logger: this._logger)
+            && !project.IsTestProject(logger: this._logger)
         )
         {
             // Code analysis project has specific requirements
             ProjectValueHelpers.CheckValue(
-                projectName: projectName,
                 project: project,
                 nodePresence: "TargetFramework",
                 requiredValue: "netstandard2.0",
@@ -88,19 +81,13 @@ public sealed class TargetFrameworkIsSetCorrectlyPolicy : IProjectCheck
 
         string[] frameworks = this._expected.Split(";");
 
-        this.CheckFrameworks(
-            projectName: projectName,
-            project: project,
-            frameworks: frameworks,
-            expected: this._expected
-        );
+        this.CheckFrameworks(project: project, frameworks: frameworks, expected: this._expected);
 
         return ValueTask.CompletedTask;
     }
 
     private void CheckFrameworks(
-        string projectName,
-        XmlDocument project,
+        in ProjectContext project,
         IReadOnlyList<string> frameworks,
         string expected
     )
@@ -111,7 +98,6 @@ public sealed class TargetFrameworkIsSetCorrectlyPolicy : IProjectCheck
                 break;
             case 1:
                 ProjectValueHelpers.CheckValue(
-                    projectName: projectName,
                     project: project,
                     nodePresence: "TargetFramework",
                     frameworks[0],
@@ -120,7 +106,6 @@ public sealed class TargetFrameworkIsSetCorrectlyPolicy : IProjectCheck
                 break;
             default:
                 ProjectValueHelpers.CheckValue(
-                    projectName: projectName,
                     project: project,
                     nodePresence: "TargetFrameworks",
                     requiredValue: expected,

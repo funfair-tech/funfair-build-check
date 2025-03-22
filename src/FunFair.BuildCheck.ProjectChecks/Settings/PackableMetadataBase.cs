@@ -1,6 +1,5 @@
 using System.Threading;
 using System.Threading.Tasks;
-using System.Xml;
 using FunFair.BuildCheck.Interfaces;
 using FunFair.BuildCheck.ProjectChecks.Helpers;
 using FunFair.BuildCheck.ProjectChecks.Settings.LoggingExtensions;
@@ -19,12 +18,7 @@ public abstract class PackableMetadataBase : IProjectCheck
         this._logger = logger;
     }
 
-    public ValueTask CheckAsync(
-        string projectName,
-        string projectFolder,
-        XmlDocument project,
-        CancellationToken cancellationToken
-    )
+    public ValueTask CheckAsync(ProjectContext project, CancellationToken cancellationToken)
     {
         if (!project.IsPackable())
         {
@@ -34,7 +28,7 @@ public abstract class PackableMetadataBase : IProjectCheck
         if (!project.HasProperty(this._property))
         {
             this._logger.PackableProjectDoesNotDefineProperty(
-                projectName: projectName,
+                projectName: project.Name,
                 property: this._property
             );
         }

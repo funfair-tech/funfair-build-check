@@ -1,4 +1,4 @@
-using System.Xml;
+using FunFair.BuildCheck.Interfaces;
 using FunFair.BuildCheck.ProjectChecks.Helpers;
 using Microsoft.Extensions.Logging;
 
@@ -11,7 +11,7 @@ public sealed class MustHaveMicrosoftSbomTargetsAnalyzerPackage : MustHaveAnalyz
     )
         : base(packageId: "Microsoft.Sbom.Targets", mustHave: true, logger: logger) { }
 
-    protected override bool CanCheck(string projectName, string projectFolder, XmlDocument project)
+    protected override bool CanCheck(in ProjectContext project)
     {
         return project.IsPackable();
     }

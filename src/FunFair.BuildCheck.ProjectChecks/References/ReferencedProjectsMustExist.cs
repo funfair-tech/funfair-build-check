@@ -19,14 +19,9 @@ public sealed class ReferencedProjectsMustExist : IProjectCheck
         this._logger = logger;
     }
 
-    public ValueTask CheckAsync(
-        string projectName,
-        string projectFolder,
-        XmlDocument project,
-        CancellationToken cancellationToken
-    )
+    public ValueTask CheckAsync(ProjectContext project, CancellationToken cancellationToken)
     {
-        XmlNodeList? nodes = project.SelectNodes("/Project/ItemGroup/ProjectReference");
+        XmlNodeList? nodes = project.CsProjXml.SelectNodes("/Project/ItemGroup/ProjectReference");
 
         if (nodes is null)
         {
@@ -38,7 +33,7 @@ public sealed class ReferencedProjectsMustExist : IProjectCheck
             string projectReference = reference.GetAttribute(name: "Include");
 
             string referencedProject = Path.Combine(
-                path1: projectFolder,
+                path1: project.Folder,
                 PathHelpers.ConvertToNative(projectReference)
             );
             FileInfo i = new(referencedProject);
@@ -46,7 +41,7 @@ public sealed class ReferencedProjectsMustExist : IProjectCheck
             if (!i.Exists)
             {
                 this._logger.ReferencesProjectThatDoesNotExist(
-                    projectName: projectName,
+                    projectName: project.Name,
                     referencedProject: referencedProject
                 );
             }

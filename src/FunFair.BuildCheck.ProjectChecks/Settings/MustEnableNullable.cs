@@ -1,4 +1,3 @@
-using System.Xml;
 using FunFair.BuildCheck.Interfaces;
 using Microsoft.Extensions.Logging;
 
@@ -17,7 +16,7 @@ public sealed class MustEnableNullable : SimplePropertyProjectCheckBase
         this._repositorySettings = repositorySettings;
     }
 
-    protected override bool CanCheck(string projectName, string projectFolder, XmlDocument project)
+    protected override bool CanCheck(in ProjectContext project)
     {
         return this._repositorySettings.IsNullableGloballyEnforced;
     }

@@ -212,7 +212,12 @@ internal static class Setup
             .AddProjectCheck<UsingXUnitMustIncludeVisualStudioTestPlatform>()
             .AddProjectCheck<MustNotReferenceTeamCityTestAdapter>()
             .AddProjectCheck<MustNotUseReferenceCoverlet>()
-            .AddProjectCheck<UsingXUnitMustIncludeAnalyzer>();
+            .AddProjectCheck<UsingXUnitV2MustIncludeAnalyzer>()
+            .AddProjectCheck<UsingXUnitV3MustIncludeAnalyzer>()
+            .AddProjectCheck<UsingXUnitV3ExtensibilityMustIncludeAnalyzer>()
+            .AddProjectCheck<XUnitV3ProjectsShouldDefineTestingPlatformDotnetTestSupport>()
+            .AddProjectCheck<XUnitV3ProjectsShouldDefineUseMicrosoftTestingPlatformRunner>()
+            .AddProjectCheck<XUnitV3ProjectsShouldBeAnExecutable>();
     }
 
     private static IServiceCollection AddProjectCheck<

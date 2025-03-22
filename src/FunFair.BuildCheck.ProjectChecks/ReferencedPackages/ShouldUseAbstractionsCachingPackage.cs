@@ -1,4 +1,4 @@
-using System.Xml;
+using FunFair.BuildCheck.Interfaces;
 using FunFair.BuildCheck.ProjectChecks.Helpers;
 using Microsoft.Extensions.Logging;
 
@@ -13,8 +13,8 @@ public sealed class ShouldUseAbstractionsCachingPackage : ShouldUseAlternatePack
             logger: logger
         ) { }
 
-    protected override bool ShouldExclude(XmlDocument project, string projectName, ILogger logger)
+    protected override bool ShouldExclude(in ProjectContext project, ILogger logger)
     {
-        return project.IsTestProject(projectName: projectName, logger: logger);
+        return project.IsTestProject(logger: logger);
     }
 }
