@@ -26,14 +26,11 @@ public sealed class NoPreReleaseNuGetPackages : IProjectCheck
         this._logger = logger;
     }
 
-    public ValueTask CheckAsync(
-        string projectName,
-        string projectFolder,
-        XmlDocument project,
-        CancellationToken cancellationToken
-    )
+    public ValueTask CheckAsync(ProjectContext project, CancellationToken cancellationToken)
     {
-        XmlNodeList? nodes = project.SelectNodes(xpath: "/Project/ItemGroup/PackageReference");
+        XmlNodeList? nodes = project.CsProjXml.SelectNodes(
+            xpath: "/Project/ItemGroup/PackageReference"
+        );
 
         if (nodes is null)
         {
@@ -46,7 +43,7 @@ public sealed class NoPreReleaseNuGetPackages : IProjectCheck
 
             if (string.IsNullOrWhiteSpace(packageName))
             {
-                this._logger.ContainsBadReferenceToPackages(projectName);
+                this._logger.ContainsBadReferenceToPackages(project.Name);
 
                 continue;
             }
@@ -66,7 +63,7 @@ public sealed class NoPreReleaseNuGetPackages : IProjectCheck
             }
 
             this.CheckReference(
-                projectName: projectName,
+                projectName: project.Name,
                 privateAssets: privateAssets,
                 reference: reference,
                 packageName: packageName

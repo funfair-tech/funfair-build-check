@@ -1,6 +1,5 @@
 using System.Threading;
 using System.Threading.Tasks;
-using System.Xml;
 using FunFair.BuildCheck.Interfaces;
 using FunFair.BuildCheck.ProjectChecks.Helpers;
 using Microsoft.Extensions.Logging;
@@ -16,12 +15,7 @@ public sealed class SymbolPackageFormatPolicy : IProjectCheck
         this._logger = logger;
     }
 
-    public ValueTask CheckAsync(
-        string projectName,
-        string projectFolder,
-        XmlDocument project,
-        CancellationToken cancellationToken
-    )
+    public ValueTask CheckAsync(ProjectContext project, CancellationToken cancellationToken)
     {
         if (!project.IsPackable())
         {
@@ -29,7 +23,6 @@ public sealed class SymbolPackageFormatPolicy : IProjectCheck
         }
 
         ProjectValueHelpers.CheckValue(
-            projectName: projectName,
             project: project,
             nodePresence: "SymbolPackageFormat",
             project.IsAnalyzerOrSourceGenerator() ? "symbols.nupkg" : "snupkg",

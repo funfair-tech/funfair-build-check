@@ -25,12 +25,7 @@ public abstract class MustNotReferencePackages : IProjectCheck
         this._logger = logger;
     }
 
-    public ValueTask CheckAsync(
-        string projectName,
-        string projectFolder,
-        XmlDocument project,
-        CancellationToken cancellationToken
-    )
+    public ValueTask CheckAsync(ProjectContext project, CancellationToken cancellationToken)
     {
         foreach (string packageId in this._packageIds)
         {
@@ -39,7 +34,7 @@ public abstract class MustNotReferencePackages : IProjectCheck
             if (packageExists)
             {
                 this._logger.ReferencesObsoletedPackageUsingNuGet(
-                    projectName: projectName,
+                    projectName: project.Name,
                     packageId: packageId,
                     reason: this._reason
                 );
@@ -49,9 +44,9 @@ public abstract class MustNotReferencePackages : IProjectCheck
         return ValueTask.CompletedTask;
     }
 
-    private static bool CheckReference(string packageId, XmlDocument project)
+    private static bool CheckReference(string packageId, in ProjectContext project)
     {
-        return project.SelectSingleNode(
+        return project.CsProjXml.SelectSingleNode(
                 "/Project/ItemGroup/PackageReference[@Include='" + packageId + "']"
             ) is XmlElement;
     }

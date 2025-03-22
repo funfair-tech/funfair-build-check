@@ -21,16 +21,12 @@ public sealed class MustHaveSourceLinkPackage : IProjectCheck
         this._logger = logger;
     }
 
-    public ValueTask CheckAsync(
-        string projectName,
-        string projectFolder,
-        XmlDocument project,
-        CancellationToken cancellationToken
-    )
+    public ValueTask CheckAsync(ProjectContext project, CancellationToken cancellationToken)
     {
         if (
-            project.SelectSingleNode(xpath: "/Project/ItemGroup/PackageReference[@Include='xunit']")
-            is XmlElement
+            project.CsProjXml.SelectSingleNode(
+                xpath: "/Project/ItemGroup/PackageReference[@Include='xunit']"
+            ) is XmlElement
         )
         {
             // has an xunit reference so is a unit test project, don't force sourcelink
@@ -46,7 +42,7 @@ public sealed class MustHaveSourceLinkPackage : IProjectCheck
         if (!packageExists && !historicalPackageExists)
         {
             this._logger.DoesNotReferencePackageOrHistoricalPackage(
-                projectName: projectName,
+                projectName: project.Name,
                 packageId: PACKAGE_ID,
                 historicalPackageId: HISTORICAL_PACKAGE_ID
             );
@@ -55,7 +51,7 @@ public sealed class MustHaveSourceLinkPackage : IProjectCheck
         if (packageExists && historicalPackageExists)
         {
             this._logger.ReferencesBothPackageAndHistoricalPackage(
-                projectName: projectName,
+                projectName: project.Name,
                 packageId: PACKAGE_ID,
                 historicalPackageId: HISTORICAL_PACKAGE_ID
             );
@@ -66,7 +62,7 @@ public sealed class MustHaveSourceLinkPackage : IProjectCheck
             if (!CheckPrivateAssets(packageId: PACKAGE_ID, project: project))
             {
                 this._logger.DoesNotReferenceMustIncludePackageIdWithAPrivateAssetsAttribute(
-                    projectName: projectName,
+                    projectName: project.Name,
                     privateAssets: PACKAGE_ID,
                     mustIncludePackageId: PACKAGE_PRIVATE_ASSETS
                 );
@@ -78,7 +74,7 @@ public sealed class MustHaveSourceLinkPackage : IProjectCheck
             if (!CheckPrivateAssets(packageId: HISTORICAL_PACKAGE_ID, project: project))
             {
                 this._logger.DoesNotReferenceMustIncludePackageIdWithAPrivateAssetsAttribute(
-                    projectName: projectName,
+                    projectName: project.Name,
                     privateAssets: HISTORICAL_PACKAGE_ID,
                     mustIncludePackageId: PACKAGE_PRIVATE_ASSETS
                 );
@@ -88,20 +84,20 @@ public sealed class MustHaveSourceLinkPackage : IProjectCheck
         return ValueTask.CompletedTask;
     }
 
-    private static bool CheckReference(string packageId, XmlDocument project)
+    private static bool CheckReference(string packageId, in ProjectContext project)
     {
         XmlElement? reference =
-            project.SelectSingleNode(
+            project.CsProjXml.SelectSingleNode(
                 "/Project/ItemGroup/PackageReference[@Include='" + packageId + "']"
             ) as XmlElement;
 
         return reference is not null;
     }
 
-    private static bool CheckPrivateAssets(string packageId, XmlDocument project)
+    private static bool CheckPrivateAssets(string packageId, in ProjectContext project)
     {
         if (
-            project.SelectSingleNode(
+            project.CsProjXml.SelectSingleNode(
                 "/Project/ItemGroup/PackageReference[@Include='" + packageId + "']"
             )
             is not XmlElement reference

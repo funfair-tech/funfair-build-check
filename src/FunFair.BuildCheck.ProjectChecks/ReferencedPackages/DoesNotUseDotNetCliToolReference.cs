@@ -16,20 +16,15 @@ public sealed class DoesNotUseDotNetCliToolReference : IProjectCheck
         this._logger = logger;
     }
 
-    public ValueTask CheckAsync(
-        string projectName,
-        string projectFolder,
-        XmlDocument project,
-        CancellationToken cancellationToken
-    )
+    public ValueTask CheckAsync(ProjectContext project, CancellationToken cancellationToken)
     {
-        XmlNodeList? nodes = project.SelectNodes(
+        XmlNodeList? nodes = project.CsProjXml.SelectNodes(
             xpath: "/Project/ItemGroup/DotNetCliToolReference"
         );
 
         if (nodes is not null && nodes.Count != 0)
         {
-            this._logger.ContainsDotNetCliToolReference(projectName);
+            this._logger.ContainsDotNetCliToolReference(project.Name);
         }
 
         return ValueTask.CompletedTask;

@@ -24,16 +24,9 @@ public abstract class ShouldUseAlternatePackage : IProjectCheck
 
     protected ILogger Logger { get; }
 
-    public ValueTask CheckAsync(
-        string projectName,
-        string projectFolder,
-        XmlDocument project,
-        CancellationToken cancellationToken
-    )
+    public ValueTask CheckAsync(ProjectContext project, CancellationToken cancellationToken)
     {
-        if (
-            !this.CanCheck(projectName: projectName, projectFolder: projectFolder, project: project)
-        )
+        if (!this.CanCheck(project: project))
         {
             return ValueTask.CompletedTask;
         }
@@ -57,13 +50,15 @@ public abstract class ShouldUseAlternatePackage : IProjectCheck
             return ValueTask.CompletedTask;
         }
 
-        if (this.ShouldExclude(project: project, projectName: projectName, logger: this.Logger))
+        if (this.ShouldExclude(project: project, logger: this.Logger))
         {
             // Test projects can use whatever they want.
             return ValueTask.CompletedTask;
         }
 
-        XmlNodeList? referenceNodes = project.SelectNodes("/Project/ItemGroup/PackageReference");
+        XmlNodeList? referenceNodes = project.CsProjXml.SelectNodes(
+            "/Project/ItemGroup/PackageReference"
+        );
 
         if (referenceNodes is null)
         {
@@ -82,7 +77,7 @@ public abstract class ShouldUseAlternatePackage : IProjectCheck
             )
             {
                 this.Logger.UseAlternatePackageIdForMatchedPackageId(
-                    projectName: projectName,
+                    projectName: project.Name,
                     usePackageId: this._usePackageId,
                     matchPackageId: this._matchPackageId
                 );
@@ -92,12 +87,12 @@ public abstract class ShouldUseAlternatePackage : IProjectCheck
         return ValueTask.CompletedTask;
     }
 
-    protected virtual bool CanCheck(string projectName, string projectFolder, XmlDocument project)
+    protected virtual bool CanCheck(in ProjectContext project)
     {
         return true;
     }
 
-    protected virtual bool ShouldExclude(XmlDocument project, string projectName, ILogger logger)
+    protected virtual bool ShouldExclude(in ProjectContext project, ILogger logger)
     {
         return false;
     }
