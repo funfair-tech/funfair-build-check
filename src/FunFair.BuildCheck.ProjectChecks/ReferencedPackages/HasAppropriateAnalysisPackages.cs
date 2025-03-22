@@ -28,14 +28,11 @@ public abstract class HasAppropriateAnalysisPackages : IProjectCheck
         this._logger = logger;
     }
 
-    public ValueTask CheckAsync(
-        string projectName,
-        string projectFolder,
-        XmlDocument project,
-        CancellationToken cancellationToken
-    )
+    public ValueTask CheckAsync(ProjectContext project, CancellationToken cancellationToken)
     {
-        XmlNodeList? nodes = project.SelectNodes(xpath: "/Project/ItemGroup/PackageReference");
+        XmlNodeList? nodes = project.CsProjXml.SelectNodes(
+            xpath: "/Project/ItemGroup/PackageReference"
+        );
 
         bool foundSourcePackage = false;
         bool foundAnalyzerPackage = false;
@@ -45,7 +42,7 @@ public abstract class HasAppropriateAnalysisPackages : IProjectCheck
             foreach (XmlElement reference in nodes.OfType<XmlElement>())
             {
                 this.CheckPackageReference(
-                    projectName: projectName,
+                    projectName: project.Name,
                     reference: reference,
                     foundSourcePackage: ref foundSourcePackage,
                     foundAnalyzerPackage: ref foundAnalyzerPackage
@@ -56,7 +53,7 @@ public abstract class HasAppropriateAnalysisPackages : IProjectCheck
         if (foundSourcePackage && !foundAnalyzerPackage)
         {
             this._logger.DidNotFindMustIncludePackageForDetectedPackage(
-                projectName: projectName,
+                projectName: project.Name,
                 detectPackageId: this._detectPackageId,
                 mustIncludePackageId: this._mustIncludePackageId
             );

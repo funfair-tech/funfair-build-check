@@ -25,12 +25,7 @@ public sealed class PackableLibrariesShouldNotDependOnNonPackable : IProjectChec
         this._logger = logger;
     }
 
-    public async ValueTask CheckAsync(
-        string projectName,
-        string projectFolder,
-        XmlDocument project,
-        CancellationToken cancellationToken
-    )
+    public async ValueTask CheckAsync(ProjectContext project, CancellationToken cancellationToken)
     {
         if (
             !StringComparer.InvariantCultureIgnoreCase.Equals(x: "Library", project.GetOutputType())
@@ -44,7 +39,7 @@ public sealed class PackableLibrariesShouldNotDependOnNonPackable : IProjectChec
             return;
         }
 
-        XmlNodeList? nodes = project.SelectNodes("/Project/ItemGroup/ProjectReference");
+        XmlNodeList? nodes = project.CsProjXml.SelectNodes("/Project/ItemGroup/ProjectReference");
 
         if (nodes is null)
         {
@@ -55,7 +50,7 @@ public sealed class PackableLibrariesShouldNotDependOnNonPackable : IProjectChec
         {
             string projectReference = reference.GetAttribute(name: "Include");
 
-            string referencedProject = Path.Combine(path1: projectFolder, path2: projectReference);
+            string referencedProject = Path.Combine(path1: project.Folder, path2: projectReference);
             FileInfo i = new(referencedProject);
 
             if (!i.Exists)
@@ -70,10 +65,13 @@ public sealed class PackableLibrariesShouldNotDependOnNonPackable : IProjectChec
                 cancellationToken: cancellationToken
             );
 
-            if (!otherProject.IsPackable())
+            // ! TODO: Change _projectXmlLoader to return ProjectContext
+            ProjectContext op = new(i.Name, i.DirectoryName!, otherProject);
+
+            if (!op.IsPackable())
             {
                 this._logger.PackableProjectReferencesNonPackableProject(
-                    projectName: projectName,
+                    projectName: project.Name,
                     referencedProject: referencedProject
                 );
             }

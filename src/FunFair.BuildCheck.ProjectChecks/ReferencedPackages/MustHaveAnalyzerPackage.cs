@@ -25,24 +25,19 @@ public abstract class MustHaveAnalyzerPackage : IProjectCheck
         this._logger = logger;
     }
 
-    protected virtual bool CanCheck(string projectName, string projectFolder, XmlDocument project)
+    protected virtual bool CanCheck(in ProjectContext project)
     {
         return true;
     }
 
-    public ValueTask CheckAsync(
-        string projectName,
-        string projectFolder,
-        XmlDocument project,
-        CancellationToken cancellationToken
-    )
+    public ValueTask CheckAsync(ProjectContext project, CancellationToken cancellationToken)
     {
         if (!this._mustHave)
         {
             return ValueTask.CompletedTask;
         }
 
-        if (!this.CanCheck(projectName, projectFolder, project))
+        if (!this.CanCheck(project))
         {
             return ValueTask.CompletedTask;
         }
@@ -54,7 +49,7 @@ public abstract class MustHaveAnalyzerPackage : IProjectCheck
             if (!CheckPrivateAssets(packageId: this._packageId, project: project))
             {
                 this._logger.DoesNotUsePrivateAssetsAttribute(
-                    projectName: projectName,
+                    projectName: project.Name,
                     packageId: this._packageId,
                     privateAssets: PACKAGE_PRIVATE_ASSETS
                 );
@@ -65,7 +60,7 @@ public abstract class MustHaveAnalyzerPackage : IProjectCheck
                 if (!CheckExcludeAssets(packageId: this._packageId, project: project))
                 {
                     this._logger.DoesNotUsePrivateAssetsAttribute(
-                        projectName: projectName,
+                        projectName: project.Name,
                         packageId: this._packageId,
                         privateAssets: PACKAGE_PRIVATE_ASSETS
                     );
@@ -74,7 +69,7 @@ public abstract class MustHaveAnalyzerPackage : IProjectCheck
         }
         else
         {
-            this._logger.DoesNotUseNuGet(projectName: projectName, packageId: this._packageId);
+            this._logger.DoesNotUseNuGet(projectName: project.Name, packageId: this._packageId);
         }
 
         return ValueTask.CompletedTask;
@@ -92,17 +87,17 @@ public abstract class MustHaveAnalyzerPackage : IProjectCheck
             );
     }
 
-    private static bool CheckReference(string packageId, XmlDocument project)
+    private static bool CheckReference(string packageId, in ProjectContext project)
     {
-        return project.SelectSingleNode(
+        return project.CsProjXml.SelectSingleNode(
                 "/Project/ItemGroup/PackageReference[@Include='" + packageId + "']"
             ) is XmlElement;
     }
 
-    private static bool CheckPrivateAssets(string packageId, XmlDocument project)
+    private static bool CheckPrivateAssets(string packageId, in ProjectContext project)
     {
         if (
-            project.SelectSingleNode(
+            project.CsProjXml.SelectSingleNode(
                 "/Project/ItemGroup/PackageReference[@Include='" + packageId + "']"
             )
             is not XmlElement reference
@@ -129,10 +124,10 @@ public abstract class MustHaveAnalyzerPackage : IProjectCheck
             && StringComparer.OrdinalIgnoreCase.Equals(x: assets, y: PACKAGE_PRIVATE_ASSETS);
     }
 
-    private static bool CheckExcludeAssets(string packageId, XmlDocument project)
+    private static bool CheckExcludeAssets(string packageId, in ProjectContext project)
     {
         if (
-            project.SelectSingleNode(
+            project.CsProjXml.SelectSingleNode(
                 "/Project/ItemGroup/PackageReference[@Include='" + packageId + "']"
             )
             is not XmlElement reference

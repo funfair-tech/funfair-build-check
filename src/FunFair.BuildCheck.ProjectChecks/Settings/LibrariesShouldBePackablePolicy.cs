@@ -3,7 +3,6 @@ using System.Collections.Immutable;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Xml;
 using FunFair.BuildCheck.Interfaces;
 using FunFair.BuildCheck.ProjectChecks.Helpers;
 using Microsoft.Extensions.Logging;
@@ -61,12 +60,7 @@ public sealed class LibrariesShouldBePackablePolicy : IProjectCheck
         }
     }
 
-    public ValueTask CheckAsync(
-        string projectName,
-        string projectFolder,
-        XmlDocument project,
-        CancellationToken cancellationToken
-    )
+    public ValueTask CheckAsync(ProjectContext project, CancellationToken cancellationToken)
     {
         if (string.IsNullOrWhiteSpace(this._repositorySettings.DotnetPackable))
         {
@@ -74,10 +68,10 @@ public sealed class LibrariesShouldBePackablePolicy : IProjectCheck
         }
 
         bool isTestProject =
-            project.IsTestProject(projectName: projectName, logger: this._logger)
+            project.IsTestProject(logger: this._logger)
             && (
                 this._isUnitTestBase
-                    && projectName.EndsWith(
+                    && project.Name.EndsWith(
                         value: ".Tests",
                         comparisonType: StringComparison.OrdinalIgnoreCase
                     )
@@ -95,11 +89,10 @@ public sealed class LibrariesShouldBePackablePolicy : IProjectCheck
             arg1: isDotNetTool,
             arg2: isLibrary,
             arg3: isTestProject,
-            arg4: projectName
+            arg4: project.Name
         );
 
         ProjectValueHelpers.CheckValue(
-            projectName: projectName,
             project: project,
             nodePresence: "IsPackable",
             requiredValue: packable,

@@ -1,4 +1,4 @@
-using System.Xml;
+using FunFair.BuildCheck.Interfaces;
 using Microsoft.Extensions.Logging;
 
 namespace FunFair.BuildCheck.ProjectChecks.Settings;
@@ -11,7 +11,7 @@ public sealed class PublishableProjectsThatPassTrimAnalyzerShouldHavePublishedTr
     )
         : base(propertyName: "PublishTrimmed", requiredValue: "true", logger: logger) { }
 
-    protected override bool CanCheck(string projectName, string projectFolder, XmlDocument project)
+    protected override bool CanCheck(in ProjectContext project)
     {
         // if (!project.IsPublishable())
         // {

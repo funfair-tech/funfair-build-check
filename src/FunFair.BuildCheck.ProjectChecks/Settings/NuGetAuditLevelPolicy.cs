@@ -1,6 +1,5 @@
 using System.Threading;
 using System.Threading.Tasks;
-using System.Xml;
 using FunFair.BuildCheck.Interfaces;
 using FunFair.BuildCheck.ProjectChecks.Helpers;
 using Microsoft.Extensions.Logging;
@@ -18,19 +17,13 @@ public sealed class NuGetAuditLevelPolicy : IProjectCheck
         this._logger = logger;
     }
 
-    public ValueTask CheckAsync(
-        string projectName,
-        string projectFolder,
-        XmlDocument project,
-        CancellationToken cancellationToken
-    )
+    public ValueTask CheckAsync(ProjectContext project, CancellationToken cancellationToken)
     {
-        string requiredLevel = project.IsTestProject(projectName: projectName, logger: this._logger)
+        string requiredLevel = project.IsTestProject(logger: this._logger)
             ? TEST_PROJECT_LEVEL
             : PRODUCTION_PROJECT_LEVEL;
 
         ProjectValueHelpers.CheckValue(
-            projectName: projectName,
             project: project,
             nodePresence: "NuGetAuditLevel",
             requiredValue: requiredLevel,
