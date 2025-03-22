@@ -42,7 +42,7 @@ public abstract class MustHaveAnalyzerPackage : IProjectCheck
             return ValueTask.CompletedTask;
         }
 
-        bool packageExists = CheckReference(packageId: this._packageId, project: project);
+        bool packageExists = project.ReferencesPackage(this._packageId, logger: this._logger);
 
         if (packageExists)
         {
@@ -85,13 +85,6 @@ public abstract class MustHaveAnalyzerPackage : IProjectCheck
                 x: packageId,
                 y: "xunit.runner.visualstudio"
             );
-    }
-
-    private static bool CheckReference(string packageId, in ProjectContext project)
-    {
-        return project.CsProjXml.SelectSingleNode(
-                "/Project/ItemGroup/PackageReference[@Include='" + packageId + "']"
-            ) is XmlElement;
     }
 
     private static bool CheckPrivateAssets(string packageId, in ProjectContext project)

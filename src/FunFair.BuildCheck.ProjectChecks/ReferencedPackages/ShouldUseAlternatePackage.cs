@@ -1,8 +1,6 @@
 using System;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Xml;
 using FunFair.BuildCheck.Interfaces;
 using FunFair.BuildCheck.ProjectChecks.Helpers;
 using FunFair.BuildCheck.ProjectChecks.ReferencedPackages.LoggingExtensions;
@@ -56,32 +54,13 @@ public abstract class ShouldUseAlternatePackage : IProjectCheck
             return ValueTask.CompletedTask;
         }
 
-        XmlNodeList? referenceNodes = project.CsProjXml.SelectNodes(
-            "/Project/ItemGroup/PackageReference"
-        );
-
-        if (referenceNodes is null)
+        if (project.ReferencesPackage(this._matchPackageId, this.Logger))
         {
-            return ValueTask.CompletedTask;
-        }
-
-        foreach (XmlElement referenceNode in referenceNodes.OfType<XmlElement>())
-        {
-            string packageId = referenceNode.GetAttribute("Include");
-
-            if (
-                StringComparer.InvariantCultureIgnoreCase.Equals(
-                    x: packageId,
-                    y: this._matchPackageId
-                )
-            )
-            {
-                this.Logger.UseAlternatePackageIdForMatchedPackageId(
-                    projectName: project.Name,
-                    usePackageId: this._usePackageId,
-                    matchPackageId: this._matchPackageId
-                );
-            }
+            this.Logger.UseAlternatePackageIdForMatchedPackageId(
+                projectName: project.Name,
+                usePackageId: this._usePackageId,
+                matchPackageId: this._matchPackageId
+            );
         }
 
         return ValueTask.CompletedTask;
