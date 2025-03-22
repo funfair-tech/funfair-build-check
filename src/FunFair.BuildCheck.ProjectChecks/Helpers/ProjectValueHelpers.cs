@@ -56,43 +56,13 @@ internal static class ProjectValueHelpers
         ILogger logger
     )
     {
-        XmlNodeList? nodes = project.CsProjXml.SelectNodes(
-            xpath: "/Project/ItemGroup/PackageReference"
-        );
-
-        if (nodes is null)
-        {
-            return false;
-        }
-
-        foreach (XmlElement reference in nodes.OfType<XmlElement>())
-        {
-            string includedPackageName = reference.GetAttribute(name: "Include");
-
-            if (string.IsNullOrWhiteSpace(includedPackageName))
-            {
-                logger.ContainsBadReferenceToPackages(project.Name);
-
-                continue;
-            }
-
-            if (
-                StringComparer.InvariantCultureIgnoreCase.Equals(
-                    x: packageName,
-                    y: includedPackageName
-                )
-            )
-            {
-                return true;
-            }
-        }
-
-        return false;
+        return project
+            .ReferencedPackages(logger)
+            .Any(x => StringComparer.InvariantCultureIgnoreCase.Equals(x, packageName));
     }
 
-    public static bool ReferencesAnyOfPackages(
-        in this ProjectContext project,
-        IReadOnlyList<string> packages,
+    public static IEnumerable<string> ReferencedPackages(
+        this ProjectContext project,
         ILogger logger
     )
     {
@@ -102,7 +72,7 @@ internal static class ProjectValueHelpers
 
         if (nodes is null)
         {
-            return false;
+            yield break;
         }
 
         foreach (XmlElement reference in nodes.OfType<XmlElement>())
@@ -116,17 +86,23 @@ internal static class ProjectValueHelpers
                 continue;
             }
 
-            if (
+            yield return packageName;
+        }
+    }
+
+    public static bool ReferencesAnyOfPackages(
+        in this ProjectContext project,
+        IReadOnlyList<string> packages,
+        ILogger logger
+    )
+    {
+        return project
+            .ReferencedPackages(logger)
+            .Any(packageName =>
                 packages.Any(x =>
                     StringComparer.InvariantCultureIgnoreCase.Equals(x: x, y: packageName)
                 )
-            )
-            {
-                return true;
-            }
-        }
-
-        return false;
+            );
     }
 
     public static bool IsTestProject(in this ProjectContext project, ILogger logger)
