@@ -26,8 +26,8 @@ public sealed class XUnitV3ProjectsShouldDefineTestingPlatformDotnetTestSupport
         if (project.IsTestProject(logger: this._logger))
         {
             if (
-                project.ReferencesPackages("xunit.v3", this._logger)
-                || project.ReferencesPackages("xunit.v3.extensibility.core", this._logger)
+                project.ReferencesPackage("xunit.v3", this._logger)
+                || project.ReferencesPackage("xunit.v3.extensibility.core", this._logger)
             )
             {
                 return true;

@@ -18,7 +18,7 @@ public sealed class XUnitV3ProjectsShouldBeAnExecutable : SimplePropertyProjectC
     {
         if (
             project.IsTestProject(logger: this._logger)
-            && project.ReferencesPackages("xunit.v3", this._logger)
+            && project.ReferencesPackage("xunit.v3", this._logger)
         )
         {
             return true;
