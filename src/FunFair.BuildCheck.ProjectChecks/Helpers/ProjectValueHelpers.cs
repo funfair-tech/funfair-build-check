@@ -50,7 +50,7 @@ internal static class ProjectValueHelpers
         return string.Empty;
     }
 
-    public static bool ReferencesPackages(
+    public static bool ReferencesPackage(
         in this ProjectContext project,
         string packageName,
         ILogger logger
@@ -90,7 +90,11 @@ internal static class ProjectValueHelpers
         return false;
     }
 
-    public static bool IsTestProject(in this ProjectContext project, ILogger logger)
+    public static bool ReferencesAnyOfPackages(
+        in this ProjectContext project,
+        IReadOnlyList<string> packages,
+        ILogger logger
+    )
     {
         XmlNodeList? nodes = project.CsProjXml.SelectNodes(
             xpath: "/Project/ItemGroup/PackageReference"
@@ -113,7 +117,7 @@ internal static class ProjectValueHelpers
             }
 
             if (
-                PackagesForTestProjectDetection.Any(x =>
+                packages.Any(x =>
                     StringComparer.InvariantCultureIgnoreCase.Equals(x: x, y: packageName)
                 )
             )
@@ -123,6 +127,11 @@ internal static class ProjectValueHelpers
         }
 
         return false;
+    }
+
+    public static bool IsTestProject(in this ProjectContext project, ILogger logger)
+    {
+        return project.ReferencesAnyOfPackages(PackagesForTestProjectDetection, logger);
     }
 
     public static void CheckNode(in ProjectContext project, string nodePresence, ILogger logger)
