@@ -3,6 +3,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Xml;
 using FunFair.BuildCheck.Interfaces;
+using FunFair.BuildCheck.ProjectChecks.Helpers;
 using FunFair.BuildCheck.ProjectChecks.ReferencedPackages.LoggingExtensions;
 using Microsoft.Extensions.Logging;
 
@@ -29,7 +30,7 @@ public abstract class MustNotReferencePackages : IProjectCheck
     {
         foreach (string packageId in this._packageIds)
         {
-            bool packageExists = CheckReference(packageId: packageId, project: project);
+            bool packageExists = project.ReferencesPackage(packageId, this._logger);
 
             if (packageExists)
             {
@@ -42,12 +43,5 @@ public abstract class MustNotReferencePackages : IProjectCheck
         }
 
         return ValueTask.CompletedTask;
-    }
-
-    private static bool CheckReference(string packageId, in ProjectContext project)
-    {
-        return project.CsProjXml.SelectSingleNode(
-                "/Project/ItemGroup/PackageReference[@Include='" + packageId + "']"
-            ) is XmlElement;
     }
 }

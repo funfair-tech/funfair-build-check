@@ -3,6 +3,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Xml;
 using FunFair.BuildCheck.Interfaces;
+using FunFair.BuildCheck.ProjectChecks.Helpers;
 using FunFair.BuildCheck.ProjectChecks.ReferencedPackages.LoggingExtensions;
 using Microsoft.Extensions.Logging;
 
@@ -23,20 +24,16 @@ public sealed class MustHaveSourceLinkPackage : IProjectCheck
 
     public ValueTask CheckAsync(ProjectContext project, CancellationToken cancellationToken)
     {
-        if (
-            project.CsProjXml.SelectSingleNode(
-                xpath: "/Project/ItemGroup/PackageReference[@Include='xunit']"
-            ) is XmlElement
-        )
+        if (project.ReferencesAnyOfPackages(["xunit", "xunit.v3"], this._logger))
         {
             // has an xunit reference so is a unit test project, don't force sourcelink
             return ValueTask.CompletedTask;
         }
 
-        bool packageExists = CheckReference(packageId: PACKAGE_ID, project: project);
-        bool historicalPackageExists = CheckReference(
-            packageId: HISTORICAL_PACKAGE_ID,
-            project: project
+        bool packageExists = project.ReferencesPackage(PACKAGE_ID, this._logger);
+        bool historicalPackageExists = project.ReferencesPackage(
+            HISTORICAL_PACKAGE_ID,
+            this._logger
         );
 
         if (!packageExists && !historicalPackageExists)
@@ -82,16 +79,6 @@ public sealed class MustHaveSourceLinkPackage : IProjectCheck
         }
 
         return ValueTask.CompletedTask;
-    }
-
-    private static bool CheckReference(string packageId, in ProjectContext project)
-    {
-        XmlElement? reference =
-            project.CsProjXml.SelectSingleNode(
-                "/Project/ItemGroup/PackageReference[@Include='" + packageId + "']"
-            ) as XmlElement;
-
-        return reference is not null;
     }
 
     private static bool CheckPrivateAssets(string packageId, in ProjectContext project)
