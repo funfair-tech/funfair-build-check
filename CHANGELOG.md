@@ -7,9 +7,17 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 
 ## [Unreleased]
 ### Added
-
-- Check for CSharpier.MSBuild
 ### Fixed
+### Changed
+### Removed
+### Deployment Changes
+
+<!--
+Releases that have at least been deployed to staging, BUT NOT necessarily released to live.  Changes should be moved from [Unreleased] into here as they are merged into the appropriate release branch
+-->
+## [474.1.0] - 2025-03-24
+### Added
+- Check for CSharpier.MSBuild
 ### Changed
 - Dependencies - Updated Nullable.Extended.Analyzer to 1.15.6495
 - Dependencies - Updated xunit to 2.9.3
@@ -29,12 +37,7 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 - Dependencies - Updated FunFair.CodeAnalysis to 7.0.73.978
 - Dependencies - Updated FunFair.Test.Common to 6.1.265.1215
 - Xunit v3 tests
-### Removed
-### Deployment Changes
 
-<!--
-Releases that have at least been deployed to staging, BUT NOT necessarily released to live.  Changes should be moved from [Unreleased] into here as they are merged into the appropriate release branch
--->
 ## [474.0.22] - 2024-12-17
 ### Added
 - Check for projects having the Microsoft SBOM tool
