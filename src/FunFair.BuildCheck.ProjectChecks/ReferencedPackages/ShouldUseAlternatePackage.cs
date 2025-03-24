@@ -1,8 +1,6 @@
 using System;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Xml;
 using FunFair.BuildCheck.Interfaces;
 using FunFair.BuildCheck.ProjectChecks.Helpers;
 using FunFair.BuildCheck.ProjectChecks.ReferencedPackages.LoggingExtensions;
@@ -24,16 +22,9 @@ public abstract class ShouldUseAlternatePackage : IProjectCheck
 
     protected ILogger Logger { get; }
 
-    public ValueTask CheckAsync(
-        string projectName,
-        string projectFolder,
-        XmlDocument project,
-        CancellationToken cancellationToken
-    )
+    public ValueTask CheckAsync(ProjectContext project, CancellationToken cancellationToken)
     {
-        if (
-            !this.CanCheck(projectName: projectName, projectFolder: projectFolder, project: project)
-        )
+        if (!this.CanCheck(project: project))
         {
             return ValueTask.CompletedTask;
         }
@@ -57,47 +48,30 @@ public abstract class ShouldUseAlternatePackage : IProjectCheck
             return ValueTask.CompletedTask;
         }
 
-        if (this.ShouldExclude(project: project, projectName: projectName, logger: this.Logger))
+        if (this.ShouldExclude(project: project, logger: this.Logger))
         {
             // Test projects can use whatever they want.
             return ValueTask.CompletedTask;
         }
 
-        XmlNodeList? referenceNodes = project.SelectNodes("/Project/ItemGroup/PackageReference");
-
-        if (referenceNodes is null)
+        if (project.ReferencesPackage(this._matchPackageId, this.Logger))
         {
-            return ValueTask.CompletedTask;
-        }
-
-        foreach (XmlElement referenceNode in referenceNodes.OfType<XmlElement>())
-        {
-            string packageId = referenceNode.GetAttribute("Include");
-
-            if (
-                StringComparer.InvariantCultureIgnoreCase.Equals(
-                    x: packageId,
-                    y: this._matchPackageId
-                )
-            )
-            {
-                this.Logger.UseAlternatePackageIdForMatchedPackageId(
-                    projectName: projectName,
-                    usePackageId: this._usePackageId,
-                    matchPackageId: this._matchPackageId
-                );
-            }
+            this.Logger.UseAlternatePackageIdForMatchedPackageId(
+                projectName: project.Name,
+                usePackageId: this._usePackageId,
+                matchPackageId: this._matchPackageId
+            );
         }
 
         return ValueTask.CompletedTask;
     }
 
-    protected virtual bool CanCheck(string projectName, string projectFolder, XmlDocument project)
+    protected virtual bool CanCheck(in ProjectContext project)
     {
         return true;
     }
 
-    protected virtual bool ShouldExclude(XmlDocument project, string projectName, ILogger logger)
+    protected virtual bool ShouldExclude(in ProjectContext project, ILogger logger)
     {
         return false;
     }

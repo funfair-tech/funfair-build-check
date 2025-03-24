@@ -128,31 +128,24 @@ public static class CheckRunner
             cancellationToken: cancellationToken
         );
 
+        ProjectContext projectContext = new(project.DisplayName, projectFolder, doc);
+
         await TestProjectAsync(
             projectChecks: projectChecks,
-            project: project,
-            projectFolder: projectFolder,
-            doc: doc,
+            project: projectContext,
             cancellationToken: cancellationToken
         );
     }
 
     private static async ValueTask TestProjectAsync(
         IReadOnlyList<IProjectCheck> projectChecks,
-        SolutionProject project,
-        string projectFolder,
-        XmlDocument doc,
+        ProjectContext project,
         CancellationToken cancellationToken
     )
     {
         foreach (IProjectCheck check in projectChecks)
         {
-            await check.CheckAsync(
-                projectName: project.DisplayName,
-                projectFolder: projectFolder,
-                project: doc,
-                cancellationToken: cancellationToken
-            );
+            await check.CheckAsync(project: project, cancellationToken: cancellationToken);
         }
     }
 

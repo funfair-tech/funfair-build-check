@@ -28,41 +28,36 @@ public sealed class MustNotDisableUnexpectedWarnings : IProjectCheck
         this._logger = logger;
     }
 
-    public ValueTask CheckAsync(
-        string projectName,
-        string projectFolder,
-        XmlDocument project,
-        CancellationToken cancellationToken
-    )
+    public ValueTask CheckAsync(ProjectContext project, CancellationToken cancellationToken)
     {
-        bool isTestProject = project.IsTestProject(projectName: projectName, logger: this._logger);
+        bool isTestProject = project.IsTestProject(logger: this._logger);
 
         IReadOnlyList<string> allowedWarnings = isTestProject
             ? AllowedTestProjectWarnings
             : AllowedWarnings;
 
         const string nodePresence = "NoWarn";
-        XmlNodeList? nodes = project.SelectNodes(
+        XmlNodeList? nodes = project.CsProjXml.SelectNodes(
             "/Project/PropertyGroup[not(@Condition)]/" + nodePresence
         );
 
         if (nodes is not null)
         {
             this.CheckGlobalConfiguration(
-                projectName: projectName,
+                projectName: project.Name,
                 nodes: nodes,
                 allowedWarnings: allowedWarnings
             );
         }
 
-        XmlNodeList? configurationGroups = project.SelectNodes(
+        XmlNodeList? configurationGroups = project.CsProjXml.SelectNodes(
             xpath: "/Project/PropertyGroup[@Condition]"
         );
 
         if (configurationGroups is not null)
         {
             this.CheckConfigurationGroup(
-                projectName: projectName,
+                projectName: project.Name,
                 configurationGroups: configurationGroups,
                 nodePresence: nodePresence,
                 allowedWarnings: allowedWarnings

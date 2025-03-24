@@ -26,14 +26,11 @@ public abstract class HasAppropriateNonAnalysisPackages : IProjectCheck
         this._logger = logger;
     }
 
-    public ValueTask CheckAsync(
-        string projectName,
-        string projectFolder,
-        XmlDocument project,
-        CancellationToken cancellationToken
-    )
+    public ValueTask CheckAsync(ProjectContext project, CancellationToken cancellationToken)
     {
-        XmlNodeList? nodes = project.SelectNodes(xpath: "/Project/ItemGroup/PackageReference");
+        XmlNodeList? nodes = project.CsProjXml.SelectNodes(
+            xpath: "/Project/ItemGroup/PackageReference"
+        );
 
         bool foundSourcePackage = false;
         bool foundRequiredPackage = false;
@@ -46,7 +43,7 @@ public abstract class HasAppropriateNonAnalysisPackages : IProjectCheck
 
                 if (string.IsNullOrWhiteSpace(packageName))
                 {
-                    this._logger.ContainsBadReferenceToPackages(projectName);
+                    this._logger.ContainsBadReferenceToPackages(project.Name);
 
                     continue;
                 }
@@ -76,7 +73,7 @@ public abstract class HasAppropriateNonAnalysisPackages : IProjectCheck
         if (foundSourcePackage && !foundRequiredPackage)
         {
             this._logger.DidNotFindMustIncludePackageForDetectedPackage(
-                projectName: projectName,
+                projectName: project.Name,
                 detectPackageId: this._detectPackageId,
                 mustIncludePackageId: this._mustIncludePackageId
             );

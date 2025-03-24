@@ -22,14 +22,9 @@ public sealed class ShouldNotRemoveFromCompilation : IProjectCheck
         this._logger = logger;
     }
 
-    public ValueTask CheckAsync(
-        string projectName,
-        string projectFolder,
-        XmlDocument project,
-        CancellationToken cancellationToken
-    )
+    public ValueTask CheckAsync(ProjectContext project, CancellationToken cancellationToken)
     {
-        XmlNodeList? nodes = project.SelectNodes("/Project/ItemGroup/Compile[@Remove]");
+        XmlNodeList? nodes = project.CsProjXml.SelectNodes("/Project/ItemGroup/Compile[@Remove]");
 
         if (nodes is null)
         {
@@ -40,7 +35,7 @@ public sealed class ShouldNotRemoveFromCompilation : IProjectCheck
         {
             string projectReference = reference.GetAttribute(name: "Remove");
             this._logger.RemovesProjectReferenceFromCompilation(
-                projectName: projectName,
+                projectName: project.Name,
                 projectReference: projectReference
             );
         }

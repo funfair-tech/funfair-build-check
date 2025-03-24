@@ -3,6 +3,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Xml;
 using FunFair.BuildCheck.Interfaces;
+using FunFair.BuildCheck.ProjectChecks.Helpers;
 using FunFair.BuildCheck.ProjectChecks.ReferencedPackages.LoggingExtensions;
 using Microsoft.Extensions.Logging;
 
@@ -25,21 +26,16 @@ public abstract class MustNotReferencePackages : IProjectCheck
         this._logger = logger;
     }
 
-    public ValueTask CheckAsync(
-        string projectName,
-        string projectFolder,
-        XmlDocument project,
-        CancellationToken cancellationToken
-    )
+    public ValueTask CheckAsync(ProjectContext project, CancellationToken cancellationToken)
     {
         foreach (string packageId in this._packageIds)
         {
-            bool packageExists = CheckReference(packageId: packageId, project: project);
+            bool packageExists = project.ReferencesPackage(packageId, this._logger);
 
             if (packageExists)
             {
                 this._logger.ReferencesObsoletedPackageUsingNuGet(
-                    projectName: projectName,
+                    projectName: project.Name,
                     packageId: packageId,
                     reason: this._reason
                 );
@@ -47,12 +43,5 @@ public abstract class MustNotReferencePackages : IProjectCheck
         }
 
         return ValueTask.CompletedTask;
-    }
-
-    private static bool CheckReference(string packageId, XmlDocument project)
-    {
-        return project.SelectSingleNode(
-                "/Project/ItemGroup/PackageReference[@Include='" + packageId + "']"
-            ) is XmlElement;
     }
 }

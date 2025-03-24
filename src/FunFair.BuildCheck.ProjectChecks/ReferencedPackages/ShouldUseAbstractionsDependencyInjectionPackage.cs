@@ -1,5 +1,4 @@
 using System;
-using System.Xml;
 using FunFair.BuildCheck.Interfaces;
 using FunFair.BuildCheck.ProjectChecks.Helpers;
 using Microsoft.Extensions.Logging;
@@ -23,16 +22,16 @@ public sealed class ShouldUseAbstractionsDependencyInjectionPackage : ShouldUseA
         this._repositorySettings = repositorySettings;
     }
 
-    protected override bool CanCheck(string projectName, string projectFolder, XmlDocument project)
+    protected override bool CanCheck(in ProjectContext project)
     {
-        return !this.IsUnitTestBaseProject(projectName: projectName, project: project);
+        return !this.IsUnitTestBaseProject(project: project);
     }
 
-    private bool IsUnitTestBaseProject(string projectName, XmlDocument project)
+    private bool IsUnitTestBaseProject(in ProjectContext project)
     {
         return this._repositorySettings.IsUnitTestBase
-            && project.IsTestProject(projectName: projectName, logger: this.Logger)
-            && !projectName.EndsWith(
+            && project.IsTestProject(logger: this.Logger)
+            && !project.Name.EndsWith(
                 value: ".Tests",
                 comparisonType: StringComparison.OrdinalIgnoreCase
             );

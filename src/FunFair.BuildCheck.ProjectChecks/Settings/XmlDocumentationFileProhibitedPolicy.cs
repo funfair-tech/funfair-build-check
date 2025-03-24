@@ -21,23 +21,20 @@ public sealed class XmlDocumentationFileProhibitedPolicy : IProjectCheck
         this._logger = logger;
     }
 
-    public ValueTask CheckAsync(
-        string projectName,
-        string projectFolder,
-        XmlDocument project,
-        CancellationToken cancellationToken
-    )
+    public ValueTask CheckAsync(ProjectContext project, CancellationToken cancellationToken)
     {
         if (this._repositorySettings.XmlDocumentationRequired)
         {
             return ValueTask.CompletedTask;
         }
 
-        XmlNodeList? nodes = project.SelectNodes("/Project/PropertyGroup/DocumentationFile");
+        XmlNodeList? nodes = project.CsProjXml.SelectNodes(
+            "/Project/PropertyGroup/DocumentationFile"
+        );
 
         if (nodes is not null && nodes.Count != 0)
         {
-            this._logger.ShouldNotHaveXmlDocumentation(projectName);
+            this._logger.ShouldNotHaveXmlDocumentation(project.Name);
         }
 
         return ValueTask.CompletedTask;

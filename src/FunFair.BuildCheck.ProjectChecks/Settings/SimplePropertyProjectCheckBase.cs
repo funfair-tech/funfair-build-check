@@ -1,6 +1,5 @@
 using System.Threading;
 using System.Threading.Tasks;
-using System.Xml;
 using FunFair.BuildCheck.Interfaces;
 using FunFair.BuildCheck.ProjectChecks.Helpers;
 using Microsoft.Extensions.Logging;
@@ -24,24 +23,18 @@ public abstract class SimplePropertyProjectCheckBase : IProjectCheck
         this._logger = logger;
     }
 
-    public ValueTask CheckAsync(
-        string projectName,
-        string projectFolder,
-        XmlDocument project,
-        CancellationToken cancellationToken
-    )
+    public ValueTask CheckAsync(ProjectContext project, CancellationToken cancellationToken)
     {
-        this.DoCheck(projectName: projectName, projectFolder: projectFolder, project: project);
+        this.DoCheck(project: project);
 
         return ValueTask.CompletedTask;
     }
 
-    private void DoCheck(string projectName, string projectFolder, XmlDocument project)
+    private void DoCheck(in ProjectContext project)
     {
-        if (this.CanCheck(projectName: projectName, projectFolder: projectFolder, project: project))
+        if (this.CanCheck(project: project))
         {
             ProjectValueHelpers.CheckValue(
-                projectName: projectName,
                 project: project,
                 nodePresence: this._propertyName,
                 requiredValue: this._requiredValue,
@@ -50,7 +43,7 @@ public abstract class SimplePropertyProjectCheckBase : IProjectCheck
         }
     }
 
-    protected virtual bool CanCheck(string projectName, string projectFolder, XmlDocument project)
+    protected virtual bool CanCheck(in ProjectContext project)
     {
         return true;
     }

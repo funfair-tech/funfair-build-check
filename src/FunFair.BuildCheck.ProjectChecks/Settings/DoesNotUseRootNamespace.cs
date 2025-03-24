@@ -16,14 +16,9 @@ public sealed class DoesNotUseRootNamespace : IProjectCheck
         this._logger = logger;
     }
 
-    public ValueTask CheckAsync(
-        string projectName,
-        string projectFolder,
-        XmlDocument project,
-        CancellationToken cancellationToken
-    )
+    public ValueTask CheckAsync(ProjectContext project, CancellationToken cancellationToken)
     {
-        XmlNodeList? nodes = project.SelectNodes("/Project/PropertyGroup/RootNamespace");
+        XmlNodeList? nodes = project.CsProjXml.SelectNodes("/Project/PropertyGroup/RootNamespace");
 
         if (nodes is null)
         {
@@ -35,7 +30,7 @@ public sealed class DoesNotUseRootNamespace : IProjectCheck
             return ValueTask.CompletedTask;
         }
 
-        this._logger.UsesRootNamespace(projectName);
+        this._logger.UsesRootNamespace(project.Name);
 
         return ValueTask.CompletedTask;
     }

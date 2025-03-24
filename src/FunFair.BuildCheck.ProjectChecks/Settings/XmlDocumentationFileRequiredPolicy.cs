@@ -26,23 +26,18 @@ public sealed class XmlDocumentationFileRequiredPolicy : IProjectCheck
         this._logger = logger;
     }
 
-    public ValueTask CheckAsync(
-        string projectName,
-        string projectFolder,
-        XmlDocument project,
-        CancellationToken cancellationToken
-    )
+    public ValueTask CheckAsync(ProjectContext project, CancellationToken cancellationToken)
     {
         if (!this._repositorySettings.XmlDocumentationRequired)
         {
             return ValueTask.CompletedTask;
         }
 
-        bool testProject = project.IsTestProject(projectName: projectName, logger: this._logger);
+        bool testProject = project.IsTestProject(logger: this._logger);
 
         if (testProject && this._repositorySettings.IsUnitTestBase)
         {
-            testProject = projectName.EndsWith(
+            testProject = project.Name.EndsWith(
                 value: ".Tests",
                 comparisonType: StringComparison.OrdinalIgnoreCase
             );
@@ -50,13 +45,12 @@ public sealed class XmlDocumentationFileRequiredPolicy : IProjectCheck
 
         if (testProject)
         {
-            this.CheckTestProject(projectName: projectName, project: project);
+            this.CheckTestProject(project: project);
 
             return ValueTask.CompletedTask;
         }
 
         ProjectValueHelpers.CheckValue(
-            projectName: projectName,
             project: project,
             nodePresence: "DocumentationFile",
             requiredValue: EXPECTED,
@@ -66,13 +60,15 @@ public sealed class XmlDocumentationFileRequiredPolicy : IProjectCheck
         return ValueTask.CompletedTask;
     }
 
-    private void CheckTestProject(string projectName, XmlDocument project)
+    private void CheckTestProject(in ProjectContext project)
     {
-        XmlNodeList? nodes = project.SelectNodes("/Project/PropertyGroup/DocumentationFile");
+        XmlNodeList? nodes = project.CsProjXml.SelectNodes(
+            "/Project/PropertyGroup/DocumentationFile"
+        );
 
         if (nodes is not null && nodes.Count != 0)
         {
-            this._logger.TestProjectsShouldNotHaveXmlDocumentation(projectName);
+            this._logger.TestProjectsShouldNotHaveXmlDocumentation(project.Name);
         }
     }
 }
