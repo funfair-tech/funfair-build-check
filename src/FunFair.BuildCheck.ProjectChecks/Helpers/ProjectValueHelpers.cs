@@ -92,7 +92,7 @@ internal static class ProjectValueHelpers
                 continue;
             }
 
-            yield return new(PackageId: packageName, Attributes: attributes);
+            yield return new(Id: packageName, Attributes: attributes);
         }
     }
 
@@ -101,7 +101,7 @@ internal static class ProjectValueHelpers
         ILogger logger
     )
     {
-        return project.ReferencedPackageElements(logger).Select(p => p.PackageId);
+        return project.ReferencedPackageElements(logger).Select(p => p.Id);
     }
 
     public static bool ReferencesAnyOfPackages(

@@ -19,6 +19,7 @@ internal static partial class HasConsistentNuGetPackagesLoggingExtensions
         string version
     );
 
+
     [LoggerMessage(
         EventId = 1,
         Level = LogLevel.Error,
@@ -68,4 +69,12 @@ internal static partial class HasConsistentNuGetPackagesLoggingExtensions
         string packageName,
         NuGetVersion installedVersion
     );
+
+    [LoggerMessage(
+        EventId = 5,
+        Level = LogLevel.Error,
+        Message = "{projectName}: Package {packageName} could not find version."
+    )]
+    public static partial void MissingPackageVersion(this ILogger<HasConsistentNuGetPackages> logger, string projectName, string packageName);
+
 }

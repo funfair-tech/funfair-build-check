@@ -44,12 +44,12 @@ public abstract class HasAppropriateAnalysisPackages : IProjectCheck
 
     private void CheckPackageReference(string projectName, in PackageReference package, ref bool foundSourcePackage, ref bool foundAnalyzerPackage)
     {
-        if (StringComparer.InvariantCultureIgnoreCase.Equals(x: this._detectPackageId, y: package.PackageId))
+        if (StringComparer.InvariantCultureIgnoreCase.Equals(x: this._detectPackageId, y: package.Id))
         {
             foundSourcePackage = true;
         }
 
-        if (StringComparer.InvariantCultureIgnoreCase.Equals(x: this._mustIncludePackageId, y: package.PackageId))
+        if (StringComparer.InvariantCultureIgnoreCase.Equals(x: this._mustIncludePackageId, y: package.Id))
         {
             foundAnalyzerPackage = true;
 

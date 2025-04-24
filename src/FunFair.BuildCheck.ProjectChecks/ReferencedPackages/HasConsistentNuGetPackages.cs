@@ -1,10 +1,10 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Xml;
 using FunFair.BuildCheck.Interfaces;
+using FunFair.BuildCheck.ProjectChecks.Helpers;
+using FunFair.BuildCheck.ProjectChecks.Models;
 using FunFair.BuildCheck.ProjectChecks.ReferencedPackages.LoggingExtensions;
 using Microsoft.Extensions.Logging;
 using NuGet.Versioning;
@@ -18,10 +18,7 @@ public sealed class HasConsistentNuGetPackages : IProjectCheck
 
     private readonly Dictionary<string, NuGetVersion> _packages;
 
-    public HasConsistentNuGetPackages(
-        ICheckConfiguration checkConfiguration,
-        ILogger<HasConsistentNuGetPackages> logger
-    )
+    public HasConsistentNuGetPackages(ICheckConfiguration checkConfiguration, ILogger<HasConsistentNuGetPackages> logger)
     {
         this._checkConfiguration = checkConfiguration;
         this._logger = logger;
@@ -31,39 +28,18 @@ public sealed class HasConsistentNuGetPackages : IProjectCheck
 
     public ValueTask CheckAsync(ProjectContext project, CancellationToken cancellationToken)
     {
-        XmlNodeList? nodes = project.CsProjXml.SelectNodes(
-            xpath: "/Project/ItemGroup/PackageReference"
-        );
-
-        if (nodes is null)
+        foreach (PackageReference package in project.ReferencedPackageElements(this._logger))
         {
-            return ValueTask.CompletedTask;
-        }
-
-        foreach (XmlElement reference in nodes.OfType<XmlElement>())
-        {
-            string packageName = reference.GetAttribute(name: "Include");
-
-            if (string.IsNullOrWhiteSpace(packageName))
+            if (package.Attributes.TryGetValue(key: "Version", out string? version))
             {
-                this._logger.ContainsBadReferenceToPackages(project.Name);
+                this._logger.FoundPackageVersion(projectName: project.Name, packageName: package.Id, version: version);
 
-                continue;
+                this.CheckPackageReference(projectName: project.Name, packageName: package.Id, version: version);
             }
-
-            string version = reference.GetAttribute(name: "Version");
-
-            this._logger.FoundPackageVersion(
-                projectName: project.Name,
-                packageName: packageName,
-                version: version
-            );
-
-            this.CheckPackageReference(
-                projectName: project.Name,
-                packageName: packageName,
-                version: version
-            );
+            else
+            {
+                this._logger.MissingPackageVersion(projectName: project.Name, packageName: package.Id);
+            }
         }
 
         return ValueTask.CompletedTask;
@@ -73,11 +49,7 @@ public sealed class HasConsistentNuGetPackages : IProjectCheck
     {
         if (!NuGetVersion.TryParse(value: version, out NuGetVersion? nuGetVersion))
         {
-            this._logger.CouldNotParsePackageVersion(
-                projectName: projectName,
-                packageName: packageName,
-                version: version
-            );
+            this._logger.CouldNotParsePackageVersion(projectName: projectName, packageName: packageName, version: version);
 
             return;
         }
@@ -90,47 +62,23 @@ public sealed class HasConsistentNuGetPackages : IProjectCheck
         }
         else if (currentVersion != nuGetVersion)
         {
-            this.LogVersionMismatch(
-                projectName: projectName,
-                packageName: packageName,
-                nuGetVersion: nuGetVersion,
-                currentVersion: currentVersion
-            );
+            this.LogVersionMismatch(projectName: projectName, packageName: packageName, nuGetVersion: nuGetVersion, currentVersion: currentVersion);
 
             return;
         }
 
-        this._logger.UsingPackageAtVersion(
-            projectName: projectName,
-            packageName: packageName,
-            installedVersion: nuGetVersion
-        );
+        this._logger.UsingPackageAtVersion(projectName: projectName, packageName: packageName, installedVersion: nuGetVersion);
     }
 
-    private void LogVersionMismatch(
-        string projectName,
-        string packageName,
-        NuGetVersion nuGetVersion,
-        NuGetVersion currentVersion
-    )
+    private void LogVersionMismatch(string projectName, string packageName, NuGetVersion nuGetVersion, NuGetVersion currentVersion)
     {
         if (this._checkConfiguration.AllowPackageVersionMismatch)
         {
-            this._logger.UsingInconsistentPackageVersionInfo(
-                projectName: projectName,
-                packageName: packageName,
-                installedVersion: nuGetVersion,
-                currentVersion: currentVersion
-            );
+            this._logger.UsingInconsistentPackageVersionInfo(projectName: projectName, packageName: packageName, installedVersion: nuGetVersion, currentVersion: currentVersion);
         }
         else
         {
-            this._logger.UsingInconsistentPackageVersionError(
-                projectName: projectName,
-                packageName: packageName,
-                installedVersion: nuGetVersion,
-                currentVersion: currentVersion
-            );
+            this._logger.UsingInconsistentPackageVersionError(projectName: projectName, packageName: packageName, installedVersion: nuGetVersion, currentVersion: currentVersion);
         }
     }
 }

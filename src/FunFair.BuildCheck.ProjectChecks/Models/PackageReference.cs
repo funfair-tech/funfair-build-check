@@ -3,8 +3,8 @@ using System.Diagnostics;
 
 namespace FunFair.BuildCheck.ProjectChecks.Models;
 
-[DebuggerDisplay("{PackageId}")]
+[DebuggerDisplay("{Id}")]
 public readonly record struct PackageReference(
-    string PackageId,
+    string Id,
     IReadOnlyDictionary<string, string> Attributes
 );

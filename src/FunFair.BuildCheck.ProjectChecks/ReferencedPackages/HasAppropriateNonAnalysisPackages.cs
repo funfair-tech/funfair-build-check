@@ -2,8 +2,8 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Xml;
 using FunFair.BuildCheck.Interfaces;
+using FunFair.BuildCheck.ProjectChecks.Helpers;
 using FunFair.BuildCheck.ProjectChecks.ReferencedPackages.LoggingExtensions;
 using Microsoft.Extensions.Logging;
 
@@ -28,45 +28,31 @@ public abstract class HasAppropriateNonAnalysisPackages : IProjectCheck
 
     public ValueTask CheckAsync(ProjectContext project, CancellationToken cancellationToken)
     {
-        XmlNodeList? nodes = project.CsProjXml.SelectNodes(
-            xpath: "/Project/ItemGroup/PackageReference"
-        );
 
         bool foundSourcePackage = false;
         bool foundRequiredPackage = false;
 
-        if (nodes is not null)
+
+        foreach (string packageId in project.ReferencedPackageElements(this._logger).Select(package => package.Id))
         {
-            foreach (XmlElement reference in nodes.OfType<XmlElement>())
+            if (
+                StringComparer.InvariantCultureIgnoreCase.Equals(
+                    x: this._detectPackageId,
+                    y: packageId
+                )
+            )
             {
-                string packageName = reference.GetAttribute(name: "Include");
+                foundSourcePackage = true;
+            }
 
-                if (string.IsNullOrWhiteSpace(packageName))
-                {
-                    this._logger.ContainsBadReferenceToPackages(project.Name);
-
-                    continue;
-                }
-
-                if (
-                    StringComparer.InvariantCultureIgnoreCase.Equals(
-                        x: this._detectPackageId,
-                        y: packageName
-                    )
+            if (
+                StringComparer.InvariantCultureIgnoreCase.Equals(
+                    x: this._mustIncludePackageId,
+                    y: packageId
                 )
-                {
-                    foundSourcePackage = true;
-                }
-
-                if (
-                    StringComparer.InvariantCultureIgnoreCase.Equals(
-                        x: this._mustIncludePackageId,
-                        y: packageName
-                    )
-                )
-                {
-                    foundRequiredPackage = true;
-                }
+            )
+            {
+                foundRequiredPackage = true;
             }
         }
 
