@@ -1,10 +1,9 @@
 using System;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Xml;
 using FunFair.BuildCheck.Interfaces;
-using FunFair.BuildCheck.ProjectChecks.ReferencedPackages.LoggingExtensions;
+using FunFair.BuildCheck.ProjectChecks.Helpers;
+using FunFair.BuildCheck.ProjectChecks.Models;
 using FunFair.BuildCheck.ProjectChecks.Settings.LoggingExtensions;
 using Microsoft.Extensions.Logging;
 using NuGet.Versioning;
@@ -28,45 +27,15 @@ public sealed class NoPreReleaseNuGetPackages : IProjectCheck
 
     public ValueTask CheckAsync(ProjectContext project, CancellationToken cancellationToken)
     {
-        XmlNodeList? nodes = project.CsProjXml.SelectNodes(
-            xpath: "/Project/ItemGroup/PackageReference"
-        );
-
-        if (nodes is null)
+        foreach (PackageReference package in project.ReferencedPackageElements(this._logger))
         {
-            return ValueTask.CompletedTask;
-        }
-
-        foreach (XmlElement reference in nodes.OfType<XmlElement>())
-        {
-            string packageName = reference.GetAttribute(name: "Include");
-
-            if (string.IsNullOrWhiteSpace(packageName))
-            {
-                this._logger.ContainsBadReferenceToPackages(project.Name);
-
-                continue;
-            }
-
             // check for private asset (if it's private the build won't fail for a pre-release package)
-            string privateAssets = reference.GetAttribute(name: "PrivateAssets");
-
-            if (string.IsNullOrEmpty(privateAssets))
-            {
-                if (
-                    reference.SelectSingleNode(xpath: "PrivateAssets")
-                    is XmlElement privateAssetsElement
-                )
-                {
-                    privateAssets = privateAssetsElement.InnerText;
-                }
-            }
+            string? privateAssets = package.GetAttributeOrElement("PrivateAssets");
 
             this.CheckReference(
                 projectName: project.Name,
                 privateAssets: privateAssets,
-                reference: reference,
-                packageName: packageName
+                package: package
             );
         }
 
@@ -75,9 +44,8 @@ public sealed class NoPreReleaseNuGetPackages : IProjectCheck
 
     private void CheckReference(
         string projectName,
-        string privateAssets,
-        XmlElement reference,
-        string packageName
+        string? privateAssets,
+        in PackageReference package
     )
     {
         if (
@@ -88,11 +56,21 @@ public sealed class NoPreReleaseNuGetPackages : IProjectCheck
             return;
         }
 
-        string version = reference.GetAttribute(name: "Version");
+        string? version = package.Version;
+
+        if (string.IsNullOrWhiteSpace(version))
+        {
+            this._logger.CouldNotParseVersion(
+                projectName: projectName,
+                packageId: package.Id,
+                version: version ?? "<null>"
+            );
+            return;
+        }
 
         this._logger.FoundNuGetPackageAtVersion(
             projectName: projectName,
-            packageId: packageName,
+            packageId: package.Id,
             version: version
         );
 
@@ -100,7 +78,7 @@ public sealed class NoPreReleaseNuGetPackages : IProjectCheck
         {
             this._logger.CouldNotParseVersion(
                 projectName: projectName,
-                packageId: packageName,
+                packageId: package.Id,
                 version: version
             );
 
@@ -111,7 +89,7 @@ public sealed class NoPreReleaseNuGetPackages : IProjectCheck
         {
             this._logger.UsesPreReleaseVersion(
                 projectName: projectName,
-                packageId: packageName,
+                packageId: package.Id,
                 version: version
             );
         }

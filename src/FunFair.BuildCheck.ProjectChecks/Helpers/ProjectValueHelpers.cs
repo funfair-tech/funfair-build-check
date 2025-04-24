@@ -59,7 +59,25 @@ internal static class ProjectValueHelpers
     {
         return project
             .ReferencedPackages(logger)
-            .Any(x => StringComparer.InvariantCultureIgnoreCase.Equals(x, packageName));
+            .Any(x => StringComparer.InvariantCultureIgnoreCase.Equals(x: x, y: packageName));
+    }
+
+    public static PackageReference? GetNamedReferencedPackage(
+        in this ProjectContext project,
+        string packageId,
+        ILogger logger
+    )
+    {
+        PackageReference package = project
+            .ReferencedPackageElements(logger)
+            .FirstOrDefault(package => MatchingPackage(package: package, packageId: packageId));
+
+        return MatchingPackage(package: package, packageId: packageId) ? package : null;
+    }
+
+    private static bool MatchingPackage(in PackageReference package, string packageId)
+    {
+        return StringComparer.OrdinalIgnoreCase.Equals(x: package.Id, y: packageId);
     }
 
     public static IEnumerable<PackageReference> ReferencedPackageElements(
@@ -80,10 +98,14 @@ internal static class ProjectValueHelpers
         {
             Dictionary<string, string> attributes = reference
                 .Attributes.OfType<XmlAttribute>()
-                .ToDictionary(k => k.Name, v => v.Value, StringComparer.Ordinal);
+                .ToDictionary(
+                    keySelector: k => k.Name,
+                    elementSelector: v => v.Value,
+                    comparer: StringComparer.Ordinal
+                );
 
             if (
-                !attributes.TryGetValue("Include", out string? packageName)
+                !attributes.TryGetValue(key: "Include", out string? packageName)
                 || string.IsNullOrWhiteSpace(packageName)
             )
             {
@@ -92,7 +114,7 @@ internal static class ProjectValueHelpers
                 continue;
             }
 
-            yield return new(Id: packageName, Attributes: attributes);
+            yield return new(Id: packageName, Attributes: attributes, Element: reference);
         }
     }
 
@@ -121,7 +143,10 @@ internal static class ProjectValueHelpers
 
     public static bool IsTestProject(in this ProjectContext project, ILogger logger)
     {
-        return project.ReferencesAnyOfPackages(PackagesForTestProjectDetection, logger);
+        return project.ReferencesAnyOfPackages(
+            packages: PackagesForTestProjectDetection,
+            logger: logger
+        );
     }
 
     public static void CheckNode(in ProjectContext project, string nodePresence, ILogger logger)

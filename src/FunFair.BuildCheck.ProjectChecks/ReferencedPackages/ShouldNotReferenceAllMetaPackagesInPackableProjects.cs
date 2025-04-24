@@ -2,7 +2,6 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Xml;
 using FunFair.BuildCheck.Interfaces;
 using FunFair.BuildCheck.ProjectChecks.Helpers;
 using FunFair.BuildCheck.ProjectChecks.ReferencedPackages.LoggingExtensions;
@@ -14,9 +13,7 @@ public sealed class ShouldNotReferenceAllMetaPackagesInPackableProjects : IProje
 {
     private readonly ILogger<ShouldNotReferenceAllMetaPackagesInPackableProjects> _logger;
 
-    public ShouldNotReferenceAllMetaPackagesInPackableProjects(
-        ILogger<ShouldNotReferenceAllMetaPackagesInPackableProjects> logger
-    )
+    public ShouldNotReferenceAllMetaPackagesInPackableProjects(ILogger<ShouldNotReferenceAllMetaPackagesInPackableProjects> logger)
     {
         this._logger = logger;
     }
@@ -28,38 +25,17 @@ public sealed class ShouldNotReferenceAllMetaPackagesInPackableProjects : IProje
             return ValueTask.CompletedTask;
         }
 
-        XmlNodeList? nodes = project.CsProjXml.SelectNodes(
-            xpath: "/Project/ItemGroup/PackageReference"
-        );
-
-        if (nodes is null)
+        foreach (string packageId in project.ReferencedPackages(this._logger)
+                                            .Where(IsAllPackage))
         {
-            return ValueTask.CompletedTask;
-        }
-
-        foreach (XmlElement reference in nodes.OfType<XmlElement>())
-        {
-            string packageName = reference.GetAttribute(name: "Include");
-
-            if (string.IsNullOrWhiteSpace(packageName))
-            {
-                continue;
-            }
-
-            if (
-                packageName.EndsWith(
-                    value: ".All",
-                    comparisonType: StringComparison.OrdinalIgnoreCase
-                )
-            )
-            {
-                this._logger.DoNotReferenceMetaPackageInPackableProjects(
-                    projectName: project.Name,
-                    packageId: packageName
-                );
-            }
+            this._logger.DoNotReferenceMetaPackageInPackableProjects(projectName: project.Name, packageId: packageId);
         }
 
         return ValueTask.CompletedTask;
+
+        static bool IsAllPackage(string packageId)
+        {
+            return packageId.EndsWith(value: ".All", comparisonType: StringComparison.OrdinalIgnoreCase);
+        }
     }
 }

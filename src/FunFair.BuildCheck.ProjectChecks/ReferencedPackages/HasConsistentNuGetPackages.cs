@@ -30,7 +30,8 @@ public sealed class HasConsistentNuGetPackages : IProjectCheck
     {
         foreach (PackageReference package in project.ReferencedPackageElements(this._logger))
         {
-            if (package.Attributes.TryGetValue(key: "Version", out string? version))
+            string? version = package.Version;
+            if (!string.IsNullOrEmpty(version))
             {
                 this._logger.FoundPackageVersion(projectName: project.Name, packageName: package.Id, version: version);
 

@@ -1,9 +1,9 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Xml;
 using FunFair.BuildCheck.Interfaces;
 using FunFair.BuildCheck.ProjectChecks.Helpers;
+using FunFair.BuildCheck.ProjectChecks.Models;
 using FunFair.BuildCheck.ProjectChecks.ReferencedPackages.LoggingExtensions;
 using Microsoft.Extensions.Logging;
 
@@ -24,93 +24,59 @@ public sealed class MustHaveSourceLinkPackage : IProjectCheck
 
     public ValueTask CheckAsync(ProjectContext project, CancellationToken cancellationToken)
     {
-        if (project.ReferencesAnyOfPackages(["xunit", "xunit.v3"], this._logger))
+        if (project.ReferencesAnyOfPackages(["xunit", "xunit.v3"], logger: this._logger))
         {
             // has an xunit reference so is a unit test project, don't force sourcelink
             return ValueTask.CompletedTask;
         }
 
-        bool packageExists = project.ReferencesPackage(PACKAGE_ID, this._logger);
-        bool historicalPackageExists = project.ReferencesPackage(
-            HISTORICAL_PACKAGE_ID,
-            this._logger
-        );
+        bool packageExists = project.ReferencesPackage(packageName: PACKAGE_ID, logger: this._logger);
+        bool historicalPackageExists = project.ReferencesPackage(packageName: HISTORICAL_PACKAGE_ID, logger: this._logger);
 
         if (!packageExists && !historicalPackageExists)
         {
-            this._logger.DoesNotReferencePackageOrHistoricalPackage(
-                projectName: project.Name,
-                packageId: PACKAGE_ID,
-                historicalPackageId: HISTORICAL_PACKAGE_ID
-            );
+            this._logger.DoesNotReferencePackageOrHistoricalPackage(projectName: project.Name, packageId: PACKAGE_ID, historicalPackageId: HISTORICAL_PACKAGE_ID);
         }
 
         if (packageExists && historicalPackageExists)
         {
-            this._logger.ReferencesBothPackageAndHistoricalPackage(
-                projectName: project.Name,
-                packageId: PACKAGE_ID,
-                historicalPackageId: HISTORICAL_PACKAGE_ID
-            );
+            this._logger.ReferencesBothPackageAndHistoricalPackage(projectName: project.Name, packageId: PACKAGE_ID, historicalPackageId: HISTORICAL_PACKAGE_ID);
         }
 
         if (packageExists)
         {
-            if (!CheckPrivateAssets(packageId: PACKAGE_ID, project: project))
+            if (!this.CheckPrivateAssets(packageId: PACKAGE_ID, project: project))
             {
-                this._logger.DoesNotReferenceMustIncludePackageIdWithAPrivateAssetsAttribute(
-                    projectName: project.Name,
-                    privateAssets: PACKAGE_ID,
-                    mustIncludePackageId: PACKAGE_PRIVATE_ASSETS
-                );
+                this._logger.DoesNotReferenceMustIncludePackageIdWithAPrivateAssetsAttribute(projectName: project.Name, privateAssets: PACKAGE_ID, mustIncludePackageId: PACKAGE_PRIVATE_ASSETS);
             }
         }
 
         if (historicalPackageExists)
         {
-            if (!CheckPrivateAssets(packageId: HISTORICAL_PACKAGE_ID, project: project))
+            if (!this.CheckPrivateAssets(packageId: HISTORICAL_PACKAGE_ID, project: project))
             {
-                this._logger.DoesNotReferenceMustIncludePackageIdWithAPrivateAssetsAttribute(
-                    projectName: project.Name,
-                    privateAssets: HISTORICAL_PACKAGE_ID,
-                    mustIncludePackageId: PACKAGE_PRIVATE_ASSETS
-                );
+                this._logger.DoesNotReferenceMustIncludePackageIdWithAPrivateAssetsAttribute(projectName: project.Name,
+                                                                                             privateAssets: HISTORICAL_PACKAGE_ID,
+                                                                                             mustIncludePackageId: PACKAGE_PRIVATE_ASSETS);
             }
         }
 
         return ValueTask.CompletedTask;
     }
 
-    private static bool CheckPrivateAssets(string packageId, in ProjectContext project)
+    private bool CheckPrivateAssets(string packageId, in ProjectContext project)
     {
-        if (
-            project.CsProjXml.SelectSingleNode(
-                "/Project/ItemGroup/PackageReference[@Include='" + packageId + "']"
-            )
-            is not XmlElement reference
-        )
+        PackageReference? package = project.GetNamedReferencedPackage(packageId, this._logger);
+
+        if (package is null)
         {
             return false;
         }
 
-        // check for an attribute
-        string assets = reference.GetAttribute(name: "PrivateAssets");
+        string? assets = package.Value.GetAttributeOrElement("PrivateAssets");
 
-        if (string.IsNullOrEmpty(assets))
-        {
-            // no PrivateAssets attribute, check for an element
-            if (reference.SelectSingleNode(xpath: "PrivateAssets") is not XmlElement privateAssets)
-            {
-                return false;
-            }
-
-            assets = privateAssets.InnerText;
-        }
-
-        return !string.IsNullOrEmpty(assets)
-            && StringComparer.InvariantCultureIgnoreCase.Equals(
-                x: assets,
-                y: PACKAGE_PRIVATE_ASSETS
-            );
+        return !string.IsNullOrEmpty(assets) && StringComparer.InvariantCultureIgnoreCase.Equals(x: assets, y: PACKAGE_PRIVATE_ASSETS);
     }
+
+
 }
