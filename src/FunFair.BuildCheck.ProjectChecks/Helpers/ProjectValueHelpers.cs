@@ -134,9 +134,9 @@ internal static class ProjectValueHelpers
     {
         return project
             .ReferencedPackages(logger)
-            .Any(packageName =>
-                packages.Any(x =>
-                    StringComparer.InvariantCultureIgnoreCase.Equals(x: x, y: packageName)
+            .Any(packageId =>
+                packages.Any(candidate =>
+                    StringComparer.InvariantCultureIgnoreCase.Equals(x: candidate, y: packageId)
                 )
             );
     }

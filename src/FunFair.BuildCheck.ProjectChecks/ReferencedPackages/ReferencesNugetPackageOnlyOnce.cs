@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Xml;
 using FunFair.BuildCheck.Interfaces;
 using FunFair.BuildCheck.ProjectChecks.Helpers;
 using FunFair.BuildCheck.ProjectChecks.Models;
@@ -24,13 +23,6 @@ public sealed class ReferencesNugetPackageOnlyOnce : IProjectCheck
     public ValueTask CheckAsync(ProjectContext project, CancellationToken cancellationToken)
     {
         HashSet<string> packageReferences = new(StringComparer.OrdinalIgnoreCase);
-
-        XmlNodeList? nodes = project.CsProjXml.SelectNodes(xpath: "/Project/ItemGroup/PackageReference");
-
-        if (nodes is null)
-        {
-            return ValueTask.CompletedTask;
-        }
 
         foreach (PackageReference package in project.ReferencedPackageElements(this._logger))
         {
