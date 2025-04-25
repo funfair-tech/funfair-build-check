@@ -373,7 +373,7 @@ internal static class ProjectValueHelpers
             .OfType<XmlElement>()
             .Where(ElementConfiguration.HasNoParentCondition)
             .Select(GetTextValue)
-            .Any(value => isRequiredValue(value));
+            .Any(isRequiredValue);
     }
 
     private static string GetTextValue(XmlNode node)
