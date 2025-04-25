@@ -6,6 +6,7 @@ using System.Xml;
 using FunFair.BuildCheck.Interfaces;
 using FunFair.BuildCheck.ProjectChecks.Helpers.LoggingExtensions;
 using FunFair.BuildCheck.ProjectChecks.Models;
+using FunFair.BuildCheck.ProjectChecks.ReferencedPackages;
 using FunFair.BuildCheck.ProjectChecks.ReferencedPackages.LoggingExtensions;
 using Microsoft.Extensions.Logging;
 
@@ -359,37 +360,20 @@ internal static class ProjectValueHelpers
         Func<string, bool> isRequiredValue
     )
     {
-        bool hasGlobalSetting = false;
         XmlNodeList? nodes = project.CsProjXml.SelectNodes(
             "/Project/PropertyGroup[not(@Condition)]/" + nodePresence
         );
 
-        if (nodes is not null)
+        if (nodes is null)
         {
-            foreach (XmlElement item in nodes.OfType<XmlElement>())
-            {
-                if (item.ParentNode is not XmlElement propertyGroup)
-                {
-                    continue;
-                }
-
-                string condition = propertyGroup.GetAttribute(name: "Condition");
-
-                if (!string.IsNullOrWhiteSpace(condition))
-                {
-                    continue;
-                }
-
-                string value = GetTextValue(item);
-
-                if (isRequiredValue(value))
-                {
-                    hasGlobalSetting = true;
-                }
-            }
+            return false;
         }
 
-        return hasGlobalSetting;
+        return nodes
+            .OfType<XmlElement>()
+            .Where(ElementConfiguration.HasNoParentCondition)
+            .Select(GetTextValue)
+            .Any(value => isRequiredValue(value));
     }
 
     private static string GetTextValue(XmlNode node)

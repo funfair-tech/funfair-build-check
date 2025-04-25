@@ -94,14 +94,8 @@ public sealed class MustNotDisableUnexpectedWarnings : IProjectCheck
 
             IReadOnlyList<string> warnings = ExtractWarnings(value);
 
-            foreach (string warning in warnings)
+            foreach (string warning in warnings.Where( warning => !ReferencesGlobalWarning(warning)))
             {
-                if (StringComparer.Ordinal.Equals(x: warning, y: "$(NoWarn)"))
-                {
-                    // skip references to global configs
-                    continue;
-                }
-
                 if (
                     !allowedWarnings.Contains(
                         value: warning,
@@ -119,26 +113,19 @@ public sealed class MustNotDisableUnexpectedWarnings : IProjectCheck
         }
     }
 
+    private static bool ReferencesGlobalWarning(string warning)
+    {
+        return StringComparer.Ordinal.Equals(x: warning, y: "$(NoWarn)");
+    }
+
     private void CheckGlobalConfiguration(
         string projectName,
         XmlNodeList nodes,
         IReadOnlyList<string> allowedWarnings
     )
     {
-        foreach (XmlElement item in nodes.OfType<XmlElement>())
+        foreach (XmlElement item in nodes.OfType<XmlElement>().Where(ElementConfiguration.HasNoParentCondition))
         {
-            if (item.ParentNode is not XmlElement propertyGroup)
-            {
-                continue;
-            }
-
-            string condition = propertyGroup.GetAttribute(name: "Condition");
-
-            if (!string.IsNullOrWhiteSpace(condition))
-            {
-                continue;
-            }
-
             string value = GetTextValue(item);
 
             if (string.IsNullOrWhiteSpace(value))
@@ -165,6 +152,8 @@ public sealed class MustNotDisableUnexpectedWarnings : IProjectCheck
             }
         }
     }
+
+
 
     private static IReadOnlyList<string> ExtractWarnings(string value)
     {
