@@ -159,20 +159,9 @@ internal static class ProjectValueHelpers
 
         if (nodes is not null)
         {
-            foreach (XmlElement item in nodes.OfType<XmlElement>())
-            {
-                if (item.ParentNode is not XmlElement propertyGroup)
-                {
-                    continue;
-                }
-
-                string condition = propertyGroup.GetAttribute(name: "Condition");
-
-                if (string.IsNullOrWhiteSpace(condition))
-                {
-                    hasGlobalSetting = true;
-                }
-            }
+            hasGlobalSetting = nodes
+                .OfType<XmlElement>()
+                .Any(ElementConfiguration.HasNoParentCondition);
         }
 
         XmlNodeList? configurationGroups = project.CsProjXml.SelectNodes(
