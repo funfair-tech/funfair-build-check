@@ -1,7 +1,7 @@
 using System.Threading;
 using System.Threading.Tasks;
-using System.Xml;
 using FunFair.BuildCheck.Interfaces;
+using FunFair.BuildCheck.ProjectChecks.Helpers;
 using FunFair.BuildCheck.ProjectChecks.Settings.LoggingExtensions;
 using Microsoft.Extensions.Logging;
 
@@ -18,19 +18,10 @@ public sealed class DoesNotUseRootNamespace : IProjectCheck
 
     public ValueTask CheckAsync(ProjectContext project, CancellationToken cancellationToken)
     {
-        XmlNodeList? nodes = project.CsProjXml.SelectNodes("/Project/PropertyGroup/RootNamespace");
-
-        if (nodes is null)
+        if (project.HasProperty("RootNamespace"))
         {
-            return ValueTask.CompletedTask;
+            this._logger.UsesRootNamespace(project.Name);
         }
-
-        if (nodes.Count == 0)
-        {
-            return ValueTask.CompletedTask;
-        }
-
-        this._logger.UsesRootNamespace(project.Name);
 
         return ValueTask.CompletedTask;
     }
