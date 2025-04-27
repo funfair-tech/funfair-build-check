@@ -13,7 +13,9 @@ public sealed class ShouldNotReferenceAllMetaPackagesInPackableProjects : IProje
 {
     private readonly ILogger<ShouldNotReferenceAllMetaPackagesInPackableProjects> _logger;
 
-    public ShouldNotReferenceAllMetaPackagesInPackableProjects(ILogger<ShouldNotReferenceAllMetaPackagesInPackableProjects> logger)
+    public ShouldNotReferenceAllMetaPackagesInPackableProjects(
+        ILogger<ShouldNotReferenceAllMetaPackagesInPackableProjects> logger
+    )
     {
         this._logger = logger;
     }
@@ -25,8 +27,7 @@ public sealed class ShouldNotReferenceAllMetaPackagesInPackableProjects : IProje
             return ValueTask.CompletedTask;
         }
 
-        foreach (string packageId in project.ReferencedPackages(this._logger)
-                                            .Where(IsAllPackage))
+        foreach (string packageId in project.ReferencedPackages(this._logger).Where(IsAllPackage))
         {
             this._logger.DoNotReferenceMetaPackageInPackableProjects(projectName: project.Name, packageId: packageId);
         }
