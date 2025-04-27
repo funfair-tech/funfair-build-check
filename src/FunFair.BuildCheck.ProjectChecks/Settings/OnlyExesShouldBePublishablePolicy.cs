@@ -38,8 +38,7 @@ public sealed class OnlyExesShouldBePublishablePolicy : IProjectCheck
         }
         else if (StringComparer.InvariantCultureIgnoreCase.Equals(x: packable, y: "EXE_TOOL"))
         {
-            this._packablePolicy = (isDotNetTool, isExe, isTestProject, _) =>
-                (isExe || isDotNetTool) && !isTestProject;
+            this._packablePolicy = (isDotNetTool, isExe, isTestProject, _) => (isExe || isDotNetTool) && !isTestProject;
         }
         else if (StringComparer.InvariantCultureIgnoreCase.Equals(x: packable, y: "EXE"))
         {
@@ -65,26 +64,15 @@ public sealed class OnlyExesShouldBePublishablePolicy : IProjectCheck
             project.IsTestProject(logger: this._logger)
             && (
                 this._isUnitTestBase
-                    && project.Name.EndsWith(
-                        value: ".Tests",
-                        comparisonType: StringComparison.OrdinalIgnoreCase
-                    )
+                    && project.Name.EndsWith(value: ".Tests", comparisonType: StringComparison.OrdinalIgnoreCase)
                 || !this._isUnitTestBase
             );
 
         bool isDotNetTool = project.IsDotNetTool();
 
-        bool isExe = StringComparer.InvariantCultureIgnoreCase.Equals(
-            x: "Exe",
-            project.GetOutputType()
-        );
+        bool isExe = StringComparer.InvariantCultureIgnoreCase.Equals(x: "Exe", project.GetOutputType());
 
-        bool packable = this._packablePolicy(
-            arg1: isDotNetTool,
-            arg2: isExe,
-            arg3: isTestProject,
-            arg4: project.Name
-        );
+        bool packable = this._packablePolicy(arg1: isDotNetTool, arg2: isExe, arg3: isTestProject, arg4: project.Name);
 
         ProjectValueHelpers.CheckValue(
             project: project,
