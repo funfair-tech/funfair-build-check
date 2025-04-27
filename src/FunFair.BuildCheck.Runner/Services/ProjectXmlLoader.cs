@@ -38,10 +38,7 @@ public sealed class ProjectXmlLoader : IProjectXmlLoader
         return false;
     }
 
-    private async ValueTask<XmlDocument> LoadPotentiallyCachedAsync(
-        string path,
-        CancellationToken cancellationToken
-    )
+    private async ValueTask<XmlDocument> LoadPotentiallyCachedAsync(string path, CancellationToken cancellationToken)
     {
         XmlDocument doc = await LoadProjectAsync(path: path, cancellationToken: cancellationToken);
 
@@ -60,10 +57,7 @@ public sealed class ProjectXmlLoader : IProjectXmlLoader
         return doc;
     }
 
-    private static async ValueTask<XmlDocument> LoadProjectAsync(
-        string path,
-        CancellationToken cancellationToken
-    )
+    private static async ValueTask<XmlDocument> LoadProjectAsync(string path, CancellationToken cancellationToken)
     {
         string content = await File.ReadAllTextAsync(
             path: path,
