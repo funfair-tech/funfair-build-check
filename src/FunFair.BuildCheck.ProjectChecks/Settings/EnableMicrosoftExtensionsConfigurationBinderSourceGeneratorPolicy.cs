@@ -4,8 +4,7 @@ using Microsoft.Extensions.Logging;
 
 namespace FunFair.BuildCheck.ProjectChecks.Settings;
 
-public sealed class EnableMicrosoftExtensionsConfigurationBinderSourceGeneratorPolicy
-    : SimplePropertyProjectCheckBase
+public sealed class EnableMicrosoftExtensionsConfigurationBinderSourceGeneratorPolicy : SimplePropertyProjectCheckBase
 {
     public EnableMicrosoftExtensionsConfigurationBinderSourceGeneratorPolicy(
         ILogger<EnableMicrosoftExtensionsConfigurationBinderSourceGeneratorPolicy> logger
