@@ -30,22 +30,12 @@ internal sealed class TrackingLogger : ITrackingLogger
     {
         if (this.IsWarningAsError(logLevel))
         {
-            this.OutputErrorMessage(
-                eventId: eventId,
-                state: state,
-                exception: exception,
-                formatter: formatter
-            );
+            this.OutputErrorMessage(eventId: eventId, state: state, exception: exception, formatter: formatter);
 
             return;
         }
 
-        this.OutputMessageWithStatus(
-            logLevel: logLevel,
-            state: state,
-            exception: exception,
-            formatter: formatter
-        );
+        this.OutputMessageWithStatus(logLevel: logLevel, state: state, exception: exception, formatter: formatter);
     }
 
     public bool IsEnabled(LogLevel logLevel)
@@ -66,13 +56,7 @@ internal sealed class TrackingLogger : ITrackingLogger
         Func<TState, Exception?, string> formatter
     )
     {
-        this.Log(
-            logLevel: LogLevel.Error,
-            eventId: eventId,
-            state: state,
-            exception: exception,
-            formatter: formatter
-        );
+        this.Log(logLevel: LogLevel.Error, eventId: eventId, state: state, exception: exception, formatter: formatter);
     }
 
     private void OutputMessageWithStatus<TState>(
@@ -92,13 +76,7 @@ internal sealed class TrackingLogger : ITrackingLogger
             Interlocked.Increment(ref this._errors);
         }
 
-        this._logger.Log(
-            logLevel: logLevel,
-            eventId: 0,
-            state: state,
-            exception: exception,
-            formatter: formatter
-        );
+        this._logger.Log(logLevel: logLevel, eventId: 0, state: state, exception: exception, formatter: formatter);
     }
 
     private static bool IsError(LogLevel logLevel)
