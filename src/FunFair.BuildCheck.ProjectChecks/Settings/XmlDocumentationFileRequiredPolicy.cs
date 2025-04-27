@@ -11,8 +11,7 @@ namespace FunFair.BuildCheck.ProjectChecks.Settings;
 
 public sealed class XmlDocumentationFileRequiredPolicy : IProjectCheck
 {
-    private const string EXPECTED =
-        @"bin\$(Configuration)\$(TargetFramework)\$(MSBuildProjectName).xml";
+    private const string EXPECTED = @"bin\$(Configuration)\$(TargetFramework)\$(MSBuildProjectName).xml";
     private readonly ILogger<XmlDocumentationFileRequiredPolicy> _logger;
 
     private readonly IRepositorySettings _repositorySettings;
@@ -37,10 +36,7 @@ public sealed class XmlDocumentationFileRequiredPolicy : IProjectCheck
 
         if (testProject && this._repositorySettings.IsUnitTestBase)
         {
-            testProject = project.Name.EndsWith(
-                value: ".Tests",
-                comparisonType: StringComparison.OrdinalIgnoreCase
-            );
+            testProject = project.Name.EndsWith(value: ".Tests", comparisonType: StringComparison.OrdinalIgnoreCase);
         }
 
         if (testProject)
@@ -62,9 +58,7 @@ public sealed class XmlDocumentationFileRequiredPolicy : IProjectCheck
 
     private void CheckTestProject(in ProjectContext project)
     {
-        XmlNodeList? nodes = project.CsProjXml.SelectNodes(
-            "/Project/PropertyGroup/DocumentationFile"
-        );
+        XmlNodeList? nodes = project.CsProjXml.SelectNodes("/Project/PropertyGroup/DocumentationFile");
 
         if (nodes is not null && nodes.Count != 0)
         {
