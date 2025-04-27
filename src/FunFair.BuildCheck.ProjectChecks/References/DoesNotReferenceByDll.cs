@@ -19,9 +19,7 @@ public sealed class DoesNotReferenceByDll : IProjectCheck
 
     public ValueTask CheckAsync(ProjectContext project, CancellationToken cancellationToken)
     {
-        XmlNodeList? references = project.CsProjXml.SelectNodes(
-            xpath: "/Project/ItemGroup/Reference"
-        );
+        XmlNodeList? references = project.CsProjXml.SelectNodes(xpath: "/Project/ItemGroup/Reference");
 
         if (references is null)
         {
