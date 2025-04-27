@@ -16,10 +16,7 @@ public sealed class XUnitV3ProjectsShouldBeAnExecutable : SimplePropertyProjectC
 
     protected override bool CanCheck(in ProjectContext project)
     {
-        if (
-            project.IsTestProject(logger: this._logger)
-            && project.ReferencesPackage("xunit.v3", this._logger)
-        )
+        if (project.IsTestProject(logger: this._logger) && project.ReferencesPackage("xunit.v3", this._logger))
         {
             return true;
         }
