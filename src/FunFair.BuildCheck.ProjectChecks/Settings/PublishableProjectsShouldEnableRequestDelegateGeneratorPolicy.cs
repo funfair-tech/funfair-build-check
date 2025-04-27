@@ -5,17 +5,12 @@ using Microsoft.Extensions.Logging;
 
 namespace FunFair.BuildCheck.ProjectChecks.Settings;
 
-public sealed class PublishableProjectsShouldEnableRequestDelegateGeneratorPolicy
-    : SimplePropertyProjectCheckBase
+public sealed class PublishableProjectsShouldEnableRequestDelegateGeneratorPolicy : SimplePropertyProjectCheckBase
 {
     public PublishableProjectsShouldEnableRequestDelegateGeneratorPolicy(
         ILogger<PublishableProjectsShouldEnableRequestDelegateGeneratorPolicy> logger
     )
-        : base(
-            propertyName: "EnableRequestDelegateGenerator",
-            requiredValue: "true",
-            logger: logger
-        ) { }
+        : base(propertyName: "EnableRequestDelegateGenerator", requiredValue: "true", logger: logger) { }
 
     protected override bool CanCheck(in ProjectContext project)
     {
