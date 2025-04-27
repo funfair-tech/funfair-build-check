@@ -15,11 +15,7 @@ public abstract class HasAppropriateNonAnalysisPackages : IProjectCheck
     private readonly ILogger _logger;
     private readonly string _mustIncludePackageId;
 
-    protected HasAppropriateNonAnalysisPackages(
-        string detectPackageId,
-        string mustIncludePackageId,
-        ILogger logger
-    )
+    protected HasAppropriateNonAnalysisPackages(string detectPackageId, string mustIncludePackageId, ILogger logger)
     {
         this._detectPackageId = detectPackageId;
         this._mustIncludePackageId = mustIncludePackageId;
@@ -28,29 +24,17 @@ public abstract class HasAppropriateNonAnalysisPackages : IProjectCheck
 
     public ValueTask CheckAsync(ProjectContext project, CancellationToken cancellationToken)
     {
-
         bool foundSourcePackage = false;
         bool foundRequiredPackage = false;
 
-
         foreach (string packageId in project.ReferencedPackageElements(this._logger).Select(package => package.Id))
         {
-            if (
-                StringComparer.InvariantCultureIgnoreCase.Equals(
-                    x: this._detectPackageId,
-                    y: packageId
-                )
-            )
+            if (StringComparer.InvariantCultureIgnoreCase.Equals(x: this._detectPackageId, y: packageId))
             {
                 foundSourcePackage = true;
             }
 
-            if (
-                StringComparer.InvariantCultureIgnoreCase.Equals(
-                    x: this._mustIncludePackageId,
-                    y: packageId
-                )
-            )
+            if (StringComparer.InvariantCultureIgnoreCase.Equals(x: this._mustIncludePackageId, y: packageId))
             {
                 foundRequiredPackage = true;
             }
