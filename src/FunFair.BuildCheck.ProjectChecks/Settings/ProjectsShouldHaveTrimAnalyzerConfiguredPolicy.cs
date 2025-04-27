@@ -24,10 +24,7 @@ public sealed class ProjectsShouldHaveTrimAnalyzerConfiguredPolicy : IProjectChe
     {
         if (!project.HasProperty(SETTING))
         {
-            this._logger.ProjectShouldConfigureTrimAnalyzer(
-                projectName: project.Name,
-                property: SETTING
-            );
+            this._logger.ProjectShouldConfigureTrimAnalyzer(projectName: project.Name, property: SETTING);
         }
 
         return ValueTask.CompletedTask;
