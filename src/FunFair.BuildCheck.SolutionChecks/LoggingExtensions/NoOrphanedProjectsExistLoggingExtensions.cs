@@ -4,11 +4,7 @@ namespace FunFair.BuildCheck.SolutionChecks.LoggingExtensions;
 
 internal static partial class NoOrphanedProjectsExistLoggingExtensions
 {
-    [LoggerMessage(
-        EventId = 1,
-        Level = LogLevel.Error,
-        Message = "{solutionFileName}: Could not get base path"
-    )]
+    [LoggerMessage(EventId = 1, Level = LogLevel.Error, Message = "{solutionFileName}: Could not get base path")]
     public static partial void CouldNotGetBasePath(
         this ILogger<NoOrphanedProjectsExist> logger,
         string solutionFileName
