@@ -16,10 +16,7 @@ public sealed class GlobalJsonIsLatest : ISolutionCheck
     private readonly string? _dotnetVersion;
     private readonly ILogger<GlobalJsonIsLatest> _logger;
 
-    public GlobalJsonIsLatest(
-        IRepositorySettings repositorySettings,
-        ILogger<GlobalJsonIsLatest> logger
-    )
+    public GlobalJsonIsLatest(IRepositorySettings repositorySettings, ILogger<GlobalJsonIsLatest> logger)
     {
         this._logger = logger;
         this._dotnetVersion = repositorySettings.DotNetSdkVersion;
@@ -34,20 +31,12 @@ public sealed class GlobalJsonIsLatest : ISolutionCheck
             return;
         }
 
-        if (
-            !GlobalJsonHelpers.GetFileNameForSolution(
-                solutionFileName: solutionFileName,
-                out string? file
-            )
-        )
+        if (!GlobalJsonHelpers.GetFileNameForSolution(solutionFileName: solutionFileName, out string? file))
         {
             return;
         }
 
-        string content = await File.ReadAllTextAsync(
-            path: file,
-            cancellationToken: cancellationToken
-        );
+        string content = await File.ReadAllTextAsync(path: file, cancellationToken: cancellationToken);
 
         try
         {
@@ -58,12 +47,7 @@ public sealed class GlobalJsonIsLatest : ISolutionCheck
 
             if (!string.IsNullOrWhiteSpace(p?.Sdk?.RollForward))
             {
-                if (
-                    !StringComparer.InvariantCultureIgnoreCase.Equals(
-                        x: p.Sdk.Version,
-                        y: this._dotnetVersion
-                    )
-                )
+                if (!StringComparer.InvariantCultureIgnoreCase.Equals(x: p.Sdk.Version, y: this._dotnetVersion))
                 {
                     this._logger.UsingIncorrectDotNetSdkVersion(
                         solutionFileName: solutionFileName,
