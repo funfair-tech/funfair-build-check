@@ -7,9 +7,7 @@ namespace FunFair.BuildCheck.Runner;
 
 internal static partial class SourceGenerated
 {
-    private static readonly TimeSpan TimeoutTimeSpan = TimeSpan.FromMilliseconds(
-        TIMEOUT_MILLISECONDS
-    );
+    private static readonly TimeSpan TimeoutTimeSpan = TimeSpan.FromMilliseconds(TIMEOUT_MILLISECONDS);
 
     private static readonly Regex RegexProjectReference = new(
         pattern: PROJECT_REFERENCE_REGEX,
