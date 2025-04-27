@@ -12,11 +12,7 @@ public abstract class SimplePropertyProjectCheckBase : IProjectCheck
     private readonly string _propertyName;
     private readonly string _requiredValue;
 
-    protected SimplePropertyProjectCheckBase(
-        string propertyName,
-        string requiredValue,
-        ILogger logger
-    )
+    protected SimplePropertyProjectCheckBase(string propertyName, string requiredValue, ILogger logger)
     {
         this._propertyName = propertyName;
         this._requiredValue = requiredValue;
