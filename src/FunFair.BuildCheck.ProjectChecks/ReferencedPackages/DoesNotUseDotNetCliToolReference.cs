@@ -18,9 +18,7 @@ public sealed class DoesNotUseDotNetCliToolReference : IProjectCheck
 
     public ValueTask CheckAsync(ProjectContext project, CancellationToken cancellationToken)
     {
-        XmlNodeList? nodes = project.CsProjXml.SelectNodes(
-            xpath: "/Project/ItemGroup/DotNetCliToolReference"
-        );
+        XmlNodeList? nodes = project.CsProjXml.SelectNodes(xpath: "/Project/ItemGroup/DotNetCliToolReference");
 
         if (nodes is not null && nodes.Count != 0)
         {
