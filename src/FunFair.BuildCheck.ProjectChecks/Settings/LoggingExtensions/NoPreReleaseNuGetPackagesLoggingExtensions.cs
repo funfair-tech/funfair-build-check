@@ -5,11 +5,7 @@ namespace FunFair.BuildCheck.ProjectChecks.Settings.LoggingExtensions;
 
 internal static partial class NoPreReleaseNuGetPackagesLoggingExtensions
 {
-    [LoggerMessage(
-        EventId = 1,
-        Level = LogLevel.Debug,
-        Message = "{projectName}: Found: {packageId} ({version})"
-    )]
+    [LoggerMessage(EventId = 1, Level = LogLevel.Debug, Message = "{projectName}: Found: {packageId} ({version})")]
     [Conditional("DEBUG")]
     public static partial void FoundNuGetPackageAtVersion(
         this ILogger<NoPreReleaseNuGetPackages> logger,
