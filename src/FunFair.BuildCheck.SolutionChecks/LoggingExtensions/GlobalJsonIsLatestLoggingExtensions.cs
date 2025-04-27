@@ -10,10 +10,7 @@ internal static partial class GlobalJsonIsLatestLoggingExtensions
         Level = LogLevel.Information,
         Message = "{solutionFileName}: Not checking global.json as DOTNET_CORE_SDK_VERSION is not defined"
     )]
-    public static partial void NotCheckingGlobalJson(
-        this ILogger<GlobalJsonIsLatest> logger,
-        string solutionFileName
-    );
+    public static partial void NotCheckingGlobalJson(this ILogger<GlobalJsonIsLatest> logger, string solutionFileName);
 
     [LoggerMessage(
         EventId = 2,
