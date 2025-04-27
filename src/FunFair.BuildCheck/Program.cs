@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading;
@@ -69,10 +69,7 @@ internal static class Program
                 warningsAsErrors: warningsAsErrors,
                 frameworkSettings: frameworkSettings,
                 projectClassifier: projectClassifier,
-                new CheckConfiguration(
-                    preReleaseBuild: preReleaseBuild,
-                    allowPackageVersionMismatch: false
-                ),
+                new CheckConfiguration(preReleaseBuild: preReleaseBuild, allowPackageVersionMismatch: false),
                 buildServiceProvider: services => services.BuildServiceProvider(),
                 logger: logger,
                 cancellationToken: CancellationToken.None
@@ -171,9 +168,7 @@ internal static class Program
 
         if (!string.IsNullOrWhiteSpace(env))
         {
-            Console.WriteLine(
-                $"##teamcity[setParameter name='env.SOLUTION_FILENAME' value='{solutionFileName}']"
-            );
+            Console.WriteLine($"##teamcity[setParameter name='env.SOLUTION_FILENAME' value='{solutionFileName}']");
         }
     }
 }
