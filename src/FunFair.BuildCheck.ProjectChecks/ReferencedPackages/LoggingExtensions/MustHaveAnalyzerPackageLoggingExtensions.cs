@@ -21,9 +21,5 @@ internal static partial class MustHaveAnalyzerPackageLoggingExtensions
         Level = LogLevel.Error,
         Message = "{projectName}: Does not reference {packageId} using NuGet"
     )]
-    public static partial void DoesNotUseNuGet(
-        this ILogger logger,
-        string projectName,
-        string packageId
-    );
+    public static partial void DoesNotUseNuGet(this ILogger logger, string projectName, string packageId);
 }
