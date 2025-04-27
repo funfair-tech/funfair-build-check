@@ -23,12 +23,7 @@ internal sealed class DiagnosticLogger : IDiagnosticLogger
     {
         if (this.IsWarningAsError(logLevel))
         {
-            this.OutputErrorMessage(
-                eventId: eventId,
-                state: state,
-                exception: exception,
-                formatter: formatter
-            );
+            this.OutputErrorMessage(eventId: eventId, state: state, exception: exception, formatter: formatter);
 
             return;
         }
@@ -40,12 +35,7 @@ internal sealed class DiagnosticLogger : IDiagnosticLogger
             return;
         }
 
-        this.OutputMessageWithStatus(
-            logLevel: logLevel,
-            state: state,
-            exception: exception,
-            formatter: formatter
-        );
+        this.OutputMessageWithStatus(logLevel: logLevel, state: state, exception: exception, formatter: formatter);
     }
 
     public bool IsEnabled(LogLevel logLevel)
@@ -66,13 +56,7 @@ internal sealed class DiagnosticLogger : IDiagnosticLogger
         Func<TState, Exception?, string> formatter
     )
     {
-        this.Log(
-            logLevel: LogLevel.Error,
-            eventId: eventId,
-            state: state,
-            exception: exception,
-            formatter: formatter
-        );
+        this.Log(logLevel: LogLevel.Error, eventId: eventId, state: state, exception: exception, formatter: formatter);
     }
 
     private void OutputMessageWithStatus<TState>(
