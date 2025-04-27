@@ -27,9 +27,7 @@ public sealed class LibrariesShouldNotDependOnExecutables : IProjectCheck
 
     public async ValueTask CheckAsync(ProjectContext project, CancellationToken cancellationToken)
     {
-        if (
-            !StringComparer.InvariantCultureIgnoreCase.Equals(x: "Library", project.GetOutputType())
-        )
+        if (!StringComparer.InvariantCultureIgnoreCase.Equals(x: "Library", project.GetOutputType()))
         {
             return;
         }
