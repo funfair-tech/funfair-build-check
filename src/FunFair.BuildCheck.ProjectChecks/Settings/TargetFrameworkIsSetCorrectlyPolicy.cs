@@ -9,11 +9,7 @@ using Microsoft.Extensions.Logging;
 
 namespace FunFair.BuildCheck.ProjectChecks.Settings;
 
-[SuppressMessage(
-    category: "ReSharper",
-    checkId: "UnusedType.Global",
-    Justification = "Created by DI"
-)]
+[SuppressMessage(category: "ReSharper", checkId: "UnusedType.Global", Justification = "Created by DI")]
 public sealed class TargetFrameworkIsSetCorrectlyPolicy : IProjectCheck
 {
     private readonly string? _expected;
@@ -38,10 +34,7 @@ public sealed class TargetFrameworkIsSetCorrectlyPolicy : IProjectCheck
             return ValueTask.CompletedTask;
         }
 
-        if (
-            this._repositorySettings.IsCodeAnalysisSolution
-            && !project.IsTestProject(logger: this._logger)
-        )
+        if (this._repositorySettings.IsCodeAnalysisSolution && !project.IsTestProject(logger: this._logger))
         {
             // Code analysis project has specific requirements
             ProjectValueHelpers.CheckValue(
@@ -62,12 +55,7 @@ public sealed class TargetFrameworkIsSetCorrectlyPolicy : IProjectCheck
             return ValueTask.CompletedTask;
         }
 
-        if (
-            !sdk.StartsWith(
-                value: "Microsoft.NET.",
-                comparisonType: StringComparison.OrdinalIgnoreCase
-            )
-        )
+        if (!sdk.StartsWith(value: "Microsoft.NET.", comparisonType: StringComparison.OrdinalIgnoreCase))
         {
             // not a dotnet SDK so don't process this
             return ValueTask.CompletedTask;
@@ -86,11 +74,7 @@ public sealed class TargetFrameworkIsSetCorrectlyPolicy : IProjectCheck
         return ValueTask.CompletedTask;
     }
 
-    private void CheckFrameworks(
-        in ProjectContext project,
-        IReadOnlyList<string> frameworks,
-        string expected
-    )
+    private void CheckFrameworks(in ProjectContext project, IReadOnlyList<string> frameworks, string expected)
     {
         switch (frameworks.Count)
         {
