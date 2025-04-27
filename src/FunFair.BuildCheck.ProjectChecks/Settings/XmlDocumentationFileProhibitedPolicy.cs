@@ -28,9 +28,7 @@ public sealed class XmlDocumentationFileProhibitedPolicy : IProjectCheck
             return ValueTask.CompletedTask;
         }
 
-        XmlNodeList? nodes = project.CsProjXml.SelectNodes(
-            "/Project/PropertyGroup/DocumentationFile"
-        );
+        XmlNodeList? nodes = project.CsProjXml.SelectNodes("/Project/PropertyGroup/DocumentationFile");
 
         if (nodes is not null && nodes.Count != 0)
         {
