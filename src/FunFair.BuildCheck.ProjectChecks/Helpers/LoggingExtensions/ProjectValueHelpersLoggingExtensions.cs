@@ -29,11 +29,7 @@ internal static partial class ProjectValueHelpersLoggingExtensions
         string requiredValueDisplayText
     );
 
-    [LoggerMessage(
-        EventId = 2,
-        Level = LogLevel.Error,
-        Message = "{projectName}: Should specify {nodePresence}"
-    )]
+    [LoggerMessage(EventId = 2, Level = LogLevel.Error, Message = "{projectName}: Should specify {nodePresence}")]
     public static partial void ProjectShouldSpecifyNodePrescence(
         this ILogger logger,
         string projectName,
