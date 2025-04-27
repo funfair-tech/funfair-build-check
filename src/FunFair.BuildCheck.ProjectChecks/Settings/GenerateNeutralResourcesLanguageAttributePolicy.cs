@@ -7,9 +7,5 @@ public sealed class GenerateNeutralResourcesLanguageAttributePolicy : SimpleProp
     public GenerateNeutralResourcesLanguageAttributePolicy(
         ILogger<GenerateNeutralResourcesLanguageAttributePolicy> logger
     )
-        : base(
-            propertyName: "GenerateNeutralResourcesLanguageAttribute",
-            requiredValue: "true",
-            logger: logger
-        ) { }
+        : base(propertyName: "GenerateNeutralResourcesLanguageAttribute", requiredValue: "true", logger: logger) { }
 }
