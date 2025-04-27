@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -73,9 +73,7 @@ public static class CheckRunner
             cancellationToken: cancellationToken
         );
 
-        IReadOnlyList<SolutionProject> projects = services.GetRequiredService<
-            IReadOnlyList<SolutionProject>
-        >();
+        IReadOnlyList<SolutionProject> projects = services.GetRequiredService<IReadOnlyList<SolutionProject>>();
 
         foreach (SolutionProject project in projects)
         {
@@ -97,10 +95,7 @@ public static class CheckRunner
     {
         foreach (ISolutionCheck check in solutionChecks)
         {
-            await check.CheckAsync(
-                solutionFileName: solutionFileName,
-                cancellationToken: cancellationToken
-            );
+            await check.CheckAsync(solutionFileName: solutionFileName, cancellationToken: cancellationToken);
         }
     }
 
@@ -186,10 +181,7 @@ public static class CheckRunner
         CancellationToken cancellationToken
     )
     {
-        string[] text = await File.ReadAllLinesAsync(
-            path: solution,
-            cancellationToken: cancellationToken
-        );
+        string[] text = await File.ReadAllLinesAsync(path: solution, cancellationToken: cancellationToken);
 
         string? basePath = Path.GetDirectoryName(solution);
 
@@ -204,10 +196,7 @@ public static class CheckRunner
 
         Console.WriteLine(value: "Looking for projects...");
 
-        return
-        [
-            .. text.SelectMany(line => ProjectReferenceRegex.Matches(line).Select(ExtractProject)),
-        ];
+        return [.. text.SelectMany(line => ProjectReferenceRegex.Matches(line).Select(ExtractProject))];
 
         SolutionProject ExtractProject(Match match)
         {
