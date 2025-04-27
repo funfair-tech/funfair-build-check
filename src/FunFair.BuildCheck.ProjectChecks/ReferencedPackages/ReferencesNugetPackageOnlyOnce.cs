@@ -29,7 +29,10 @@ public sealed class ReferencesNugetPackageOnlyOnce : IProjectCheck
             // check for private asset (if it's private the build won't fail for a pre-release package)
             string? privateAssets = package.GetAttributeOrElement("PrivateAssets");
 
-            if (!string.IsNullOrEmpty(privateAssets) && StringComparer.OrdinalIgnoreCase.Equals(x: privateAssets, y: PACKAGE_PRIVATE_ASSETS))
+            if (
+                !string.IsNullOrEmpty(privateAssets)
+                && StringComparer.OrdinalIgnoreCase.Equals(x: privateAssets, y: PACKAGE_PRIVATE_ASSETS)
+            )
             {
                 continue;
             }
