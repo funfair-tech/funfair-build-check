@@ -27,10 +27,7 @@ public abstract class PackableMetadataBase : IProjectCheck
 
         if (!project.HasProperty(this._property))
         {
-            this._logger.PackableProjectDoesNotDefineProperty(
-                projectName: project.Name,
-                property: this._property
-            );
+            this._logger.PackableProjectDoesNotDefineProperty(projectName: project.Name, property: this._property);
         }
 
         return ValueTask.CompletedTask;
