@@ -20,8 +20,7 @@ internal sealed class RepositorySettings : IRepositorySettings
         this._projects = projects;
     }
 
-    public bool IsCodeAnalysisSolution =>
-        this._projectClassifier.IsCodeAnalysisSolution(this._projects);
+    public bool IsCodeAnalysisSolution => this._projectClassifier.IsCodeAnalysisSolution(this._projects);
 
     public bool IsNullableGloballyEnforced => this._frameworkSettings.IsNullableGloballyEnforced;
 
