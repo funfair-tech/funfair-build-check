@@ -28,9 +28,7 @@ public sealed class IsTransformWebConfigDisabledShouldBeTrueForWebLibraryProject
             return ValueTask.CompletedTask;
         }
 
-        if (
-            !StringComparer.InvariantCultureIgnoreCase.Equals(project.GetOutputType(), y: "Library")
-        )
+        if (!StringComparer.InvariantCultureIgnoreCase.Equals(project.GetOutputType(), y: "Library"))
         {
             // not a library
             return ValueTask.CompletedTask;
