@@ -15,10 +15,7 @@ public sealed class AllProjectsExist : ISolutionCheck
     private readonly ILogger<AllProjectsExist> _logger;
     private readonly IReadOnlyList<SolutionProject> _projects;
 
-    public AllProjectsExist(
-        IReadOnlyList<SolutionProject> projects,
-        ILogger<AllProjectsExist> logger
-    )
+    public AllProjectsExist(IReadOnlyList<SolutionProject> projects, ILogger<AllProjectsExist> logger)
     {
         this._projects = projects;
         this._logger = logger;
@@ -30,10 +27,7 @@ public sealed class AllProjectsExist : ISolutionCheck
 
         foreach (string projectFileName in this.GetMissingProjectFileNames())
         {
-            this._logger.ProjectDoesNotExist(
-                solutionFileName: solutionFileName,
-                projectFileName: projectFileName
-            );
+            this._logger.ProjectDoesNotExist(solutionFileName: solutionFileName, projectFileName: projectFileName);
         }
 
         return ValueTask.CompletedTask;
@@ -43,8 +37,6 @@ public sealed class AllProjectsExist : ISolutionCheck
     {
         return this
             ._projects.Select(static project => project.FileName)
-            .Where(static projectFileName =>
-                !File.Exists(PathHelpers.ConvertToNative(projectFileName))
-            );
+            .Where(static projectFileName => !File.Exists(PathHelpers.ConvertToNative(projectFileName)));
     }
 }
