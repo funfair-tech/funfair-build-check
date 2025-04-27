@@ -17,11 +17,7 @@ public sealed class ErrorPolicyWarningAsErrors : IProjectCheck
 
     public ValueTask CheckAsync(ProjectContext project, CancellationToken cancellationToken)
     {
-        ProjectValueHelpers.CheckNode(
-            project: project,
-            nodePresence: "WarningsAsErrors",
-            logger: this._logger
-        );
+        ProjectValueHelpers.CheckNode(project: project, nodePresence: "WarningsAsErrors", logger: this._logger);
 
         ProjectValueHelpers.CheckValue(
             project: project,
