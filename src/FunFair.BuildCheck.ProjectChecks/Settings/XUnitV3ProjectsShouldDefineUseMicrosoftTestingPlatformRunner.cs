@@ -4,19 +4,14 @@ using Microsoft.Extensions.Logging;
 
 namespace FunFair.BuildCheck.ProjectChecks.Settings;
 
-public sealed class XUnitV3ProjectsShouldDefineUseMicrosoftTestingPlatformRunner
-    : SimplePropertyProjectCheckBase
+public sealed class XUnitV3ProjectsShouldDefineUseMicrosoftTestingPlatformRunner : SimplePropertyProjectCheckBase
 {
     private readonly ILogger<XUnitV3ProjectsShouldDefineUseMicrosoftTestingPlatformRunner> _logger;
 
     public XUnitV3ProjectsShouldDefineUseMicrosoftTestingPlatformRunner(
         ILogger<XUnitV3ProjectsShouldDefineUseMicrosoftTestingPlatformRunner> logger
     )
-        : base(
-            propertyName: "UseMicrosoftTestingPlatformRunner",
-            requiredValue: "true",
-            logger: logger
-        )
+        : base(propertyName: "UseMicrosoftTestingPlatformRunner", requiredValue: "true", logger: logger)
     {
         this._logger = logger;
     }
