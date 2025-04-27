@@ -27,10 +27,7 @@ public sealed class GlobalJsonMustNotAllowPreRelease : ISolutionCheck
         this._logger = logger;
         string allowPreRelease = repositorySettings.DotNetAllowPreReleaseSdk;
 
-        this._allowPreRelease = StringComparer.InvariantCultureIgnoreCase.Equals(
-            x: allowPreRelease,
-            y: "true"
-        );
+        this._allowPreRelease = StringComparer.InvariantCultureIgnoreCase.Equals(x: allowPreRelease, y: "true");
     }
 
     public async ValueTask CheckAsync(string solutionFileName, CancellationToken cancellationToken)
@@ -40,20 +37,12 @@ public sealed class GlobalJsonMustNotAllowPreRelease : ISolutionCheck
             return;
         }
 
-        if (
-            !GlobalJsonHelpers.GetFileNameForSolution(
-                solutionFileName: solutionFileName,
-                out string? file
-            )
-        )
+        if (!GlobalJsonHelpers.GetFileNameForSolution(solutionFileName: solutionFileName, out string? file))
         {
             return;
         }
 
-        string content = await File.ReadAllTextAsync(
-            path: file,
-            cancellationToken: cancellationToken
-        );
+        string content = await File.ReadAllTextAsync(path: file, cancellationToken: cancellationToken);
 
         try
         {
