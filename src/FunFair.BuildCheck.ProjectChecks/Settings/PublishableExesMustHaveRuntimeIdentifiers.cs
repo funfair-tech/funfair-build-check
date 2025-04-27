@@ -12,19 +12,14 @@ public sealed class PublishableExesMustHaveRuntimeIdentifiers : IProjectCheck
 {
     private readonly ILogger<PublishableExesMustHaveRuntimeIdentifiers> _logger;
 
-    public PublishableExesMustHaveRuntimeIdentifiers(
-        ILogger<PublishableExesMustHaveRuntimeIdentifiers> logger
-    )
+    public PublishableExesMustHaveRuntimeIdentifiers(ILogger<PublishableExesMustHaveRuntimeIdentifiers> logger)
     {
         this._logger = logger;
     }
 
     public ValueTask CheckAsync(ProjectContext project, CancellationToken cancellationToken)
     {
-        bool isExe = StringComparer.InvariantCultureIgnoreCase.Equals(
-            x: "Exe",
-            project.GetOutputType()
-        );
+        bool isExe = StringComparer.InvariantCultureIgnoreCase.Equals(x: "Exe", project.GetOutputType());
 
         if (!isExe)
         {
