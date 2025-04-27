@@ -4,12 +4,6 @@ namespace FunFair.BuildCheck.ProjectChecks.ReferencedPackages;
 
 public sealed class MustHaveDuplicateCodeAnalyzerPackage : MustHaveAnalyzerPackage
 {
-    public MustHaveDuplicateCodeAnalyzerPackage(
-        ILogger<MustHaveDuplicateCodeAnalyzerPackage> logger
-    )
-        : base(
-            packageId: "Philips.CodeAnalysis.DuplicateCodeAnalyzer",
-            mustHave: true,
-            logger: logger
-        ) { }
+    public MustHaveDuplicateCodeAnalyzerPackage(ILogger<MustHaveDuplicateCodeAnalyzerPackage> logger)
+        : base(packageId: "Philips.CodeAnalysis.DuplicateCodeAnalyzer", mustHave: true, logger: logger) { }
 }
