@@ -33,20 +33,12 @@ public sealed class GlobalJsonMustSpecifyCorrectRollForwardPolicy : ISolutionChe
             return;
         }
 
-        if (
-            !GlobalJsonHelpers.GetFileNameForSolution(
-                solutionFileName: solutionFileName,
-                out string? file
-            )
-        )
+        if (!GlobalJsonHelpers.GetFileNameForSolution(solutionFileName: solutionFileName, out string? file))
         {
             return;
         }
 
-        string content = await File.ReadAllTextAsync(
-            path: file,
-            cancellationToken: cancellationToken
-        );
+        string content = await File.ReadAllTextAsync(path: file, cancellationToken: cancellationToken);
 
         try
         {
@@ -57,12 +49,7 @@ public sealed class GlobalJsonMustSpecifyCorrectRollForwardPolicy : ISolutionChe
 
             if (!string.IsNullOrWhiteSpace(p?.Sdk?.RollForward))
             {
-                if (
-                    !StringComparer.InvariantCulture.Equals(
-                        x: p.Sdk.RollForward,
-                        y: ROLL_FORWARD_POLICY
-                    )
-                )
+                if (!StringComparer.InvariantCulture.Equals(x: p.Sdk.RollForward, y: ROLL_FORWARD_POLICY))
                 {
                     this._logger.UsingIncorrectRollForwardPolicy(
                         solutionFileName: solutionFileName,
