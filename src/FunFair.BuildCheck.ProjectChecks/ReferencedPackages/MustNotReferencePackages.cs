@@ -29,7 +29,11 @@ public abstract class MustNotReferencePackages : IProjectCheck
 
             if (packageExists)
             {
-                this._logger.ReferencesObsoletedPackageUsingNuGet(projectName: project.Name, packageId: packageId, reason: this._reason);
+                this._logger.ReferencesObsoletedPackageUsingNuGet(
+                    projectName: project.Name,
+                    packageId: packageId,
+                    reason: this._reason
+                );
             }
         }
 
