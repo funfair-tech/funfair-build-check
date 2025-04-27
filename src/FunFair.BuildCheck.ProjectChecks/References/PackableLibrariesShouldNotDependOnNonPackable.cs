@@ -27,9 +27,7 @@ public sealed class PackableLibrariesShouldNotDependOnNonPackable : IProjectChec
 
     public async ValueTask CheckAsync(ProjectContext project, CancellationToken cancellationToken)
     {
-        if (
-            !StringComparer.InvariantCultureIgnoreCase.Equals(x: "Library", project.GetOutputType())
-        )
+        if (!StringComparer.InvariantCultureIgnoreCase.Equals(x: "Library", project.GetOutputType()))
         {
             return;
         }
