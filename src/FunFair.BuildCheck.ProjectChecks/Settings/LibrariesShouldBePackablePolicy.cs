@@ -71,19 +71,13 @@ public sealed class LibrariesShouldBePackablePolicy : IProjectCheck
             project.IsTestProject(logger: this._logger)
             && (
                 this._isUnitTestBase
-                    && project.Name.EndsWith(
-                        value: ".Tests",
-                        comparisonType: StringComparison.OrdinalIgnoreCase
-                    )
+                    && project.Name.EndsWith(value: ".Tests", comparisonType: StringComparison.OrdinalIgnoreCase)
                 || !this._isUnitTestBase
             );
 
         bool isDotNetTool = project.IsDotNetTool();
 
-        bool isLibrary = StringComparer.InvariantCultureIgnoreCase.Equals(
-            x: "Library",
-            project.GetOutputType()
-        );
+        bool isLibrary = StringComparer.InvariantCultureIgnoreCase.Equals(x: "Library", project.GetOutputType());
 
         bool packable = this._packablePolicy(
             arg1: isDotNetTool,
