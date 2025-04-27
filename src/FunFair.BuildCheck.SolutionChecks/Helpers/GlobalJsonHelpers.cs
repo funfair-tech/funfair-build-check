@@ -5,10 +5,7 @@ namespace FunFair.BuildCheck.SolutionChecks.Helpers;
 
 internal static class GlobalJsonHelpers
 {
-    public static bool GetFileNameForSolution(
-        string solutionFileName,
-        [NotNullWhen(true)] out string? file
-    )
+    public static bool GetFileNameForSolution(string solutionFileName, [NotNullWhen(true)] out string? file)
     {
         string? solutionDir = Path.GetDirectoryName(solutionFileName);
 
