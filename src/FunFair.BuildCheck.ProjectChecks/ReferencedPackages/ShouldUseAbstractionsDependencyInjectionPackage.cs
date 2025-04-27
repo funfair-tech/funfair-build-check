@@ -31,9 +31,6 @@ public sealed class ShouldUseAbstractionsDependencyInjectionPackage : ShouldUseA
     {
         return this._repositorySettings.IsUnitTestBase
             && project.IsTestProject(logger: this.Logger)
-            && !project.Name.EndsWith(
-                value: ".Tests",
-                comparisonType: StringComparison.OrdinalIgnoreCase
-            );
+            && !project.Name.EndsWith(value: ".Tests", comparisonType: StringComparison.OrdinalIgnoreCase);
     }
 }
