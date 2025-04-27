@@ -6,11 +6,7 @@ namespace FunFair.BuildCheck.ProjectChecks.ReferencedPackages.LoggingExtensions;
 
 internal static partial class HasConsistentNuGetPackagesLoggingExtensions
 {
-    [LoggerMessage(
-        EventId = 0,
-        Level = LogLevel.Debug,
-        Message = "{projectName}: Found: {packageName} ({version})"
-    )]
+    [LoggerMessage(EventId = 0, Level = LogLevel.Debug, Message = "{projectName}: Found: {packageName} ({version})")]
     [Conditional("DEBUG")]
     public static partial void FoundPackageVersion(
         this ILogger<HasConsistentNuGetPackages> logger,
@@ -18,7 +14,6 @@ internal static partial class HasConsistentNuGetPackagesLoggingExtensions
         string packageName,
         string version
     );
-
 
     [LoggerMessage(
         EventId = 1,
@@ -75,6 +70,9 @@ internal static partial class HasConsistentNuGetPackagesLoggingExtensions
         Level = LogLevel.Error,
         Message = "{projectName}: Package {packageName} could not find version."
     )]
-    public static partial void MissingPackageVersion(this ILogger<HasConsistentNuGetPackages> logger, string projectName, string packageName);
-
+    public static partial void MissingPackageVersion(
+        this ILogger<HasConsistentNuGetPackages> logger,
+        string projectName,
+        string packageName
+    );
 }
