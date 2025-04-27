@@ -15,9 +15,7 @@ public readonly record struct PackageReference(
 
     public string? GetAttribute(string attibuteName)
     {
-        return
-            this.Attributes.TryGetValue(key: attibuteName, out string? value)
-            && !string.IsNullOrEmpty(value)
+        return this.Attributes.TryGetValue(key: attibuteName, out string? value) && !string.IsNullOrEmpty(value)
             ? value
             : null;
     }
@@ -25,18 +23,13 @@ public readonly record struct PackageReference(
     public string? GetAttributeOrElement(string attributeOrElementName)
     {
         // check for an attribute
-        if (
-            this.Attributes.TryGetValue(key: attributeOrElementName, out string? value)
-            && !string.IsNullOrEmpty(value)
-        )
+        if (this.Attributes.TryGetValue(key: attributeOrElementName, out string? value) && !string.IsNullOrEmpty(value))
         {
             return value;
         }
 
         // no attribute, check for an element
-        if (
-            this.Element.SelectSingleNode(xpath: attributeOrElementName) is XmlElement privateAssets
-        )
+        if (this.Element.SelectSingleNode(xpath: attributeOrElementName) is XmlElement privateAssets)
         {
             return privateAssets.InnerText;
         }
