@@ -12,10 +12,7 @@ public sealed class ImportCommonProps : IProjectCheck
     private readonly ILogger<ImportCommonProps> _logger;
     private readonly string _projectImport;
 
-    public ImportCommonProps(
-        IRepositorySettings repositorySettings,
-        ILogger<ImportCommonProps> logger
-    )
+    public ImportCommonProps(IRepositorySettings repositorySettings, ILogger<ImportCommonProps> logger)
     {
         this._logger = logger;
 
