@@ -6,9 +6,7 @@ namespace FunFair.BuildCheck.ProjectChecks.ReferencedPackages;
 
 public sealed class MustHaveMicrosoftSbomTargetsAnalyzerPackage : MustHaveAnalyzerPackage
 {
-    public MustHaveMicrosoftSbomTargetsAnalyzerPackage(
-        ILogger<MustHaveMicrosoftSbomTargetsAnalyzerPackage> logger
-    )
+    public MustHaveMicrosoftSbomTargetsAnalyzerPackage(ILogger<MustHaveMicrosoftSbomTargetsAnalyzerPackage> logger)
         : base(packageId: "Microsoft.Sbom.Targets", mustHave: true, logger: logger) { }
 
     protected override bool CanCheck(in ProjectContext project)
