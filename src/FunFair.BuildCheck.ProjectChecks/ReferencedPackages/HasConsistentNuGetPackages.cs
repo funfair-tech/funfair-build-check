@@ -18,7 +18,10 @@ public sealed class HasConsistentNuGetPackages : IProjectCheck
 
     private readonly Dictionary<string, NuGetVersion> _packages;
 
-    public HasConsistentNuGetPackages(ICheckConfiguration checkConfiguration, ILogger<HasConsistentNuGetPackages> logger)
+    public HasConsistentNuGetPackages(
+        ICheckConfiguration checkConfiguration,
+        ILogger<HasConsistentNuGetPackages> logger
+    )
     {
         this._checkConfiguration = checkConfiguration;
         this._logger = logger;
@@ -50,7 +53,11 @@ public sealed class HasConsistentNuGetPackages : IProjectCheck
     {
         if (!NuGetVersion.TryParse(value: version, out NuGetVersion? nuGetVersion))
         {
-            this._logger.CouldNotParsePackageVersion(projectName: projectName, packageName: packageName, version: version);
+            this._logger.CouldNotParsePackageVersion(
+                projectName: projectName,
+                packageName: packageName,
+                version: version
+            );
 
             return;
         }
@@ -63,23 +70,47 @@ public sealed class HasConsistentNuGetPackages : IProjectCheck
         }
         else if (currentVersion != nuGetVersion)
         {
-            this.LogVersionMismatch(projectName: projectName, packageName: packageName, nuGetVersion: nuGetVersion, currentVersion: currentVersion);
+            this.LogVersionMismatch(
+                projectName: projectName,
+                packageName: packageName,
+                nuGetVersion: nuGetVersion,
+                currentVersion: currentVersion
+            );
 
             return;
         }
 
-        this._logger.UsingPackageAtVersion(projectName: projectName, packageName: packageName, installedVersion: nuGetVersion);
+        this._logger.UsingPackageAtVersion(
+            projectName: projectName,
+            packageName: packageName,
+            installedVersion: nuGetVersion
+        );
     }
 
-    private void LogVersionMismatch(string projectName, string packageName, NuGetVersion nuGetVersion, NuGetVersion currentVersion)
+    private void LogVersionMismatch(
+        string projectName,
+        string packageName,
+        NuGetVersion nuGetVersion,
+        NuGetVersion currentVersion
+    )
     {
         if (this._checkConfiguration.AllowPackageVersionMismatch)
         {
-            this._logger.UsingInconsistentPackageVersionInfo(projectName: projectName, packageName: packageName, installedVersion: nuGetVersion, currentVersion: currentVersion);
+            this._logger.UsingInconsistentPackageVersionInfo(
+                projectName: projectName,
+                packageName: packageName,
+                installedVersion: nuGetVersion,
+                currentVersion: currentVersion
+            );
         }
         else
         {
-            this._logger.UsingInconsistentPackageVersionError(projectName: projectName, packageName: packageName, installedVersion: nuGetVersion, currentVersion: currentVersion);
+            this._logger.UsingInconsistentPackageVersionError(
+                projectName: projectName,
+                packageName: packageName,
+                installedVersion: nuGetVersion,
+                currentVersion: currentVersion
+            );
         }
     }
 }
