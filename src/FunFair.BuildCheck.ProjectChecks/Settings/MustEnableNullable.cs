@@ -7,10 +7,7 @@ public sealed class MustEnableNullable : SimplePropertyProjectCheckBase
 {
     private readonly IRepositorySettings _repositorySettings;
 
-    public MustEnableNullable(
-        IRepositorySettings repositorySettings,
-        ILogger<MustEnableNullable> logger
-    )
+    public MustEnableNullable(IRepositorySettings repositorySettings, ILogger<MustEnableNullable> logger)
         : base(propertyName: "Nullable", requiredValue: "enable", logger: logger)
     {
         this._repositorySettings = repositorySettings;
