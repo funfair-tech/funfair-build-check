@@ -9,13 +9,17 @@ internal sealed class FrameworkSettings : IFrameworkSettings
     {
         get
         {
-            string? codeAnalysis = Environment.GetEnvironmentVariable(variable: "DISABLE_BUILD_NULLABLE_REFERENCE_TYPES");
+            string? codeAnalysis = Environment.GetEnvironmentVariable(
+                variable: "DISABLE_BUILD_NULLABLE_REFERENCE_TYPES"
+            );
 
-            return string.IsNullOrWhiteSpace(codeAnalysis) || !StringComparer.OrdinalIgnoreCase.Equals(x: codeAnalysis, y: "TRUE");
+            return string.IsNullOrWhiteSpace(codeAnalysis)
+                || !StringComparer.OrdinalIgnoreCase.Equals(x: codeAnalysis, y: "TRUE");
         }
     }
 
-    public string ProjectImport => Environment.GetEnvironmentVariable("DOTNET_PACK_PROJECT_METADATA_IMPORT") ?? string.Empty;
+    public string ProjectImport =>
+        Environment.GetEnvironmentVariable("DOTNET_PACK_PROJECT_METADATA_IMPORT") ?? string.Empty;
 
     public string? DotnetPackable => Environment.GetEnvironmentVariable(variable: "DOTNET_PACKABLE");
 
@@ -25,7 +29,9 @@ internal sealed class FrameworkSettings : IFrameworkSettings
 
     public string? DotNetSdkVersion => Environment.GetEnvironmentVariable(variable: "DOTNET_CORE_SDK_VERSION");
 
-    public string DotNetAllowPreReleaseSdk => Environment.GetEnvironmentVariable("DOTNET_SDK_ALLOW_PRE_RELEASE") ?? "false";
+    public string DotNetAllowPreReleaseSdk =>
+        Environment.GetEnvironmentVariable("DOTNET_SDK_ALLOW_PRE_RELEASE") ?? "false";
 
-    public bool XmlDocumentationRequired => StringComparer.Ordinal.Equals(Environment.GetEnvironmentVariable("XML_DOCUMENTATION"), y: "true");
+    public bool XmlDocumentationRequired =>
+        StringComparer.Ordinal.Equals(Environment.GetEnvironmentVariable("XML_DOCUMENTATION"), y: "true");
 }
