@@ -20,13 +20,7 @@ public sealed class MustSpecifyOutputType : IProjectCheck
     {
         const string msg = "Exe or Library";
 
-        ProjectValueHelpers.CheckValue(
-            project: project,
-            nodePresence: "OutputType",
-            isRequiredValue: IsRequiredValue,
-            msg: msg,
-            logger: this._logger
-        );
+        ProjectValueHelpers.CheckValue(project: project, nodePresence: "OutputType", isRequiredValue: IsRequiredValue, msg: msg, logger: this._logger);
 
         return ValueTask.CompletedTask;
     }
@@ -38,7 +32,6 @@ public sealed class MustSpecifyOutputType : IProjectCheck
 
     private static bool IsExeOrLibrary(string value)
     {
-        return StringComparer.InvariantCultureIgnoreCase.Equals(x: value, y: "Exe")
-            || StringComparer.InvariantCultureIgnoreCase.Equals(x: value, y: "Library");
+        return StringComparer.OrdinalIgnoreCase.Equals(x: value, y: "Exe") || StringComparer.OrdinalIgnoreCase.Equals(x: value, y: "Library");
     }
 }

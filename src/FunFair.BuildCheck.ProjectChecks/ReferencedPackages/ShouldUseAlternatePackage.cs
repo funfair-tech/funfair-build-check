@@ -31,7 +31,7 @@ public abstract class ShouldUseAlternatePackage : IProjectCheck
 
         string outputType = project.GetOutputType();
 
-        if (StringComparer.InvariantCultureIgnoreCase.Equals(x: outputType, y: "Exe"))
+        if (StringComparer.OrdinalIgnoreCase.Equals(x: outputType, y: "Exe"))
         {
             // Executables can use whatever they want.
             return ValueTask.CompletedTask;
@@ -39,10 +39,7 @@ public abstract class ShouldUseAlternatePackage : IProjectCheck
 
         string? awsProjectType = project.GetAwsProjectType();
 
-        if (
-            awsProjectType is not null
-            && StringComparer.InvariantCultureIgnoreCase.Equals(x: awsProjectType, y: "Lambda")
-        )
+        if (awsProjectType is not null && StringComparer.OrdinalIgnoreCase.Equals(x: awsProjectType, y: "Lambda"))
         {
             // Lambdas are effectively executables so can use whatever they want.
             return ValueTask.CompletedTask;
@@ -56,11 +53,7 @@ public abstract class ShouldUseAlternatePackage : IProjectCheck
 
         if (project.ReferencesPackage(this._matchPackageId, this.Logger))
         {
-            this.Logger.UseAlternatePackageIdForMatchedPackageId(
-                projectName: project.Name,
-                usePackageId: this._usePackageId,
-                matchPackageId: this._matchPackageId
-            );
+            this.Logger.UseAlternatePackageIdForMatchedPackageId(projectName: project.Name, usePackageId: this._usePackageId, matchPackageId: this._matchPackageId);
         }
 
         return ValueTask.CompletedTask;

@@ -40,20 +40,13 @@ public sealed class GlobalJsonIsLatest : ISolutionCheck
 
         try
         {
-            GlobalJsonPacket? p = JsonSerializer.Deserialize(
-                json: content,
-                jsonTypeInfo: MustBeSerializable.Default.GlobalJsonPacket
-            );
+            GlobalJsonPacket? p = JsonSerializer.Deserialize(json: content, jsonTypeInfo: MustBeSerializable.Default.GlobalJsonPacket);
 
             if (!string.IsNullOrWhiteSpace(p?.Sdk?.RollForward))
             {
-                if (!StringComparer.InvariantCultureIgnoreCase.Equals(x: p.Sdk.Version, y: this._dotnetVersion))
+                if (!StringComparer.OrdinalIgnoreCase.Equals(x: p.Sdk.Version, y: this._dotnetVersion))
                 {
-                    this._logger.UsingIncorrectDotNetSdkVersion(
-                        solutionFileName: solutionFileName,
-                        projectVersion: p.Sdk.Version,
-                        dotnetVersion: this._dotnetVersion
-                    );
+                    this._logger.UsingIncorrectDotNetSdkVersion(solutionFileName: solutionFileName, projectVersion: p.Sdk.Version, dotnetVersion: this._dotnetVersion);
                 }
             }
             else
@@ -63,12 +56,7 @@ public sealed class GlobalJsonIsLatest : ISolutionCheck
         }
         catch (Exception exception)
         {
-            this._logger.FailedToReadGlobalJson(
-                solutionFileName: solutionFileName,
-                file: file,
-                message: exception.Message,
-                exception: exception
-            );
+            this._logger.FailedToReadGlobalJson(solutionFileName: solutionFileName, file: file, message: exception.Message, exception: exception);
         }
     }
 }
