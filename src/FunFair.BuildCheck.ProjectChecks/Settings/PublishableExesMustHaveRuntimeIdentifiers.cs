@@ -34,7 +34,10 @@ public sealed class PublishableExesMustHaveRuntimeIdentifiers : IProjectCheck
         }
 
         string runtimeIdentifiers = project.GetRuntimeIdentifiers();
-        bool hasRuntimeIdentifiers = Array.Exists(runtimeIdentifiers.Split(";"), match: static item => !string.IsNullOrWhiteSpace(item));
+        bool hasRuntimeIdentifiers = Array.Exists(
+            runtimeIdentifiers.Split(";"),
+            match: static item => !string.IsNullOrWhiteSpace(item)
+        );
 
         if (!hasRuntimeIdentifiers)
         {
