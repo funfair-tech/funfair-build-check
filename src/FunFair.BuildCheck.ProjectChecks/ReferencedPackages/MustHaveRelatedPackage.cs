@@ -28,12 +28,12 @@ public abstract class MustHaveRelatedPackage : IProjectCheck
 
         foreach (string packageId in project.ReferencedPackages(this._logger))
         {
-            if (StringComparer.InvariantCultureIgnoreCase.Equals(x: this._detectPackageId, y: packageId))
+            if (StringComparer.OrdinalIgnoreCase.Equals(x: this._detectPackageId, y: packageId))
             {
                 foundSourcePackage = true;
             }
 
-            if (StringComparer.InvariantCultureIgnoreCase.Equals(x: this._mustIncludePackageId, y: packageId))
+            if (StringComparer.OrdinalIgnoreCase.Equals(x: this._mustIncludePackageId, y: packageId))
             {
                 foundRelatedPackage = true;
             }
@@ -41,11 +41,7 @@ public abstract class MustHaveRelatedPackage : IProjectCheck
 
         if (foundSourcePackage && !foundRelatedPackage)
         {
-            this._logger.DidNotFindRelatedPackageForDetectedPackage(
-                projectName: project.Name,
-                detectPackageId: this._detectPackageId,
-                mustIncludePackageId: this._mustIncludePackageId
-            );
+            this._logger.DidNotFindRelatedPackageForDetectedPackage(projectName: project.Name, detectPackageId: this._detectPackageId, mustIncludePackageId: this._mustIncludePackageId);
         }
 
         return ValueTask.CompletedTask;

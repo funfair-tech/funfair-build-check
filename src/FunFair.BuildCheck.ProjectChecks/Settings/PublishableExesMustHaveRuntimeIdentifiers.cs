@@ -19,7 +19,7 @@ public sealed class PublishableExesMustHaveRuntimeIdentifiers : IProjectCheck
 
     public ValueTask CheckAsync(ProjectContext project, CancellationToken cancellationToken)
     {
-        bool isExe = StringComparer.InvariantCultureIgnoreCase.Equals(x: "Exe", project.GetOutputType());
+        bool isExe = StringComparer.OrdinalIgnoreCase.Equals(x: "Exe", project.GetOutputType());
 
         if (!isExe)
         {
@@ -34,10 +34,7 @@ public sealed class PublishableExesMustHaveRuntimeIdentifiers : IProjectCheck
         }
 
         string runtimeIdentifiers = project.GetRuntimeIdentifiers();
-        bool hasRuntimeIdentifiers = Array.Exists(
-            runtimeIdentifiers.Split(";"),
-            match: static item => !string.IsNullOrWhiteSpace(item)
-        );
+        bool hasRuntimeIdentifiers = Array.Exists(runtimeIdentifiers.Split(";"), match: static item => !string.IsNullOrWhiteSpace(item));
 
         if (!hasRuntimeIdentifiers)
         {
