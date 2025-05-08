@@ -27,8 +27,7 @@ public abstract class HasAppropriateNonAnalysisPackages : IProjectCheck
         bool foundSourcePackage = false;
         bool foundRequiredPackage = false;
 
-        foreach (string packageId in project.ReferencedPackageElements(this._logger)
-                                            .Select(package => package.Id))
+        foreach (string packageId in project.ReferencedPackageElements(this._logger).Select(package => package.Id))
         {
             if (StringComparer.OrdinalIgnoreCase.Equals(x: this._detectPackageId, y: packageId))
             {
@@ -43,7 +42,11 @@ public abstract class HasAppropriateNonAnalysisPackages : IProjectCheck
 
         if (foundSourcePackage && !foundRequiredPackage)
         {
-            this._logger.DidNotFindMustIncludePackageForDetectedPackage(projectName: project.Name, detectPackageId: this._detectPackageId, mustIncludePackageId: this._mustIncludePackageId);
+            this._logger.DidNotFindMustIncludePackageForDetectedPackage(
+                projectName: project.Name,
+                detectPackageId: this._detectPackageId,
+                mustIncludePackageId: this._mustIncludePackageId
+            );
         }
 
         return ValueTask.CompletedTask;
