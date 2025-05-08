@@ -11,7 +11,9 @@ public sealed class IsTransformWebConfigDisabledShouldBeTrueForWebLibraryProject
 {
     private readonly ILogger<IsTransformWebConfigDisabledShouldBeTrueForWebLibraryProjects> _logger;
 
-    public IsTransformWebConfigDisabledShouldBeTrueForWebLibraryProjects(ILogger<IsTransformWebConfigDisabledShouldBeTrueForWebLibraryProjects> logger)
+    public IsTransformWebConfigDisabledShouldBeTrueForWebLibraryProjects(
+        ILogger<IsTransformWebConfigDisabledShouldBeTrueForWebLibraryProjects> logger
+    )
     {
         this._logger = logger;
     }
@@ -32,7 +34,12 @@ public sealed class IsTransformWebConfigDisabledShouldBeTrueForWebLibraryProject
             return ValueTask.CompletedTask;
         }
 
-        ProjectValueHelpers.CheckValue(project: project, nodePresence: "IsTransformWebConfigDisabled", requiredValue: true, logger: this._logger);
+        ProjectValueHelpers.CheckValue(
+            project: project,
+            nodePresence: "IsTransformWebConfigDisabled",
+            requiredValue: true,
+            logger: this._logger
+        );
 
         return ValueTask.CompletedTask;
     }
