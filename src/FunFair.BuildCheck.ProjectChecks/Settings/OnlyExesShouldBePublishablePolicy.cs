@@ -17,7 +17,10 @@ public sealed class OnlyExesShouldBePublishablePolicy : IProjectCheck
     private readonly Func<bool, bool, bool, string, bool> _packablePolicy;
     private readonly IRepositorySettings _repositorySettings;
 
-    public OnlyExesShouldBePublishablePolicy(IRepositorySettings repositorySettings, ILogger<OnlyExesShouldBePublishablePolicy> logger)
+    public OnlyExesShouldBePublishablePolicy(
+        IRepositorySettings repositorySettings,
+        ILogger<OnlyExesShouldBePublishablePolicy> logger
+    )
     {
         this._repositorySettings = repositorySettings;
         this._logger = logger;
@@ -45,7 +48,8 @@ public sealed class OnlyExesShouldBePublishablePolicy : IProjectCheck
         {
             ImmutableHashSet<string> projects = GetProjects(packable);
 
-            this._packablePolicy = (_, _, isTestProject, projectName) => !isTestProject && projects.Contains(projectName);
+            this._packablePolicy = (_, _, isTestProject, projectName) =>
+                !isTestProject && projects.Contains(projectName);
         }
     }
 
@@ -56,8 +60,13 @@ public sealed class OnlyExesShouldBePublishablePolicy : IProjectCheck
             return ValueTask.CompletedTask;
         }
 
-        bool isTestProject = project.IsTestProject(logger: this._logger) &&
-                             (this._isUnitTestBase && project.Name.EndsWith(value: ".Tests", comparisonType: StringComparison.OrdinalIgnoreCase) || !this._isUnitTestBase);
+        bool isTestProject =
+            project.IsTestProject(logger: this._logger)
+            && (
+                this._isUnitTestBase
+                    && project.Name.EndsWith(value: ".Tests", comparisonType: StringComparison.OrdinalIgnoreCase)
+                || !this._isUnitTestBase
+            );
 
         bool isDotNetTool = project.IsDotNetTool();
 
@@ -65,16 +74,22 @@ public sealed class OnlyExesShouldBePublishablePolicy : IProjectCheck
 
         bool packable = this._packablePolicy(arg1: isDotNetTool, arg2: isExe, arg3: isTestProject, arg4: project.Name);
 
-        ProjectValueHelpers.CheckValue(project: project, nodePresence: "IsPublishable", requiredValue: packable, logger: this._logger);
+        ProjectValueHelpers.CheckValue(
+            project: project,
+            nodePresence: "IsPublishable",
+            requiredValue: packable,
+            logger: this._logger
+        );
 
         return ValueTask.CompletedTask;
     }
 
     private static ImmutableHashSet<string> GetProjects(string packable)
     {
-        return packable.Split(",")
-                       .Select(static p => p.Trim())
-                       .Where(static p => !string.IsNullOrWhiteSpace(p))
-                       .ToImmutableHashSet(StringComparer.OrdinalIgnoreCase);
+        return packable
+            .Split(",")
+            .Select(static p => p.Trim())
+            .Where(static p => !string.IsNullOrWhiteSpace(p))
+            .ToImmutableHashSet(StringComparer.OrdinalIgnoreCase);
     }
 }
