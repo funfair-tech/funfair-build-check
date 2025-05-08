@@ -43,14 +43,22 @@ public abstract class MustHaveAnalyzerPackage : IProjectCheck
         {
             if (!this.CheckPrivateAssets(packageId: this._packageId, project: project))
             {
-                this._logger.DoesNotUsePrivateAssetsAttribute(projectName: project.Name, packageId: this._packageId, privateAssets: PACKAGE_PRIVATE_ASSETS);
+                this._logger.DoesNotUsePrivateAssetsAttribute(
+                    projectName: project.Name,
+                    packageId: this._packageId,
+                    privateAssets: PACKAGE_PRIVATE_ASSETS
+                );
             }
 
             if (!(project.IsFunFairTestProject() && IsPackageExcluded(packageId: this._packageId)))
             {
                 if (!this.CheckExcludeAssets(packageId: this._packageId, project: project))
                 {
-                    this._logger.DoesNotUsePrivateAssetsAttribute(projectName: project.Name, packageId: this._packageId, privateAssets: PACKAGE_PRIVATE_ASSETS);
+                    this._logger.DoesNotUsePrivateAssetsAttribute(
+                        projectName: project.Name,
+                        packageId: this._packageId,
+                        privateAssets: PACKAGE_PRIVATE_ASSETS
+                    );
                 }
             }
         }
@@ -69,7 +77,8 @@ public abstract class MustHaveAnalyzerPackage : IProjectCheck
 
     private static bool IsPackageExcluded(string packageId)
     {
-        return StringComparer.OrdinalIgnoreCase.Equals(x: packageId, y: "Microsoft.NET.Test.Sdk") || StringComparer.OrdinalIgnoreCase.Equals(x: packageId, y: "xunit.runner.visualstudio");
+        return StringComparer.OrdinalIgnoreCase.Equals(x: packageId, y: "Microsoft.NET.Test.Sdk")
+            || StringComparer.OrdinalIgnoreCase.Equals(x: packageId, y: "xunit.runner.visualstudio");
     }
 
     private bool CheckPrivateAssets(string packageId, in ProjectContext project)
@@ -83,7 +92,8 @@ public abstract class MustHaveAnalyzerPackage : IProjectCheck
 
         string? assets = package.Value.GetAttributeOrElement(attributeOrElementName: "PrivateAssets");
 
-        return !string.IsNullOrEmpty(assets) && StringComparer.OrdinalIgnoreCase.Equals(x: assets, y: PACKAGE_PRIVATE_ASSETS);
+        return !string.IsNullOrEmpty(assets)
+            && StringComparer.OrdinalIgnoreCase.Equals(x: assets, y: PACKAGE_PRIVATE_ASSETS);
     }
 
     private bool CheckExcludeAssets(string packageId, in ProjectContext project)
@@ -97,6 +107,7 @@ public abstract class MustHaveAnalyzerPackage : IProjectCheck
 
         string? assets = package.Value.GetAttributeOrElement(attributeOrElementName: "ExcludeAssets");
 
-        return !string.IsNullOrEmpty(assets) && StringComparer.OrdinalIgnoreCase.Equals(x: assets, y: PACKAGE_EXCLUDE_ASSETS);
+        return !string.IsNullOrEmpty(assets)
+            && StringComparer.OrdinalIgnoreCase.Equals(x: assets, y: PACKAGE_EXCLUDE_ASSETS);
     }
 }
