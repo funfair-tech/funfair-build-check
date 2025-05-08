@@ -53,7 +53,11 @@ public abstract class ShouldUseAlternatePackage : IProjectCheck
 
         if (project.ReferencesPackage(this._matchPackageId, this.Logger))
         {
-            this.Logger.UseAlternatePackageIdForMatchedPackageId(projectName: project.Name, usePackageId: this._usePackageId, matchPackageId: this._matchPackageId);
+            this.Logger.UseAlternatePackageIdForMatchedPackageId(
+                projectName: project.Name,
+                usePackageId: this._usePackageId,
+                matchPackageId: this._matchPackageId
+            );
         }
 
         return ValueTask.CompletedTask;
