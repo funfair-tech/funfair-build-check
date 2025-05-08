@@ -31,23 +31,38 @@ public sealed class MustHaveSourceLinkPackage : IProjectCheck
         }
 
         bool packageExists = project.ReferencesPackage(packageName: PACKAGE_ID, logger: this._logger);
-        bool historicalPackageExists = project.ReferencesPackage(packageName: HISTORICAL_PACKAGE_ID, logger: this._logger);
+        bool historicalPackageExists = project.ReferencesPackage(
+            packageName: HISTORICAL_PACKAGE_ID,
+            logger: this._logger
+        );
 
         if (!packageExists && !historicalPackageExists)
         {
-            this._logger.DoesNotReferencePackageOrHistoricalPackage(projectName: project.Name, packageId: PACKAGE_ID, historicalPackageId: HISTORICAL_PACKAGE_ID);
+            this._logger.DoesNotReferencePackageOrHistoricalPackage(
+                projectName: project.Name,
+                packageId: PACKAGE_ID,
+                historicalPackageId: HISTORICAL_PACKAGE_ID
+            );
         }
 
         if (packageExists && historicalPackageExists)
         {
-            this._logger.ReferencesBothPackageAndHistoricalPackage(projectName: project.Name, packageId: PACKAGE_ID, historicalPackageId: HISTORICAL_PACKAGE_ID);
+            this._logger.ReferencesBothPackageAndHistoricalPackage(
+                projectName: project.Name,
+                packageId: PACKAGE_ID,
+                historicalPackageId: HISTORICAL_PACKAGE_ID
+            );
         }
 
         if (packageExists)
         {
             if (!this.CheckPrivateAssets(packageId: PACKAGE_ID, project: project))
             {
-                this._logger.DoesNotReferenceMustIncludePackageIdWithAPrivateAssetsAttribute(projectName: project.Name, privateAssets: PACKAGE_ID, mustIncludePackageId: PACKAGE_PRIVATE_ASSETS);
+                this._logger.DoesNotReferenceMustIncludePackageIdWithAPrivateAssetsAttribute(
+                    projectName: project.Name,
+                    privateAssets: PACKAGE_ID,
+                    mustIncludePackageId: PACKAGE_PRIVATE_ASSETS
+                );
             }
         }
 
@@ -55,9 +70,11 @@ public sealed class MustHaveSourceLinkPackage : IProjectCheck
         {
             if (!this.CheckPrivateAssets(packageId: HISTORICAL_PACKAGE_ID, project: project))
             {
-                this._logger.DoesNotReferenceMustIncludePackageIdWithAPrivateAssetsAttribute(projectName: project.Name,
-                                                                                             privateAssets: HISTORICAL_PACKAGE_ID,
-                                                                                             mustIncludePackageId: PACKAGE_PRIVATE_ASSETS);
+                this._logger.DoesNotReferenceMustIncludePackageIdWithAPrivateAssetsAttribute(
+                    projectName: project.Name,
+                    privateAssets: HISTORICAL_PACKAGE_ID,
+                    mustIncludePackageId: PACKAGE_PRIVATE_ASSETS
+                );
             }
         }
 
@@ -75,6 +92,7 @@ public sealed class MustHaveSourceLinkPackage : IProjectCheck
 
         string? assets = package.Value.GetAttributeOrElement("PrivateAssets");
 
-        return !string.IsNullOrEmpty(assets) && StringComparer.OrdinalIgnoreCase.Equals(x: assets, y: PACKAGE_PRIVATE_ASSETS);
+        return !string.IsNullOrEmpty(assets)
+            && StringComparer.OrdinalIgnoreCase.Equals(x: assets, y: PACKAGE_PRIVATE_ASSETS);
     }
 }
