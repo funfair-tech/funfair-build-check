@@ -18,7 +18,10 @@ public sealed class GlobalJsonMustNotAllowPreRelease : ISolutionCheck
 
     private readonly IRepositorySettings _repositorySettings;
 
-    public GlobalJsonMustNotAllowPreRelease(IRepositorySettings repositorySettings, ILogger<GlobalJsonMustNotAllowPreRelease> logger)
+    public GlobalJsonMustNotAllowPreRelease(
+        IRepositorySettings repositorySettings,
+        ILogger<GlobalJsonMustNotAllowPreRelease> logger
+    )
     {
         this._repositorySettings = repositorySettings;
         this._logger = logger;
@@ -43,7 +46,10 @@ public sealed class GlobalJsonMustNotAllowPreRelease : ISolutionCheck
 
         try
         {
-            GlobalJsonPacket? p = JsonSerializer.Deserialize(json: content, jsonTypeInfo: MustBeSerializable.Default.GlobalJsonPacket);
+            GlobalJsonPacket? p = JsonSerializer.Deserialize(
+                json: content,
+                jsonTypeInfo: MustBeSerializable.Default.GlobalJsonPacket
+            );
 
             if (p?.Sdk?.AllowPrerelease is not null)
             {
@@ -51,7 +57,11 @@ public sealed class GlobalJsonMustNotAllowPreRelease : ISolutionCheck
 
                 if (!this._allowPreRelease && preReleaseAllowedInConfig)
                 {
-                    this._logger.UsingIncorrectPreReleasePolicy(solutionFileName: solutionFileName, FormatPolicy(preReleaseAllowedInConfig), FormatPolicy(this._allowPreRelease));
+                    this._logger.UsingIncorrectPreReleasePolicy(
+                        solutionFileName: solutionFileName,
+                        FormatPolicy(preReleaseAllowedInConfig),
+                        FormatPolicy(this._allowPreRelease)
+                    );
                 }
             }
             else
@@ -61,14 +71,17 @@ public sealed class GlobalJsonMustNotAllowPreRelease : ISolutionCheck
         }
         catch (Exception exception)
         {
-            this._logger.FailedToReadGlobalJson(solutionFileName: solutionFileName, file: file, message: exception.Message, exception: exception);
+            this._logger.FailedToReadGlobalJson(
+                solutionFileName: solutionFileName,
+                file: file,
+                message: exception.Message,
+                exception: exception
+            );
         }
     }
 
     private static string FormatPolicy(bool preReleaseAllowed)
     {
-        return preReleaseAllowed
-            ? "Pre-Release Allowed"
-            : "Production Only";
+        return preReleaseAllowed ? "Pre-Release Allowed" : "Production Only";
     }
 }
