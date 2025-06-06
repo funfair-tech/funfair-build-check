@@ -18,10 +18,10 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 - SDK - Updated DotNet SDK to 9.0.300
 - Dependencies - Updated Microsoft.VisualStudio.Threading.Analyzers to 17.14.15
 - Dependencies - Updated Microsoft.Sbom.Targets to 4.0.3
-- Dependencies - Updated SonarAnalyzer.CSharp to 10.10.0.116381
 - Dependencies - Updated Microsoft.NET.Test.Sdk to 17.14.1
 - Dependencies - Updated Credfeto.Enumeration to 1.2.104.1195
 - Dependencies - Updated Credfeto.Version.Information.Generator to 1.0.92.617
+- Dependencies - Updated SonarAnalyzer.CSharp to 10.11.0.117924
 ### Removed
 ### Deployment Changes
 
