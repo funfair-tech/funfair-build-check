@@ -13,7 +13,6 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 - Dependencies - Updated Meziantou.Analyzer to 2.0.201
 - Dependencies - Updated FunFair.CodeAnalysis to 7.1.0.1124
 - Dependencies - Updated NuGet to 6.14.0
-- SDK - Updated DotNet SDK to 9.0.300
 - Dependencies - Updated Microsoft.VisualStudio.Threading.Analyzers to 17.14.15
 - Dependencies - Updated Microsoft.Sbom.Targets to 4.0.3
 - Dependencies - Updated Microsoft.NET.Test.Sdk to 17.14.1
@@ -23,6 +22,7 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 - Dependencies - Updated Microsoft.Extensions to 9.0.6
 - Dependencies - Updated Credfeto.Version.Information.Generator to 1.0.98.642
 - Dependencies - Updated Credfeto.Enumeration to 1.2.111.1223
+- SDK - Updated DotNet SDK to 9.0.301
 ### Removed
 ### Deployment Changes
 
