@@ -10,7 +10,6 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 ### Fixed
 ### Changed
 - Dependencies - Updated Nullable.Extended.Analyzer to 1.15.6581
-- Dependencies - Updated Meziantou.Analyzer to 2.0.201
 - Dependencies - Updated FunFair.CodeAnalysis to 7.1.0.1124
 - Dependencies - Updated NuGet to 6.14.0
 - Dependencies - Updated Microsoft.VisualStudio.Threading.Analyzers to 17.14.15
@@ -23,6 +22,7 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 - SDK - Updated DotNet SDK to 9.0.301
 - Dependencies - Updated Credfeto.Enumeration to 1.2.113.1231
 - Dependencies - Updated Credfeto.Version.Information.Generator to 1.0.101.652
+- Dependencies - Updated Meziantou.Analyzer to 2.0.202
 ### Removed
 ### Deployment Changes
 
