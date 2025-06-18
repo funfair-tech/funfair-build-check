@@ -32,9 +32,7 @@ public sealed class MustNotDisableUnexpectedWarnings : IProjectCheck
     {
         bool isTestProject = project.IsTestProject(logger: this._logger);
 
-        IReadOnlyList<string> allowedWarnings = isTestProject
-            ? AllowedTestProjectWarnings
-            : AllowedWarnings;
+        IReadOnlyList<string> allowedWarnings = isTestProject ? AllowedTestProjectWarnings : AllowedWarnings;
 
         const string nodePresence = "NoWarn";
         XmlNodeList? nodes = project.CsProjXml.SelectNodes("/Project/PropertyGroup[not(@Condition)]/" + nodePresence);
@@ -48,13 +46,23 @@ public sealed class MustNotDisableUnexpectedWarnings : IProjectCheck
 
         if (configurationGroups is not null)
         {
-            this.CheckConfigurationGroup(projectName: project.Name, configurationGroups: configurationGroups, nodePresence: nodePresence, allowedWarnings: allowedWarnings);
+            this.CheckConfigurationGroup(
+                projectName: project.Name,
+                configurationGroups: configurationGroups,
+                nodePresence: nodePresence,
+                allowedWarnings: allowedWarnings
+            );
         }
 
         return ValueTask.CompletedTask;
     }
 
-    private void CheckConfigurationGroup(string projectName, XmlNodeList configurationGroups, string nodePresence, IReadOnlyList<string> allowedWarnings)
+    private void CheckConfigurationGroup(
+        string projectName,
+        XmlNodeList configurationGroups,
+        string nodePresence,
+        IReadOnlyList<string> allowedWarnings
+    )
     {
         foreach (XmlElement propertyGroup in configurationGroups.OfType<XmlElement>())
         {
@@ -76,9 +84,18 @@ public sealed class MustNotDisableUnexpectedWarnings : IProjectCheck
 
             IReadOnlyList<string> warnings = ExtractWarnings(value);
 
-            foreach (string warning in warnings.Where(warning => !ReferencesGlobalWarning(warning) && !allowedWarnings.Contains(value: warning, comparer: StringComparer.OrdinalIgnoreCase)))
+            foreach (
+                string warning in warnings.Where(warning =>
+                    !ReferencesGlobalWarning(warning)
+                    && !allowedWarnings.Contains(value: warning, comparer: StringComparer.OrdinalIgnoreCase)
+                )
+            )
             {
-                this._logger.ConfigurationHidesWarning(projectName: projectName, configuration: configuration, warning: warning);
+                this._logger.ConfigurationHidesWarning(
+                    projectName: projectName,
+                    configuration: configuration,
+                    warning: warning
+                );
             }
         }
     }
@@ -90,8 +107,7 @@ public sealed class MustNotDisableUnexpectedWarnings : IProjectCheck
 
     private void CheckGlobalConfiguration(string projectName, XmlNodeList nodes, IReadOnlyList<string> allowedWarnings)
     {
-        foreach (XmlElement item in nodes.OfType<XmlElement>()
-                                         .Where(ElementConfiguration.HasNoParentCondition))
+        foreach (XmlElement item in nodes.OfType<XmlElement>().Where(ElementConfiguration.HasNoParentCondition))
         {
             string value = GetTextValue(item);
 
@@ -102,7 +118,11 @@ public sealed class MustNotDisableUnexpectedWarnings : IProjectCheck
 
             IReadOnlyList<string> warnings = ExtractWarnings(value);
 
-            foreach (string warning in warnings.Where(warning => !allowedWarnings.Contains(value: warning, comparer: StringComparer.OrdinalIgnoreCase)))
+            foreach (
+                string warning in warnings.Where(warning =>
+                    !allowedWarnings.Contains(value: warning, comparer: StringComparer.OrdinalIgnoreCase)
+                )
+            )
             {
                 this._logger.GlobalConfigurationHidesWarning(projectName: projectName, warning: warning);
             }
@@ -113,12 +133,12 @@ public sealed class MustNotDisableUnexpectedWarnings : IProjectCheck
     {
         return
         [
-            .. value.Split(separator: ';')
-                    .Where(predicate: HasContent)
-                    .SelectMany(selector: static s => s.Split(separator: ',')
-                                                       .Where(predicate: HasContent))
-                    .Where(predicate: static s => !string.IsNullOrWhiteSpace(s))
-                    .Order(StringComparer.OrdinalIgnoreCase)
+            .. value
+                .Split(separator: ';')
+                .Where(predicate: HasContent)
+                .SelectMany(selector: static s => s.Split(separator: ',').Where(predicate: HasContent))
+                .Where(predicate: static s => !string.IsNullOrWhiteSpace(s))
+                .Order(StringComparer.OrdinalIgnoreCase),
         ];
     }
 
