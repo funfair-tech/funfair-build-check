@@ -12,7 +12,6 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 - Dependencies - Updated Nullable.Extended.Analyzer to 1.15.6581
 - Dependencies - Updated NuGet to 6.14.0
 - Dependencies - Updated Microsoft.VisualStudio.Threading.Analyzers to 17.14.15
-- Dependencies - Updated Microsoft.Sbom.Targets to 4.0.3
 - Dependencies - Updated Microsoft.NET.Test.Sdk to 17.14.1
 - Dependencies - Updated Credfeto.Enumeration to 1.2.119.1263
 - Dependencies - Updated Credfeto.Version.Information.Generator to 1.0.107.685
@@ -25,6 +24,7 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 - Dependencies - Updated SonarAnalyzer.CSharp to 10.15.0.120848
 - SDK - Updated DotNet SDK to 9.0.303
 - Dependencies - Updated FunFair.CodeAnalysis to 7.1.11.1309
+- Dependencies - Updated Microsoft.Sbom.Targets to 4.1.0
 ### Removed
 ### Deployment Changes
 
