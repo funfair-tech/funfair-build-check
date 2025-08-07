@@ -21,12 +21,12 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 - Dependencies - Updated Roslynator.Analyzers to 4.14.0
 - Dependencies - Updated Philips.CodeAnalysis.MaintainabilityAnalyzers to 1.6.4
 - Dependencies - Updated Philips.CodeAnalysis.DuplicateCodeAnalyzer to 1.6.4
-- Dependencies - Updated FunFair.Test.Common to 6.1.280.1580
 - Dependencies - Updated Microsoft.Extensions to 9.0.8
 - Dependencies - Updated Credfeto.Version.Information.Generator to 1.0.108.756
 - Dependencies - Updated Credfeto.Enumeration to 1.2.122.1340
 - Dependencies - Updated Meziantou.Analyzer to 2.0.211
 - Dependencies - Updated FunFair.CodeAnalysis to 7.1.15.1339
+- Dependencies - Updated FunFair.Test.Common to 6.1.281.1593
 ### Removed
 ### Deployment Changes
 
