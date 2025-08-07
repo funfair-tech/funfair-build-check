@@ -23,10 +23,10 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 - Dependencies - Updated Philips.CodeAnalysis.DuplicateCodeAnalyzer to 1.6.4
 - Dependencies - Updated Microsoft.Extensions to 9.0.8
 - Dependencies - Updated Meziantou.Analyzer to 2.0.211
-- Dependencies - Updated FunFair.CodeAnalysis to 7.1.15.1339
 - Dependencies - Updated FunFair.Test.Common to 6.1.281.1593
 - Dependencies - Updated Credfeto.Version.Information.Generator to 1.0.109.760
 - Dependencies - Updated Credfeto.Enumeration to 1.2.123.1345
+- Dependencies - Updated FunFair.CodeAnalysis to 7.1.16.1341
 ### Removed
 ### Deployment Changes
 
