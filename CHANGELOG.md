@@ -18,7 +18,6 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 - Dependencies - Updated SonarAnalyzer.CSharp to 10.15.0.120848
 - Dependencies - Updated Microsoft.Sbom.Targets to 4.1.0
 - Dependencies - Updated Roslynator.Analyzers to 4.14.0
-- Dependencies - Updated Philips.CodeAnalysis.MaintainabilityAnalyzers to 1.6.4
 - Dependencies - Updated Philips.CodeAnalysis.DuplicateCodeAnalyzer to 1.6.4
 - Dependencies - Updated Microsoft.Extensions to 9.0.8
 - Dependencies - Updated Credfeto.Version.Information.Generator to 1.0.110.765
@@ -27,6 +26,7 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 - Dependencies - Updated FunFair.Test.Common to 6.1.282.1603
 - Dependencies - Updated Credfeto.Enumeration to 1.2.125.1355
 - Dependencies - Updated FunFair.CodeAnalysis to 7.1.18.1350
+- Dependencies - Updated Philips.CodeAnalysis.MaintainabilityAnalyzers to 1.7.0
 ### Removed
 ### Deployment Changes
 
