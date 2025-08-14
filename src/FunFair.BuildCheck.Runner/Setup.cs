@@ -160,7 +160,7 @@ internal static class Setup
             .AddProjectCheck<MustHaveThreadingAnalyzerPackage>()
             .AddProjectCheck<MustHaveToStringWithoutOverrideAnalyzerPackage>()
             .AddProjectCheck<MustNotHaveFxCopAnalyzerPackage>()
-            .AddProjectCheck<MustUseOpenApiAnalyzers>()
+            .AddProjectCheck<MustNotUseOpenApiAnalyzers>()
             .AddProjectCheck<NuGetAuditPolicy>()
             .AddProjectCheck<NuGetAuditLevelPolicy>()
             .AddProjectCheck<ProjectsShouldHaveTrimAnalyzerConfiguredPolicy>()

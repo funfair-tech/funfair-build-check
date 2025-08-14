@@ -27,6 +27,7 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 - Dependencies - Updated FunFair.Test.Common to 6.1.285.1620
 - Dependencies - Updated FunFair.CodeAnalysis to 7.1.22.1366
 - Dependencies - Updated Credfeto.Version.Information.Generator to 1.0.114.790
+- Switched Must user open api analyzers to must not as building with net10 reports warnings The IncludeOpenAPIAnalyzers property and its associated MVC API analyzers are deprecated and will be removed in a future release.
 ### Removed
 ### Deployment Changes
 

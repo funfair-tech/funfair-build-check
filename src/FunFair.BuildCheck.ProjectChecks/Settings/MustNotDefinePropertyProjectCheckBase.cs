@@ -2,20 +2,19 @@ using System.Threading;
 using System.Threading.Tasks;
 using FunFair.BuildCheck.Interfaces;
 using FunFair.BuildCheck.ProjectChecks.Helpers;
+using FunFair.BuildCheck.ProjectChecks.Settings.LoggingExtensions;
 using Microsoft.Extensions.Logging;
 
 namespace FunFair.BuildCheck.ProjectChecks.Settings;
 
-public abstract class SimplePropertyProjectCheckBase : IProjectCheck
+public abstract class MustNotDefinePropertyProjectCheckBase : IProjectCheck
 {
     private readonly ILogger _logger;
     private readonly string _propertyName;
-    private readonly string _requiredValue;
 
-    protected SimplePropertyProjectCheckBase(string propertyName, string requiredValue, ILogger logger)
+    protected MustNotDefinePropertyProjectCheckBase(string propertyName, ILogger logger)
     {
         this._propertyName = propertyName;
-        this._requiredValue = requiredValue;
         this._logger = logger;
     }
 
@@ -28,14 +27,14 @@ public abstract class SimplePropertyProjectCheckBase : IProjectCheck
 
     private void DoCheck(in ProjectContext project)
     {
-        if (this.CanCheck(project: project))
+        if (!this.CanCheck(project: project))
         {
-            ProjectValueHelpers.CheckValue(
-                project: project,
-                nodePresence: this._propertyName,
-                requiredValue: this._requiredValue,
-                logger: this._logger
-            );
+            return;
+        }
+
+        if (project.HasProperty(this._propertyName))
+        {
+            this._logger.ProjectShouldNotDefineProperty(project.Name, this._propertyName);
         }
     }
 
