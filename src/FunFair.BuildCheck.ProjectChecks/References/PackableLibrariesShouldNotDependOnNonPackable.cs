@@ -16,7 +16,10 @@ public sealed class PackableLibrariesShouldNotDependOnNonPackable : IProjectChec
     private readonly ILogger<PackableLibrariesShouldNotDependOnNonPackable> _logger;
     private readonly IProjectXmlLoader _projectXmlLoader;
 
-    public PackableLibrariesShouldNotDependOnNonPackable(IProjectXmlLoader projectXmlLoader, ILogger<PackableLibrariesShouldNotDependOnNonPackable> logger)
+    public PackableLibrariesShouldNotDependOnNonPackable(
+        IProjectXmlLoader projectXmlLoader,
+        ILogger<PackableLibrariesShouldNotDependOnNonPackable> logger
+    )
     {
         this._projectXmlLoader = projectXmlLoader;
         this._logger = logger;
@@ -55,14 +58,20 @@ public sealed class PackableLibrariesShouldNotDependOnNonPackable : IProjectChec
 
             referencedProject = i.FullName;
 
-            XmlDocument otherProject = await this._projectXmlLoader.LoadAsync(path: referencedProject, cancellationToken: cancellationToken);
+            XmlDocument otherProject = await this._projectXmlLoader.LoadAsync(
+                path: referencedProject,
+                cancellationToken: cancellationToken
+            );
 
             // ! Directory name should always be valid here
             ProjectContext op = new(i.Name, i.DirectoryName!, otherProject);
 
             if (!op.IsPackable())
             {
-                this._logger.PackableProjectReferencesNonPackableProject(projectName: project.Name, referencedProject: referencedProject);
+                this._logger.PackableProjectReferencesNonPackableProject(
+                    projectName: project.Name,
+                    referencedProject: referencedProject
+                );
             }
         }
     }
