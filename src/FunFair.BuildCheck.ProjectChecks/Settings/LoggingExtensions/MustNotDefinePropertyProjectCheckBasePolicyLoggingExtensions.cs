@@ -2,7 +2,7 @@ using Microsoft.Extensions.Logging;
 
 namespace FunFair.BuildCheck.ProjectChecks.Settings.LoggingExtensions;
 
-internal static partial  class MustNotDefinePropertyProjectCheckBasePolicyLoggingExtensions
+internal static partial class MustNotDefinePropertyProjectCheckBasePolicyLoggingExtensions
 {
     [LoggerMessage(
         EventId = 1,
