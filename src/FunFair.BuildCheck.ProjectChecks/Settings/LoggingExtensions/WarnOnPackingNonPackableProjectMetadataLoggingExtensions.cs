@@ -38,5 +38,4 @@ internal static partial class WarnOnPackingNonPackableProjectMetadataLoggingExte
         string propertyName,
         string propertyValue
     );
-   
 }
