@@ -14,5 +14,4 @@ internal static partial class PackableMetadataBaseLoggingExtensions
         string projectName,
         string property
     );
-
 }
