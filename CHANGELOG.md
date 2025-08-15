@@ -7,16 +7,20 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 
 ## [Unreleased]
 ### Added
-- Check for <WarnOnPackingNonPackableProject> property on non-packable projects so can build with warnings as errors without getting errors saying that the explicitly <IsPackable>false</IsPackable> project couldn't be packed
 ### Fixed
 ### Changed
-- Dependencies - Updated Philips.CodeAnalysis.MaintainabilityAnalyzers to 1.8.0
 ### Removed
 ### Deployment Changes
 
 <!--
 Releases that have at least been deployed to staging, BUT NOT necessarily released to live.  Changes should be moved from [Unreleased] into here as they are merged into the appropriate release branch
 -->
+## [474.1.4] - 2025-08-15
+### Added
+- Check for <WarnOnPackingNonPackableProject> property on non-packable projects so can build with warnings as errors without getting errors saying that the explicitly <IsPackable>false</IsPackable> project couldn't be packed
+### Changed
+- Dependencies - Updated Philips.CodeAnalysis.MaintainabilityAnalyzers to 1.8.0
+
 ## [474.1.3] - 2025-08-14
 ### Changed
 - Dependencies - Updated Nullable.Extended.Analyzer to 1.15.6581
