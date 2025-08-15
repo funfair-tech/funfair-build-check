@@ -126,6 +126,7 @@ internal static class Setup
             .AddProjectCheck<ImportCommonProps>()
             .AddProjectCheck<IsTransformWebConfigDisabledShouldBeTrueForWebLibraryProjects>()
             .AddProjectCheck<PackableLibrariesShouldNotDependOnNonPackable>()
+            .AddProjectCheck<WarnOnPackingNonPackableProjectMetadata>()
             .AddProjectCheck<PackageTagsMetadata>()
             .AddProjectCheck<RepositoryUrlMetadata>();
     }

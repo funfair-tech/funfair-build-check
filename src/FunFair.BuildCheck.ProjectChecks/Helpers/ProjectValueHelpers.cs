@@ -339,10 +339,10 @@ internal static class ProjectValueHelpers
     {
         const string defaultType = "Library";
 
-        return GetStringProperty(project: project, path: "/Project/PropertyGroup/OutputType", defaultType: defaultType);
+        return project.GetStringProperty(path: "/Project/PropertyGroup/OutputType", defaultType: defaultType);
     }
 
-    private static string GetStringProperty(in ProjectContext project, string path, string defaultType)
+    public  static string GetStringProperty(this in ProjectContext project, string path, string defaultType)
     {
         XmlNode? outputTypeNode = project.CsProjXml.SelectSingleNode(path);
 
@@ -358,31 +358,22 @@ internal static class ProjectValueHelpers
     {
         const string defaultType = "";
 
-        return GetStringProperty(
-            project: project,
-            path: "/Project/PropertyGroup/RuntimeIdentifiers",
-            defaultType: defaultType
-        );
+        return project.GetStringProperty(path: "/Project/PropertyGroup/RuntimeIdentifiers", defaultType: defaultType
+);
     }
 
     public static bool IsPackable(in this ProjectContext project)
     {
-        string value = GetStringProperty(
-            project: project,
-            path: "/Project/PropertyGroup/IsPackable",
-            defaultType: "true"
-        );
+        string value = project.GetStringProperty(path: "/Project/PropertyGroup/IsPackable", defaultType: "true"
+);
 
         return StringComparer.OrdinalIgnoreCase.Equals(x: value, y: "true");
     }
 
     public static bool IsPublishable(in this ProjectContext project)
     {
-        string value = GetStringProperty(
-            project: project,
-            path: "/Project/PropertyGroup/IsPublishable",
-            defaultType: "true"
-        );
+        string value = project.GetStringProperty(path: "/Project/PropertyGroup/IsPublishable", defaultType: "true"
+);
 
         return StringComparer.OrdinalIgnoreCase.Equals(x: value, y: "true");
     }

@@ -7,6 +7,7 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 
 ## [Unreleased]
 ### Added
+- Check for WarnOnPackingNonPackableProject on non packable projects so can build with warnigns as errors without getting errors saysing that the explicitly non packable project couldn't be packed
 ### Fixed
 ### Changed
 - Dependencies - Updated Philips.CodeAnalysis.MaintainabilityAnalyzers to 1.8.0
