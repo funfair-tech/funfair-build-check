@@ -21,20 +21,31 @@ public sealed class WarnOnPackingNonPackableProjectMetadata : IProjectCheck
 
     public ValueTask CheckAsync(ProjectContext project, CancellationToken cancellationToken)
     {
-        string notPresent = Guid.NewGuid()
-                                .ToString();
+        string notPresent = Guid.NewGuid().ToString();
         string disablePackingWarning = project.GetStringProperty("/Project/PropertyGroup/" + PROPERTY_NAME, notPresent);
 
         return project.IsPackable()
-            ? this.CheckPackableAsync(project: project, disablePackingWarning: disablePackingWarning, notPresent: notPresent)
-            : this.CheckNotPackableAsync(project: project, disablePackingWarning: disablePackingWarning, notPresent: notPresent);
+            ? this.CheckPackableAsync(
+                project: project,
+                disablePackingWarning: disablePackingWarning,
+                notPresent: notPresent
+            )
+            : this.CheckNotPackableAsync(
+                project: project,
+                disablePackingWarning: disablePackingWarning,
+                notPresent: notPresent
+            );
     }
 
     private ValueTask CheckPackableAsync(in ProjectContext project, string disablePackingWarning, string notPresent)
     {
         if (!StringComparer.OrdinalIgnoreCase.Equals(disablePackingWarning, notPresent))
         {
-            this._logger.PackableProjectDefinesNotWarnOnPackingNonPackableProjectToFalse(project.Name, PROPERTY_NAME, disablePackingWarning);
+            this._logger.PackableProjectDefinesNotWarnOnPackingNonPackableProjectToFalse(
+                project.Name,
+                PROPERTY_NAME,
+                disablePackingWarning
+            );
         }
 
         return ValueTask.CompletedTask;
@@ -48,7 +59,11 @@ public sealed class WarnOnPackingNonPackableProjectMetadata : IProjectCheck
         }
         else if (!StringComparer.OrdinalIgnoreCase.Equals(disablePackingWarning, "false"))
         {
-            this._logger.NonPackableProjectDoesNotWarnOnPackingNonPackableProjectToFalse(project.Name, PROPERTY_NAME, disablePackingWarning);
+            this._logger.NonPackableProjectDoesNotWarnOnPackingNonPackableProjectToFalse(
+                project.Name,
+                PROPERTY_NAME,
+                disablePackingWarning
+            );
         }
 
         return ValueTask.CompletedTask;
