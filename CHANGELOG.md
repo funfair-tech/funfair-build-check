@@ -7,7 +7,6 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 
 ## [Unreleased]
 ### Added
-- Check for duplicate properties
 ### Fixed
 ### Changed
 ### Removed
@@ -16,6 +15,10 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 <!--
 Releases that have at least been deployed to staging, BUT NOT necessarily released to live.  Changes should be moved from [Unreleased] into here as they are merged into the appropriate release branch
 -->
+## [474.1.5] - 2025-08-16
+### Added
+- Check for duplicate properties
+
 ## [474.1.4] - 2025-08-15
 ### Added
 - Check for <WarnOnPackingNonPackableProject> property on non-packable projects so can build with warnings as errors without getting errors saying that the explicitly <IsPackable>false</IsPackable> project couldn't be packed
