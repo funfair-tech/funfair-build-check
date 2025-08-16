@@ -41,7 +41,7 @@ public sealed class NoDuplicateProjectSettings : IProjectCheck
 
             foreach (XmlElement property in propertyGroup.ChildNodes.OfType<XmlElement>())
             {
-                if(property.HasAttribute("Condition"))
+                if (property.HasAttribute("Condition"))
                 {
                     // Skip properties that have a condition
                     continue;
@@ -83,7 +83,11 @@ public sealed class NoDuplicateProjectSettings : IProjectCheck
         return newItem;
     }
 
-    private static void Include(Dictionary<string, NodeTracking> tracking, Dictionary<string, HashSet<string>> caseInsensitiveNames, XmlElement node)
+    private static void Include(
+        Dictionary<string, NodeTracking> tracking,
+        Dictionary<string, HashSet<string>> caseInsensitiveNames,
+        XmlElement node
+    )
     {
         NodeTracking nt = GetNodeTracking(tracking: tracking, node: node);
 
@@ -134,7 +138,7 @@ public sealed class NoDuplicateProjectSettings : IProjectCheck
 
             bool includesReferenceToSelf = value.Contains($"$({node.Name})", StringComparison.Ordinal);
 
-            this._items.Add( (node, includesReferenceToSelf) );
+            this._items.Add((node, includesReferenceToSelf));
         }
     }
 }
