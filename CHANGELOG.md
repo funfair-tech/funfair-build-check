@@ -7,6 +7,7 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 
 ## [Unreleased]
 ### Added
+- Check for duplicate properties
 ### Fixed
 ### Changed
 ### Removed
