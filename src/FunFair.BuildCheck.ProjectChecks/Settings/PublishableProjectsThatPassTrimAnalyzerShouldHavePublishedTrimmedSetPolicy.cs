@@ -13,14 +13,16 @@ public sealed class PublishableProjectsThatPassTrimAnalyzerShouldHavePublishedTr
 
     protected override bool CanCheck(in ProjectContext project)
     {
-        // if (!project.IsPublishable())
-        // {
-        //     return false;
-        // }
-        //
-        // string? value = project.GetProperty("EnableTrimAnalyzer");
-        //
-        // return !string.IsNullOrWhiteSpace(value) && StringComparer.OrdinalIgnoreCase.Equals(x: value, y: "true");
+#if PUBLISH_TRIMMED_BUILDS_CLEAN
+        if (!project.IsPublishable())
+        {
+            return false;
+        }
+
+        string? value = project.GetProperty("EnableTrimAnalyzer");
+
+        return !string.IsNullOrWhiteSpace(value) && StringComparer.OrdinalIgnoreCase.Equals(x: value, y: "true");
+#endif
         return false;
     }
 }
