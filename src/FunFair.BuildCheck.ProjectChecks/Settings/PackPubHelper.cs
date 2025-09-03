@@ -7,7 +7,14 @@ namespace FunFair.BuildCheck.ProjectChecks.Settings;
 
 internal static class PackPubHelper
 {
-    public static void Check(in ProjectContext project, bool isTestProject, string outputType, string property, Func<bool, bool, bool, string, bool> policy, ILogger logger)
+    public static void Check(
+        in ProjectContext project,
+        bool isTestProject,
+        string outputType,
+        string property,
+        Func<bool, bool, bool, string, bool> policy,
+        ILogger logger
+    )
     {
         bool isDotNetTool = project.IsDotNetTool();
 
@@ -15,6 +22,11 @@ internal static class PackPubHelper
 
         bool packable = policy(arg1: isDotNetTool, arg2: isExe, arg3: isTestProject, arg4: project.Name);
 
-        ProjectValueHelpers.CheckValue(project: project, nodePresence: property, requiredValue: packable, logger: logger);
+        ProjectValueHelpers.CheckValue(
+            project: project,
+            nodePresence: property,
+            requiredValue: packable,
+            logger: logger
+        );
     }
 }
