@@ -57,14 +57,7 @@ public sealed class OnlyExesShouldBePublishablePolicy : IProjectCheck
         }
 
         bool isTestProject = this.IsProjectATestProject(project);
-
-        bool isDotNetTool = project.IsDotNetTool();
-
-        bool isExe = StringComparer.OrdinalIgnoreCase.Equals(x: "Exe", project.GetOutputType());
-
-        bool packable = this._packablePolicy(arg1: isDotNetTool, arg2: isExe, arg3: isTestProject, arg4: project.Name);
-
-        ProjectValueHelpers.CheckValue(project: project, nodePresence: "IsPublishable", requiredValue: packable, logger: this._logger);
+        PackPubHelper.Check(project: project, isTestProject: isTestProject, outputType: "Exe", property: "IsPublishable", policy: this._packablePolicy, logger: this._logger);
 
         return ValueTask.CompletedTask;
     }
