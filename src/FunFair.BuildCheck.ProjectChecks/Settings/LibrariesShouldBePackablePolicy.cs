@@ -17,10 +17,7 @@ public sealed class LibrariesShouldBePackablePolicy : IProjectCheck
     private readonly Func<bool, bool, bool, string, bool> _packablePolicy;
     private readonly IRepositorySettings _repositorySettings;
 
-    public LibrariesShouldBePackablePolicy(
-        IRepositorySettings repositorySettings,
-        ILogger<LibrariesShouldBePackablePolicy> logger
-    )
+    public LibrariesShouldBePackablePolicy(IRepositorySettings repositorySettings, ILogger<LibrariesShouldBePackablePolicy> logger)
     {
         this._repositorySettings = repositorySettings;
         this._logger = logger;
@@ -38,25 +35,21 @@ public sealed class LibrariesShouldBePackablePolicy : IProjectCheck
         }
         else if (StringComparer.OrdinalIgnoreCase.Equals(x: packable, y: "LIBRARIES"))
         {
-            this._packablePolicy = (isDotNetTool, isLibrary, isTestProject, _) =>
-                isLibrary && !isTestProject && !isDotNetTool;
+            this._packablePolicy = (isDotNetTool, isLibrary, isTestProject, _) => isLibrary && !isTestProject && !isDotNetTool;
         }
         else if (StringComparer.OrdinalIgnoreCase.Equals(x: packable, y: "LIBRARY_TOOL"))
         {
-            this._packablePolicy = (isDotNetTool, isLibrary, isTestProject, _) =>
-                (isLibrary || isDotNetTool) && !isTestProject;
+            this._packablePolicy = (isDotNetTool, isLibrary, isTestProject, _) => (isLibrary || isDotNetTool) && !isTestProject;
         }
         else if (StringComparer.OrdinalIgnoreCase.Equals(x: packable, y: "TOOLS"))
         {
-            this._packablePolicy = (isDotNetTool, isLibrary, isTestProject, _) =>
-                !isLibrary && !isTestProject && isDotNetTool;
+            this._packablePolicy = (isDotNetTool, isLibrary, isTestProject, _) => !isLibrary && !isTestProject && isDotNetTool;
         }
         else
         {
             ImmutableHashSet<string> projects = GetProjects(packable);
 
-            this._packablePolicy = (_, _, isTestProject, projectName) =>
-                !isTestProject && projects.Contains(projectName);
+            this._packablePolicy = (_, _, isTestProject, projectName) => NotATestProjectButPackable(isTestProject: isTestProject, projects: projects, projectName: projectName);
         }
     }
 
@@ -67,41 +60,30 @@ public sealed class LibrariesShouldBePackablePolicy : IProjectCheck
             return ValueTask.CompletedTask;
         }
 
-        bool isTestProject =
-            project.IsTestProject(logger: this._logger)
-            && (
-                this._isUnitTestBase
-                    && project.Name.EndsWith(value: ".Tests", comparisonType: StringComparison.OrdinalIgnoreCase)
-                || !this._isUnitTestBase
-            );
+        bool isTestProject = project.IsTestProject(logger: this._logger) &&
+                             ((this._isUnitTestBase && project.Name.EndsWith(value: ".Tests", comparisonType: StringComparison.OrdinalIgnoreCase)) || !this._isUnitTestBase);
 
         bool isDotNetTool = project.IsDotNetTool();
 
         bool isLibrary = StringComparer.OrdinalIgnoreCase.Equals(x: "Library", project.GetOutputType());
 
-        bool packable = this._packablePolicy(
-            arg1: isDotNetTool,
-            arg2: isLibrary,
-            arg3: isTestProject,
-            arg4: project.Name
-        );
+        bool packable = this._packablePolicy(arg1: isDotNetTool, arg2: isLibrary, arg3: isTestProject, arg4: project.Name);
 
-        ProjectValueHelpers.CheckValue(
-            project: project,
-            nodePresence: "IsPackable",
-            requiredValue: packable,
-            logger: this._logger
-        );
+        ProjectValueHelpers.CheckValue(project: project, nodePresence: "IsPackable", requiredValue: packable, logger: this._logger);
 
         return ValueTask.CompletedTask;
     }
 
+    private static bool NotATestProjectButPackable(bool isTestProject, ImmutableHashSet<string> projects, string projectName)
+    {
+        return !isTestProject && projects.Contains(projectName);
+    }
+
     private static ImmutableHashSet<string> GetProjects(string packable)
     {
-        return packable
-            .Split(",")
-            .Select(static p => p.Trim())
-            .Where(static p => !string.IsNullOrWhiteSpace(p))
-            .ToImmutableHashSet(StringComparer.OrdinalIgnoreCase);
+        return packable.Split(",")
+                       .Select(static p => p.Trim())
+                       .Where(static p => !string.IsNullOrWhiteSpace(p))
+                       .ToImmutableHashSet(StringComparer.OrdinalIgnoreCase);
     }
 }
