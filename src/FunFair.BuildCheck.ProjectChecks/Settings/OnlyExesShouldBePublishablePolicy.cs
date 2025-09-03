@@ -17,7 +17,10 @@ public sealed class OnlyExesShouldBePublishablePolicy : IProjectCheck
     private readonly Func<bool, bool, bool, string, bool> _packablePolicy;
     private readonly IRepositorySettings _repositorySettings;
 
-    public OnlyExesShouldBePublishablePolicy(IRepositorySettings repositorySettings, ILogger<OnlyExesShouldBePublishablePolicy> logger)
+    public OnlyExesShouldBePublishablePolicy(
+        IRepositorySettings repositorySettings,
+        ILogger<OnlyExesShouldBePublishablePolicy> logger
+    )
     {
         this._repositorySettings = repositorySettings;
         this._logger = logger;
@@ -45,7 +48,8 @@ public sealed class OnlyExesShouldBePublishablePolicy : IProjectCheck
         {
             ImmutableHashSet<string> projects = GetProjects(packable);
 
-            this._packablePolicy = (_, _, isTestProject, projectName) => NotATestProjectButPackable(isTestProject: isTestProject, projects: projects, projectName: projectName);
+            this._packablePolicy = (_, _, isTestProject, projectName) =>
+                NotATestProjectButPackable(isTestProject: isTestProject, projects: projects, projectName: projectName);
         }
     }
 
@@ -57,12 +61,23 @@ public sealed class OnlyExesShouldBePublishablePolicy : IProjectCheck
         }
 
         bool isTestProject = this.IsProjectATestProject(project);
-        PackPubHelper.Check(project: project, isTestProject: isTestProject, outputType: "Exe", property: "IsPublishable", policy: this._packablePolicy, logger: this._logger);
+        PackPubHelper.Check(
+            project: project,
+            isTestProject: isTestProject,
+            outputType: "Exe",
+            property: "IsPublishable",
+            policy: this._packablePolicy,
+            logger: this._logger
+        );
 
         return ValueTask.CompletedTask;
     }
 
-    private static bool NotATestProjectButPackable(bool isTestProject, ImmutableHashSet<string> projects, string projectName)
+    private static bool NotATestProjectButPackable(
+        bool isTestProject,
+        ImmutableHashSet<string> projects,
+        string projectName
+    )
     {
         return !isTestProject && projects.Contains(projectName);
     }
@@ -79,14 +94,16 @@ public sealed class OnlyExesShouldBePublishablePolicy : IProjectCheck
 
     private bool IsUnitTestBase(in ProjectContext project)
     {
-        return this._isUnitTestBase && project.Name.EndsWith(value: ".Tests", comparisonType: StringComparison.OrdinalIgnoreCase);
+        return this._isUnitTestBase
+            && project.Name.EndsWith(value: ".Tests", comparisonType: StringComparison.OrdinalIgnoreCase);
     }
 
     private static ImmutableHashSet<string> GetProjects(string packable)
     {
-        return packable.Split(",")
-                       .Select(static p => p.Trim())
-                       .Where(static p => !string.IsNullOrWhiteSpace(p))
-                       .ToImmutableHashSet(StringComparer.OrdinalIgnoreCase);
+        return packable
+            .Split(",")
+            .Select(static p => p.Trim())
+            .Where(static p => !string.IsNullOrWhiteSpace(p))
+            .ToImmutableHashSet(StringComparer.OrdinalIgnoreCase);
     }
 }
