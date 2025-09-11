@@ -13,6 +13,7 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 - SDK - Updated DotNet SDK to 9.0.305
 - Dependencies - Updated FunFair.CodeAnalysis to 7.1.24.1452
 - Dependencies - Updated Meziantou.Analyzer to 2.0.218
+- Dotnet 10
 ### Removed
 ### Deployment Changes
 
