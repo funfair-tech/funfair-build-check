@@ -7,20 +7,24 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 
 ## [Unreleased]
 ### Added
-- Support for Slnx files
 ### Fixed
 ### Changed
-- Dependencies - Updated Microsoft.Sbom.Targets to 4.1.2
-- SDK - Updated DotNet SDK to 9.0.305
-- Dependencies - Updated FunFair.CodeAnalysis to 7.1.24.1452
-- Dependencies - Updated Meziantou.Analyzer to 2.0.218
-- Dotnet 10
 ### Removed
 ### Deployment Changes
 
 <!--
 Releases that have at least been deployed to staging, BUT NOT necessarily released to live.  Changes should be moved from [Unreleased] into here as they are merged into the appropriate release branch
 -->
+## [474.2.0] - 2025-09-22
+### Added
+- Support for Slnx files
+### Changed
+- Dependencies - Updated Microsoft.Sbom.Targets to 4.1.2
+- SDK - Updated DotNet SDK to 9.0.305
+- Dependencies - Updated FunFair.CodeAnalysis to 7.1.24.1452
+- Dependencies - Updated Meziantou.Analyzer to 2.0.218
+- Dotnet 10
+
 ## [474.1.6] - 2025-09-02
 ### Changed
 - Dependencies - Updated xunit.v3 to 3.0.1
