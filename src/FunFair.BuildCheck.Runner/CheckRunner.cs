@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
@@ -176,10 +177,76 @@ public static class CheckRunner
         );
     }
 
-    private static async ValueTask<IReadOnlyList<SolutionProject>> LoadProjectsAsync(
-        string solution,
-        CancellationToken cancellationToken
-    )
+    private static ValueTask<IReadOnlyList<SolutionProject>> LoadProjectsAsync(string solution, in CancellationToken cancellationToken)
+    {
+        if (StringComparer.OrdinalIgnoreCase.Equals(Path.GetExtension(solution),".sln"))
+        {
+            return LoadLegacySolutionProjectsAsync(solution, cancellationToken);
+        }
+
+        if (StringComparer.OrdinalIgnoreCase.Equals(Path.GetExtension(solution),".slnx"))
+        {
+            return LoadXmlSolutionProjectsAsync(solution, cancellationToken);
+        }
+
+        throw new ArgumentOutOfRangeException(nameof(solution), solution, "Not a .sln or .slnx file");
+    }
+
+    private static async ValueTask<IReadOnlyList<SolutionProject>> LoadXmlSolutionProjectsAsync(string solution, CancellationToken cancellationToken)
+    {
+        string? basePath = Path.GetDirectoryName(solution);
+
+        if (string.IsNullOrEmpty(basePath))
+        {
+            throw new ArgumentOutOfRangeException(nameof(solution), solution, "Could not get solution directory");
+        }
+
+        XmlDocument xmlDocument = await LoadXmlSolutionAsync(solution, cancellationToken);
+
+        XmlNodeList? projectNodes = xmlDocument.SelectNodes("/Solution/Project");
+
+        if (projectNodes is null)
+        {
+            return [];
+        }
+
+
+        return
+        [
+            ..projectNodes.Cast<XmlElement>()
+                          .Select(ExtractProject)
+        ];
+
+
+        SolutionProject ExtractProject(XmlElement xmlElement)
+        {
+            string fileName = xmlElement.GetAttribute("Path");
+            string displayName = Path.GetFileNameWithoutExtension(fileName);
+
+            Console.WriteLine($" * {displayName} = {fileName}");
+
+            string fullPath = Path.Combine(path1: basePath, PathHelpers.ConvertToNative(fileName));
+            Console.WriteLine($"    - {fullPath}");
+
+            return new(fileName: fullPath, displayName: displayName);
+        }
+    }
+
+    private static async ValueTask<XmlDocument> LoadXmlSolutionAsync(string path, CancellationToken cancellationToken)
+    {
+        string content = await File.ReadAllTextAsync(
+            path: path,
+            encoding: Encoding.UTF8,
+            cancellationToken: cancellationToken
+        );
+        XmlDocument doc = new();
+
+        doc.LoadXml(content);
+
+        return doc;
+    }
+
+    private static async ValueTask<IReadOnlyList<SolutionProject>> LoadLegacySolutionProjectsAsync(string solution, CancellationToken cancellationToken)
     {
         string[] text = await File.ReadAllLinesAsync(path: solution, cancellationToken: cancellationToken);
 

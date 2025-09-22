@@ -23,7 +23,7 @@ internal static class Program
         Console.WriteLine();
         Console.WriteLine(value: "Usage:");
         Console.WriteLine(
-            $"{typeof(Program).Namespace} -Solution D:\\Source\\Solution.sln [-WarningAsErrors true|false] [-PreReleaseBuild true|false]"
+            $"{typeof(Program).Namespace} -Solution D:\\Source\\Solution.slnx [-WarningAsErrors true|false] [-PreReleaseBuild true|false]"
         );
     }
 
