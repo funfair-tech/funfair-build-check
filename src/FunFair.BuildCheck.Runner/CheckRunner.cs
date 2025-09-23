@@ -20,79 +20,48 @@ public static class CheckRunner
 {
     private static readonly Regex ProjectReferenceRegex = SourceGenerated.ProjectReferenceRegex();
 
-    public static async ValueTask<int> CheckAsync(
-        string solutionFileName,
-        bool warningsAsErrors,
-        IFrameworkSettings frameworkSettings,
-        IProjectClassifier projectClassifier,
-        ICheckConfiguration checkConfiguration,
-        Func<IServiceCollection, IServiceProvider> buildServiceProvider,
-        ILogger logger,
-        CancellationToken cancellationToken
-    )
+    public static async ValueTask<int> CheckAsync(string solutionFileName,
+                                                  bool warningsAsErrors,
+                                                  IFrameworkSettings frameworkSettings,
+                                                  IProjectClassifier projectClassifier,
+                                                  ICheckConfiguration checkConfiguration,
+                                                  Func<IServiceCollection, IServiceProvider> buildServiceProvider,
+                                                  ILogger logger,
+                                                  CancellationToken cancellationToken)
     {
-        IReadOnlyList<SolutionProject> projects = await LoadProjectsAsync(
-            solution: solutionFileName,
-            cancellationToken: cancellationToken
-        );
-        IServiceProvider services = Setup(
-            warningsAsErrors: warningsAsErrors,
-            projects: projects,
-            frameworkSettings: frameworkSettings,
-            projectClassifier: projectClassifier,
-            checkConfiguration: checkConfiguration,
-            buildServiceProvider: buildServiceProvider,
-            logger: logger
-        );
+        IReadOnlyList<SolutionProject> projects = await LoadProjectsAsync(solution: solutionFileName, cancellationToken: cancellationToken);
+        IServiceProvider services = Setup(warningsAsErrors: warningsAsErrors,
+                                          projects: projects,
+                                          frameworkSettings: frameworkSettings,
+                                          projectClassifier: projectClassifier,
+                                          checkConfiguration: checkConfiguration,
+                                          buildServiceProvider: buildServiceProvider,
+                                          logger: logger);
 
         ITrackingLogger logging = services.GetRequiredService<ITrackingLogger>();
 
-        await PerformChecksAsync(
-            services: services,
-            solutionFileName: solutionFileName,
-            logging: logging,
-            cancellationToken: cancellationToken
-        );
+        await PerformChecksAsync(services: services, solutionFileName: solutionFileName, logging: logging, cancellationToken: cancellationToken);
 
         return (int)logging.Errors;
     }
 
-    private static async ValueTask PerformChecksAsync(
-        IServiceProvider services,
-        string solutionFileName,
-        ITrackingLogger logging,
-        CancellationToken cancellationToken
-    )
+    private static async ValueTask PerformChecksAsync(IServiceProvider services, string solutionFileName, ITrackingLogger logging, CancellationToken cancellationToken)
     {
         IProjectXmlLoader projectXmlLoader = services.GetRequiredService<IProjectXmlLoader>();
         IReadOnlyList<ISolutionCheck> solutionChecks = RegisteredSolutionChecks(services);
         IReadOnlyList<IProjectCheck> projectChecks = RegisteredProjectChecks(services);
 
-        await TestSolutionAsync(
-            solutionFileName: solutionFileName,
-            solutionChecks: solutionChecks,
-            cancellationToken: cancellationToken
-        );
+        await TestSolutionAsync(solutionFileName: solutionFileName, solutionChecks: solutionChecks, cancellationToken: cancellationToken);
 
         IReadOnlyList<SolutionProject> projects = services.GetRequiredService<IReadOnlyList<SolutionProject>>();
 
         foreach (SolutionProject project in projects)
         {
-            await CheckProjectAsync(
-                project: project,
-                projectXmlLoader: projectXmlLoader,
-                projectChecks: projectChecks,
-                logging: logging,
-                cancellationToken: cancellationToken
-            );
+            await CheckProjectAsync(project: project, projectXmlLoader: projectXmlLoader, projectChecks: projectChecks, logging: logging, cancellationToken: cancellationToken);
         }
     }
 
-    private static async ValueTask TestSolutionAsync(
-        string solutionFileName,
-        IReadOnlyList<ISolutionCheck> solutionChecks,
-        CancellationToken cancellationToken
-    )
+    private static async ValueTask TestSolutionAsync(string solutionFileName, IReadOnlyList<ISolutionCheck> solutionChecks, CancellationToken cancellationToken)
     {
         foreach (ISolutionCheck check in solutionChecks)
         {
@@ -100,13 +69,11 @@ public static class CheckRunner
         }
     }
 
-    private static async ValueTask CheckProjectAsync(
-        SolutionProject project,
-        IProjectXmlLoader projectXmlLoader,
-        IReadOnlyList<IProjectCheck> projectChecks,
-        ITrackingLogger logging,
-        CancellationToken cancellationToken
-    )
+    private static async ValueTask CheckProjectAsync(SolutionProject project,
+                                                     IProjectXmlLoader projectXmlLoader,
+                                                     IReadOnlyList<IProjectCheck> projectChecks,
+                                                     ITrackingLogger logging,
+                                                     CancellationToken cancellationToken)
     {
         logging.LogCheckingProject(project.DisplayName);
 
@@ -119,25 +86,14 @@ public static class CheckRunner
             return;
         }
 
-        XmlDocument doc = await projectXmlLoader.LoadAsync(
-            path: project.FileName,
-            cancellationToken: cancellationToken
-        );
+        XmlDocument doc = await projectXmlLoader.LoadAsync(path: project.FileName, cancellationToken: cancellationToken);
 
         ProjectContext projectContext = new(project.DisplayName, projectFolder, doc);
 
-        await TestProjectAsync(
-            projectChecks: projectChecks,
-            project: projectContext,
-            cancellationToken: cancellationToken
-        );
+        await TestProjectAsync(projectChecks: projectChecks, project: projectContext, cancellationToken: cancellationToken);
     }
 
-    private static async ValueTask TestProjectAsync(
-        IReadOnlyList<IProjectCheck> projectChecks,
-        ProjectContext project,
-        CancellationToken cancellationToken
-    )
+    private static async ValueTask TestProjectAsync(IReadOnlyList<IProjectCheck> projectChecks, ProjectContext project, CancellationToken cancellationToken)
     {
         foreach (IProjectCheck check in projectChecks)
         {
@@ -145,46 +101,37 @@ public static class CheckRunner
         }
     }
 
-    private static IServiceProvider Setup(
-        bool warningsAsErrors,
-        IReadOnlyList<SolutionProject> projects,
-        IFrameworkSettings frameworkSettings,
-        IProjectClassifier projectClassifier,
-        ICheckConfiguration checkConfiguration,
-        Func<IServiceCollection, IServiceProvider> buildServiceProvider,
-        ILogger logger
-    )
+    private static IServiceProvider Setup(bool warningsAsErrors,
+                                          IReadOnlyList<SolutionProject> projects,
+                                          IFrameworkSettings frameworkSettings,
+                                          IProjectClassifier projectClassifier,
+                                          ICheckConfiguration checkConfiguration,
+                                          Func<IServiceCollection, IServiceProvider> buildServiceProvider,
+                                          ILogger logger)
     {
-        IRepositorySettings wrappedRepositorySettings = new RepositorySettings(
-            frameworkSettings: frameworkSettings,
-            projectClassifier: projectClassifier,
-            projects: projects
-        );
+        IRepositorySettings wrappedRepositorySettings = new RepositorySettings(frameworkSettings: frameworkSettings, projectClassifier: projectClassifier, projects: projects);
 
         TrackingLogger trackingLogger = new(warningsAsErrors: warningsAsErrors, logger: logger);
 
-        return buildServiceProvider(
-            new ServiceCollection()
-                .AddSingleton(wrappedRepositorySettings)
-                .AddSingleton<ILogger>(trackingLogger)
-                .AddSingleton<ITrackingLogger>(trackingLogger)
-                .AddSingleton(typeof(ILogger<>), typeof(LoggerProxy<>))
-                .AddSingleton(projects)
-                .AddSingleton<IProjectXmlLoader, ProjectXmlLoader>()
-                .SetupSolutionChecks()
-                .SetupProjectChecks(repositorySettings: wrappedRepositorySettings)
-                .AddSingleton(checkConfiguration)
-        );
+        return buildServiceProvider(new ServiceCollection().AddSingleton(wrappedRepositorySettings)
+                                                           .AddSingleton<ILogger>(trackingLogger)
+                                                           .AddSingleton<ITrackingLogger>(trackingLogger)
+                                                           .AddSingleton(typeof(ILogger<>), typeof(LoggerProxy<>))
+                                                           .AddSingleton(projects)
+                                                           .AddSingleton<IProjectXmlLoader, ProjectXmlLoader>()
+                                                           .SetupSolutionChecks()
+                                                           .SetupProjectChecks(repositorySettings: wrappedRepositorySettings)
+                                                           .AddSingleton(checkConfiguration));
     }
 
     private static ValueTask<IReadOnlyList<SolutionProject>> LoadProjectsAsync(string solution, in CancellationToken cancellationToken)
     {
-        if (StringComparer.OrdinalIgnoreCase.Equals(Path.GetExtension(solution),".sln"))
+        if (StringComparer.OrdinalIgnoreCase.Equals(Path.GetExtension(solution), y: ".sln"))
         {
             return LoadLegacySolutionProjectsAsync(solution, cancellationToken);
         }
 
-        if (StringComparer.OrdinalIgnoreCase.Equals(Path.GetExtension(solution),".slnx"))
+        if (StringComparer.OrdinalIgnoreCase.Equals(Path.GetExtension(solution), y: ".slnx"))
         {
             return LoadXmlSolutionProjectsAsync(solution, cancellationToken);
         }
@@ -203,20 +150,18 @@ public static class CheckRunner
 
         XmlDocument xmlDocument = await LoadXmlSolutionAsync(solution, cancellationToken);
 
-        XmlNodeList? projectNodes = xmlDocument.SelectNodes("/Solution/Project");
+        XmlNodeList? projectNodes = xmlDocument.SelectNodes("/Solution//Project");
 
         if (projectNodes is null)
         {
             return [];
         }
 
-
         return
         [
             ..projectNodes.Cast<XmlElement>()
                           .Select(ExtractProject)
         ];
-
 
         SolutionProject ExtractProject(XmlElement xmlElement)
         {
@@ -234,11 +179,7 @@ public static class CheckRunner
 
     private static async ValueTask<XmlDocument> LoadXmlSolutionAsync(string path, CancellationToken cancellationToken)
     {
-        string content = await File.ReadAllTextAsync(
-            path: path,
-            encoding: Encoding.UTF8,
-            cancellationToken: cancellationToken
-        );
+        string content = await File.ReadAllTextAsync(path: path, encoding: Encoding.UTF8, cancellationToken: cancellationToken);
         XmlDocument doc = new();
 
         doc.LoadXml(content);
@@ -263,7 +204,11 @@ public static class CheckRunner
 
         Console.WriteLine(value: "Looking for projects...");
 
-        return [.. text.SelectMany(line => ProjectReferenceRegex.Matches(line).Select(ExtractProject))];
+        return
+        [
+            .. text.SelectMany(line => ProjectReferenceRegex.Matches(line)
+                                                            .Select(ExtractProject))
+        ];
 
         SolutionProject ExtractProject(Match match)
         {

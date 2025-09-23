@@ -7,12 +7,20 @@
     <File Path="FunFair.props" />
     <File Path="global.json" />
   </Folder>
-  <Project Path="FunFair.BuildCheck.Helpers/FunFair.BuildCheck.Helpers.csproj" />
-  <Project Path="FunFair.BuildCheck.Interfaces/FunFair.BuildCheck.Interfaces.csproj" />
-  <Project Path="FunFair.BuildCheck.ProjectChecks/FunFair.BuildCheck.ProjectChecks.csproj" />
-  <Project Path="FunFair.BuildCheck.Runner.Tests/FunFair.BuildCheck.Runner.Tests.csproj" />
-  <Project Path="FunFair.BuildCheck.Runner/FunFair.BuildCheck.Runner.csproj" />
-  <Project Path="FunFair.BuildCheck.SolutionChecks/FunFair.BuildCheck.SolutionChecks.csproj" />
-  <Project Path="FunFair.BuildCheck.Tests/FunFair.BuildCheck.Tests.csproj" />
-  <Project Path="FunFair.BuildCheck/FunFair.BuildCheck.csproj" />
+    <Folder Name="/Projects/">
+        <Project Path="FunFair.BuildCheck.ProjectChecks/FunFair.BuildCheck.ProjectChecks.csproj"/>
+    </Folder>
+    <Folder Name="/Runner/">
+        <Project Path="FunFair.BuildCheck.Helpers/FunFair.BuildCheck.Helpers.csproj"/>
+        <Project Path="FunFair.BuildCheck.Interfaces/FunFair.BuildCheck.Interfaces.csproj"/>
+        <Project Path="FunFair.BuildCheck.Runner.Tests/FunFair.BuildCheck.Runner.Tests.csproj"/>
+        <Project Path="FunFair.BuildCheck.Runner/FunFair.BuildCheck.Runner.csproj"/>
+    </Folder>
+    <Folder Name="/Solution/">
+        <Project Path="FunFair.BuildCheck.SolutionChecks/FunFair.BuildCheck.SolutionChecks.csproj"/>
+    </Folder>
+    <Folder Name="/Tool/">
+        <Project Path="FunFair.BuildCheck/FunFair.BuildCheck.csproj"/>
+    </Folder>
+    <Project Path="FunFair.BuildCheck.Tests/FunFair.BuildCheck.Tests.csproj"/>
 </Solution>
