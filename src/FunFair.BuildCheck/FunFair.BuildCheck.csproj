@@ -27,11 +27,11 @@
     <IsTrimmable>false</IsTrimmable>
     <JsonSerializerIsReflectionEnabledByDefault>false</JsonSerializerIsReflectionEnabledByDefault>
     <LangVersion>latest</LangVersion>
-    <NeutralLanguage>en</NeutralLanguage>
-    <NoWarn>1591</NoWarn>
+    <NeutralLanguage>en-gb</NeutralLanguage>
+    <NoWarn/>
     <NuGetAudit>true</NuGetAudit>
     <NuGetAuditLevel>low</NuGetAuditLevel>
-    <NuGetAuditMode>direct</NuGetAuditMode>
+    <NuGetAuditMode>all</NuGetAuditMode>
     <Nullable>enable</Nullable>
     <OptimizationPreference>speed</OptimizationPreference>
     <OutputType>Exe</OutputType>
