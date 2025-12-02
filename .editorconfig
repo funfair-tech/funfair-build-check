@@ -1172,7 +1172,7 @@ dotnet_diagnostic.MA0159.severity = error
 ########################################################################################################################
 # Philips.CodeAnalysis.DuplicateCodeAnalyzer
 ########################################################################################################################
-
+                              
 # See https://github.com/philips-software/roslyn-analyzers/blob/master/Philips.CodeAnalysis.DuplicateCodeAnalyzer/Philips.CodeAnalysis.DuplicateCodeAnalyzer.md
 # TODO
 
@@ -1293,14 +1293,14 @@ dotnet_diagnostic.PH2101.severity = error
 ########################################################################################################################
 # SecurityCodeScan.VS2019
 ########################################################################################################################
-
+                              
 # SCS0019 - Controller method is potentially Vulnerable to Cross Site Request Forgery CSRF
 dotnet_diagnostic.SCS0019.severity = error
 
 ########################################################################################################################
 # CSharpIsNull
 ########################################################################################################################
-
+                              
 # CSIsNull001 - catch uses of == null
 dotnet_diagnostic.CSIsNull001.severity = error
 # CSIsNull002 to catch uses of != null
