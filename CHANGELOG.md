@@ -10,6 +10,7 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 ### Fixed
 ### Changed
 - SDK - Updated DotNet SDK to 10.0.100
+- Prohibit CodeAnalysisRuleset property
 ### Removed
 ### Deployment Changes
 

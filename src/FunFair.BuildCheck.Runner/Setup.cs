@@ -165,6 +165,7 @@ internal static class Setup
             .AddProjectCheck<MustNotUseOpenApiAnalyzers>()
             .AddProjectCheck<NuGetAuditPolicy>()
             .AddProjectCheck<NuGetAuditLevelPolicy>()
+            .AddProjectCheck<MustNotDefineCodeAnalysisRuleSet>()
             .AddProjectCheck<ProjectsShouldHaveTrimAnalyzerConfiguredPolicy>()
             .AddProjectCheck<MustHaveMicrosoftSbomTargetsAnalyzerPackage>()
             .AddEnumSourceGeneratorAnalyzerPackage(repositorySettings: repositorySettings)
