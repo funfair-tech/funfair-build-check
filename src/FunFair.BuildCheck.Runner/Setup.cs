@@ -21,7 +21,6 @@ internal static class Setup
             .AddSolutionCheck<NoOrphanedProjectsExist>();
     }
 
-    
     public static IServiceCollection SetupProjectChecks(
         this IServiceCollection services,
         IRepositorySettings repositorySettings
