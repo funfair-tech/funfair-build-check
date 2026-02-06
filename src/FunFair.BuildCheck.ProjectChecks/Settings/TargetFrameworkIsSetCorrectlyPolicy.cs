@@ -9,7 +9,6 @@ using Microsoft.Extensions.Logging;
 
 namespace FunFair.BuildCheck.ProjectChecks.Settings;
 
-
 public sealed class TargetFrameworkIsSetCorrectlyPolicy : IProjectCheck
 {
     private readonly string? _expected;
