@@ -9,15 +9,18 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 ### Added
 ### Fixed
 ### Changed
-- Prohibit CodeAnalysisRuleset property
-- SDK - Updated DotNet SDK to 10.0.102
-- Dotnet tools should use ``symbols.nupkg`` rather than ``snupkg`` to avoid NU5017
 ### Removed
 ### Deployment Changes
 
 <!--
 Releases that have at least been deployed to staging, BUT NOT necessarily released to live.  Changes should be moved from [Unreleased] into here as they are merged into the appropriate release branch
 -->
+## [474.2.2] - 2026-02-06
+### Changed
+- Prohibit CodeAnalysisRuleset property
+- SDK - Updated DotNet SDK to 10.0.102
+- Dotnet tools should use ``symbols.nupkg`` rather than ``snupkg`` to avoid NU5017
+
 ## [474.2.1] - 2025-09-23
 ### Fixed
 - Projects in folders
