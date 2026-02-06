@@ -25,7 +25,7 @@ public sealed class SymbolPackageFormatPolicy : IProjectCheck
         ProjectValueHelpers.CheckValue(
             project: project,
             nodePresence: "SymbolPackageFormat",
-            project.IsAnalyzerOrSourceGenerator() ? "symbols.nupkg" : "snupkg",
+            project.IsAnalyzerOrSourceGenerator() || project.IsDotNetTool() ? "symbols.nupkg" : "snupkg",
             logger: this._logger
         );
 

@@ -11,6 +11,7 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 ### Changed
 - Prohibit CodeAnalysisRuleset property
 - SDK - Updated DotNet SDK to 10.0.102
+- Dotnet tools should use ``symbols.nupkg`` rather than ``snupkg`` to avoid NU5017
 ### Removed
 ### Deployment Changes
 
