@@ -21,7 +21,7 @@ internal static class Setup
             .AddSolutionCheck<NoOrphanedProjectsExist>();
     }
 
-    [SuppressMessage(category: "", checkId: "MA0051: Method too long", Justification = "Registering Analyzers")]
+    
     public static IServiceCollection SetupProjectChecks(
         this IServiceCollection services,
         IRepositorySettings repositorySettings
