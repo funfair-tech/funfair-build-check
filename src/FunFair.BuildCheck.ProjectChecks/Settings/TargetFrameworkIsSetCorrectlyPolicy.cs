@@ -9,7 +9,7 @@ using Microsoft.Extensions.Logging;
 
 namespace FunFair.BuildCheck.ProjectChecks.Settings;
 
-[SuppressMessage(category: "ReSharper", checkId: "UnusedType.Global", Justification = "Created by DI")]
+
 public sealed class TargetFrameworkIsSetCorrectlyPolicy : IProjectCheck
 {
     private readonly string? _expected;
