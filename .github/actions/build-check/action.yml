@@ -11,7 +11,7 @@ runs:
   using: "composite"
   steps:
     - name: "Dotnet: Run build check (Pre-Release)"
-      if: env.Release == 'false'
+      if: env.Release == 'do-not-check'
       working-directory: ${{github.workspace}}/src
       shell: bash
       run: dotnet tool run buildcheck -Solution "$(find . -type f -iname "*.sln" | head -1)" -WarningAsErrors true -PreReleaseBuild false
