@@ -11,7 +11,7 @@ runs:
   using: "composite"
   steps:
     - name: "Dotnet: Run build check (Pre-Release)"
-      if: inputs.RELEASE == 'false'
+      if: inputs.RELEASE == 'do-not-check'
       working-directory: ${{github.workspace}}/src
       shell: bash
       run: |
@@ -35,7 +35,7 @@ runs:
         NUGET_PACKAGES: ${{ github.workspace }}/.nuget/packages
 
     - name: "Dotnet: Run build check (Release)"
-      if: inputs.RELEASE == 'true'
+      if: inputs.RELEASE == 'do-not-check'
       working-directory: ${{github.workspace}}/src
       shell: bash
       run: |
