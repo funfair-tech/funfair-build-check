@@ -10,13 +10,15 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 ### Fixed
 ### Changed
 ### Removed
-
-- Requirement that dotnet tools and code analysis have symbols
 ### Deployment Changes
 
 <!--
 Releases that have at least been deployed to staging, BUT NOT necessarily released to live.  Changes should be moved from [Unreleased] into here as they are merged into the appropriate release branch
 -->
+## [474.2.3] - 2026-02-10
+### Removed
+- Requirement that dotnet tools and code analysis have symbols
+
 ## [474.2.2] - 2026-02-06
 ### Changed
 - Prohibit CodeAnalysisRuleset property
