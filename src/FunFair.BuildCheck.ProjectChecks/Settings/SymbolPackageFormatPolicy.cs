@@ -22,12 +22,12 @@ public sealed class SymbolPackageFormatPolicy : IProjectCheck
             return ValueTask.CompletedTask;
         }
 
-        ProjectValueHelpers.CheckValue(
-            project: project,
-            nodePresence: "SymbolPackageFormat",
-            project.IsAnalyzerOrSourceGenerator() || project.IsDotNetTool() ? "symbols.nupkg" : "snupkg",
-            logger: this._logger
-        );
+        if (project.IsAnalyzerOrSourceGenerator())
+        {
+            return ValueTask.CompletedTask;
+        }
+
+        ProjectValueHelpers.CheckValue(project: project, nodePresence: "SymbolPackageFormat", requiredValue: "symbols.nupkg", logger: this._logger);
 
         return ValueTask.CompletedTask;
     }

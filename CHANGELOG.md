@@ -10,6 +10,8 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 ### Fixed
 ### Changed
 ### Removed
+
+- Requirement that dotnet tools and code analysis have symbols
 ### Deployment Changes
 
 <!--

@@ -7,10 +7,12 @@ namespace FunFair.BuildCheck.ProjectChecks.Settings;
 public sealed class IncludeSymbolsPolicy : SimplePropertyProjectCheckBase
 {
     public IncludeSymbolsPolicy(ILogger<IncludeSymbolsPolicy> logger)
-        : base(propertyName: "IncludeSymbols", requiredValue: "true", logger: logger) { }
+        : base(propertyName: "IncludeSymbols", requiredValue: "true", logger: logger)
+    {
+    }
 
     protected override bool CanCheck(in ProjectContext project)
     {
-        return project.IsPackable();
+        return project.IsPackable() && !project.IsDotNetTool();
     }
 }
