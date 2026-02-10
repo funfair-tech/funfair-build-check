@@ -27,7 +27,7 @@ public sealed class SymbolPackageFormatPolicy : IProjectCheck
             return ValueTask.CompletedTask;
         }
 
-        ProjectValueHelpers.CheckValue(project: project, nodePresence: "SymbolPackageFormat", requiredValue: "symbols.nupkg", logger: this._logger);
+        ProjectValueHelpers.CheckValue(project: project, nodePresence: "SymbolPackageFormat", requiredValue: "snupkg", logger: this._logger);
 
         return ValueTask.CompletedTask;
     }
