@@ -17,18 +17,16 @@ public sealed class SymbolPackageFormatPolicy : IProjectCheck
 
     public ValueTask CheckAsync(ProjectContext project, CancellationToken cancellationToken)
     {
-        if (!project.IsPackable())
+        if (CanCheck(project: project))
         {
-            return ValueTask.CompletedTask;
+            ProjectValueHelpers.CheckValue(project: project, nodePresence: "SymbolPackageFormat", requiredValue: "snupkg", logger: this._logger);
         }
-
-        if (project.IsAnalyzerOrSourceGenerator())
-        {
-            return ValueTask.CompletedTask;
-        }
-
-        ProjectValueHelpers.CheckValue(project: project, nodePresence: "SymbolPackageFormat", requiredValue: "snupkg", logger: this._logger);
 
         return ValueTask.CompletedTask;
+    }
+
+    private static bool CanCheck(in ProjectContext project)
+    {
+        return project.IsPackable() && !project.IsAnalyzerOrSourceGenerator() && !project.IsDotNetTool();
     }
 }
