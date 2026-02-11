@@ -20,11 +20,11 @@ public sealed class SymbolPackageFormatPolicy : IProjectCheck
         if (CanCheck(project: project))
         {
             ProjectValueHelpers.CheckValue(
-            project: project,
-            nodePresence: "SymbolPackageFormat",
-            requiredValue: "snupkg",
-            logger: this._logger
-        );
+                project: project,
+                nodePresence: "SymbolPackageFormat",
+                requiredValue: "snupkg",
+                logger: this._logger
+            );
         }
 
         return ValueTask.CompletedTask;
