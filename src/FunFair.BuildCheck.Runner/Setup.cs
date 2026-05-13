@@ -207,6 +207,7 @@ internal static class Setup
             .AddProjectCheck<UsingXUnitMustIncludeVisualStudioTestPlatform>()
             .AddProjectCheck<MustNotReferenceTeamCityTestAdapter>()
             .AddProjectCheck<MustNotUseReferenceCoverlet>()
+            .AddProjectCheck<TestProjectsMustImportUnitTestsProps>()
             .AddProjectCheck<UsingXUnitV2MustIncludeAnalyzer>()
             .AddProjectCheck<UsingXUnitV3MustIncludeAnalyzer>()
             .AddProjectCheck<UsingXUnitV3ExtensibilityMustIncludeAnalyzer>()
