@@ -8,8 +8,6 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 ## [Unreleased]
 ### Security
 ### Added
-- Unit tests for FunFair.BuildCheck.Helpers to achieve 100% code coverage
-- Unit tests for FunFair.BuildCheck.Interfaces to achieve 100% code coverage
 ### Fixed
 ### Changed
 ### Deprecated
@@ -18,6 +16,11 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 <!--
 Releases that have at least been deployed to staging, BUT NOT necessarily released to live.  Changes should be moved from [Unreleased] into here as they are merged into the appropriate release branch
 -->
+## [474.2.5] - 2026-05-22
+### Added
+- Unit tests for FunFair.BuildCheck.Helpers to achieve 100% code coverage
+- Unit tests for FunFair.BuildCheck.Interfaces to achieve 100% code coverage
+
 ## [474.2.4] - 2026-05-22
 ### Added
 - Test projects must import the UnitTests.props file
