@@ -9,6 +9,7 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 ### Security
 ### Added
 - Test projects must import the UnitTests.props file
+- `ProjectsShouldHaveTrimAnalyzerConfiguredPolicy`: when `IsTrimmable` is true, `EnableTrimAnalyzer` must also be true; otherwise just needs to be defined
 ### Fixed
 - Disabled local publish step for multi-target-framework tool project to fix pre-commit hook
 ### Changed
