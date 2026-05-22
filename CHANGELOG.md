@@ -9,12 +9,15 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 ### Security
 ### Added
 - Test projects must import the UnitTests.props file
+- `MustNotSpecifyBothPublishAotAndPublishReadyToRunPolicy`: error if both `PublishAot` and `PublishReadyToRun` are set to `true`
 ### Fixed
 - Disabled local publish step for multi-target-framework tool project to fix pre-commit hook
 ### Changed
 - SDK - Updated DotNet SDK to 10.0.200
+- `ProjectsShouldHaveTrimAnalyzerConfiguredPolicy`: `EnableTrimAnalyzer` must be `true` or `false`; must be `true` when `IsTrimmable` is `true`
 ### Deprecated
 ### Removed
+- Removed `PublishableProjectsThatPassTrimAnalyzerShouldHavePublishedTrimmedSetPolicy` - was permanently disabled and served no purpose
 ### Deployment Changes
 <!--
 Releases that have at least been deployed to staging, BUT NOT necessarily released to live.  Changes should be moved from [Unreleased] into here as they are merged into the appropriate release branch
