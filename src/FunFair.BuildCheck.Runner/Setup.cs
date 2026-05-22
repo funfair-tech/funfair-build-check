@@ -108,6 +108,7 @@ internal static class Setup
             .AddProjectCheck<DebuggerSupportPolicy>()
             .AddProjectCheck<IlcGenerateStackTraceDataPolicy>()
             .AddProjectCheck<IlcOptimizationPreferencePolicy>()
+            .AddProjectCheck<PublishableExesMustHavePublishAotSetPolicy>()
             .AddProjectCheck<PublishableExesMustHaveRuntimeIdentifiers>()
             .AddProjectCheck<PublishableProjectsThatPassTrimAnalyzerShouldHavePublishedTrimmedSetPolicy>()
             .AddProjectCheck<PublishableProjectsShouldEnableRequestDelegateGeneratorPolicy>()
