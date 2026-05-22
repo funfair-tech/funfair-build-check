@@ -10,6 +10,7 @@ public sealed class PathHelpersTests : TestBase
     [Theory]
     [InlineData("path/to/file", "path/to/file")]
     [InlineData(@"path\to\file", "path/to/file")]
+    [InlineData(@"path\to/file", "path/to/file")]
     [InlineData("", "")]
     [InlineData("single", "single")]
     public void ConvertToNativeReturnsPathWithNativeSeparators(string input, string expectedOnLinux)
