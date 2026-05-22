@@ -9,6 +9,7 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 ### Security
 ### Added
 - Test projects must import the UnitTests.props file
+- `MustNotSpecifyBothPublishAotAndPublishReadyToRunPolicy`: error if both `PublishAot` and `PublishReadyToRun` are set to `true`
 ### Fixed
 - Disabled local publish step for multi-target-framework tool project to fix pre-commit hook
 ### Changed

@@ -109,6 +109,7 @@ internal static class Setup
             .AddProjectCheck<IlcGenerateStackTraceDataPolicy>()
             .AddProjectCheck<IlcOptimizationPreferencePolicy>()
             .AddProjectCheck<PublishableExesMustHavePublishAotSetPolicy>()
+            .AddProjectCheck<MustNotSpecifyBothPublishAotAndPublishReadyToRunPolicy>()
             .AddProjectCheck<PublishableExesMustHaveRuntimeIdentifiers>()
             .AddProjectCheck<PublishableProjectsShouldEnableRequestDelegateGeneratorPolicy>()
             .AddProjectCheck<TieredPgoPolicy>()
