@@ -110,7 +110,6 @@ internal static class Setup
             .AddProjectCheck<IlcOptimizationPreferencePolicy>()
             .AddProjectCheck<PublishableExesMustHavePublishAotSetPolicy>()
             .AddProjectCheck<PublishableExesMustHaveRuntimeIdentifiers>()
-            .AddProjectCheck<PublishableProjectsThatPassTrimAnalyzerShouldHavePublishedTrimmedSetPolicy>()
             .AddProjectCheck<PublishableProjectsShouldEnableRequestDelegateGeneratorPolicy>()
             .AddProjectCheck<TieredPgoPolicy>()
             .AddProjectCheck<UseSystemResourceKeysPolicy>()
