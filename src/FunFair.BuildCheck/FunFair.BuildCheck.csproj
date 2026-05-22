@@ -22,7 +22,7 @@
     <ImplicitUsings>disable</ImplicitUsings>
     <IncludeSymbols>false</IncludeSymbols>
     <IsPackable>true</IsPackable>
-    <IsPublishable>false</IsPublishable>
+    <IsPublishable>true</IsPublishable>
     <IsTool>true</IsTool>
     <IsTrimmable>false</IsTrimmable>
     <JsonSerializerIsReflectionEnabledByDefault>false</JsonSerializerIsReflectionEnabledByDefault>
