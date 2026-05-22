@@ -8,6 +8,16 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 ## [Unreleased]
 ### Security
 ### Added
+### Fixed
+### Changed
+### Deprecated
+### Removed
+### Deployment Changes
+<!--
+Releases that have at least been deployed to staging, BUT NOT necessarily released to live.  Changes should be moved from [Unreleased] into here as they are merged into the appropriate release branch
+-->
+## [474.2.4] - 2026-05-22
+### Added
 - Test projects must import the UnitTests.props file
 - `MustNotSpecifyBothPublishAotAndPublishReadyToRunPolicy`: error if both `PublishAot` and `PublishReadyToRun` are set to `true`
 ### Fixed
@@ -15,13 +25,9 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 ### Changed
 - SDK - Updated DotNet SDK to 10.0.200
 - `ProjectsShouldHaveTrimAnalyzerConfiguredPolicy`: `EnableTrimAnalyzer` must be `true` or `false`; must be `true` when `IsTrimmable` is `true`
-### Deprecated
 ### Removed
 - Removed `PublishableProjectsThatPassTrimAnalyzerShouldHavePublishedTrimmedSetPolicy` - was permanently disabled and served no purpose
-### Deployment Changes
-<!--
-Releases that have at least been deployed to staging, BUT NOT necessarily released to live.  Changes should be moved from [Unreleased] into here as they are merged into the appropriate release branch
--->
+
 ## [474.2.3] - 2026-02-10
 ### Removed
 - Requirement that dotnet tools and code analysis have symbols
