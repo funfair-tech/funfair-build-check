@@ -121,6 +121,7 @@ internal static class Setup
     {
         return services
             .AddProjectCheck<DescriptionMetadata>()
+            .AddProjectCheck<DotNetToolsMustBePublishablePolicy>()
             .AddProjectCheck<EnablePackageValidationPolicy>()
             .AddProjectCheck<IncludeSymbolsPolicy>()
             .AddProjectCheck<SymbolPackageFormatPolicy>()
