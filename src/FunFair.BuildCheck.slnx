@@ -20,6 +20,7 @@
     </Folder>
     <Folder Name="/Solution/">
         <Project Path="FunFair.BuildCheck.SolutionChecks/FunFair.BuildCheck.SolutionChecks.csproj" />
+        <Project Path="FunFair.BuildCheck.SolutionChecks.Tests/FunFair.BuildCheck.SolutionChecks.Tests.csproj" />
     </Folder>
     <Folder Name="/Tool/">
         <Project Path="FunFair.BuildCheck/FunFair.BuildCheck.csproj" />
