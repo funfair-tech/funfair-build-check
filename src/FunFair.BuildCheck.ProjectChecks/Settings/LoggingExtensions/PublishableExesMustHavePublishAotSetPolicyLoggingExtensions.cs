@@ -13,4 +13,14 @@ internal static partial class PublishableExesMustHavePublishAotSetPolicyLoggingE
         this ILogger<PublishableExesMustHavePublishAotSetPolicy> logger,
         string projectName
     );
+
+    [LoggerMessage(
+        EventId = 2,
+        Level = LogLevel.Error,
+        Message = "{projectName}: Cannot enable PublishAot when IsTrimmable is not true."
+    )]
+    public static partial void CannotEnablePublishAotWhenNotTrimmable(
+        this ILogger<PublishableExesMustHavePublishAotSetPolicy> logger,
+        string projectName
+    );
 }
