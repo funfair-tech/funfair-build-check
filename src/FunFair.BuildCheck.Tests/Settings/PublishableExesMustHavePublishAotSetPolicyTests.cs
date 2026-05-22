@@ -12,7 +12,7 @@ namespace FunFair.BuildCheck.Tests.Settings;
 public sealed class PublishableExesMustHavePublishAotSetPolicyTests : TestBase
 {
     [Fact]
-    public async Task PublishableExeWithPublishAotTrueProducesNoErrorAsync()
+    public async Task PublishableExeWithPublishAotTrueAndTrimmableTrueProducesNoErrorAsync()
     {
         CapturingLogger<PublishableExesMustHavePublishAotSetPolicy> logger = new();
         PublishableExesMustHavePublishAotSetPolicy check = new(logger);
@@ -25,6 +25,7 @@ public sealed class PublishableExesMustHavePublishAotSetPolicyTests : TestBase
                 <OutputType>Exe</OutputType>
                 <IsPublishable>true</IsPublishable>
                 <PublishAot>true</PublishAot>
+                <IsTrimmable>true</IsTrimmable>
               </PropertyGroup>
             </Project>
             """
@@ -33,6 +34,31 @@ public sealed class PublishableExesMustHavePublishAotSetPolicyTests : TestBase
         await check.CheckAsync(project: project, cancellationToken: this.CancellationToken());
 
         Assert.DoesNotContain(collection: logger.Entries, filter: e => e.Level == LogLevel.Error);
+    }
+
+    [Fact]
+    public async Task PublishableExeWithPublishAotTrueButNotTrimmableLogsErrorAsync()
+    {
+        CapturingLogger<PublishableExesMustHavePublishAotSetPolicy> logger = new();
+        PublishableExesMustHavePublishAotSetPolicy check = new(logger);
+
+        ProjectContext project = BuildProjectContext(
+            name: "Sample.Exe.csproj",
+            csproj: """
+            <Project Sdk="Microsoft.NET.Sdk">
+              <PropertyGroup>
+                <OutputType>Exe</OutputType>
+                <IsPublishable>true</IsPublishable>
+                <PublishAot>true</PublishAot>
+                <IsTrimmable>false</IsTrimmable>
+              </PropertyGroup>
+            </Project>
+            """
+        );
+
+        await check.CheckAsync(project: project, cancellationToken: this.CancellationToken());
+
+        Assert.Single(collection: logger.Entries, predicate: e => e.Level == LogLevel.Error);
     }
 
     [Fact]

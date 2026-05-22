@@ -38,6 +38,17 @@ public sealed class PublishableExesMustHavePublishAotSetPolicy : IProjectCheck
         if (string.IsNullOrWhiteSpace(publishAot))
         {
             this._logger.ShouldDefinePublishAot(project.Name);
+            return ValueTask.CompletedTask;
+        }
+
+        if (StringComparer.OrdinalIgnoreCase.Equals(x: publishAot, y: "true"))
+        {
+            string? isTrimmable = project.GetProperty("IsTrimmable");
+
+            if (!StringComparer.OrdinalIgnoreCase.Equals(x: isTrimmable, y: "true"))
+            {
+                this._logger.CannotEnablePublishAotWhenNotTrimmable(project.Name);
+            }
         }
 
         return ValueTask.CompletedTask;
