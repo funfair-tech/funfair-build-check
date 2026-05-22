@@ -8,6 +8,7 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 ## [Unreleased]
 ### Security
 ### Added
+- Unit tests for FunFair.BuildCheck.Helpers to achieve 100% code coverage
 ### Fixed
 ### Changed
 ### Deprecated
