@@ -281,7 +281,7 @@ runs:
       uses: ./.github/actions/dotnet-tool
       with:
         TOOL_NAME: "FunFair.BuildCheck"
-        TOOL_VERSION: "latest"
+        TOOL_VERSION: "474.2.3.1996"
 
     - name: "Deploy check - Default"
       shell: bash
