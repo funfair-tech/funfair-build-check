@@ -14,6 +14,7 @@
         <Project Path="FunFair.BuildCheck.Helpers/FunFair.BuildCheck.Helpers.csproj" />
         <Project Path="FunFair.BuildCheck.Helpers.Tests/FunFair.BuildCheck.Helpers.Tests.csproj" />
         <Project Path="FunFair.BuildCheck.Interfaces/FunFair.BuildCheck.Interfaces.csproj" />
+        <Project Path="FunFair.BuildCheck.Interfaces.Tests/FunFair.BuildCheck.Interfaces.Tests.csproj" />
         <Project Path="FunFair.BuildCheck.Runner.Tests/FunFair.BuildCheck.Runner.Tests.csproj" />
         <Project Path="FunFair.BuildCheck.Runner/FunFair.BuildCheck.Runner.csproj" />
     </Folder>
