@@ -13,6 +13,7 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 - Disabled local publish step for multi-target-framework tool project to fix pre-commit hook
 ### Changed
 - SDK - Updated DotNet SDK to 10.0.200
+- `ProjectsShouldHaveTrimAnalyzerConfiguredPolicy`: `EnableTrimAnalyzer` must be `true` or `false`; must be `true` when `IsTrimmable` is `true`
 ### Deprecated
 ### Removed
 - Removed `PublishableProjectsThatPassTrimAnalyzerShouldHavePublishedTrimmedSetPolicy` - was permanently disabled and served no purpose
