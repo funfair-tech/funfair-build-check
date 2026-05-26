@@ -66,13 +66,25 @@
    color: "96f7d2"
    description: "Changes in FunFair.BuildCheck.Helpers project"
 
+ - name: "funfair-buildcheck-helpers-tests"
+   color: "0e8a16"
+   description: "Changes in FunFair.BuildCheck.Helpers.Tests project"
+
  - name: "funfair-buildcheck-interfaces"
    color: "96f7d2"
    description: "Changes in FunFair.BuildCheck.Interfaces project"
 
+ - name: "funfair-buildcheck-interfaces-tests"
+   color: "0e8a16"
+   description: "Changes in FunFair.BuildCheck.Interfaces.Tests project"
+
  - name: "funfair-buildcheck-projectchecks"
    color: "96f7d2"
    description: "Changes in FunFair.BuildCheck.ProjectChecks project"
+
+ - name: "funfair-buildcheck-projectchecks-tests"
+   color: "0e8a16"
+   description: "Changes in FunFair.BuildCheck.ProjectChecks.Tests project"
 
  - name: "funfair-buildcheck-runner"
    color: "96f7d2"
@@ -85,6 +97,10 @@
  - name: "funfair-buildcheck-solutionchecks"
    color: "96f7d2"
    description: "Changes in FunFair.BuildCheck.SolutionChecks project"
+
+ - name: "funfair-buildcheck-solutionchecks-tests"
+   color: "0e8a16"
+   description: "Changes in FunFair.BuildCheck.SolutionChecks.Tests project"
 
  - name: "funfair-buildcheck-tests"
    color: "0e8a16"

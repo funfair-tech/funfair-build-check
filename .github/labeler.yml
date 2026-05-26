@@ -18,16 +18,24 @@
  - any: [ 'src/$FunFair.BuildCheck/**/*' ]
 "funfair-buildcheck-helpers":
  - any: [ 'src/$FunFair.BuildCheck.Helpers/**/*' ]
+"funfair-buildcheck-helpers-tests":
+ - any: [ 'src/$FunFair.BuildCheck.Helpers.Tests/**/*' ]
 "funfair-buildcheck-interfaces":
  - any: [ 'src/$FunFair.BuildCheck.Interfaces/**/*' ]
+"funfair-buildcheck-interfaces-tests":
+ - any: [ 'src/$FunFair.BuildCheck.Interfaces.Tests/**/*' ]
 "funfair-buildcheck-projectchecks":
  - any: [ 'src/$FunFair.BuildCheck.ProjectChecks/**/*' ]
+"funfair-buildcheck-projectchecks-tests":
+ - any: [ 'src/$FunFair.BuildCheck.ProjectChecks.Tests/**/*' ]
 "funfair-buildcheck-runner":
  - any: [ 'src/$FunFair.BuildCheck.Runner/**/*' ]
 "funfair-buildcheck-runner-tests":
  - any: [ 'src/$FunFair.BuildCheck.Runner.Tests/**/*' ]
 "funfair-buildcheck-solutionchecks":
  - any: [ 'src/$FunFair.BuildCheck.SolutionChecks/**/*' ]
+"funfair-buildcheck-solutionchecks-tests":
+ - any: [ 'src/$FunFair.BuildCheck.SolutionChecks.Tests/**/*' ]
 "funfair-buildcheck-tests":
  - any: [ 'src/$FunFair.BuildCheck.Tests/**/*' ]
 "github-actions":
