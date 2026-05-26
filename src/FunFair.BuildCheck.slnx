@@ -9,6 +9,7 @@
   </Folder>
     <Folder Name="/Projects/">
         <Project Path="FunFair.BuildCheck.ProjectChecks/FunFair.BuildCheck.ProjectChecks.csproj" />
+        <Project Path="FunFair.BuildCheck.ProjectChecks.Tests/FunFair.BuildCheck.ProjectChecks.Tests.csproj" />
     </Folder>
     <Folder Name="/Runner/">
         <Project Path="FunFair.BuildCheck.Helpers/FunFair.BuildCheck.Helpers.csproj" />
