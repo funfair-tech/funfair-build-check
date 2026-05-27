@@ -6,6 +6,9 @@
       <File Path="../.globalconfig" />
     <File Path="FunFair.props" />
     <File Path="global.json" />
+    <File Path="pre-release.rule-settings.json" />
+    <File Path="release.rule-settings.json" />
+    <File Path="UnitTests.props" />
   </Folder>
     <Folder Name="/Projects/">
         <Project Path="FunFair.BuildCheck.ProjectChecks/FunFair.BuildCheck.ProjectChecks.csproj" />
