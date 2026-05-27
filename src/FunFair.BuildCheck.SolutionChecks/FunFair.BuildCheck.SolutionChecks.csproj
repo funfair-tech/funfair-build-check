@@ -58,6 +58,9 @@
     <NuGetAuditSuppress Include="https://github.com/advisories/GHSA-xhfc-gr8f-ffwc" />
   </ItemGroup>
   <ItemGroup>
+    <InternalsVisibleTo Include="FunFair.BuildCheck.SolutionChecks.Tests" />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\FunFair.BuildCheck.Helpers\FunFair.BuildCheck.Helpers.csproj" />
     <ProjectReference Include="..\FunFair.BuildCheck.Interfaces\FunFair.BuildCheck.Interfaces.csproj" />
   </ItemGroup>
