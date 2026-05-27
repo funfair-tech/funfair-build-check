@@ -4,7 +4,7 @@ using System.Text.Json.Serialization;
 namespace FunFair.BuildCheck.SolutionChecks.Models;
 
 [JsonSourceGenerationOptions(
-    GenerationMode = JsonSourceGenerationMode.Serialization | JsonSourceGenerationMode.Metadata,
+    GenerationMode = JsonSourceGenerationMode.Metadata,
     DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
     WriteIndented = false,
     PropertyNamingPolicy = JsonKnownNamingPolicy.CamelCase,
