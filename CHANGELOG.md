@@ -16,6 +16,7 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 - Additional unit tests to raise FunFair.BuildCheck.Runner code coverage to 95.7%
 ### Fixed
 ### Changed
+- Exclude source-generated code (GeneratedCode attribute) from coverage measurements
 ### Deprecated
 ### Removed
 ### Deployment Changes
