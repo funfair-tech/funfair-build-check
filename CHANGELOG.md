@@ -12,6 +12,7 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 - Unit tests for FunFair.BuildCheck.SolutionChecks to achieve 100% code coverage
 - Unit tests for FunFair.BuildCheck.Runner to achieve 100% code coverage
 - Added tests for FunFair.BuildCheck.ProjectChecks project checks
+- MustNotUseInternalsVisibleTo rule: fail the build whenever InternalsVisibleTo is present in any .csproj file
 ### Fixed
 ### Changed
 ### Deprecated
