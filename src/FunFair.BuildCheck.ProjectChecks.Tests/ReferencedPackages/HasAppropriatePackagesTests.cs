@@ -220,6 +220,44 @@ public sealed class HasAppropriatePackagesTests : TestBase
         Assert.DoesNotContain(collection: logger.Entries, filter: e => e.Level == LogLevel.Error);
     }
 
+    [Fact]
+    public async Task WhenHasConsistentNuGetPackagesPackageHasMissingVersionErrorIsLoggedAsync()
+    {
+        // A package reference with no Version attribute → MissingPackageVersion log
+        XmlDocument doc = new();
+        doc.LoadXml(
+            "<Project Sdk=\"Microsoft.NET.Sdk\"><ItemGroup><PackageReference Include=\"Foo\" /></ItemGroup></Project>"
+        );
+        ProjectContext project = new(Name: "Test1.csproj", Folder: "/test", CsProjXml: doc);
+
+        CapturingLogger<HasConsistentNuGetPackages> logger = new();
+        CheckConfiguration configuration = new(preReleaseBuild: false, allowPackageVersionMismatch: false);
+        HasConsistentNuGetPackages check = new(checkConfiguration: configuration, logger: logger);
+
+        await check.CheckAsync(project: project, cancellationToken: this.CancellationToken());
+
+        Assert.Contains(logger.Entries, e => e.Level == LogLevel.Error);
+    }
+
+    [Fact]
+    public async Task WhenHasConsistentNuGetPackagesPackageHasUnparseableVersionErrorIsLoggedAsync()
+    {
+        // A package reference with an invalid version string → CouldNotParsePackageVersion log
+        XmlDocument doc = new();
+        doc.LoadXml(
+            "<Project Sdk=\"Microsoft.NET.Sdk\"><ItemGroup><PackageReference Include=\"Foo\" Version=\"not-a-version\" /></ItemGroup></Project>"
+        );
+        ProjectContext project = new(Name: "Test1.csproj", Folder: "/test", CsProjXml: doc);
+
+        CapturingLogger<HasConsistentNuGetPackages> logger = new();
+        CheckConfiguration configuration = new(preReleaseBuild: false, allowPackageVersionMismatch: false);
+        HasConsistentNuGetPackages check = new(checkConfiguration: configuration, logger: logger);
+
+        await check.CheckAsync(project: project, cancellationToken: this.CancellationToken());
+
+        Assert.Contains(logger.Entries, e => e.Level == LogLevel.Error);
+    }
+
     // ──────────────────────────────────────────────────────────────
     // ShouldUseAbstractionsLoggingPackage (ShouldUseAlternatePackage)
     // match: Microsoft.Extensions.Logging / use: Microsoft.Extensions.Logging.Abstractions

@@ -158,6 +158,24 @@ public sealed class MustNotDefinePropertyTests : TestBase
     }
 
     [Fact]
+    public async Task WhenErrorPolicyWarningAsErrorsWarningsAsErrorsNodeIsMissingErrorIsLoggedAsync()
+    {
+        // No WarningsAsErrors node at all → CheckNode logs an error
+        XmlDocument doc = new();
+        doc.LoadXml(
+            "<Project Sdk=\"Microsoft.NET.Sdk\"><PropertyGroup><TreatWarningsAsErrors>true</TreatWarningsAsErrors></PropertyGroup></Project>"
+        );
+        ProjectContext project = new(Name: "Test.csproj", Folder: "/test", CsProjXml: doc);
+
+        CapturingLogger<ErrorPolicyWarningAsErrors> logger = new();
+        ErrorPolicyWarningAsErrors check = new(logger: logger);
+
+        await check.CheckAsync(project: project, cancellationToken: this.CancellationToken());
+
+        Assert.Contains(logger.Entries, e => e.Level == LogLevel.Error);
+    }
+
+    [Fact]
     public async Task WhenErrorPolicyWarningAsErrorsGlobalSettingWithConditionalGroupsHavingWarningsAsErrorsNoErrorIsLoggedAsync()
     {
         // Global WarningsAsErrors present, conditional group also has it — no error
