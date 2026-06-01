@@ -43,6 +43,7 @@ internal static class Setup
             .AddProjectCheck<HasConsistentNuGetPackages>()
             .AddProjectCheck<LibrariesShouldNotDependOnExecutables>()
             .AddProjectCheck<MustNotReferenceObsoleteAspNetPackages>()
+            .AddProjectCheck<MustNotUseInternalsVisibleTo>()
             .AddProjectCheck<ReferencedProjectsMustExist>()
             .AddProjectCheck<ReferencesNugetPackageOnlyOnce>()
             .AddProjectCheck<ShouldNotRemoveFromCompilation>();
