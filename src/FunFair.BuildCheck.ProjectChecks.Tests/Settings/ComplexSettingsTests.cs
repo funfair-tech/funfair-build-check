@@ -117,6 +117,24 @@ public sealed class ComplexSettingsTests : TestBase
         Assert.DoesNotContain(collection: logger.Entries, filter: e => e.Level == LogLevel.Error);
     }
 
+    [Fact]
+    public async Task WhenNoDuplicateProjectSettingsPropertyAppearsInMultipleCasesErrorIsLoggedAsync()
+    {
+        // Same property name in different cases (e.g., Foo vs FOO)
+        XmlDocument doc = new();
+        doc.LoadXml(
+            "<Project Sdk=\"Microsoft.NET.Sdk\"><PropertyGroup><Foo>bar</Foo><FOO>baz</FOO></PropertyGroup></Project>"
+        );
+        ProjectContext project = new(Name: "Test.csproj", Folder: "/test", CsProjXml: doc);
+
+        CapturingLogger<NoDuplicateProjectSettings> logger = new();
+        NoDuplicateProjectSettings check = new(logger: logger);
+
+        await check.CheckAsync(project: project, cancellationToken: this.CancellationToken());
+
+        Assert.Contains(logger.Entries, e => e.Level == LogLevel.Error);
+    }
+
     // ──────────────────────────────────────────────────────────────
     // DoesNotUseRootNamespace
     // ──────────────────────────────────────────────────────────────

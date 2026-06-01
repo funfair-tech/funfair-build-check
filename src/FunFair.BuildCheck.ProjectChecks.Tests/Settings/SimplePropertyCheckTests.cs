@@ -1074,4 +1074,80 @@ public sealed class SimplePropertyCheckTests : TestBase
 
         Assert.Contains(logger.Entries, e => e.Level == LogLevel.Error);
     }
+
+    // ──────────────────────────────────────────────────────────────
+    // Conditional property group coverage (CheckValue/CheckConditionalSettings paths)
+    // ──────────────────────────────────────────────────────────────
+
+    [Fact]
+    public async Task WhenEnableNetAnalyzersPolicyGlobalSettingCorrectAndConditionalGroupAlsoCorrectNoErrorIsLoggedAsync()
+    {
+        // Global setting correct + conditional group also has correct value → no error
+        XmlDocument doc = new();
+        doc.LoadXml(
+            "<Project Sdk=\"Microsoft.NET.Sdk\"><PropertyGroup><EnableNETAnalyzers>true</EnableNETAnalyzers></PropertyGroup><PropertyGroup Condition=\"'$(Config)'=='Debug'\"><EnableNETAnalyzers>true</EnableNETAnalyzers></PropertyGroup></Project>"
+        );
+        ProjectContext project = new(Name: "Test.csproj", Folder: "/test", CsProjXml: doc);
+
+        CapturingLogger<EnableNetAnalyzersPolicy> logger = new();
+        EnableNetAnalyzersPolicy check = new(logger: logger);
+
+        await check.CheckAsync(project: project, cancellationToken: this.CancellationToken());
+
+        Assert.DoesNotContain(collection: logger.Entries, filter: e => e.Level == LogLevel.Error);
+    }
+
+    [Fact]
+    public async Task WhenEnableNetAnalyzersPolicyNoGlobalSettingAndConditionalGroupMissingPropertyErrorIsLoggedAsync()
+    {
+        // No global setting + conditional group is missing the property → error
+        XmlDocument doc = new();
+        doc.LoadXml(
+            "<Project Sdk=\"Microsoft.NET.Sdk\"><PropertyGroup Condition=\"'$(Config)'=='Debug'\"></PropertyGroup></Project>"
+        );
+        ProjectContext project = new(Name: "Test.csproj", Folder: "/test", CsProjXml: doc);
+
+        CapturingLogger<EnableNetAnalyzersPolicy> logger = new();
+        EnableNetAnalyzersPolicy check = new(logger: logger);
+
+        await check.CheckAsync(project: project, cancellationToken: this.CancellationToken());
+
+        Assert.Contains(logger.Entries, e => e.Level == LogLevel.Error);
+    }
+
+    [Fact]
+    public async Task WhenEnableNetAnalyzersPolicyNoGlobalSettingAndConditionalGroupHasWrongValueErrorIsLoggedAsync()
+    {
+        // No global setting + conditional group has wrong value → error
+        XmlDocument doc = new();
+        doc.LoadXml(
+            "<Project Sdk=\"Microsoft.NET.Sdk\"><PropertyGroup Condition=\"'$(Config)'=='Debug'\"><EnableNETAnalyzers>false</EnableNETAnalyzers></PropertyGroup></Project>"
+        );
+        ProjectContext project = new(Name: "Test.csproj", Folder: "/test", CsProjXml: doc);
+
+        CapturingLogger<EnableNetAnalyzersPolicy> logger = new();
+        EnableNetAnalyzersPolicy check = new(logger: logger);
+
+        await check.CheckAsync(project: project, cancellationToken: this.CancellationToken());
+
+        Assert.Contains(logger.Entries, e => e.Level == LogLevel.Error);
+    }
+
+    [Fact]
+    public async Task WhenEnableNetAnalyzersPolicyGlobalSettingCorrectAndConditionalGroupMissingPropertyNoErrorIsLoggedAsync()
+    {
+        // Global setting correct → conditional group's missing property is OK
+        XmlDocument doc = new();
+        doc.LoadXml(
+            "<Project Sdk=\"Microsoft.NET.Sdk\"><PropertyGroup><EnableNETAnalyzers>true</EnableNETAnalyzers></PropertyGroup><PropertyGroup Condition=\"'$(Config)'=='Debug'\"></PropertyGroup></Project>"
+        );
+        ProjectContext project = new(Name: "Test.csproj", Folder: "/test", CsProjXml: doc);
+
+        CapturingLogger<EnableNetAnalyzersPolicy> logger = new();
+        EnableNetAnalyzersPolicy check = new(logger: logger);
+
+        await check.CheckAsync(project: project, cancellationToken: this.CancellationToken());
+
+        Assert.DoesNotContain(collection: logger.Entries, filter: e => e.Level == LogLevel.Error);
+    }
 }
