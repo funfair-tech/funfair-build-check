@@ -156,4 +156,40 @@ public sealed class MustNotDefinePropertyTests : TestBase
 
         Assert.Contains(logger.Entries, e => e.Level == LogLevel.Error);
     }
+
+    [Fact]
+    public async Task WhenErrorPolicyWarningAsErrorsGlobalSettingWithConditionalGroupsHavingWarningsAsErrorsNoErrorIsLoggedAsync()
+    {
+        // Global WarningsAsErrors present, conditional group also has it — no error
+        XmlDocument doc = new();
+        doc.LoadXml(
+            "<Project Sdk=\"Microsoft.NET.Sdk\"><PropertyGroup><WarningsAsErrors /><TreatWarningsAsErrors>true</TreatWarningsAsErrors></PropertyGroup><PropertyGroup Condition=\"'$(Config)'=='Debug'\"><WarningsAsErrors /></PropertyGroup></Project>"
+        );
+        ProjectContext project = new(Name: "Test.csproj", Folder: "/test", CsProjXml: doc);
+
+        CapturingLogger<ErrorPolicyWarningAsErrors> logger = new();
+        ErrorPolicyWarningAsErrors check = new(logger: logger);
+
+        await check.CheckAsync(project: project, cancellationToken: this.CancellationToken());
+
+        Assert.DoesNotContain(collection: logger.Entries, filter: e => e.Level == LogLevel.Error);
+    }
+
+    [Fact]
+    public async Task WhenErrorPolicyWarningAsErrorsConditionalGroupMissingWarningsAsErrorsButGlobalPresentNoErrorIsLoggedAsync()
+    {
+        // No global WarningsAsErrors, conditional group is missing it — error for the configuration group
+        XmlDocument doc = new();
+        doc.LoadXml(
+            "<Project Sdk=\"Microsoft.NET.Sdk\"><PropertyGroup><TreatWarningsAsErrors>true</TreatWarningsAsErrors></PropertyGroup><PropertyGroup Condition=\"'$(Config)'=='Debug'\"></PropertyGroup></Project>"
+        );
+        ProjectContext project = new(Name: "Test.csproj", Folder: "/test", CsProjXml: doc);
+
+        CapturingLogger<ErrorPolicyWarningAsErrors> logger = new();
+        ErrorPolicyWarningAsErrors check = new(logger: logger);
+
+        await check.CheckAsync(project: project, cancellationToken: this.CancellationToken());
+
+        Assert.Contains(logger.Entries, e => e.Level == LogLevel.Error);
+    }
 }
