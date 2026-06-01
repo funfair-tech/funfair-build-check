@@ -243,4 +243,22 @@ public sealed class PackableMetadataTests : TestBase
 
         Assert.Contains(logger.Entries, e => e.Level == LogLevel.Error);
     }
+
+    [Fact]
+    public async Task WhenWarnOnPackingNonPackableProjectMetadataProjectIsNotPackableAndPropertyIsNotFalseErrorIsLoggedAsync()
+    {
+        // Non-packable project with WarnOnPackingNonPackableProject set but NOT to "false" → error
+        XmlDocument doc = new();
+        doc.LoadXml(
+            "<Project Sdk=\"Microsoft.NET.Sdk\"><PropertyGroup><IsPackable>false</IsPackable><WarnOnPackingNonPackableProject>true</WarnOnPackingNonPackableProject></PropertyGroup></Project>"
+        );
+        ProjectContext project = new(Name: "Test.csproj", Folder: "/test", CsProjXml: doc);
+
+        CapturingLogger<WarnOnPackingNonPackableProjectMetadata> logger = new();
+        WarnOnPackingNonPackableProjectMetadata check = new(logger: logger);
+
+        await check.CheckAsync(project: project, cancellationToken: this.CancellationToken());
+
+        Assert.Contains(logger.Entries, e => e.Level == LogLevel.Error);
+    }
 }
