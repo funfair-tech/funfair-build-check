@@ -27,6 +27,20 @@ public sealed class GlobalJsonIsLatestTests : TestBase
     }
 
     [Fact]
+    public async Task WhenSolutionFileHasNoParentDirectorySkipsCheckAsync()
+    {
+        IRepositorySettings settings = GetSubstitute<IRepositorySettings>();
+        settings.DotNetSdkVersion.Returns("9.0.100");
+
+        CapturingLogger<GlobalJsonIsLatest> logger = new();
+        GlobalJsonIsLatest check = new(repositorySettings: settings, logger: logger);
+
+        await check.CheckAsync(solutionFileName: "/", cancellationToken: this.CancellationToken());
+
+        Assert.Empty(logger.Entries);
+    }
+
+    [Fact]
     public async Task WhenGlobalJsonIsMissingSkipsCheckAsync()
     {
         string tempDir = CreateTempDirectory();

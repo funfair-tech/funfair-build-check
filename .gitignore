@@ -33,7 +33,7 @@ bld/
 
 # Tests
 .runsettings
-*.runsettings
+coverage.runsettings
 coverage.settings.xml
 
 # MSTest test Results
