@@ -239,6 +239,46 @@ public sealed class RepositorySettingsTests : TestBase
         Assert.DoesNotContain(collection: logger.Entries, filter: e => e.Level == LogLevel.Error);
     }
 
+    [Fact]
+    public async Task WhenTargetFrameworkIsSetCorrectlyPolicyProjectHasNoSdkAttributeIsSkippedNoErrorIsLoggedAsync()
+    {
+        // No Sdk attribute on the Project element → GetSdk() returns empty string (attribute absent) → check is skipped
+        IRepositorySettings repositorySettings = Substitute.For<IRepositorySettings>();
+        repositorySettings.DotnetTargetFramework.Returns("net10.0");
+        repositorySettings.IsCodeAnalysisSolution.Returns(false);
+
+        XmlDocument doc = new();
+        doc.LoadXml("<Project><PropertyGroup></PropertyGroup></Project>");
+        ProjectContext project = new(Name: "Test.csproj", Folder: "/test", CsProjXml: doc);
+
+        CapturingLogger<TargetFrameworkIsSetCorrectlyPolicy> logger = new();
+        TargetFrameworkIsSetCorrectlyPolicy check = new(repositorySettings: repositorySettings, logger: logger);
+
+        await check.CheckAsync(project: project, cancellationToken: this.CancellationToken());
+
+        Assert.DoesNotContain(collection: logger.Entries, filter: e => e.Level == LogLevel.Error);
+    }
+
+    [Fact]
+    public async Task WhenTargetFrameworkIsSetCorrectlyPolicyProjectHasNonProjectRootElementIsSkippedNoErrorIsLoggedAsync()
+    {
+        // No /Project element → GetSdk() returns string.Empty (null element) → check is skipped
+        IRepositorySettings repositorySettings = Substitute.For<IRepositorySettings>();
+        repositorySettings.DotnetTargetFramework.Returns("net10.0");
+        repositorySettings.IsCodeAnalysisSolution.Returns(false);
+
+        XmlDocument doc = new();
+        doc.LoadXml("<Root><PropertyGroup></PropertyGroup></Root>");
+        ProjectContext project = new(Name: "Test.csproj", Folder: "/test", CsProjXml: doc);
+
+        CapturingLogger<TargetFrameworkIsSetCorrectlyPolicy> logger = new();
+        TargetFrameworkIsSetCorrectlyPolicy check = new(repositorySettings: repositorySettings, logger: logger);
+
+        await check.CheckAsync(project: project, cancellationToken: this.CancellationToken());
+
+        Assert.DoesNotContain(collection: logger.Entries, filter: e => e.Level == LogLevel.Error);
+    }
+
     // ──────────────────────────────────────────────────────────────
     // XmlDocumentationFileRequiredPolicy
     // ──────────────────────────────────────────────────────────────
