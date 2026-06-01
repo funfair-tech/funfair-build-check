@@ -202,7 +202,7 @@ public sealed class RepositorySettingsTests : TestBase
     public async Task WhenTargetFrameworkIsSetCorrectlyPolicyCodeAnalysisSolutionTestProjectUsesNormalFrameworkCheckNoErrorIsLoggedAsync()
     {
         // CodeAnalysis solution + test project → falls through to normal framework check
-        IRepositorySettings repositorySettings = Substitute.For<IRepositorySettings>();
+        IRepositorySettings repositorySettings = GetSubstitute<IRepositorySettings>();
         repositorySettings.DotnetTargetFramework.Returns("net10.0");
         repositorySettings.IsCodeAnalysisSolution.Returns(true);
 
@@ -223,7 +223,7 @@ public sealed class RepositorySettingsTests : TestBase
     [Fact]
     public async Task WhenTargetFrameworkIsSetCorrectlyPolicyNonMicrosoftSdkProjectIsSkippedNoErrorIsLoggedAsync()
     {
-        IRepositorySettings repositorySettings = Substitute.For<IRepositorySettings>();
+        IRepositorySettings repositorySettings = GetSubstitute<IRepositorySettings>();
         repositorySettings.DotnetTargetFramework.Returns("net10.0");
         repositorySettings.IsCodeAnalysisSolution.Returns(false);
 
@@ -243,7 +243,7 @@ public sealed class RepositorySettingsTests : TestBase
     public async Task WhenTargetFrameworkIsSetCorrectlyPolicyProjectHasNoSdkAttributeIsSkippedNoErrorIsLoggedAsync()
     {
         // No Sdk attribute on the Project element → GetSdk() returns empty string (attribute absent) → check is skipped
-        IRepositorySettings repositorySettings = Substitute.For<IRepositorySettings>();
+        IRepositorySettings repositorySettings = GetSubstitute<IRepositorySettings>();
         repositorySettings.DotnetTargetFramework.Returns("net10.0");
         repositorySettings.IsCodeAnalysisSolution.Returns(false);
 
@@ -263,7 +263,7 @@ public sealed class RepositorySettingsTests : TestBase
     public async Task WhenTargetFrameworkIsSetCorrectlyPolicyProjectHasNonProjectRootElementIsSkippedNoErrorIsLoggedAsync()
     {
         // No /Project element → GetSdk() returns string.Empty (null element) → check is skipped
-        IRepositorySettings repositorySettings = Substitute.For<IRepositorySettings>();
+        IRepositorySettings repositorySettings = GetSubstitute<IRepositorySettings>();
         repositorySettings.DotnetTargetFramework.Returns("net10.0");
         repositorySettings.IsCodeAnalysisSolution.Returns(false);
 
@@ -367,7 +367,7 @@ public sealed class RepositorySettingsTests : TestBase
     public async Task WhenXmlDocumentationFileRequiredPolicyIsUnitTestBaseAndTestProjectEndingInTestsWithoutDocFileNoErrorIsLoggedAsync()
     {
         // IsUnitTestBase=true and name ends with ".Tests" → treat as test project → should not have doc file
-        IRepositorySettings repositorySettings = Substitute.For<IRepositorySettings>();
+        IRepositorySettings repositorySettings = GetSubstitute<IRepositorySettings>();
         repositorySettings.XmlDocumentationRequired.Returns(true);
         repositorySettings.IsUnitTestBase.Returns(true);
 
@@ -390,7 +390,7 @@ public sealed class RepositorySettingsTests : TestBase
     public async Task WhenXmlDocumentationFileRequiredPolicyIsUnitTestBaseAndTestProjectNotEndingInTestsRequiresDocFileNoErrorIsLoggedAsync()
     {
         // IsUnitTestBase=true but name does NOT end with ".Tests" → not treated as test project in IsUnitTestBase path
-        IRepositorySettings repositorySettings = Substitute.For<IRepositorySettings>();
+        IRepositorySettings repositorySettings = GetSubstitute<IRepositorySettings>();
         repositorySettings.XmlDocumentationRequired.Returns(true);
         repositorySettings.IsUnitTestBase.Returns(true);
 
