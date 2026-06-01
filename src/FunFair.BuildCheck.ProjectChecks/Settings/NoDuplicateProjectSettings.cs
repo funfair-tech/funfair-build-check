@@ -23,31 +23,29 @@ public sealed class NoDuplicateProjectSettings : IProjectCheck
     {
         XmlNodeList? properttyGroups = project.CsProjXml.SelectNodes("/Project/PropertyGroup");
 
-        if (properttyGroups is null)
-        {
-            return ValueTask.CompletedTask;
-        }
-
         Dictionary<string, NodeTracking> tracking = new(StringComparer.Ordinal);
         Dictionary<string, HashSet<string>> caseInsensitiveNames = new(StringComparer.OrdinalIgnoreCase);
 
-        foreach (XmlElement propertyGroup in properttyGroups.OfType<XmlElement>())
+        if (properttyGroups is not null)
         {
-            if (propertyGroup.HasAttribute("Condition"))
+            foreach (XmlElement propertyGroup in properttyGroups.OfType<XmlElement>())
             {
-                // Skip property groups that have a condition
-                continue;
-            }
-
-            foreach (XmlElement property in propertyGroup.ChildNodes.OfType<XmlElement>())
-            {
-                if (property.HasAttribute("Condition"))
+                if (propertyGroup.HasAttribute("Condition"))
                 {
-                    // Skip properties that have a condition
+                    // Skip property groups that have a condition
                     continue;
                 }
 
-                Include(tracking: tracking, caseInsensitiveNames: caseInsensitiveNames, node: property);
+                foreach (XmlElement property in propertyGroup.ChildNodes.OfType<XmlElement>())
+                {
+                    if (property.HasAttribute("Condition"))
+                    {
+                        // Skip properties that have a condition
+                        continue;
+                    }
+
+                    Include(tracking: tracking, caseInsensitiveNames: caseInsensitiveNames, node: property);
+                }
             }
         }
 

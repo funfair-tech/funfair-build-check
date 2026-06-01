@@ -39,39 +39,37 @@ public sealed class PackableLibrariesShouldNotDependOnNonPackable : IProjectChec
 
         XmlNodeList? nodes = project.CsProjXml.SelectNodes("/Project/ItemGroup/ProjectReference");
 
-        if (nodes is null)
+        if (nodes is not null)
         {
-            return;
-        }
-
-        foreach (XmlElement reference in nodes.OfType<XmlElement>())
-        {
-            string projectReference = reference.GetAttribute(name: "Include");
-
-            string referencedProject = Path.Combine(path1: project.Folder, path2: projectReference);
-            FileInfo i = new(referencedProject);
-
-            if (!i.Exists)
+            foreach (XmlElement reference in nodes.OfType<XmlElement>())
             {
-                continue;
-            }
+                string projectReference = reference.GetAttribute(name: "Include");
 
-            referencedProject = i.FullName;
+                string referencedProject = Path.Combine(path1: project.Folder, path2: projectReference);
+                FileInfo i = new(referencedProject);
 
-            XmlDocument otherProject = await this._projectXmlLoader.LoadAsync(
-                path: referencedProject,
-                cancellationToken: cancellationToken
-            );
+                if (!i.Exists)
+                {
+                    continue;
+                }
 
-            // ! Directory name should always be valid here
-            ProjectContext op = new(i.Name, i.DirectoryName!, otherProject);
+                referencedProject = i.FullName;
 
-            if (!op.IsPackable())
-            {
-                this._logger.PackableProjectReferencesNonPackableProject(
-                    projectName: project.Name,
-                    referencedProject: referencedProject
+                XmlDocument otherProject = await this._projectXmlLoader.LoadAsync(
+                    path: referencedProject,
+                    cancellationToken: cancellationToken
                 );
+
+                // ! Directory name should always be valid here
+                ProjectContext op = new(i.Name, i.DirectoryName!, otherProject);
+
+                if (!op.IsPackable())
+                {
+                    this._logger.PackableProjectReferencesNonPackableProject(
+                        projectName: project.Name,
+                        referencedProject: referencedProject
+                    );
+                }
             }
         }
     }

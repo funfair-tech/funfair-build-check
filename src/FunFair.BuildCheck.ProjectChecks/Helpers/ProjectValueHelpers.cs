@@ -76,12 +76,7 @@ internal static class ProjectValueHelpers
     {
         XmlNodeList? nodes = project.CsProjXml.SelectNodes(xpath: "/Project/ItemGroup/PackageReference");
 
-        if (nodes is null)
-        {
-            yield break;
-        }
-
-        foreach (XmlElement reference in nodes.OfType<XmlElement>())
+        foreach (XmlElement reference in nodes?.OfType<XmlElement>() ?? [])
         {
             Dictionary<string, string> attributes = reference
                 .Attributes.OfType<XmlAttribute>()
@@ -308,16 +303,12 @@ internal static class ProjectValueHelpers
     {
         XmlNodeList? nodes = project.CsProjXml.SelectNodes("/Project/PropertyGroup[not(@Condition)]/" + nodePresence);
 
-        if (nodes is null)
-        {
-            return false;
-        }
-
-        return nodes
-            .OfType<XmlElement>()
-            .Where(ElementConfiguration.HasNoParentCondition)
-            .Select(GetTextValue)
-            .Any(isRequiredValue);
+        return nodes is not null
+            && nodes
+                .OfType<XmlElement>()
+                .Where(ElementConfiguration.HasNoParentCondition)
+                .Select(GetTextValue)
+                .Any(isRequiredValue);
     }
 
     private static string GetTextValue(XmlNode node)
