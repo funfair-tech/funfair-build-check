@@ -131,4 +131,115 @@ public sealed class MustBeSerializableTests : TestBase
         public override JsonConverter? CreateConverter(Type typeToConvert, JsonSerializerOptions options) =>
             new UppercaseStringConverter();
     }
+
+    [Fact]
+    public void CanSerializeNullGlobalJsonPacket()
+    {
+        string json = JsonSerializer.Serialize(value: null, jsonTypeInfo: MustBeSerializable.Default.GlobalJsonPacket);
+        Assert.Equal(expected: "null", actual: json);
+    }
+
+    [Fact]
+    public void CanSerializeNullGlobalJsonSdk()
+    {
+        string json = JsonSerializer.Serialize(value: null, jsonTypeInfo: MustBeSerializable.Default.GlobalJsonSdk);
+        Assert.Equal(expected: "null", actual: json);
+    }
+
+    [Fact]
+    public void CanRoundTripGlobalJsonSdkWithAllowPrereleaseTrue()
+    {
+        GlobalJsonSdk sdk = new(version: "9.0.100", rollForward: "latestPatch", allowPrerelease: true);
+        string json = JsonSerializer.Serialize(value: sdk, jsonTypeInfo: MustBeSerializable.Default.GlobalJsonSdk);
+        GlobalJsonSdk? result = JsonSerializer.Deserialize(
+            json: json,
+            jsonTypeInfo: MustBeSerializable.Default.GlobalJsonSdk
+        );
+        Assert.NotNull(result);
+        Assert.True(result.AllowPrerelease);
+    }
+
+    [Fact]
+    public void PropertyGetterDelegatesCanBeInvokedForGlobalJsonSdk()
+    {
+        GlobalJsonSdk sdk = new(version: "9.0.100", rollForward: "latestPatch", allowPrerelease: null);
+        JsonTypeInfo<GlobalJsonSdk> typeInfo = MustBeSerializable.Default.GlobalJsonSdk;
+
+        foreach (JsonPropertyInfo prop in typeInfo.Properties)
+        {
+            if (prop.Get is { } getter)
+            {
+                _ = getter(sdk);
+            }
+        }
+    }
+
+    [Fact]
+    public void PropertyGetterDelegateCanBeInvokedForGlobalJsonPacket()
+    {
+        GlobalJsonPacket packet = new(sdk: null);
+        JsonTypeInfo<GlobalJsonPacket> typeInfo = MustBeSerializable.Default.GlobalJsonPacket;
+
+        foreach (JsonPropertyInfo prop in typeInfo.Properties)
+        {
+            if (prop.Get is { } getter)
+            {
+                _ = getter(packet);
+            }
+        }
+    }
+
+    [Fact]
+    public void PropertySetterDelegateCanBeInvokedForGlobalJsonPacket()
+    {
+        GlobalJsonPacket packet = new(sdk: null);
+        GlobalJsonSdk sdk = new(version: "9.0.100", rollForward: null, allowPrerelease: null);
+        JsonTypeInfo<GlobalJsonPacket> typeInfo = MustBeSerializable.Default.GlobalJsonPacket;
+
+        foreach (JsonPropertyInfo prop in typeInfo.Properties)
+        {
+            prop.Set?.Invoke(packet, sdk);
+        }
+
+        Assert.Same(expected: sdk, actual: packet.Sdk);
+    }
+
+    [Fact]
+    public void PropertyAttributeProvidersCanBeAccessedForGlobalJsonPacket()
+    {
+        JsonTypeInfo<GlobalJsonPacket> typeInfo = MustBeSerializable.Default.GlobalJsonPacket;
+
+        foreach (JsonPropertyInfo prop in typeInfo.Properties)
+        {
+            Assert.NotNull(prop.AttributeProvider);
+        }
+    }
+
+    [Fact]
+    public void PropertyAttributeProvidersCanBeAccessedForGlobalJsonSdk()
+    {
+        JsonTypeInfo<GlobalJsonSdk> typeInfo = MustBeSerializable.Default.GlobalJsonSdk;
+
+        foreach (JsonPropertyInfo prop in typeInfo.Properties)
+        {
+            Assert.NotNull(prop.AttributeProvider);
+        }
+    }
+
+    [Fact]
+    public void ContextWithFactoryConverterReturningNullThrows()
+    {
+        JsonSerializerOptions options = new();
+        options.Converters.Add(new NullReturningStringConverterFactory());
+        MustBeSerializable context = new(options);
+
+        Assert.Throws<InvalidOperationException>(() => _ = context.String);
+    }
+
+    private sealed class NullReturningStringConverterFactory : JsonConverterFactory
+    {
+        public override bool CanConvert(Type typeToConvert) => typeToConvert == typeof(string);
+
+        public override JsonConverter? CreateConverter(Type typeToConvert, JsonSerializerOptions options) => null;
+    }
 }
