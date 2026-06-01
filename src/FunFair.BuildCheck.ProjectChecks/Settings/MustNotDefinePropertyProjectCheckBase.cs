@@ -27,19 +27,9 @@ public abstract class MustNotDefinePropertyProjectCheckBase : IProjectCheck
 
     private void DoCheck(in ProjectContext project)
     {
-        if (!this.CanCheck(project: project))
-        {
-            return;
-        }
-
         if (project.HasProperty(this._propertyName))
         {
             this._logger.ProjectShouldNotDefineProperty(project.Name, this._propertyName);
         }
-    }
-
-    protected virtual bool CanCheck(in ProjectContext project)
-    {
-        return true;
     }
 }

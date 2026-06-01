@@ -84,13 +84,7 @@ public sealed class MustHaveSourceLinkPackage : IProjectCheck
     private bool CheckPrivateAssets(string packageId, in ProjectContext project)
     {
         PackageReference? package = project.GetNamedReferencedPackage(packageId, this._logger);
-
-        if (package is null)
-        {
-            return false;
-        }
-
-        string? assets = package.Value.GetAttributeOrElement("PrivateAssets");
+        string? assets = package?.GetAttributeOrElement("PrivateAssets");
 
         return !string.IsNullOrEmpty(assets)
             && StringComparer.OrdinalIgnoreCase.Equals(x: assets, y: PACKAGE_PRIVATE_ASSETS);

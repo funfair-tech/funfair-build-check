@@ -21,15 +21,13 @@ public sealed class MustNotUseInternalsVisibleTo : IProjectCheck
     {
         XmlNodeList? nodes = project.CsProjXml.SelectNodes(xpath: "/Project/ItemGroup/InternalsVisibleTo");
 
-        if (nodes is null)
+        if (nodes is not null)
         {
-            return ValueTask.CompletedTask;
-        }
-
-        foreach (XmlElement node in nodes.OfType<XmlElement>())
-        {
-            string assembly = node.GetAttribute(name: "Include");
-            this._logger.UsesInternalsVisibleTo(projectName: project.Name, assembly: assembly);
+            foreach (XmlElement node in nodes.OfType<XmlElement>())
+            {
+                string assembly = node.GetAttribute(name: "Include");
+                this._logger.UsesInternalsVisibleTo(projectName: project.Name, assembly: assembly);
+            }
         }
 
         return ValueTask.CompletedTask;
