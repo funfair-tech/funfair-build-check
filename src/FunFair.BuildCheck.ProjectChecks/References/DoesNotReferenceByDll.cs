@@ -21,18 +21,16 @@ public sealed class DoesNotReferenceByDll : IProjectCheck
     {
         XmlNodeList? references = project.CsProjXml.SelectNodes(xpath: "/Project/ItemGroup/Reference");
 
-        if (references is null)
+        if (references is not null)
         {
-            return ValueTask.CompletedTask;
-        }
-
-        foreach (XmlElement reference in references.OfType<XmlElement>())
-        {
-            string assembly = reference.GetAttribute(name: "Include");
-            this._logger.ReferencesAssemblyDirectlyRatherThanThroughReference(
-                projectName: project.Name,
-                assembly: assembly
-            );
+            foreach (XmlElement reference in references.OfType<XmlElement>())
+            {
+                string assembly = reference.GetAttribute(name: "Include");
+                this._logger.ReferencesAssemblyDirectlyRatherThanThroughReference(
+                    projectName: project.Name,
+                    assembly: assembly
+                );
+            }
         }
 
         return ValueTask.CompletedTask;

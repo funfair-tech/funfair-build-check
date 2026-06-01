@@ -23,27 +23,25 @@ public sealed class ReferencedProjectsMustExist : IProjectCheck
     {
         XmlNodeList? nodes = project.CsProjXml.SelectNodes("/Project/ItemGroup/ProjectReference");
 
-        if (nodes is null)
+        if (nodes is not null)
         {
-            return ValueTask.CompletedTask;
-        }
-
-        foreach (XmlElement reference in nodes.OfType<XmlElement>())
-        {
-            string projectReference = reference.GetAttribute(name: "Include");
-
-            string referencedProject = Path.Combine(
-                path1: project.Folder,
-                PathHelpers.ConvertToNative(projectReference)
-            );
-            FileInfo i = new(referencedProject);
-
-            if (!i.Exists)
+            foreach (XmlElement reference in nodes.OfType<XmlElement>())
             {
-                this._logger.ReferencesProjectThatDoesNotExist(
-                    projectName: project.Name,
-                    referencedProject: referencedProject
+                string projectReference = reference.GetAttribute(name: "Include");
+
+                string referencedProject = Path.Combine(
+                    path1: project.Folder,
+                    PathHelpers.ConvertToNative(projectReference)
                 );
+                FileInfo i = new(referencedProject);
+
+                if (!i.Exists)
+                {
+                    this._logger.ReferencesProjectThatDoesNotExist(
+                        projectName: project.Name,
+                        referencedProject: referencedProject
+                    );
+                }
             }
         }
 

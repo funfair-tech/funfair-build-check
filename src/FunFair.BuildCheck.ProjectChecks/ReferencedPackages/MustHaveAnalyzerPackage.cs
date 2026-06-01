@@ -84,13 +84,7 @@ public abstract class MustHaveAnalyzerPackage : IProjectCheck
     private bool CheckPrivateAssets(string packageId, in ProjectContext project)
     {
         PackageReference? package = project.GetNamedReferencedPackage(packageId: packageId, logger: this._logger);
-
-        if (package is null)
-        {
-            return false;
-        }
-
-        string? assets = package.Value.GetAttributeOrElement(attributeOrElementName: "PrivateAssets");
+        string? assets = package?.GetAttributeOrElement(attributeOrElementName: "PrivateAssets");
 
         return !string.IsNullOrEmpty(assets)
             && StringComparer.OrdinalIgnoreCase.Equals(x: assets, y: PACKAGE_PRIVATE_ASSETS);
@@ -99,13 +93,7 @@ public abstract class MustHaveAnalyzerPackage : IProjectCheck
     private bool CheckExcludeAssets(string packageId, in ProjectContext project)
     {
         PackageReference? package = project.GetNamedReferencedPackage(packageId: packageId, logger: this._logger);
-
-        if (package is null)
-        {
-            return false;
-        }
-
-        string? assets = package.Value.GetAttributeOrElement(attributeOrElementName: "ExcludeAssets");
+        string? assets = package?.GetAttributeOrElement(attributeOrElementName: "ExcludeAssets");
 
         return !string.IsNullOrEmpty(assets)
             && StringComparer.OrdinalIgnoreCase.Equals(x: assets, y: PACKAGE_EXCLUDE_ASSETS);
