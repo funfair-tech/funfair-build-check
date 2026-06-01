@@ -198,6 +198,87 @@ public sealed class RepositorySettingsTests : TestBase
         Assert.DoesNotContain(collection: logger.Entries, filter: e => e.Level == LogLevel.Error);
     }
 
+    [Fact]
+    public async Task WhenTargetFrameworkIsSetCorrectlyPolicyCodeAnalysisSolutionTestProjectUsesNormalFrameworkCheckNoErrorIsLoggedAsync()
+    {
+        // CodeAnalysis solution + test project → falls through to normal framework check
+        IRepositorySettings repositorySettings = GetSubstitute<IRepositorySettings>();
+        repositorySettings.DotnetTargetFramework.Returns("net10.0");
+        repositorySettings.IsCodeAnalysisSolution.Returns(true);
+
+        XmlDocument doc = new();
+        doc.LoadXml(
+            "<Project Sdk=\"Microsoft.NET.Sdk\"><PropertyGroup><TargetFramework>net10.0</TargetFramework></PropertyGroup><ItemGroup><PackageReference Include=\"xunit\" Version=\"2.0.0\" /></ItemGroup></Project>"
+        );
+        ProjectContext project = new(Name: "Test.csproj", Folder: "/test", CsProjXml: doc);
+
+        CapturingLogger<TargetFrameworkIsSetCorrectlyPolicy> logger = new();
+        TargetFrameworkIsSetCorrectlyPolicy check = new(repositorySettings: repositorySettings, logger: logger);
+
+        await check.CheckAsync(project: project, cancellationToken: this.CancellationToken());
+
+        Assert.DoesNotContain(collection: logger.Entries, filter: e => e.Level == LogLevel.Error);
+    }
+
+    [Fact]
+    public async Task WhenTargetFrameworkIsSetCorrectlyPolicyNonMicrosoftSdkProjectIsSkippedNoErrorIsLoggedAsync()
+    {
+        IRepositorySettings repositorySettings = GetSubstitute<IRepositorySettings>();
+        repositorySettings.DotnetTargetFramework.Returns("net10.0");
+        repositorySettings.IsCodeAnalysisSolution.Returns(false);
+
+        XmlDocument doc = new();
+        doc.LoadXml("<Project Sdk=\"MyCustom.Sdk\"><PropertyGroup></PropertyGroup></Project>");
+        ProjectContext project = new(Name: "Test.csproj", Folder: "/test", CsProjXml: doc);
+
+        CapturingLogger<TargetFrameworkIsSetCorrectlyPolicy> logger = new();
+        TargetFrameworkIsSetCorrectlyPolicy check = new(repositorySettings: repositorySettings, logger: logger);
+
+        await check.CheckAsync(project: project, cancellationToken: this.CancellationToken());
+
+        Assert.DoesNotContain(collection: logger.Entries, filter: e => e.Level == LogLevel.Error);
+    }
+
+    [Fact]
+    public async Task WhenTargetFrameworkIsSetCorrectlyPolicyProjectHasNoSdkAttributeIsSkippedNoErrorIsLoggedAsync()
+    {
+        // No Sdk attribute on the Project element → GetSdk() returns empty string (attribute absent) → check is skipped
+        IRepositorySettings repositorySettings = GetSubstitute<IRepositorySettings>();
+        repositorySettings.DotnetTargetFramework.Returns("net10.0");
+        repositorySettings.IsCodeAnalysisSolution.Returns(false);
+
+        XmlDocument doc = new();
+        doc.LoadXml("<Project><PropertyGroup></PropertyGroup></Project>");
+        ProjectContext project = new(Name: "Test.csproj", Folder: "/test", CsProjXml: doc);
+
+        CapturingLogger<TargetFrameworkIsSetCorrectlyPolicy> logger = new();
+        TargetFrameworkIsSetCorrectlyPolicy check = new(repositorySettings: repositorySettings, logger: logger);
+
+        await check.CheckAsync(project: project, cancellationToken: this.CancellationToken());
+
+        Assert.DoesNotContain(collection: logger.Entries, filter: e => e.Level == LogLevel.Error);
+    }
+
+    [Fact]
+    public async Task WhenTargetFrameworkIsSetCorrectlyPolicyProjectHasNonProjectRootElementIsSkippedNoErrorIsLoggedAsync()
+    {
+        // No /Project element → GetSdk() returns string.Empty (null element) → check is skipped
+        IRepositorySettings repositorySettings = GetSubstitute<IRepositorySettings>();
+        repositorySettings.DotnetTargetFramework.Returns("net10.0");
+        repositorySettings.IsCodeAnalysisSolution.Returns(false);
+
+        XmlDocument doc = new();
+        doc.LoadXml("<Root><PropertyGroup></PropertyGroup></Root>");
+        ProjectContext project = new(Name: "Test.csproj", Folder: "/test", CsProjXml: doc);
+
+        CapturingLogger<TargetFrameworkIsSetCorrectlyPolicy> logger = new();
+        TargetFrameworkIsSetCorrectlyPolicy check = new(repositorySettings: repositorySettings, logger: logger);
+
+        await check.CheckAsync(project: project, cancellationToken: this.CancellationToken());
+
+        Assert.DoesNotContain(collection: logger.Entries, filter: e => e.Level == LogLevel.Error);
+    }
+
     // ──────────────────────────────────────────────────────────────
     // XmlDocumentationFileRequiredPolicy
     // ──────────────────────────────────────────────────────────────
@@ -280,6 +361,52 @@ public sealed class RepositorySettingsTests : TestBase
         await check.CheckAsync(project: project, cancellationToken: this.CancellationToken());
 
         Assert.Contains(logger.Entries, e => e.Level == LogLevel.Error);
+    }
+
+    [Fact]
+    public async Task WhenXmlDocumentationFileRequiredPolicyIsUnitTestBaseAndTestProjectEndingInTestsWithoutDocFileNoErrorIsLoggedAsync()
+    {
+        // IsUnitTestBase=true and name ends with ".Tests" → treat as test project → should not have doc file
+        IRepositorySettings repositorySettings = GetSubstitute<IRepositorySettings>();
+        repositorySettings.XmlDocumentationRequired.Returns(true);
+        repositorySettings.IsUnitTestBase.Returns(true);
+
+        XmlDocument doc = new();
+        doc.LoadXml(
+            "<Project Sdk=\"Microsoft.NET.Sdk\"><PropertyGroup></PropertyGroup><ItemGroup><PackageReference Include=\"xunit\" Version=\"2.0.0\" /></ItemGroup></Project>"
+        );
+        // Display name ends with ".Tests"
+        ProjectContext project = new(Name: "SomeProject.Tests", Folder: "/test", CsProjXml: doc);
+
+        CapturingLogger<XmlDocumentationFileRequiredPolicy> logger = new();
+        XmlDocumentationFileRequiredPolicy check = new(repositorySettings: repositorySettings, logger: logger);
+
+        await check.CheckAsync(project: project, cancellationToken: this.CancellationToken());
+
+        Assert.DoesNotContain(collection: logger.Entries, filter: e => e.Level == LogLevel.Error);
+    }
+
+    [Fact]
+    public async Task WhenXmlDocumentationFileRequiredPolicyIsUnitTestBaseAndTestProjectNotEndingInTestsRequiresDocFileNoErrorIsLoggedAsync()
+    {
+        // IsUnitTestBase=true but name does NOT end with ".Tests" → not treated as test project in IsUnitTestBase path
+        IRepositorySettings repositorySettings = GetSubstitute<IRepositorySettings>();
+        repositorySettings.XmlDocumentationRequired.Returns(true);
+        repositorySettings.IsUnitTestBase.Returns(true);
+
+        XmlDocument doc = new();
+        doc.LoadXml(
+            @"<Project Sdk=""Microsoft.NET.Sdk""><PropertyGroup><DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(MSBuildProjectName).xml</DocumentationFile></PropertyGroup><ItemGroup><PackageReference Include=""xunit"" Version=""2.0.0"" /></ItemGroup></Project>"
+        );
+        // Display name does NOT end with ".Tests"
+        ProjectContext project = new(Name: "FunFair.Test.Common", Folder: "/test", CsProjXml: doc);
+
+        CapturingLogger<XmlDocumentationFileRequiredPolicy> logger = new();
+        XmlDocumentationFileRequiredPolicy check = new(repositorySettings: repositorySettings, logger: logger);
+
+        await check.CheckAsync(project: project, cancellationToken: this.CancellationToken());
+
+        Assert.DoesNotContain(collection: logger.Entries, filter: e => e.Level == LogLevel.Error);
     }
 
     // ──────────────────────────────────────────────────────────────

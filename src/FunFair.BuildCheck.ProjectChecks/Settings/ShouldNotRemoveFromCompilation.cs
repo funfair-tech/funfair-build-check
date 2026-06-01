@@ -26,18 +26,16 @@ public sealed class ShouldNotRemoveFromCompilation : IProjectCheck
     {
         XmlNodeList? nodes = project.CsProjXml.SelectNodes("/Project/ItemGroup/Compile[@Remove]");
 
-        if (nodes is null)
+        if (nodes is not null)
         {
-            return ValueTask.CompletedTask;
-        }
-
-        foreach (XmlElement reference in nodes.OfType<XmlElement>())
-        {
-            string projectReference = reference.GetAttribute(name: "Remove");
-            this._logger.RemovesProjectReferenceFromCompilation(
-                projectName: project.Name,
-                projectReference: projectReference
-            );
+            foreach (XmlElement reference in nodes.OfType<XmlElement>())
+            {
+                string projectReference = reference.GetAttribute(name: "Remove");
+                this._logger.RemovesProjectReferenceFromCompilation(
+                    projectName: project.Name,
+                    projectReference: projectReference
+                );
+            }
         }
 
         return ValueTask.CompletedTask;
