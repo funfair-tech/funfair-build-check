@@ -8,6 +8,7 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 ## [Unreleased]
 ### Security
 ### Added
+- Increased code coverage to 100% for FunFair.BuildCheck.ProjectChecks
 ### Fixed
 ### Changed
 ### Deprecated
