@@ -45,7 +45,7 @@
             <_CoverageSettingsLines Include="    &lt;/ModulePaths&gt;" />
             <_CoverageSettingsLines Include="    &lt;Attributes&gt;" />
             <_CoverageSettingsLines Include="      &lt;Exclude&gt;" />
-            <_CoverageSettingsLines Include="        &lt;Attribute&gt;^System\.CodeDom\.Compiler\.GeneratedCodeAttribute$&lt;/Attribute&gt;" />
+            <_CoverageSettingsLines Include="        &lt;Attribute&gt;^System%5C.CodeDom%5C.Compiler%5C.GeneratedCodeAttribute$&lt;/Attribute&gt;" />
             <_CoverageSettingsLines Include="      &lt;/Exclude&gt;" />
             <_CoverageSettingsLines Include="    &lt;/Attributes&gt;" />
             <_CoverageSettingsLines Include="  &lt;/CodeCoverage&gt;" />
