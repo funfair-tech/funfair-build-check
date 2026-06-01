@@ -103,6 +103,24 @@ public sealed class ReferencedPackagesTests : TestBase
         Assert.DoesNotContain(collection: logger.Entries, filter: e => e.Level == LogLevel.Error);
     }
 
+    [Fact]
+    public async Task WhenReferencesNugetPackageOnlyOncePackageReferenceWithMissingIncludeAttributeErrorIsLoggedAsync()
+    {
+        // A PackageReference element without an Include attribute triggers a bad reference warning
+        XmlDocument doc = new();
+        doc.LoadXml(
+            "<Project Sdk=\"Microsoft.NET.Sdk\"><ItemGroup><PackageReference Version=\"1.0.0\" /></ItemGroup></Project>"
+        );
+        ProjectContext project = new(Name: "Test.csproj", Folder: "/test", CsProjXml: doc);
+
+        CapturingLogger<ReferencesNugetPackageOnlyOnce> logger = new();
+        ReferencesNugetPackageOnlyOnce check = new(logger: logger);
+
+        await check.CheckAsync(project: project, cancellationToken: this.CancellationToken());
+
+        Assert.Contains(logger.Entries, e => e.Level == LogLevel.Error);
+    }
+
     // ──────────────────────────────────────────────────────────────
     // MustNotDisableUnexpectedWarnings
     // ──────────────────────────────────────────────────────────────
