@@ -117,4 +117,23 @@ public sealed class NoPreReleaseNuGetPackagesTests : TestBase
 
         Assert.Contains(logger.Entries, e => e.Level == LogLevel.Error);
     }
+
+    [Fact]
+    public async Task WhenPackageHasUnparseableVersionErrorIsLoggedAsync()
+    {
+        // A package with an invalid version string that cannot be parsed as NuGetVersion
+        XmlDocument doc = new();
+        doc.LoadXml(
+            "<Project Sdk=\"Microsoft.NET.Sdk\"><ItemGroup><PackageReference Include=\"Foo\" Version=\"not-a-valid-nuget-version!!\" /></ItemGroup></Project>"
+        );
+        ProjectContext project = new(Name: "Test.csproj", Folder: "/test", CsProjXml: doc);
+
+        CapturingLogger<NoPreReleaseNuGetPackages> logger = new();
+        CheckConfiguration configuration = new(preReleaseBuild: false, allowPackageVersionMismatch: false);
+        NoPreReleaseNuGetPackages check = new(configuration: configuration, logger: logger);
+
+        await check.CheckAsync(project: project, cancellationToken: this.CancellationToken());
+
+        Assert.Contains(logger.Entries, e => e.Level == LogLevel.Error);
+    }
 }
