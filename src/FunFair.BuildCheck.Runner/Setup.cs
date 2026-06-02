@@ -215,6 +215,7 @@ internal static class Setup
             .AddProjectCheck<UsingXUnitV3MustIncludeAnalyzer>()
             .AddProjectCheck<UsingXUnitV3ExtensibilityMustIncludeAnalyzer>()
             .AddProjectCheck<XUnitV3ProjectsShouldDefineTestingPlatformDotnetTestSupport>()
+            .AddProjectCheck<XUnitV3ProjectsShouldDefineIsTestingPlatformApplication>()
             .AddProjectCheck<XUnitV3ProjectsShouldDefineUseMicrosoftTestingPlatformRunner>()
             .AddProjectCheck<XUnitV3ProjectsShouldBeAnExecutable>();
     }
