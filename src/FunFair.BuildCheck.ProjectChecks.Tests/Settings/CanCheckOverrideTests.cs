@@ -178,6 +178,114 @@ public sealed class CanCheckOverrideTests : TestBase
     }
 
     // ──────────────────────────────────────────────────────────────
+    // NonTestProjectsMustNotDefineTestingPlatformDotnetTestSupport
+    // CanCheck = !IsTestProject
+    // ──────────────────────────────────────────────────────────────
+
+    [Fact]
+    public async Task WhenNonTestProjectsMustNotDefineTestingPlatformDotnetTestSupportPropertyIsAbsentNoErrorIsLoggedAsync()
+    {
+        XmlDocument doc = new();
+        doc.LoadXml("<Project Sdk=\"Microsoft.NET.Sdk\"><PropertyGroup></PropertyGroup></Project>");
+        ProjectContext project = new(Name: "Test.csproj", Folder: "/test", CsProjXml: doc);
+
+        CapturingLogger<NonTestProjectsMustNotDefineTestingPlatformDotnetTestSupport> logger = new();
+        NonTestProjectsMustNotDefineTestingPlatformDotnetTestSupport check = new(logger: logger);
+
+        await check.CheckAsync(project: project, cancellationToken: this.CancellationToken());
+
+        Assert.DoesNotContain(collection: logger.Entries, filter: e => e.Level == LogLevel.Error);
+    }
+
+    [Fact]
+    public async Task WhenNonTestProjectsMustNotDefineTestingPlatformDotnetTestSupportPropertyIsDefinedErrorIsLoggedAsync()
+    {
+        XmlDocument doc = new();
+        doc.LoadXml(
+            "<Project Sdk=\"Microsoft.NET.Sdk\"><PropertyGroup><TestingPlatformDotnetTestSupport>true</TestingPlatformDotnetTestSupport></PropertyGroup></Project>"
+        );
+        ProjectContext project = new(Name: "Test.csproj", Folder: "/test", CsProjXml: doc);
+
+        CapturingLogger<NonTestProjectsMustNotDefineTestingPlatformDotnetTestSupport> logger = new();
+        NonTestProjectsMustNotDefineTestingPlatformDotnetTestSupport check = new(logger: logger);
+
+        await check.CheckAsync(project: project, cancellationToken: this.CancellationToken());
+
+        Assert.Contains(logger.Entries, e => e.Level == LogLevel.Error);
+    }
+
+    [Fact]
+    public async Task WhenNonTestProjectsMustNotDefineTestingPlatformDotnetTestSupportIsTestProjectSoCanCheckIsFalseNoErrorIsLoggedAsync()
+    {
+        XmlDocument doc = new();
+        doc.LoadXml(
+            "<Project Sdk=\"Microsoft.NET.Sdk\"><PropertyGroup><TestingPlatformDotnetTestSupport>true</TestingPlatformDotnetTestSupport></PropertyGroup><ItemGroup><PackageReference Include=\"xunit.v3\" Version=\"1.0.0\" /></ItemGroup></Project>"
+        );
+        ProjectContext project = new(Name: "Test.csproj", Folder: "/test", CsProjXml: doc);
+
+        CapturingLogger<NonTestProjectsMustNotDefineTestingPlatformDotnetTestSupport> logger = new();
+        NonTestProjectsMustNotDefineTestingPlatformDotnetTestSupport check = new(logger: logger);
+
+        await check.CheckAsync(project: project, cancellationToken: this.CancellationToken());
+
+        Assert.DoesNotContain(collection: logger.Entries, filter: e => e.Level == LogLevel.Error);
+    }
+
+    // ──────────────────────────────────────────────────────────────
+    // NonTestProjectsMustNotDefineIsTestingPlatformApplication
+    // CanCheck = !IsTestProject
+    // ──────────────────────────────────────────────────────────────
+
+    [Fact]
+    public async Task WhenNonTestProjectsMustNotDefineIsTestingPlatformApplicationPropertyIsAbsentNoErrorIsLoggedAsync()
+    {
+        XmlDocument doc = new();
+        doc.LoadXml("<Project Sdk=\"Microsoft.NET.Sdk\"><PropertyGroup></PropertyGroup></Project>");
+        ProjectContext project = new(Name: "Test.csproj", Folder: "/test", CsProjXml: doc);
+
+        CapturingLogger<NonTestProjectsMustNotDefineIsTestingPlatformApplication> logger = new();
+        NonTestProjectsMustNotDefineIsTestingPlatformApplication check = new(logger: logger);
+
+        await check.CheckAsync(project: project, cancellationToken: this.CancellationToken());
+
+        Assert.DoesNotContain(collection: logger.Entries, filter: e => e.Level == LogLevel.Error);
+    }
+
+    [Fact]
+    public async Task WhenNonTestProjectsMustNotDefineIsTestingPlatformApplicationPropertyIsDefinedErrorIsLoggedAsync()
+    {
+        XmlDocument doc = new();
+        doc.LoadXml(
+            "<Project Sdk=\"Microsoft.NET.Sdk\"><PropertyGroup><IsTestingPlatformApplication>true</IsTestingPlatformApplication></PropertyGroup></Project>"
+        );
+        ProjectContext project = new(Name: "Test.csproj", Folder: "/test", CsProjXml: doc);
+
+        CapturingLogger<NonTestProjectsMustNotDefineIsTestingPlatformApplication> logger = new();
+        NonTestProjectsMustNotDefineIsTestingPlatformApplication check = new(logger: logger);
+
+        await check.CheckAsync(project: project, cancellationToken: this.CancellationToken());
+
+        Assert.Contains(logger.Entries, e => e.Level == LogLevel.Error);
+    }
+
+    [Fact]
+    public async Task WhenNonTestProjectsMustNotDefineIsTestingPlatformApplicationIsTestProjectSoCanCheckIsFalseNoErrorIsLoggedAsync()
+    {
+        XmlDocument doc = new();
+        doc.LoadXml(
+            "<Project Sdk=\"Microsoft.NET.Sdk\"><PropertyGroup><IsTestingPlatformApplication>true</IsTestingPlatformApplication></PropertyGroup><ItemGroup><PackageReference Include=\"xunit.v3\" Version=\"1.0.0\" /></ItemGroup></Project>"
+        );
+        ProjectContext project = new(Name: "Test.csproj", Folder: "/test", CsProjXml: doc);
+
+        CapturingLogger<NonTestProjectsMustNotDefineIsTestingPlatformApplication> logger = new();
+        NonTestProjectsMustNotDefineIsTestingPlatformApplication check = new(logger: logger);
+
+        await check.CheckAsync(project: project, cancellationToken: this.CancellationToken());
+
+        Assert.DoesNotContain(collection: logger.Entries, filter: e => e.Level == LogLevel.Error);
+    }
+
+    // ──────────────────────────────────────────────────────────────
     // JsonSerializerIsReflectionEnabledByDefaultPolicy
     // CanCheck = IsPackable()
     // ──────────────────────────────────────────────────────────────
