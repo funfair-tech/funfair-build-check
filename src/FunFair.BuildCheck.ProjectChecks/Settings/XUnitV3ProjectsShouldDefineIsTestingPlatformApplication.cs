@@ -8,14 +8,14 @@ using Microsoft.Extensions.Logging;
 
 namespace FunFair.BuildCheck.ProjectChecks.Settings;
 
-public sealed class XUnitV3ProjectsShouldDefineTestingPlatformDotnetTestSupport : IProjectCheck
+public sealed class XUnitV3ProjectsShouldDefineIsTestingPlatformApplication : IProjectCheck
 {
-    private const string PROPERTY_NAME = "TestingPlatformDotnetTestSupport";
+    private const string PROPERTY_NAME = "IsTestingPlatformApplication";
 
-    private readonly ILogger<XUnitV3ProjectsShouldDefineTestingPlatformDotnetTestSupport> _logger;
+    private readonly ILogger<XUnitV3ProjectsShouldDefineIsTestingPlatformApplication> _logger;
 
-    public XUnitV3ProjectsShouldDefineTestingPlatformDotnetTestSupport(
-        ILogger<XUnitV3ProjectsShouldDefineTestingPlatformDotnetTestSupport> logger
+    public XUnitV3ProjectsShouldDefineIsTestingPlatformApplication(
+        ILogger<XUnitV3ProjectsShouldDefineIsTestingPlatformApplication> logger
     )
     {
         this._logger = logger;
