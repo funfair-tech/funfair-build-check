@@ -100,7 +100,9 @@ internal static class Setup
             .AddProjectCheck<EnableMicrosoftExtensionsConfigurationBinderSourceGeneratorPolicy>()
             .AddProjectCheck<JsonSerializerIsReflectionEnabledByDefaultPolicy>()
             .AddProjectCheck<OptimizationPreferencePolicy>()
-            .AddProjectCheck<GenerateSbomPolicy>();
+            .AddProjectCheck<GenerateSbomPolicy>()
+            .AddProjectCheck<TestHarnessExeProjectsMustSetIsTestProjectToFalse>()
+            .AddProjectCheck<TestHarnessExeProjectsMustSetTestingPlatformDotnetTestSupportToFalse>();
     }
 
     private static IServiceCollection PublishingSettings(this IServiceCollection services)
