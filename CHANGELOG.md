@@ -8,6 +8,16 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 ## [Unreleased]
 ### Security
 ### Added
+### Fixed
+### Changed
+### Deprecated
+### Removed
+### Deployment Changes
+<!--
+Releases that have at least been deployed to staging, BUT NOT necessarily released to live.  Changes should be moved from [Unreleased] into here as they are merged into the appropriate release branch
+-->
+## [474.2.6] - 2026-06-03
+### Added
 - Unit tests for FunFair.BuildCheck.Helpers to achieve 100% code coverage
 - Unit tests for FunFair.BuildCheck.SolutionChecks to achieve 100% code coverage
 - Unit tests for FunFair.BuildCheck.Runner to achieve 100% code coverage
@@ -17,16 +27,10 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 - XUnitV3ProjectsShouldDefineIsTestingPlatformApplication: errors when an xunit.v3 test project does not define IsTestingPlatformApplication=true, or when a project with IsTestProject=false defines it
 - TestHarness Exe projects must define TestingPlatformDotnetTestSupport=false and IsTestProject=false
 - TestHarness Exe projects must define IsTestingPlatformApplication=false
-### Fixed
 ### Changed
 - Exclude source-generated code (GeneratedCode attribute) from coverage measurements
 - XUnitV3ProjectsShouldDefineTestingPlatformDotnetTestSupport: now also errors when a project with IsTestProject=false defines TestingPlatformDotnetTestSupport
-### Deprecated
-### Removed
-### Deployment Changes
-<!--
-Releases that have at least been deployed to staging, BUT NOT necessarily released to live.  Changes should be moved from [Unreleased] into here as they are merged into the appropriate release branch
--->
+
 ## [474.2.5] - 2026-05-22
 ### Added
 - Unit tests for FunFair.BuildCheck.Helpers to achieve 100% code coverage
