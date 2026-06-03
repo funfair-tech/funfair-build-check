@@ -102,6 +102,7 @@ internal static class Setup
             .AddProjectCheck<OptimizationPreferencePolicy>()
             .AddProjectCheck<GenerateSbomPolicy>()
             .AddProjectCheck<TestHarnessExeProjectsMustSetIsTestProjectToFalse>()
+            .AddProjectCheck<TestHarnessExeProjectsMustSetIsTestingPlatformApplicationToFalse>()
             .AddProjectCheck<TestHarnessExeProjectsMustSetTestingPlatformDotnetTestSupportToFalse>();
     }
 
