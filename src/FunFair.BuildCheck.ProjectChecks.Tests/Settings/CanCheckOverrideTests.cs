@@ -898,4 +898,267 @@ public sealed class CanCheckOverrideTests : TestBase
 
         Assert.DoesNotContain(collection: logger.Entries, filter: e => e.Level == LogLevel.Error);
     }
+
+    // ──────────────────────────────────────────────────────────────
+    // TestHarnessExeProjectsMustSetIsTestProjectToFalse
+    // CanCheck = name ends with .TestHarness && OutputType==Exe
+    // ──────────────────────────────────────────────────────────────
+
+    [Fact]
+    public async Task WhenTestHarnessExeProjectHasIsTestProjectFalseNoErrorIsLoggedAsync()
+    {
+        XmlDocument doc = new();
+        doc.LoadXml(
+            "<Project Sdk=\"Microsoft.NET.Sdk\"><PropertyGroup><OutputType>Exe</OutputType><IsTestProject>false</IsTestProject></PropertyGroup></Project>"
+        );
+        ProjectContext project = new(Name: "MyProject.TestHarness", Folder: "/test", CsProjXml: doc);
+
+        CapturingLogger<TestHarnessExeProjectsMustSetIsTestProjectToFalse> logger = new();
+        TestHarnessExeProjectsMustSetIsTestProjectToFalse check = new(logger: logger);
+
+        await check.CheckAsync(project: project, cancellationToken: this.CancellationToken());
+
+        Assert.DoesNotContain(collection: logger.Entries, filter: e => e.Level == LogLevel.Error);
+    }
+
+    [Fact]
+    public async Task WhenTestHarnessExeProjectMissingIsTestProjectErrorIsLoggedAsync()
+    {
+        XmlDocument doc = new();
+        doc.LoadXml(
+            "<Project Sdk=\"Microsoft.NET.Sdk\"><PropertyGroup><OutputType>Exe</OutputType></PropertyGroup></Project>"
+        );
+        ProjectContext project = new(Name: "MyProject.TestHarness", Folder: "/test", CsProjXml: doc);
+
+        CapturingLogger<TestHarnessExeProjectsMustSetIsTestProjectToFalse> logger = new();
+        TestHarnessExeProjectsMustSetIsTestProjectToFalse check = new(logger: logger);
+
+        await check.CheckAsync(project: project, cancellationToken: this.CancellationToken());
+
+        Assert.Contains(logger.Entries, e => e.Level == LogLevel.Error);
+    }
+
+    [Fact]
+    public async Task WhenNonTestHarnessProjectIsSkippedByIsTestProjectCheckNoErrorIsLoggedAsync()
+    {
+        XmlDocument doc = new();
+        doc.LoadXml(
+            "<Project Sdk=\"Microsoft.NET.Sdk\"><PropertyGroup><OutputType>Exe</OutputType></PropertyGroup></Project>"
+        );
+        ProjectContext project = new(Name: "MyProject.csproj", Folder: "/test", CsProjXml: doc);
+
+        CapturingLogger<TestHarnessExeProjectsMustSetIsTestProjectToFalse> logger = new();
+        TestHarnessExeProjectsMustSetIsTestProjectToFalse check = new(logger: logger);
+
+        await check.CheckAsync(project: project, cancellationToken: this.CancellationToken());
+
+        Assert.DoesNotContain(collection: logger.Entries, filter: e => e.Level == LogLevel.Error);
+    }
+
+    [Fact]
+    public async Task WhenTestHarnessLibraryProjectIsSkippedByIsTestProjectCheckNoErrorIsLoggedAsync()
+    {
+        XmlDocument doc = new();
+        doc.LoadXml(
+            "<Project Sdk=\"Microsoft.NET.Sdk\"><PropertyGroup><OutputType>Library</OutputType></PropertyGroup></Project>"
+        );
+        ProjectContext project = new(Name: "MyProject.TestHarness", Folder: "/test", CsProjXml: doc);
+
+        CapturingLogger<TestHarnessExeProjectsMustSetIsTestProjectToFalse> logger = new();
+        TestHarnessExeProjectsMustSetIsTestProjectToFalse check = new(logger: logger);
+
+        await check.CheckAsync(project: project, cancellationToken: this.CancellationToken());
+
+        Assert.DoesNotContain(collection: logger.Entries, filter: e => e.Level == LogLevel.Error);
+    }
+
+    // ──────────────────────────────────────────────────────────────
+    // TestHarnessExeProjectsMustSetTestingPlatformDotnetTestSupportToFalse
+    // CanCheck = name ends with .TestHarness && OutputType==Exe
+    // ──────────────────────────────────────────────────────────────
+
+    [Fact]
+    public async Task WhenTestHarnessExeProjectHasTestingPlatformDotnetTestSupportFalseNoErrorIsLoggedAsync()
+    {
+        XmlDocument doc = new();
+        doc.LoadXml(
+            "<Project Sdk=\"Microsoft.NET.Sdk\"><PropertyGroup><OutputType>Exe</OutputType><TestingPlatformDotnetTestSupport>false</TestingPlatformDotnetTestSupport></PropertyGroup></Project>"
+        );
+        ProjectContext project = new(Name: "MyProject.TestHarness", Folder: "/test", CsProjXml: doc);
+
+        CapturingLogger<TestHarnessExeProjectsMustSetTestingPlatformDotnetTestSupportToFalse> logger = new();
+        TestHarnessExeProjectsMustSetTestingPlatformDotnetTestSupportToFalse check = new(logger: logger);
+
+        await check.CheckAsync(project: project, cancellationToken: this.CancellationToken());
+
+        Assert.DoesNotContain(collection: logger.Entries, filter: e => e.Level == LogLevel.Error);
+    }
+
+    [Fact]
+    public async Task WhenTestHarnessExeProjectMissingTestingPlatformDotnetTestSupportErrorIsLoggedAsync()
+    {
+        XmlDocument doc = new();
+        doc.LoadXml(
+            "<Project Sdk=\"Microsoft.NET.Sdk\"><PropertyGroup><OutputType>Exe</OutputType></PropertyGroup></Project>"
+        );
+        ProjectContext project = new(Name: "MyProject.TestHarness", Folder: "/test", CsProjXml: doc);
+
+        CapturingLogger<TestHarnessExeProjectsMustSetTestingPlatformDotnetTestSupportToFalse> logger = new();
+        TestHarnessExeProjectsMustSetTestingPlatformDotnetTestSupportToFalse check = new(logger: logger);
+
+        await check.CheckAsync(project: project, cancellationToken: this.CancellationToken());
+
+        Assert.Contains(logger.Entries, e => e.Level == LogLevel.Error);
+    }
+
+    [Fact]
+    public async Task WhenNonTestHarnessProjectIsSkippedByTestingPlatformDotnetTestSupportCheckNoErrorIsLoggedAsync()
+    {
+        XmlDocument doc = new();
+        doc.LoadXml(
+            "<Project Sdk=\"Microsoft.NET.Sdk\"><PropertyGroup><OutputType>Exe</OutputType></PropertyGroup></Project>"
+        );
+        ProjectContext project = new(Name: "MyProject.csproj", Folder: "/test", CsProjXml: doc);
+
+        CapturingLogger<TestHarnessExeProjectsMustSetTestingPlatformDotnetTestSupportToFalse> logger = new();
+        TestHarnessExeProjectsMustSetTestingPlatformDotnetTestSupportToFalse check = new(logger: logger);
+
+        await check.CheckAsync(project: project, cancellationToken: this.CancellationToken());
+
+        Assert.DoesNotContain(collection: logger.Entries, filter: e => e.Level == LogLevel.Error);
+    }
+
+    [Fact]
+    public async Task WhenTestHarnessLibraryProjectIsSkippedByTestingPlatformDotnetTestSupportCheckNoErrorIsLoggedAsync()
+    {
+        XmlDocument doc = new();
+        doc.LoadXml(
+            "<Project Sdk=\"Microsoft.NET.Sdk\"><PropertyGroup><OutputType>Library</OutputType></PropertyGroup></Project>"
+        );
+        ProjectContext project = new(Name: "MyProject.TestHarness", Folder: "/test", CsProjXml: doc);
+
+        CapturingLogger<TestHarnessExeProjectsMustSetTestingPlatformDotnetTestSupportToFalse> logger = new();
+        TestHarnessExeProjectsMustSetTestingPlatformDotnetTestSupportToFalse check = new(logger: logger);
+
+        await check.CheckAsync(project: project, cancellationToken: this.CancellationToken());
+
+        Assert.DoesNotContain(collection: logger.Entries, filter: e => e.Level == LogLevel.Error);
+    }
+
+    // ──────────────────────────────────────────────────────────────
+    // TestHarnessExeProjectsMustSetIsTestingPlatformApplicationToFalse
+    // CanCheck = name ends with .TestHarness && OutputType==Exe
+    // ──────────────────────────────────────────────────────────────
+
+    [Fact]
+    public async Task WhenTestHarnessExeProjectHasIsTestingPlatformApplicationFalseNoErrorIsLoggedAsync()
+    {
+        XmlDocument doc = new();
+        doc.LoadXml(
+            "<Project Sdk=\"Microsoft.NET.Sdk\"><PropertyGroup><OutputType>Exe</OutputType><IsTestingPlatformApplication>false</IsTestingPlatformApplication></PropertyGroup></Project>"
+        );
+        ProjectContext project = new(Name: "MyProject.TestHarness", Folder: "/test", CsProjXml: doc);
+
+        CapturingLogger<TestHarnessExeProjectsMustSetIsTestingPlatformApplicationToFalse> logger = new();
+        TestHarnessExeProjectsMustSetIsTestingPlatformApplicationToFalse check = new(logger: logger);
+
+        await check.CheckAsync(project: project, cancellationToken: this.CancellationToken());
+
+        Assert.DoesNotContain(collection: logger.Entries, filter: e => e.Level == LogLevel.Error);
+    }
+
+    [Fact]
+    public async Task WhenTestHarnessExeProjectMissingIsTestingPlatformApplicationErrorIsLoggedAsync()
+    {
+        XmlDocument doc = new();
+        doc.LoadXml(
+            "<Project Sdk=\"Microsoft.NET.Sdk\"><PropertyGroup><OutputType>Exe</OutputType></PropertyGroup></Project>"
+        );
+        ProjectContext project = new(Name: "MyProject.TestHarness", Folder: "/test", CsProjXml: doc);
+
+        CapturingLogger<TestHarnessExeProjectsMustSetIsTestingPlatformApplicationToFalse> logger = new();
+        TestHarnessExeProjectsMustSetIsTestingPlatformApplicationToFalse check = new(logger: logger);
+
+        await check.CheckAsync(project: project, cancellationToken: this.CancellationToken());
+
+        Assert.Contains(logger.Entries, e => e.Level == LogLevel.Error);
+    }
+
+    [Fact]
+    public async Task WhenNonTestHarnessProjectIsSkippedByIsTestingPlatformApplicationCheckNoErrorIsLoggedAsync()
+    {
+        XmlDocument doc = new();
+        doc.LoadXml(
+            "<Project Sdk=\"Microsoft.NET.Sdk\"><PropertyGroup><OutputType>Exe</OutputType></PropertyGroup></Project>"
+        );
+        ProjectContext project = new(Name: "MyProject", Folder: "/test", CsProjXml: doc);
+
+        CapturingLogger<TestHarnessExeProjectsMustSetIsTestingPlatformApplicationToFalse> logger = new();
+        TestHarnessExeProjectsMustSetIsTestingPlatformApplicationToFalse check = new(logger: logger);
+
+        await check.CheckAsync(project: project, cancellationToken: this.CancellationToken());
+
+        Assert.DoesNotContain(collection: logger.Entries, filter: e => e.Level == LogLevel.Error);
+    }
+
+    [Fact]
+    public async Task WhenTestHarnessLibraryProjectIsSkippedByIsTestingPlatformApplicationCheckNoErrorIsLoggedAsync()
+    {
+        XmlDocument doc = new();
+        doc.LoadXml(
+            "<Project Sdk=\"Microsoft.NET.Sdk\"><PropertyGroup><OutputType>Library</OutputType></PropertyGroup></Project>"
+        );
+        ProjectContext project = new(Name: "MyProject.TestHarness", Folder: "/test", CsProjXml: doc);
+
+        CapturingLogger<TestHarnessExeProjectsMustSetIsTestingPlatformApplicationToFalse> logger = new();
+        TestHarnessExeProjectsMustSetIsTestingPlatformApplicationToFalse check = new(logger: logger);
+
+        await check.CheckAsync(project: project, cancellationToken: this.CancellationToken());
+
+        Assert.DoesNotContain(collection: logger.Entries, filter: e => e.Level == LogLevel.Error);
+    }
+
+    // ──────────────────────────────────────────────────────────────
+    // XUnitV3ProjectsShouldDefineTestingPlatformDotnetTestSupport
+    // TestHarness Exe projects are excluded from this check
+    // ──────────────────────────────────────────────────────────────
+
+    [Fact]
+    public async Task WhenTestHarnessExeProjectWithIsTestProjectFalseAndPropertyDefinedNoErrorIsLoggedByXUnitCheckAsync()
+    {
+        XmlDocument doc = new();
+        doc.LoadXml(
+            "<Project Sdk=\"Microsoft.NET.Sdk\"><PropertyGroup><OutputType>Exe</OutputType><IsTestProject>false</IsTestProject><TestingPlatformDotnetTestSupport>false</TestingPlatformDotnetTestSupport></PropertyGroup></Project>"
+        );
+        ProjectContext project = new(Name: "MyProject.TestHarness", Folder: "/test", CsProjXml: doc);
+
+        CapturingLogger<XUnitV3ProjectsShouldDefineTestingPlatformDotnetTestSupport> logger = new();
+        XUnitV3ProjectsShouldDefineTestingPlatformDotnetTestSupport check = new(logger: logger);
+
+        await check.CheckAsync(project: project, cancellationToken: this.CancellationToken());
+
+        Assert.DoesNotContain(collection: logger.Entries, filter: e => e.Level == LogLevel.Error);
+    }
+
+    // ──────────────────────────────────────────────────────────────
+    // XUnitV3ProjectsShouldDefineIsTestingPlatformApplication
+    // TestHarness Exe projects are excluded from this check
+    // ──────────────────────────────────────────────────────────────
+
+    [Fact]
+    public async Task WhenTestHarnessExeProjectWithIsTestProjectFalseAndIsTestingPlatformApplicationDefinedNoErrorIsLoggedByXUnitCheckAsync()
+    {
+        XmlDocument doc = new();
+        doc.LoadXml(
+            "<Project Sdk=\"Microsoft.NET.Sdk\"><PropertyGroup><OutputType>Exe</OutputType><IsTestProject>false</IsTestProject><IsTestingPlatformApplication>false</IsTestingPlatformApplication></PropertyGroup></Project>"
+        );
+        ProjectContext project = new(Name: "MyProject.TestHarness", Folder: "/test", CsProjXml: doc);
+
+        CapturingLogger<XUnitV3ProjectsShouldDefineIsTestingPlatformApplication> logger = new();
+        XUnitV3ProjectsShouldDefineIsTestingPlatformApplication check = new(logger: logger);
+
+        await check.CheckAsync(project: project, cancellationToken: this.CancellationToken());
+
+        Assert.DoesNotContain(collection: logger.Entries, filter: e => e.Level == LogLevel.Error);
+    }
 }

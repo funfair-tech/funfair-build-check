@@ -23,6 +23,14 @@ public sealed class XUnitV3ProjectsShouldDefineIsTestingPlatformApplication : IP
 
     public ValueTask CheckAsync(ProjectContext project, CancellationToken cancellationToken)
     {
+        if (
+            project.Name.EndsWith(value: ".TestHarness", comparisonType: StringComparison.OrdinalIgnoreCase)
+            && StringComparer.OrdinalIgnoreCase.Equals(x: project.GetOutputType(), y: "Exe")
+        )
+        {
+            return ValueTask.CompletedTask;
+        }
+
         string? isTestProject = project.GetProperty("IsTestProject");
 
         if (isTestProject is not null && StringComparer.OrdinalIgnoreCase.Equals(x: isTestProject, y: "false"))

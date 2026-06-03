@@ -15,6 +15,8 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 - MustNotUseInternalsVisibleTo rule: fail the build whenever InternalsVisibleTo is present in any .csproj file
 - Additional unit tests to raise FunFair.BuildCheck.Runner code coverage to 95.7%
 - XUnitV3ProjectsShouldDefineIsTestingPlatformApplication: errors when an xunit.v3 test project does not define IsTestingPlatformApplication=true, or when a project with IsTestProject=false defines it
+- TestHarness Exe projects must define TestingPlatformDotnetTestSupport=false and IsTestProject=false
+- TestHarness Exe projects must define IsTestingPlatformApplication=false
 ### Fixed
 ### Changed
 - Exclude source-generated code (GeneratedCode attribute) from coverage measurements
