@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
 using FunFair.BuildCheck.Interfaces;
@@ -57,12 +56,6 @@ public sealed class TargetFrameworkIsSetCorrectlyPolicy : IProjectCheck
         if (!sdk.StartsWith(value: "Microsoft.NET.", comparisonType: StringComparison.OrdinalIgnoreCase))
         {
             // not a dotnet SDK so don't process this
-            return ValueTask.CompletedTask;
-        }
-
-        if (string.IsNullOrEmpty(this._expected))
-        {
-            // no frameworks defined - allow any
             return ValueTask.CompletedTask;
         }
 

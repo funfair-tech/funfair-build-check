@@ -8,8 +8,11 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 ## [Unreleased]
 ### Security
 ### Added
+- Increased code coverage to 100% for FunFair.BuildCheck.ProjectChecks
 ### Fixed
+- GeneratedCodeAttribute exclusion regex in UnitTests.props now correctly excludes source-generated types from coverage reports
 ### Changed
+- Removed unreachable dead-code null guards from FunFair.BuildCheck.ProjectChecks
 ### Deprecated
 ### Removed
 ### Deployment Changes

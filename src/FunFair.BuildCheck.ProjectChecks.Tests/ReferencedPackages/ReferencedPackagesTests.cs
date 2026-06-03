@@ -103,6 +103,24 @@ public sealed class ReferencedPackagesTests : TestBase
         Assert.DoesNotContain(collection: logger.Entries, filter: e => e.Level == LogLevel.Error);
     }
 
+    [Fact]
+    public async Task WhenReferencesNugetPackageOnlyOncePackageReferenceWithMissingIncludeAttributeErrorIsLoggedAsync()
+    {
+        // A PackageReference element without an Include attribute triggers a bad reference warning
+        XmlDocument doc = new();
+        doc.LoadXml(
+            "<Project Sdk=\"Microsoft.NET.Sdk\"><ItemGroup><PackageReference Version=\"1.0.0\" /></ItemGroup></Project>"
+        );
+        ProjectContext project = new(Name: "Test.csproj", Folder: "/test", CsProjXml: doc);
+
+        CapturingLogger<ReferencesNugetPackageOnlyOnce> logger = new();
+        ReferencesNugetPackageOnlyOnce check = new(logger: logger);
+
+        await check.CheckAsync(project: project, cancellationToken: this.CancellationToken());
+
+        Assert.Contains(logger.Entries, e => e.Level == LogLevel.Error);
+    }
+
     // ──────────────────────────────────────────────────────────────
     // MustNotDisableUnexpectedWarnings
     // ──────────────────────────────────────────────────────────────
@@ -154,6 +172,76 @@ public sealed class ReferencedPackagesTests : TestBase
         await check.CheckAsync(project: project, cancellationToken: this.CancellationToken());
 
         Assert.Contains(logger.Entries, e => e.Level == LogLevel.Error);
+    }
+
+    [Fact]
+    public async Task WhenMustNotDisableUnexpectedWarningsTestProjectHasAllowedNoWarnNoErrorIsLoggedAsync()
+    {
+        // Test projects have an empty allowed warnings list — 1591 is allowed for non-test projects only
+        XmlDocument doc = new();
+        doc.LoadXml(
+            "<Project Sdk=\"Microsoft.NET.Sdk\"><PropertyGroup><NoWarn>1591</NoWarn></PropertyGroup><ItemGroup><PackageReference Include=\"xunit\" Version=\"2.0.0\" /></ItemGroup></Project>"
+        );
+        ProjectContext project = new(Name: "Test.csproj", Folder: "/test", CsProjXml: doc);
+
+        CapturingLogger<MustNotDisableUnexpectedWarnings> logger = new();
+        MustNotDisableUnexpectedWarnings check = new(logger: logger);
+
+        await check.CheckAsync(project: project, cancellationToken: this.CancellationToken());
+
+        Assert.Contains(logger.Entries, e => e.Level == LogLevel.Error);
+    }
+
+    [Fact]
+    public async Task WhenMustNotDisableUnexpectedWarningsConfigurationGroupHasDisallowedNoWarnErrorIsLoggedAsync()
+    {
+        XmlDocument doc = new();
+        doc.LoadXml(
+            "<Project Sdk=\"Microsoft.NET.Sdk\"><PropertyGroup Condition=\"'$(Configuration)'=='Debug'\"><NoWarn>CS0649</NoWarn></PropertyGroup></Project>"
+        );
+        ProjectContext project = new(Name: "Test.csproj", Folder: "/test", CsProjXml: doc);
+
+        CapturingLogger<MustNotDisableUnexpectedWarnings> logger = new();
+        MustNotDisableUnexpectedWarnings check = new(logger: logger);
+
+        await check.CheckAsync(project: project, cancellationToken: this.CancellationToken());
+
+        Assert.Contains(logger.Entries, e => e.Level == LogLevel.Error);
+    }
+
+    [Fact]
+    public async Task WhenMustNotDisableUnexpectedWarningsConfigurationGroupHasGlobalNoWarnReferenceNoErrorIsLoggedAsync()
+    {
+        // $(NoWarn) references the global NoWarn — this is allowed
+        XmlDocument doc = new();
+        doc.LoadXml(
+            "<Project Sdk=\"Microsoft.NET.Sdk\"><PropertyGroup Condition=\"'$(Configuration)'=='Debug'\"><NoWarn>$(NoWarn)</NoWarn></PropertyGroup></Project>"
+        );
+        ProjectContext project = new(Name: "Test.csproj", Folder: "/test", CsProjXml: doc);
+
+        CapturingLogger<MustNotDisableUnexpectedWarnings> logger = new();
+        MustNotDisableUnexpectedWarnings check = new(logger: logger);
+
+        await check.CheckAsync(project: project, cancellationToken: this.CancellationToken());
+
+        Assert.DoesNotContain(collection: logger.Entries, filter: e => e.Level == LogLevel.Error);
+    }
+
+    [Fact]
+    public async Task WhenMustNotDisableUnexpectedWarningsConfigurationGroupHasEmptyNoWarnNoErrorIsLoggedAsync()
+    {
+        XmlDocument doc = new();
+        doc.LoadXml(
+            "<Project Sdk=\"Microsoft.NET.Sdk\"><PropertyGroup Condition=\"'$(Configuration)'=='Debug'\"><NoWarn></NoWarn></PropertyGroup></Project>"
+        );
+        ProjectContext project = new(Name: "Test.csproj", Folder: "/test", CsProjXml: doc);
+
+        CapturingLogger<MustNotDisableUnexpectedWarnings> logger = new();
+        MustNotDisableUnexpectedWarnings check = new(logger: logger);
+
+        await check.CheckAsync(project: project, cancellationToken: this.CancellationToken());
+
+        Assert.DoesNotContain(collection: logger.Entries, filter: e => e.Level == LogLevel.Error);
     }
 
     // ──────────────────────────────────────────────────────────────
