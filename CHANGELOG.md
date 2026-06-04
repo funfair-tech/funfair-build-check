@@ -8,6 +8,16 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 ## [Unreleased]
 ### Security
 ### Added
+### Fixed
+### Changed
+### Deprecated
+### Removed
+### Deployment Changes
+<!--
+Releases that have at least been deployed to staging, BUT NOT necessarily released to live.  Changes should be moved from [Unreleased] into here as they are merged into the appropriate release branch
+-->
+## [474.2.7] - 2026-06-04
+### Added
 - Increased code coverage to 100% for FunFair.BuildCheck.ProjectChecks
 ### Fixed
 - Allow IsTestingPlatformApplication=false and TestingPlatformDotnetTestSupport on non-test Library projects that reference xunit packages
@@ -15,13 +25,9 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 ### Changed
 - Removed unreachable dead-code null guards from FunFair.BuildCheck.ProjectChecks
 - Converted DoesNotReferenceByDllTests to use [Theory]/[InlineData] instead of duplicate [Fact] methods
-### Deprecated
 ### Removed
 - Removed pre-.NET 9 conditional compilation guards and dead fallback code from FunFair.BuildCheck.Runner
-### Deployment Changes
-<!--
-Releases that have at least been deployed to staging, BUT NOT necessarily released to live.  Changes should be moved from [Unreleased] into here as they are merged into the appropriate release branch
--->
+
 ## [474.2.6] - 2026-06-03
 ### Added
 - Unit tests for FunFair.BuildCheck.Helpers to achieve 100% code coverage
