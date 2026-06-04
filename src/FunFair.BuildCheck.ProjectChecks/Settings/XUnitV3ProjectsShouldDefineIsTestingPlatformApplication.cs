@@ -35,7 +35,9 @@ public sealed class XUnitV3ProjectsShouldDefineIsTestingPlatformApplication : IP
 
         if (isTestProject is not null && StringComparer.OrdinalIgnoreCase.Equals(x: isTestProject, y: "false"))
         {
-            if (project.HasProperty(PROPERTY_NAME))
+            string? value = project.GetProperty(PROPERTY_NAME);
+
+            if (value is not null && !StringComparer.OrdinalIgnoreCase.Equals(x: value, y: "false"))
             {
                 this._logger.ProjectShouldNotDefineProperty(project.Name, PROPERTY_NAME);
             }

@@ -10,6 +10,7 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 ### Added
 - Increased code coverage to 100% for FunFair.BuildCheck.ProjectChecks
 ### Fixed
+- Allow IsTestingPlatformApplication=false and TestingPlatformDotnetTestSupport on non-test Library projects that reference xunit packages
 - GeneratedCodeAttribute exclusion regex in UnitTests.props now correctly excludes source-generated types from coverage reports
 ### Changed
 - Removed unreachable dead-code null guards from FunFair.BuildCheck.ProjectChecks
