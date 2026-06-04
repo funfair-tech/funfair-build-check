@@ -1,4 +1,3 @@
-#if NET7_0_OR_GREATER
 using System.Text.RegularExpressions;
 
 namespace FunFair.BuildCheck.Runner;
@@ -12,4 +11,3 @@ internal static partial class SourceGenerated
     )]
     public static partial Regex ProjectReferenceRegex();
 }
-#endif
