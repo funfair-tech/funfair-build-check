@@ -13,6 +13,7 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 - GeneratedCodeAttribute exclusion regex in UnitTests.props now correctly excludes source-generated types from coverage reports
 ### Changed
 - Removed unreachable dead-code null guards from FunFair.BuildCheck.ProjectChecks
+- Converted DoesNotReferenceByDllTests to use [Theory]/[InlineData] instead of duplicate [Fact] methods
 ### Deprecated
 ### Removed
 ### Deployment Changes

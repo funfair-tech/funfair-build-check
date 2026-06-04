@@ -1,4 +1,4 @@
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using System.Xml;
 using FunFair.BuildCheck.Interfaces;
@@ -12,11 +12,15 @@ namespace FunFair.BuildCheck.ProjectChecks.Tests.References;
 
 public sealed class DoesNotReferenceByDllTests : TestBase
 {
-    [Fact]
-    public async Task WhenProjectHasNoReferenceNodesNoErrorIsLoggedAsync()
+    [Theory]
+    [InlineData("<Project Sdk=\"Microsoft.NET.Sdk\"><ItemGroup></ItemGroup></Project>")]
+    [InlineData(
+        "<Project Sdk=\"Microsoft.NET.Sdk\"><ItemGroup><PackageReference Include=\"Some.Package\" Version=\"1.0.0\" /></ItemGroup></Project>"
+    )]
+    public async Task WhenProjectHasNoDllReferencesNoErrorIsLoggedAsync(string xml)
     {
         XmlDocument doc = new();
-        doc.LoadXml("<Project Sdk=\"Microsoft.NET.Sdk\"><ItemGroup></ItemGroup></Project>");
+        doc.LoadXml(xml);
         ProjectContext project = new(Name: "Test.csproj", Folder: "/test", CsProjXml: doc);
 
         CapturingLogger<DoesNotReferenceByDll> logger = new();
@@ -27,13 +31,19 @@ public sealed class DoesNotReferenceByDllTests : TestBase
         Assert.DoesNotContain(collection: logger.Entries, filter: e => e.Level == LogLevel.Error);
     }
 
-    [Fact]
-    public async Task WhenProjectReferencesOneAssemblyByDllOneErrorIsLoggedAsync()
+    [Theory]
+    [InlineData(
+        "<Project Sdk=\"Microsoft.NET.Sdk\"><ItemGroup><Reference Include=\"Some.Assembly\" /></ItemGroup></Project>",
+        1
+    )]
+    [InlineData(
+        "<Project Sdk=\"Microsoft.NET.Sdk\"><ItemGroup><Reference Include=\"First.Assembly\" /><Reference Include=\"Second.Assembly\" /></ItemGroup></Project>",
+        2
+    )]
+    public async Task WhenProjectReferencesByDllErrorsAreLoggedForEachAsync(string xml, int expectedErrorCount)
     {
         XmlDocument doc = new();
-        doc.LoadXml(
-            "<Project Sdk=\"Microsoft.NET.Sdk\"><ItemGroup><Reference Include=\"Some.Assembly\" /></ItemGroup></Project>"
-        );
+        doc.LoadXml(xml);
         ProjectContext project = new(Name: "Test.csproj", Folder: "/test", CsProjXml: doc);
 
         CapturingLogger<DoesNotReferenceByDll> logger = new();
@@ -41,40 +51,6 @@ public sealed class DoesNotReferenceByDllTests : TestBase
 
         await check.CheckAsync(project: project, cancellationToken: this.CancellationToken());
 
-        Assert.Contains(logger.Entries, e => e.Level == LogLevel.Error);
-    }
-
-    [Fact]
-    public async Task WhenProjectReferencesTwoAssembliesByDllTwoErrorsAreLoggedAsync()
-    {
-        XmlDocument doc = new();
-        doc.LoadXml(
-            "<Project Sdk=\"Microsoft.NET.Sdk\"><ItemGroup><Reference Include=\"First.Assembly\" /><Reference Include=\"Second.Assembly\" /></ItemGroup></Project>"
-        );
-        ProjectContext project = new(Name: "Test.csproj", Folder: "/test", CsProjXml: doc);
-
-        CapturingLogger<DoesNotReferenceByDll> logger = new();
-        DoesNotReferenceByDll check = new(logger: logger);
-
-        await check.CheckAsync(project: project, cancellationToken: this.CancellationToken());
-
-        Assert.Equal(expected: 2, actual: logger.Entries.Count(e => e.Level == LogLevel.Error));
-    }
-
-    [Fact]
-    public async Task WhenProjectHasOnlyPackageReferencesNoErrorIsLoggedAsync()
-    {
-        XmlDocument doc = new();
-        doc.LoadXml(
-            "<Project Sdk=\"Microsoft.NET.Sdk\"><ItemGroup><PackageReference Include=\"Some.Package\" Version=\"1.0.0\" /></ItemGroup></Project>"
-        );
-        ProjectContext project = new(Name: "Test.csproj", Folder: "/test", CsProjXml: doc);
-
-        CapturingLogger<DoesNotReferenceByDll> logger = new();
-        DoesNotReferenceByDll check = new(logger: logger);
-
-        await check.CheckAsync(project: project, cancellationToken: this.CancellationToken());
-
-        Assert.DoesNotContain(collection: logger.Entries, filter: e => e.Level == LogLevel.Error);
+        Assert.Equal(expected: expectedErrorCount, actual: logger.Entries.Count(e => e.Level == LogLevel.Error));
     }
 }
