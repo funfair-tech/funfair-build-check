@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
 using FunFair.BuildCheck.Interfaces;
@@ -35,7 +35,12 @@ public sealed class XUnitV3ProjectsShouldDefineTestingPlatformDotnetTestSupport 
 
         if (isTestProject is not null && StringComparer.OrdinalIgnoreCase.Equals(x: isTestProject, y: "false"))
         {
-            if (project.HasProperty(PROPERTY_NAME))
+            string? isTestingPlatformApplication = project.GetProperty("IsTestingPlatformApplication");
+            bool suppressesTestDiscovery =
+                isTestingPlatformApplication is not null
+                && StringComparer.OrdinalIgnoreCase.Equals(x: isTestingPlatformApplication, y: "false");
+
+            if (project.HasProperty(PROPERTY_NAME) && !suppressesTestDiscovery)
             {
                 this._logger.ProjectShouldNotDefineProperty(project.Name, PROPERTY_NAME);
             }

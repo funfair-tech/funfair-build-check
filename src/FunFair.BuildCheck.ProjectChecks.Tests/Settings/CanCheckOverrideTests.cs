@@ -173,6 +173,23 @@ public sealed class CanCheckOverrideTests : TestBase
         Assert.Contains(logger.Entries, e => e.Level == LogLevel.Error);
     }
 
+    [Fact]
+    public async Task WhenXUnitV3ProjectsShouldDefineTestingPlatformDotnetTestSupportIsTestProjectFalseWithIsTestingPlatformApplicationFalseAndPropertyDefinedNoErrorIsLoggedAsync()
+    {
+        XmlDocument doc = new();
+        doc.LoadXml(
+            "<Project Sdk=\"Microsoft.NET.Sdk\"><PropertyGroup><IsTestProject>false</IsTestProject><IsTestingPlatformApplication>false</IsTestingPlatformApplication><TestingPlatformDotnetTestSupport>true</TestingPlatformDotnetTestSupport></PropertyGroup></Project>"
+        );
+        ProjectContext project = new(Name: "Test.csproj", Folder: "/test", CsProjXml: doc);
+
+        CapturingLogger<XUnitV3ProjectsShouldDefineTestingPlatformDotnetTestSupport> logger = new();
+        XUnitV3ProjectsShouldDefineTestingPlatformDotnetTestSupport check = new(logger: logger);
+
+        await check.CheckAsync(project: project, cancellationToken: this.CancellationToken());
+
+        Assert.DoesNotContain(collection: logger.Entries, filter: e => e.Level == LogLevel.Error);
+    }
+
     // ──────────────────────────────────────────────────────────────
     // XUnitV3ProjectsShouldDefineUseMicrosoftTestingPlatformRunner
     // CanCheck = IsTestProject && (xunit.v3 || xunit.v3.extensibility.core)
@@ -332,6 +349,23 @@ public sealed class CanCheckOverrideTests : TestBase
         await check.CheckAsync(project: project, cancellationToken: this.CancellationToken());
 
         Assert.Contains(logger.Entries, e => e.Level == LogLevel.Error);
+    }
+
+    [Fact]
+    public async Task WhenXUnitV3ProjectsShouldDefineIsTestingPlatformApplicationIsTestProjectFalseAndPropertyDefinedAsFalseNoErrorIsLoggedAsync()
+    {
+        XmlDocument doc = new();
+        doc.LoadXml(
+            "<Project Sdk=\"Microsoft.NET.Sdk\"><PropertyGroup><IsTestProject>false</IsTestProject><IsTestingPlatformApplication>false</IsTestingPlatformApplication></PropertyGroup></Project>"
+        );
+        ProjectContext project = new(Name: "Test.csproj", Folder: "/test", CsProjXml: doc);
+
+        CapturingLogger<XUnitV3ProjectsShouldDefineIsTestingPlatformApplication> logger = new();
+        XUnitV3ProjectsShouldDefineIsTestingPlatformApplication check = new(logger: logger);
+
+        await check.CheckAsync(project: project, cancellationToken: this.CancellationToken());
+
+        Assert.DoesNotContain(collection: logger.Entries, filter: e => e.Level == LogLevel.Error);
     }
 
     // ──────────────────────────────────────────────────────────────
