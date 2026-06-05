@@ -9,6 +9,7 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 ### Security
 ### Added
 - Increased code coverage to 100% for FunFair.BuildCheck.ProjectChecks
+- Check that SuppressTrimAnalysisWarnings is set to false when present
 ### Fixed
 - GeneratedCodeAttribute exclusion regex in UnitTests.props now correctly excludes source-generated types from coverage reports
 ### Changed
