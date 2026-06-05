@@ -1161,4 +1161,58 @@ public sealed class CanCheckOverrideTests : TestBase
 
         Assert.DoesNotContain(collection: logger.Entries, filter: e => e.Level == LogLevel.Error);
     }
+
+    // ──────────────────────────────────────────────────────────────
+    // SuppressTrimAnalysisWarningsMustBeFalsePolicy
+    // CanCheck = project.HasProperty("SuppressTrimAnalysisWarnings")
+    // ──────────────────────────────────────────────────────────────
+
+    [Fact]
+    public async Task WhenSuppressTrimAnalysisWarningsMustBeFalsePolicyPropertyIsAbsentNoErrorIsLoggedAsync()
+    {
+        XmlDocument doc = new();
+        doc.LoadXml("<Project Sdk=\"Microsoft.NET.Sdk\"><PropertyGroup></PropertyGroup></Project>");
+        ProjectContext project = new(Name: "Test.csproj", Folder: "/test", CsProjXml: doc);
+
+        CapturingLogger<SuppressTrimAnalysisWarningsMustBeFalsePolicy> logger = new();
+        SuppressTrimAnalysisWarningsMustBeFalsePolicy check = new(logger: logger);
+
+        await check.CheckAsync(project: project, cancellationToken: this.CancellationToken());
+
+        Assert.DoesNotContain(collection: logger.Entries, filter: e => e.Level == LogLevel.Error);
+    }
+
+    [Fact]
+    public async Task WhenSuppressTrimAnalysisWarningsMustBeFalsePolicyPropertyIsFalseNoErrorIsLoggedAsync()
+    {
+        XmlDocument doc = new();
+        doc.LoadXml(
+            "<Project Sdk=\"Microsoft.NET.Sdk\"><PropertyGroup><SuppressTrimAnalysisWarnings>false</SuppressTrimAnalysisWarnings></PropertyGroup></Project>"
+        );
+        ProjectContext project = new(Name: "Test.csproj", Folder: "/test", CsProjXml: doc);
+
+        CapturingLogger<SuppressTrimAnalysisWarningsMustBeFalsePolicy> logger = new();
+        SuppressTrimAnalysisWarningsMustBeFalsePolicy check = new(logger: logger);
+
+        await check.CheckAsync(project: project, cancellationToken: this.CancellationToken());
+
+        Assert.DoesNotContain(collection: logger.Entries, filter: e => e.Level == LogLevel.Error);
+    }
+
+    [Fact]
+    public async Task WhenSuppressTrimAnalysisWarningsMustBeFalsePolicyPropertyIsTrueErrorIsLoggedAsync()
+    {
+        XmlDocument doc = new();
+        doc.LoadXml(
+            "<Project Sdk=\"Microsoft.NET.Sdk\"><PropertyGroup><SuppressTrimAnalysisWarnings>true</SuppressTrimAnalysisWarnings></PropertyGroup></Project>"
+        );
+        ProjectContext project = new(Name: "Test.csproj", Folder: "/test", CsProjXml: doc);
+
+        CapturingLogger<SuppressTrimAnalysisWarningsMustBeFalsePolicy> logger = new();
+        SuppressTrimAnalysisWarningsMustBeFalsePolicy check = new(logger: logger);
+
+        await check.CheckAsync(project: project, cancellationToken: this.CancellationToken());
+
+        Assert.Contains(logger.Entries, e => e.Level == LogLevel.Error);
+    }
 }
