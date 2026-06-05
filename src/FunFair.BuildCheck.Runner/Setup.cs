@@ -172,6 +172,7 @@ internal static class Setup
             .AddProjectCheck<NuGetAuditLevelPolicy>()
             .AddProjectCheck<MustNotDefineCodeAnalysisRuleSet>()
             .AddProjectCheck<ProjectsShouldHaveTrimAnalyzerConfiguredPolicy>()
+            .AddProjectCheck<SuppressTrimAnalysisWarningsMustBeFalsePolicy>()
             .AddProjectCheck<MustHaveMicrosoftSbomTargetsAnalyzerPackage>()
             .AddEnumSourceGeneratorAnalyzerPackage(repositorySettings: repositorySettings)
             .AddUnitTestAnalysers(repositorySettings: repositorySettings)
