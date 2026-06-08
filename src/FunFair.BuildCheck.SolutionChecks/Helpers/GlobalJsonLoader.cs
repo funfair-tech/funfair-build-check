@@ -39,10 +39,10 @@ public sealed class GlobalJsonLoader : IGlobalJsonLoader
             return GlobalJsonNotFoundResult.Instance;
         }
 
-        string content = await File.ReadAllTextAsync(path: file, cancellationToken: cancellationToken);
-
         try
         {
+            string content = await File.ReadAllTextAsync(path: file, cancellationToken: cancellationToken);
+
             GlobalJsonPacket? packet = JsonSerializer.Deserialize(
                 json: content,
                 jsonTypeInfo: MustBeSerializable.Default.GlobalJsonPacket
@@ -55,6 +55,10 @@ public sealed class GlobalJsonLoader : IGlobalJsonLoader
             );
 
             return new GlobalJsonLoadedResult(info);
+        }
+        catch (OperationCanceledException)
+        {
+            throw;
         }
         catch (Exception exception)
         {
