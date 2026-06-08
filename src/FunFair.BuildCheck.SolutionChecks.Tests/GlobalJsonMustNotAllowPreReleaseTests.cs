@@ -2,6 +2,7 @@
 using System.IO;
 using System.Threading.Tasks;
 using FunFair.BuildCheck.Interfaces;
+using FunFair.BuildCheck.SolutionChecks.Helpers;
 using FunFair.BuildCheck.SolutionChecks.Tests.Helpers;
 using FunFair.Test.Common;
 using Microsoft.Extensions.Logging;
@@ -20,7 +21,11 @@ public sealed class GlobalJsonMustNotAllowPreReleaseTests : TestBase
         settings.DotNetAllowPreReleaseSdk.Returns("false");
 
         CapturingLogger<GlobalJsonMustNotAllowPreRelease> logger = new();
-        GlobalJsonMustNotAllowPreRelease check = new(repositorySettings: settings, logger: logger);
+        GlobalJsonMustNotAllowPreRelease check = new(
+            repositorySettings: settings,
+            loader: new GlobalJsonLoader(),
+            logger: logger
+        );
 
         await check.CheckAsync(solutionFileName: "/some/solution.slnx", cancellationToken: this.CancellationToken());
 
@@ -39,7 +44,11 @@ public sealed class GlobalJsonMustNotAllowPreReleaseTests : TestBase
             settings.DotNetAllowPreReleaseSdk.Returns("false");
 
             CapturingLogger<GlobalJsonMustNotAllowPreRelease> logger = new();
-            GlobalJsonMustNotAllowPreRelease check = new(repositorySettings: settings, logger: logger);
+            GlobalJsonMustNotAllowPreRelease check = new(
+                repositorySettings: settings,
+                loader: new GlobalJsonLoader(),
+                logger: logger
+            );
 
             await check.CheckAsync(
                 solutionFileName: Path.Combine(path1: tempDir, path2: "Solution.slnx"),
@@ -68,7 +77,11 @@ public sealed class GlobalJsonMustNotAllowPreReleaseTests : TestBase
             settings.DotNetAllowPreReleaseSdk.Returns("false");
 
             CapturingLogger<GlobalJsonMustNotAllowPreRelease> logger = new();
-            GlobalJsonMustNotAllowPreRelease check = new(repositorySettings: settings, logger: logger);
+            GlobalJsonMustNotAllowPreRelease check = new(
+                repositorySettings: settings,
+                loader: new GlobalJsonLoader(),
+                logger: logger
+            );
 
             await check.CheckAsync(
                 solutionFileName: Path.Combine(path1: tempDir, path2: "Solution.slnx"),
@@ -97,7 +110,11 @@ public sealed class GlobalJsonMustNotAllowPreReleaseTests : TestBase
             settings.DotNetAllowPreReleaseSdk.Returns("false");
 
             CapturingLogger<GlobalJsonMustNotAllowPreRelease> logger = new();
-            GlobalJsonMustNotAllowPreRelease check = new(repositorySettings: settings, logger: logger);
+            GlobalJsonMustNotAllowPreRelease check = new(
+                repositorySettings: settings,
+                loader: new GlobalJsonLoader(),
+                logger: logger
+            );
 
             await check.CheckAsync(
                 solutionFileName: Path.Combine(path1: tempDir, path2: "Solution.slnx"),
@@ -126,7 +143,11 @@ public sealed class GlobalJsonMustNotAllowPreReleaseTests : TestBase
             settings.DotNetAllowPreReleaseSdk.Returns("false");
 
             CapturingLogger<GlobalJsonMustNotAllowPreRelease> logger = new();
-            GlobalJsonMustNotAllowPreRelease check = new(repositorySettings: settings, logger: logger);
+            GlobalJsonMustNotAllowPreRelease check = new(
+                repositorySettings: settings,
+                loader: new GlobalJsonLoader(),
+                logger: logger
+            );
 
             await check.CheckAsync(
                 solutionFileName: Path.Combine(path1: tempDir, path2: "Solution.slnx"),
@@ -155,7 +176,11 @@ public sealed class GlobalJsonMustNotAllowPreReleaseTests : TestBase
             settings.DotNetAllowPreReleaseSdk.Returns("true");
 
             CapturingLogger<GlobalJsonMustNotAllowPreRelease> logger = new();
-            GlobalJsonMustNotAllowPreRelease check = new(repositorySettings: settings, logger: logger);
+            GlobalJsonMustNotAllowPreRelease check = new(
+                repositorySettings: settings,
+                loader: new GlobalJsonLoader(),
+                logger: logger
+            );
 
             await check.CheckAsync(
                 solutionFileName: Path.Combine(path1: tempDir, path2: "Solution.slnx"),
@@ -188,7 +213,11 @@ public sealed class GlobalJsonMustNotAllowPreReleaseTests : TestBase
             settings.DotNetAllowPreReleaseSdk.Returns("false");
 
             CapturingLogger<GlobalJsonMustNotAllowPreRelease> logger = new();
-            GlobalJsonMustNotAllowPreRelease check = new(repositorySettings: settings, logger: logger);
+            GlobalJsonMustNotAllowPreRelease check = new(
+                repositorySettings: settings,
+                loader: new GlobalJsonLoader(),
+                logger: logger
+            );
 
             await check.CheckAsync(
                 solutionFileName: Path.Combine(path1: tempDir, path2: "Solution.slnx"),

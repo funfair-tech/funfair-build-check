@@ -2,6 +2,7 @@
 using System.IO;
 using System.Threading.Tasks;
 using FunFair.BuildCheck.Interfaces;
+using FunFair.BuildCheck.SolutionChecks.Helpers;
 using FunFair.BuildCheck.SolutionChecks.Tests.Helpers;
 using FunFair.Test.Common;
 using Microsoft.Extensions.Logging;
@@ -19,7 +20,7 @@ public sealed class GlobalJsonIsLatestTests : TestBase
         settings.DotNetSdkVersion.Returns((string?)null);
 
         CapturingLogger<GlobalJsonIsLatest> logger = new();
-        GlobalJsonIsLatest check = new(repositorySettings: settings, logger: logger);
+        GlobalJsonIsLatest check = new(repositorySettings: settings, loader: new GlobalJsonLoader(), logger: logger);
 
         await check.CheckAsync(solutionFileName: "/some/solution.slnx", cancellationToken: this.CancellationToken());
 
@@ -33,7 +34,7 @@ public sealed class GlobalJsonIsLatestTests : TestBase
         settings.DotNetSdkVersion.Returns("9.0.100");
 
         CapturingLogger<GlobalJsonIsLatest> logger = new();
-        GlobalJsonIsLatest check = new(repositorySettings: settings, logger: logger);
+        GlobalJsonIsLatest check = new(repositorySettings: settings, loader: new GlobalJsonLoader(), logger: logger);
 
         await check.CheckAsync(solutionFileName: "/", cancellationToken: this.CancellationToken());
 
@@ -51,7 +52,11 @@ public sealed class GlobalJsonIsLatestTests : TestBase
             settings.DotNetSdkVersion.Returns("9.0.100");
 
             CapturingLogger<GlobalJsonIsLatest> logger = new();
-            GlobalJsonIsLatest check = new(repositorySettings: settings, logger: logger);
+            GlobalJsonIsLatest check = new(
+                repositorySettings: settings,
+                loader: new GlobalJsonLoader(),
+                logger: logger
+            );
 
             await check.CheckAsync(
                 solutionFileName: Path.Combine(path1: tempDir, path2: "Solution.slnx"),
@@ -80,7 +85,11 @@ public sealed class GlobalJsonIsLatestTests : TestBase
             settings.DotNetSdkVersion.Returns(sdkVersion);
 
             CapturingLogger<GlobalJsonIsLatest> logger = new();
-            GlobalJsonIsLatest check = new(repositorySettings: settings, logger: logger);
+            GlobalJsonIsLatest check = new(
+                repositorySettings: settings,
+                loader: new GlobalJsonLoader(),
+                logger: logger
+            );
 
             await check.CheckAsync(
                 solutionFileName: Path.Combine(path1: tempDir, path2: "Solution.slnx"),
@@ -108,7 +117,11 @@ public sealed class GlobalJsonIsLatestTests : TestBase
             settings.DotNetSdkVersion.Returns("9.0.200");
 
             CapturingLogger<GlobalJsonIsLatest> logger = new();
-            GlobalJsonIsLatest check = new(repositorySettings: settings, logger: logger);
+            GlobalJsonIsLatest check = new(
+                repositorySettings: settings,
+                loader: new GlobalJsonLoader(),
+                logger: logger
+            );
 
             await check.CheckAsync(
                 solutionFileName: Path.Combine(path1: tempDir, path2: "Solution.slnx"),
@@ -124,7 +137,7 @@ public sealed class GlobalJsonIsLatestTests : TestBase
     }
 
     [Fact]
-    public async Task WhenGlobalJsonHasNoRollForwardErrorIsLoggedAsync()
+    public async Task WhenGlobalJsonVersionMatchesButHasNoRollForwardNoErrorIsLoggedAsync()
     {
         string tempDir = CreateTempDirectory();
 
@@ -136,7 +149,79 @@ public sealed class GlobalJsonIsLatestTests : TestBase
             settings.DotNetSdkVersion.Returns("9.0.100");
 
             CapturingLogger<GlobalJsonIsLatest> logger = new();
-            GlobalJsonIsLatest check = new(repositorySettings: settings, logger: logger);
+            GlobalJsonIsLatest check = new(
+                repositorySettings: settings,
+                loader: new GlobalJsonLoader(),
+                logger: logger
+            );
+
+            await check.CheckAsync(
+                solutionFileName: Path.Combine(path1: tempDir, path2: "Solution.slnx"),
+                cancellationToken: this.CancellationToken()
+            );
+
+            Assert.DoesNotContain(collection: logger.Entries, filter: e => e.Level == LogLevel.Error);
+        }
+        finally
+        {
+            Directory.Delete(path: tempDir, recursive: true);
+        }
+    }
+
+    [Fact]
+    public async Task WhenGlobalJsonVersionMismatchAndHasNoRollForwardErrorIsLoggedAsync()
+    {
+        string tempDir = CreateTempDirectory();
+
+        try
+        {
+            await this.WriteGlobalJsonAsync(tempDir: tempDir, version: "9.0.100", rollForward: null);
+
+            IRepositorySettings settings = Substitute.For<IRepositorySettings>();
+            settings.DotNetSdkVersion.Returns("9.0.200");
+
+            CapturingLogger<GlobalJsonIsLatest> logger = new();
+            GlobalJsonIsLatest check = new(
+                repositorySettings: settings,
+                loader: new GlobalJsonLoader(),
+                logger: logger
+            );
+
+            await check.CheckAsync(
+                solutionFileName: Path.Combine(path1: tempDir, path2: "Solution.slnx"),
+                cancellationToken: this.CancellationToken()
+            );
+
+            Assert.Single(collection: logger.Entries, predicate: e => e.Level == LogLevel.Error);
+        }
+        finally
+        {
+            Directory.Delete(path: tempDir, recursive: true);
+        }
+    }
+
+    [Fact]
+    public async Task WhenGlobalJsonHasNoVersionErrorIsLoggedAsync()
+    {
+        string tempDir = CreateTempDirectory();
+
+        try
+        {
+            await File.WriteAllTextAsync(
+                path: Path.Combine(path1: tempDir, path2: "global.json"),
+                contents: "{\"sdk\":{\"rollForward\":\"latestPatch\"}}",
+                cancellationToken: this.CancellationToken()
+            );
+
+            IRepositorySettings settings = Substitute.For<IRepositorySettings>();
+            settings.DotNetSdkVersion.Returns("9.0.100");
+
+            CapturingLogger<GlobalJsonIsLatest> logger = new();
+            GlobalJsonIsLatest check = new(
+                repositorySettings: settings,
+                loader: new GlobalJsonLoader(),
+                logger: logger
+            );
 
             await check.CheckAsync(
                 solutionFileName: Path.Combine(path1: tempDir, path2: "Solution.slnx"),
@@ -168,7 +253,11 @@ public sealed class GlobalJsonIsLatestTests : TestBase
             settings.DotNetSdkVersion.Returns("9.0.100");
 
             CapturingLogger<GlobalJsonIsLatest> logger = new();
-            GlobalJsonIsLatest check = new(repositorySettings: settings, logger: logger);
+            GlobalJsonIsLatest check = new(
+                repositorySettings: settings,
+                loader: new GlobalJsonLoader(),
+                logger: logger
+            );
 
             await check.CheckAsync(
                 solutionFileName: Path.Combine(path1: tempDir, path2: "Solution.slnx"),

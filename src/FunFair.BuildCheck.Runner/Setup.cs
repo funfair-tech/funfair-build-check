@@ -5,6 +5,7 @@ using FunFair.BuildCheck.ProjectChecks.ReferencedPackages;
 using FunFair.BuildCheck.ProjectChecks.References;
 using FunFair.BuildCheck.ProjectChecks.Settings;
 using FunFair.BuildCheck.SolutionChecks;
+using FunFair.BuildCheck.SolutionChecks.Helpers;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace FunFair.BuildCheck.Runner;
@@ -14,6 +15,7 @@ internal static class Setup
     public static IServiceCollection SetupSolutionChecks(this IServiceCollection services)
     {
         return services
+            .AddSingleton<IGlobalJsonLoader, GlobalJsonLoader>()
             .AddSolutionCheck<GlobalJsonIsLatest>()
             .AddSolutionCheck<GlobalJsonMustSpecifyCorrectRollForwardPolicy>()
             .AddSolutionCheck<GlobalJsonMustNotAllowPreRelease>()

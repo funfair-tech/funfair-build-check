@@ -1,8 +1,4 @@
 using System;
-using System.IO;
-using System.Text.Json;
-using System.Threading;
-using System.Threading.Tasks;
 using FunFair.BuildCheck.Interfaces;
 using FunFair.BuildCheck.SolutionChecks.Helpers;
 using FunFair.BuildCheck.SolutionChecks.LoggingExtensions;
@@ -11,71 +7,52 @@ using Microsoft.Extensions.Logging;
 
 namespace FunFair.BuildCheck.SolutionChecks;
 
-public sealed class GlobalJsonMustNotAllowPreRelease : ISolutionCheck
+public sealed class GlobalJsonMustNotAllowPreRelease : GlobalJsonSolutionCheckBase
 {
     private readonly bool _allowPreRelease;
     private readonly ILogger<GlobalJsonMustNotAllowPreRelease> _logger;
 
-    private readonly IRepositorySettings _repositorySettings;
-
     public GlobalJsonMustNotAllowPreRelease(
         IRepositorySettings repositorySettings,
+        IGlobalJsonLoader loader,
         ILogger<GlobalJsonMustNotAllowPreRelease> logger
     )
+        : base(repositorySettings: repositorySettings, loader: loader)
     {
-        this._repositorySettings = repositorySettings;
         this._logger = logger;
-        string allowPreRelease = repositorySettings.DotNetAllowPreReleaseSdk;
-
-        this._allowPreRelease = StringComparer.OrdinalIgnoreCase.Equals(x: allowPreRelease, y: "true");
+        this._allowPreRelease = StringComparer.OrdinalIgnoreCase.Equals(
+            x: repositorySettings.DotNetAllowPreReleaseSdk,
+            y: "true"
+        );
     }
 
-    public async ValueTask CheckAsync(string solutionFileName, CancellationToken cancellationToken)
+    protected override void OnReadFailed(string solutionFileName, string file, Exception exception)
     {
-        if (string.IsNullOrWhiteSpace(this._repositorySettings.DotNetSdkVersion))
+        this._logger.FailedToReadGlobalJson(
+            solutionFileName: solutionFileName,
+            file: file,
+            message: exception.Message,
+            exception: exception
+        );
+    }
+
+    protected override void CheckSdk(string solutionFileName, GlobalJsonInfo info)
+    {
+        bool? allowPrereleaseInConfig = info.AllowPrerelease;
+
+        if (allowPrereleaseInConfig is null)
         {
+            this._logger.DoesNotSpecifyADotNetSdkPreReleasePolicy(solutionFileName);
+
             return;
         }
 
-        if (!GlobalJsonHelpers.GetFileNameForSolution(solutionFileName: solutionFileName, out string? file))
+        if (!this._allowPreRelease && allowPrereleaseInConfig.Value)
         {
-            return;
-        }
-
-        string content = await File.ReadAllTextAsync(path: file, cancellationToken: cancellationToken);
-
-        try
-        {
-            GlobalJsonPacket? p = JsonSerializer.Deserialize(
-                json: content,
-                jsonTypeInfo: MustBeSerializable.Default.GlobalJsonPacket
-            );
-
-            if (p?.Sdk?.AllowPrerelease is not null)
-            {
-                bool preReleaseAllowedInConfig = p.Sdk.AllowPrerelease ?? true;
-
-                if (!this._allowPreRelease && preReleaseAllowedInConfig)
-                {
-                    this._logger.UsingIncorrectPreReleasePolicy(
-                        solutionFileName: solutionFileName,
-                        FormatPolicy(preReleaseAllowedInConfig),
-                        FormatPolicy(this._allowPreRelease)
-                    );
-                }
-            }
-            else
-            {
-                this._logger.DoesNotSpecifyADotNetSdkPreReleasePolicy(solutionFileName);
-            }
-        }
-        catch (Exception exception)
-        {
-            this._logger.FailedToReadGlobalJson(
+            this._logger.UsingIncorrectPreReleasePolicy(
                 solutionFileName: solutionFileName,
-                file: file,
-                message: exception.Message,
-                exception: exception
+                FormatPolicy(allowPrereleaseInConfig.Value),
+                FormatPolicy(this._allowPreRelease)
             );
         }
     }

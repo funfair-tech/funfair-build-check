@@ -2,6 +2,7 @@
 using System.IO;
 using System.Threading.Tasks;
 using FunFair.BuildCheck.Interfaces;
+using FunFair.BuildCheck.SolutionChecks.Helpers;
 using FunFair.BuildCheck.SolutionChecks.Tests.Helpers;
 using FunFair.Test.Common;
 using Microsoft.Extensions.Logging;
@@ -19,7 +20,11 @@ public sealed class GlobalJsonMustSpecifyCorrectRollForwardPolicyTests : TestBas
         settings.DotNetSdkVersion.Returns((string?)null);
 
         CapturingLogger<GlobalJsonMustSpecifyCorrectRollForwardPolicy> logger = new();
-        GlobalJsonMustSpecifyCorrectRollForwardPolicy check = new(repositorySettings: settings, logger: logger);
+        GlobalJsonMustSpecifyCorrectRollForwardPolicy check = new(
+            repositorySettings: settings,
+            loader: new GlobalJsonLoader(),
+            logger: logger
+        );
 
         await check.CheckAsync(solutionFileName: "/some/solution.slnx", cancellationToken: this.CancellationToken());
 
@@ -37,7 +42,11 @@ public sealed class GlobalJsonMustSpecifyCorrectRollForwardPolicyTests : TestBas
             settings.DotNetSdkVersion.Returns("9.0.100");
 
             CapturingLogger<GlobalJsonMustSpecifyCorrectRollForwardPolicy> logger = new();
-            GlobalJsonMustSpecifyCorrectRollForwardPolicy check = new(repositorySettings: settings, logger: logger);
+            GlobalJsonMustSpecifyCorrectRollForwardPolicy check = new(
+                repositorySettings: settings,
+                loader: new GlobalJsonLoader(),
+                logger: logger
+            );
 
             await check.CheckAsync(
                 solutionFileName: Path.Combine(path1: tempDir, path2: "Solution.slnx"),
@@ -65,7 +74,11 @@ public sealed class GlobalJsonMustSpecifyCorrectRollForwardPolicyTests : TestBas
             settings.DotNetSdkVersion.Returns("9.0.100");
 
             CapturingLogger<GlobalJsonMustSpecifyCorrectRollForwardPolicy> logger = new();
-            GlobalJsonMustSpecifyCorrectRollForwardPolicy check = new(repositorySettings: settings, logger: logger);
+            GlobalJsonMustSpecifyCorrectRollForwardPolicy check = new(
+                repositorySettings: settings,
+                loader: new GlobalJsonLoader(),
+                logger: logger
+            );
 
             await check.CheckAsync(
                 solutionFileName: Path.Combine(path1: tempDir, path2: "Solution.slnx"),
@@ -93,7 +106,11 @@ public sealed class GlobalJsonMustSpecifyCorrectRollForwardPolicyTests : TestBas
             settings.DotNetSdkVersion.Returns("9.0.100");
 
             CapturingLogger<GlobalJsonMustSpecifyCorrectRollForwardPolicy> logger = new();
-            GlobalJsonMustSpecifyCorrectRollForwardPolicy check = new(repositorySettings: settings, logger: logger);
+            GlobalJsonMustSpecifyCorrectRollForwardPolicy check = new(
+                repositorySettings: settings,
+                loader: new GlobalJsonLoader(),
+                logger: logger
+            );
 
             await check.CheckAsync(
                 solutionFileName: Path.Combine(path1: tempDir, path2: "Solution.slnx"),
@@ -121,7 +138,11 @@ public sealed class GlobalJsonMustSpecifyCorrectRollForwardPolicyTests : TestBas
             settings.DotNetSdkVersion.Returns("9.0.100");
 
             CapturingLogger<GlobalJsonMustSpecifyCorrectRollForwardPolicy> logger = new();
-            GlobalJsonMustSpecifyCorrectRollForwardPolicy check = new(repositorySettings: settings, logger: logger);
+            GlobalJsonMustSpecifyCorrectRollForwardPolicy check = new(
+                repositorySettings: settings,
+                loader: new GlobalJsonLoader(),
+                logger: logger
+            );
 
             await check.CheckAsync(
                 solutionFileName: Path.Combine(path1: tempDir, path2: "Solution.slnx"),
@@ -153,7 +174,11 @@ public sealed class GlobalJsonMustSpecifyCorrectRollForwardPolicyTests : TestBas
             settings.DotNetSdkVersion.Returns("9.0.100");
 
             CapturingLogger<GlobalJsonMustSpecifyCorrectRollForwardPolicy> logger = new();
-            GlobalJsonMustSpecifyCorrectRollForwardPolicy check = new(repositorySettings: settings, logger: logger);
+            GlobalJsonMustSpecifyCorrectRollForwardPolicy check = new(
+                repositorySettings: settings,
+                loader: new GlobalJsonLoader(),
+                logger: logger
+            );
 
             await check.CheckAsync(
                 solutionFileName: Path.Combine(path1: tempDir, path2: "Solution.slnx"),
