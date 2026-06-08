@@ -9,6 +9,7 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 ### Security
 ### Added
 - Check that SuppressTrimAnalysisWarnings is set to false when present
+- Ban WarningsNotAsErrors from being defined in project files
 ### Fixed
 ### Changed
 ### Deprecated

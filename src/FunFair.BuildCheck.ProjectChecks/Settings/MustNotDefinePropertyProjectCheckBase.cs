@@ -27,7 +27,7 @@ public abstract class MustNotDefinePropertyProjectCheckBase : IProjectCheck
 
     private void DoCheck(in ProjectContext project)
     {
-        if (project.HasProperty(this._propertyName))
+        if (project.IsPropertyDefined(this._propertyName))
         {
             this._logger.ProjectShouldNotDefineProperty(project.Name, this._propertyName);
         }

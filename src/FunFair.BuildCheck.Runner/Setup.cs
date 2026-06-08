@@ -171,6 +171,7 @@ internal static class Setup
             .AddProjectCheck<NuGetAuditPolicy>()
             .AddProjectCheck<NuGetAuditLevelPolicy>()
             .AddProjectCheck<MustNotDefineCodeAnalysisRuleSet>()
+            .AddProjectCheck<MustNotDefineWarningsNotAsErrors>()
             .AddProjectCheck<ProjectsShouldHaveTrimAnalyzerConfiguredPolicy>()
             .AddProjectCheck<SuppressTrimAnalysisWarningsMustBeFalsePolicy>()
             .AddProjectCheck<MustHaveMicrosoftSbomTargetsAnalyzerPackage>()
