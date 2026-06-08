@@ -29,6 +29,11 @@ public sealed class GlobalJsonLoader : IGlobalJsonLoader
         return result;
     }
 
+    public void Clear()
+    {
+        this._cache.Clear();
+    }
+
     private static async ValueTask<GlobalJsonLoadResult> LoadCoreAsync(
         string solutionFileName,
         CancellationToken cancellationToken
