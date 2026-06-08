@@ -1,8 +1,4 @@
 using System;
-using System.IO;
-using System.Text.Json;
-using System.Threading;
-using System.Threading.Tasks;
 using FunFair.BuildCheck.Interfaces;
 using FunFair.BuildCheck.SolutionChecks.Helpers;
 using FunFair.BuildCheck.SolutionChecks.LoggingExtensions;
@@ -11,66 +7,47 @@ using Microsoft.Extensions.Logging;
 
 namespace FunFair.BuildCheck.SolutionChecks;
 
-public sealed class GlobalJsonMustSpecifyCorrectRollForwardPolicy : ISolutionCheck
+public sealed class GlobalJsonMustSpecifyCorrectRollForwardPolicy : GlobalJsonSolutionCheckBase
 {
     private const string ROLL_FORWARD_POLICY = "latestPatch";
     private readonly ILogger<GlobalJsonMustSpecifyCorrectRollForwardPolicy> _logger;
-    private readonly IRepositorySettings _repositorySettings;
 
     public GlobalJsonMustSpecifyCorrectRollForwardPolicy(
         IRepositorySettings repositorySettings,
+        IGlobalJsonLoader loader,
         ILogger<GlobalJsonMustSpecifyCorrectRollForwardPolicy> logger
     )
+        : base(repositorySettings: repositorySettings, loader: loader)
     {
-        this._repositorySettings = repositorySettings;
         this._logger = logger;
     }
 
-    public async ValueTask CheckAsync(string solutionFileName, CancellationToken cancellationToken)
+    protected override void OnReadFailed(string solutionFileName, string file, Exception exception)
     {
-        if (string.IsNullOrWhiteSpace(this._repositorySettings.DotNetSdkVersion))
+        this._logger.FailedToReadGlobalJson(
+            solutionFileName: solutionFileName,
+            file: file,
+            message: exception.Message,
+            exception: exception
+        );
+    }
+
+    protected override void CheckSdk(string solutionFileName, GlobalJsonInfo info)
+    {
+        if (!string.IsNullOrWhiteSpace(info.RollForward))
         {
-            return;
-        }
-
-        if (!GlobalJsonHelpers.GetFileNameForSolution(solutionFileName: solutionFileName, out string? file))
-        {
-            return;
-        }
-
-        string content = await File.ReadAllTextAsync(path: file, cancellationToken: cancellationToken);
-
-        try
-        {
-            GlobalJsonPacket? p = JsonSerializer.Deserialize(
-                json: content,
-                jsonTypeInfo: MustBeSerializable.Default.GlobalJsonPacket
-            );
-
-            if (!string.IsNullOrWhiteSpace(p?.Sdk?.RollForward))
+            if (!StringComparer.Ordinal.Equals(x: info.RollForward, y: ROLL_FORWARD_POLICY))
             {
-                if (!StringComparer.Ordinal.Equals(x: p.Sdk.RollForward, y: ROLL_FORWARD_POLICY))
-                {
-                    this._logger.UsingIncorrectRollForwardPolicy(
-                        solutionFileName: solutionFileName,
-                        projectPolicy: p.Sdk.RollForward,
-                        expectedPolicy: ROLL_FORWARD_POLICY
-                    );
-                }
-            }
-            else
-            {
-                this._logger.DoesNotSpecifyADotNetSdkRollForwardPolicy(solutionFileName);
+                this._logger.UsingIncorrectRollForwardPolicy(
+                    solutionFileName: solutionFileName,
+                    projectPolicy: info.RollForward,
+                    expectedPolicy: ROLL_FORWARD_POLICY
+                );
             }
         }
-        catch (Exception exception)
+        else
         {
-            this._logger.FailedToReadGlobalJson(
-                solutionFileName: solutionFileName,
-                file: file,
-                message: exception.Message,
-                exception: exception
-            );
+            this._logger.DoesNotSpecifyADotNetSdkRollForwardPolicy(solutionFileName);
         }
     }
 }
