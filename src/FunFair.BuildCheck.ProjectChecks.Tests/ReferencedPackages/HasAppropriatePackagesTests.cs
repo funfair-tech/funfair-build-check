@@ -161,7 +161,7 @@ public sealed class HasAppropriatePackagesTests : TestBase
         ProjectContext project2 = new(Name: "Test2.csproj", Folder: "/test", CsProjXml: doc2);
 
         CapturingLogger<HasConsistentNuGetPackages> logger = new();
-        CheckConfiguration configuration = new(preReleaseBuild: false, allowPackageVersionMismatch: false);
+        CheckConfiguration configuration = new(PreReleaseBuild: false, AllowPackageVersionMismatch: false);
         HasConsistentNuGetPackages check = new(checkConfiguration: configuration, logger: logger);
 
         await check.CheckAsync(project: project1, cancellationToken: this.CancellationToken());
@@ -186,7 +186,7 @@ public sealed class HasAppropriatePackagesTests : TestBase
         ProjectContext project2 = new(Name: "Test2.csproj", Folder: "/test", CsProjXml: doc2);
 
         CapturingLogger<HasConsistentNuGetPackages> logger = new();
-        CheckConfiguration configuration = new(preReleaseBuild: false, allowPackageVersionMismatch: false);
+        CheckConfiguration configuration = new(PreReleaseBuild: false, AllowPackageVersionMismatch: false);
         HasConsistentNuGetPackages check = new(checkConfiguration: configuration, logger: logger);
 
         await check.CheckAsync(project: project1, cancellationToken: this.CancellationToken());
@@ -211,7 +211,7 @@ public sealed class HasAppropriatePackagesTests : TestBase
         ProjectContext project2 = new(Name: "Test2.csproj", Folder: "/test", CsProjXml: doc2);
 
         CapturingLogger<HasConsistentNuGetPackages> logger = new();
-        CheckConfiguration configuration = new(preReleaseBuild: false, allowPackageVersionMismatch: true);
+        CheckConfiguration configuration = new(PreReleaseBuild: false, AllowPackageVersionMismatch: true);
         HasConsistentNuGetPackages check = new(checkConfiguration: configuration, logger: logger);
 
         await check.CheckAsync(project: project1, cancellationToken: this.CancellationToken());
@@ -231,7 +231,7 @@ public sealed class HasAppropriatePackagesTests : TestBase
         ProjectContext project = new(Name: "Test1.csproj", Folder: "/test", CsProjXml: doc);
 
         CapturingLogger<HasConsistentNuGetPackages> logger = new();
-        CheckConfiguration configuration = new(preReleaseBuild: false, allowPackageVersionMismatch: false);
+        CheckConfiguration configuration = new(PreReleaseBuild: false, AllowPackageVersionMismatch: false);
         HasConsistentNuGetPackages check = new(checkConfiguration: configuration, logger: logger);
 
         await check.CheckAsync(project: project, cancellationToken: this.CancellationToken());
@@ -250,7 +250,7 @@ public sealed class HasAppropriatePackagesTests : TestBase
         ProjectContext project = new(Name: "Test1.csproj", Folder: "/test", CsProjXml: doc);
 
         CapturingLogger<HasConsistentNuGetPackages> logger = new();
-        CheckConfiguration configuration = new(preReleaseBuild: false, allowPackageVersionMismatch: false);
+        CheckConfiguration configuration = new(PreReleaseBuild: false, AllowPackageVersionMismatch: false);
         HasConsistentNuGetPackages check = new(checkConfiguration: configuration, logger: logger);
 
         await check.CheckAsync(project: project, cancellationToken: this.CancellationToken());

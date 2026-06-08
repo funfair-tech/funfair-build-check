@@ -20,7 +20,7 @@ public sealed class NoPreReleaseNuGetPackagesTests : TestBase
         ProjectContext project = new(Name: "Test.csproj", Folder: "/test", CsProjXml: doc);
 
         CapturingLogger<NoPreReleaseNuGetPackages> logger = new();
-        CheckConfiguration configuration = new(preReleaseBuild: false, allowPackageVersionMismatch: false);
+        CheckConfiguration configuration = new(PreReleaseBuild: false, AllowPackageVersionMismatch: false);
         NoPreReleaseNuGetPackages check = new(configuration: configuration, logger: logger);
 
         await check.CheckAsync(project: project, cancellationToken: this.CancellationToken());
@@ -38,7 +38,7 @@ public sealed class NoPreReleaseNuGetPackagesTests : TestBase
         ProjectContext project = new(Name: "Test.csproj", Folder: "/test", CsProjXml: doc);
 
         CapturingLogger<NoPreReleaseNuGetPackages> logger = new();
-        CheckConfiguration configuration = new(preReleaseBuild: false, allowPackageVersionMismatch: false);
+        CheckConfiguration configuration = new(PreReleaseBuild: false, AllowPackageVersionMismatch: false);
         NoPreReleaseNuGetPackages check = new(configuration: configuration, logger: logger);
 
         await check.CheckAsync(project: project, cancellationToken: this.CancellationToken());
@@ -56,7 +56,7 @@ public sealed class NoPreReleaseNuGetPackagesTests : TestBase
         ProjectContext project = new(Name: "Test.csproj", Folder: "/test", CsProjXml: doc);
 
         CapturingLogger<NoPreReleaseNuGetPackages> logger = new();
-        CheckConfiguration configuration = new(preReleaseBuild: false, allowPackageVersionMismatch: false);
+        CheckConfiguration configuration = new(PreReleaseBuild: false, AllowPackageVersionMismatch: false);
         NoPreReleaseNuGetPackages check = new(configuration: configuration, logger: logger);
 
         await check.CheckAsync(project: project, cancellationToken: this.CancellationToken());
@@ -74,7 +74,7 @@ public sealed class NoPreReleaseNuGetPackagesTests : TestBase
         ProjectContext project = new(Name: "Test.csproj", Folder: "/test", CsProjXml: doc);
 
         CapturingLogger<NoPreReleaseNuGetPackages> logger = new();
-        CheckConfiguration configuration = new(preReleaseBuild: true, allowPackageVersionMismatch: false);
+        CheckConfiguration configuration = new(PreReleaseBuild: true, AllowPackageVersionMismatch: false);
         NoPreReleaseNuGetPackages check = new(configuration: configuration, logger: logger);
 
         await check.CheckAsync(project: project, cancellationToken: this.CancellationToken());
@@ -92,7 +92,7 @@ public sealed class NoPreReleaseNuGetPackagesTests : TestBase
         ProjectContext project = new(Name: "Test.csproj", Folder: "/test", CsProjXml: doc);
 
         CapturingLogger<NoPreReleaseNuGetPackages> logger = new();
-        CheckConfiguration configuration = new(preReleaseBuild: false, allowPackageVersionMismatch: false);
+        CheckConfiguration configuration = new(PreReleaseBuild: false, AllowPackageVersionMismatch: false);
         NoPreReleaseNuGetPackages check = new(configuration: configuration, logger: logger);
 
         await check.CheckAsync(project: project, cancellationToken: this.CancellationToken());
@@ -110,7 +110,7 @@ public sealed class NoPreReleaseNuGetPackagesTests : TestBase
         ProjectContext project = new(Name: "Test.csproj", Folder: "/test", CsProjXml: doc);
 
         CapturingLogger<NoPreReleaseNuGetPackages> logger = new();
-        CheckConfiguration configuration = new(preReleaseBuild: false, allowPackageVersionMismatch: false);
+        CheckConfiguration configuration = new(PreReleaseBuild: false, AllowPackageVersionMismatch: false);
         NoPreReleaseNuGetPackages check = new(configuration: configuration, logger: logger);
 
         await check.CheckAsync(project: project, cancellationToken: this.CancellationToken());
@@ -129,7 +129,7 @@ public sealed class NoPreReleaseNuGetPackagesTests : TestBase
         ProjectContext project = new(Name: "Test.csproj", Folder: "/test", CsProjXml: doc);
 
         CapturingLogger<NoPreReleaseNuGetPackages> logger = new();
-        CheckConfiguration configuration = new(preReleaseBuild: false, allowPackageVersionMismatch: false);
+        CheckConfiguration configuration = new(PreReleaseBuild: false, AllowPackageVersionMismatch: false);
         NoPreReleaseNuGetPackages check = new(configuration: configuration, logger: logger);
 
         await check.CheckAsync(project: project, cancellationToken: this.CancellationToken());

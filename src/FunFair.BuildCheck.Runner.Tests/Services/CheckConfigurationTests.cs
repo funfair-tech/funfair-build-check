@@ -9,7 +9,7 @@ public sealed class CheckConfigurationTests : TestBase
     [Fact]
     public void PreReleaseBuildTrueIsStoredCorrectly()
     {
-        CheckConfiguration config = new(preReleaseBuild: true, allowPackageVersionMismatch: false);
+        CheckConfiguration config = new(PreReleaseBuild: true, AllowPackageVersionMismatch: false);
 
         Assert.True(config.PreReleaseBuild, "PreReleaseBuild should be true when initialized with true");
     }
@@ -17,7 +17,7 @@ public sealed class CheckConfigurationTests : TestBase
     [Fact]
     public void PreReleaseBuildFalseIsStoredCorrectly()
     {
-        CheckConfiguration config = new(preReleaseBuild: false, allowPackageVersionMismatch: false);
+        CheckConfiguration config = new(PreReleaseBuild: false, AllowPackageVersionMismatch: false);
 
         Assert.False(config.PreReleaseBuild, "PreReleaseBuild should be false when initialized with false");
     }
@@ -25,7 +25,7 @@ public sealed class CheckConfigurationTests : TestBase
     [Fact]
     public void AllowPackageVersionMismatchTrueIsStoredCorrectly()
     {
-        CheckConfiguration config = new(preReleaseBuild: false, allowPackageVersionMismatch: true);
+        CheckConfiguration config = new(PreReleaseBuild: false, AllowPackageVersionMismatch: true);
 
         Assert.True(
             config.AllowPackageVersionMismatch,
@@ -36,7 +36,7 @@ public sealed class CheckConfigurationTests : TestBase
     [Fact]
     public void AllowPackageVersionMismatchFalseIsStoredCorrectly()
     {
-        CheckConfiguration config = new(preReleaseBuild: false, allowPackageVersionMismatch: false);
+        CheckConfiguration config = new(PreReleaseBuild: false, AllowPackageVersionMismatch: false);
 
         Assert.False(
             config.AllowPackageVersionMismatch,

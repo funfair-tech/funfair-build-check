@@ -131,7 +131,7 @@ public sealed class TrackingLoggerTests : TestBase
                 warningsAsErrors: warningsAsErrors,
                 frameworkSettings: frameworkSettings,
                 projectClassifier: projectClassifier,
-                checkConfiguration: new CheckConfiguration(preReleaseBuild: false, allowPackageVersionMismatch: false),
+                checkConfiguration: new CheckConfiguration(PreReleaseBuild: false, AllowPackageVersionMismatch: false),
                 buildServiceProvider: CaptureAndBuild,
                 logger: inner,
                 cancellationToken: this.CancellationToken()
