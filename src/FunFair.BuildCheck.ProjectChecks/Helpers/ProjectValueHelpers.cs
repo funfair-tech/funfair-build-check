@@ -424,6 +424,11 @@ internal static class ProjectValueHelpers
         return !string.IsNullOrWhiteSpace(value);
     }
 
+    public static bool IsPropertyDefined(in this ProjectContext project, string property)
+    {
+        return project.CsProjXml.SelectSingleNode("/Project/PropertyGroup/" + property) is not null;
+    }
+
     public static bool IsFunFairTestProject(in this ProjectContext project)
     {
         XmlNode? outputTypeNode = project.CsProjXml.SelectSingleNode("/Project/PropertyGroup/FFTestProject");
