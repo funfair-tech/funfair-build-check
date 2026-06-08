@@ -69,7 +69,7 @@ internal static class Program
                 warningsAsErrors: warningsAsErrors,
                 frameworkSettings: frameworkSettings,
                 projectClassifier: projectClassifier,
-                new CheckConfiguration(preReleaseBuild: preReleaseBuild, allowPackageVersionMismatch: false),
+                new CheckConfiguration(PreReleaseBuild: preReleaseBuild, AllowPackageVersionMismatch: false),
                 buildServiceProvider: services => services.BuildServiceProvider(),
                 logger: logger,
                 cancellationToken: CancellationToken.None

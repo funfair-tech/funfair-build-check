@@ -25,8 +25,8 @@ public sealed class RunnerTests : TestBase
         frameworkSettings.DotNetAllowPreReleaseSdk.Returns(string.Empty);
         IProjectClassifier projectClassifier = Substitute.For<IProjectClassifier>();
         ICheckConfiguration checkConfiguration = new CheckConfiguration(
-            preReleaseBuild: false,
-            allowPackageVersionMismatch: false
+            PreReleaseBuild: false,
+            AllowPackageVersionMismatch: false
         );
         CapturingLogger logger = new();
 
@@ -127,8 +127,8 @@ public sealed class RunnerTests : TestBase
         frameworkSettings.DotNetAllowPreReleaseSdk.Returns(string.Empty);
         IProjectClassifier projectClassifier = Substitute.For<IProjectClassifier>();
         ICheckConfiguration checkConfiguration = new CheckConfiguration(
-            preReleaseBuild: false,
-            allowPackageVersionMismatch: false
+            PreReleaseBuild: false,
+            AllowPackageVersionMismatch: false
         );
         CapturingLogger logger = new();
 
@@ -215,8 +215,8 @@ public sealed class RunnerTests : TestBase
             frameworkSettings.DotNetAllowPreReleaseSdk.Returns(string.Empty);
             IProjectClassifier projectClassifier = GetSubstitute<IProjectClassifier>();
             ICheckConfiguration checkConfiguration = new CheckConfiguration(
-                preReleaseBuild: false,
-                allowPackageVersionMismatch: false
+                PreReleaseBuild: false,
+                AllowPackageVersionMismatch: false
             );
             CapturingLogger logger = new();
 
@@ -296,7 +296,7 @@ public sealed class RunnerTests : TestBase
                 warningsAsErrors: false,
                 frameworkSettings: frameworkSettings,
                 projectClassifier: projectClassifier,
-                checkConfiguration: new CheckConfiguration(preReleaseBuild: false, allowPackageVersionMismatch: false),
+                checkConfiguration: new CheckConfiguration(PreReleaseBuild: false, AllowPackageVersionMismatch: false),
                 buildServiceProvider: CaptureSettingsAndBuild,
                 logger: logger,
                 cancellationToken: this.CancellationToken()
@@ -335,8 +335,8 @@ public sealed class RunnerTests : TestBase
             IProjectClassifier projectClassifier = GetSubstitute<IProjectClassifier>();
             projectClassifier.IsCodeAnalysisSolution(Arg.Any<IReadOnlyList<SolutionProject>>()).Returns(true);
             ICheckConfiguration checkConfiguration = new CheckConfiguration(
-                preReleaseBuild: false,
-                allowPackageVersionMismatch: false
+                PreReleaseBuild: false,
+                AllowPackageVersionMismatch: false
             );
             CapturingLogger logger = new();
 
@@ -378,8 +378,8 @@ public sealed class RunnerTests : TestBase
                 .MustHaveEnumSourceGeneratorAnalyzerPackage(Arg.Any<IReadOnlyList<SolutionProject>>())
                 .Returns(true);
             ICheckConfiguration checkConfiguration = new CheckConfiguration(
-                preReleaseBuild: false,
-                allowPackageVersionMismatch: false
+                PreReleaseBuild: false,
+                AllowPackageVersionMismatch: false
             );
             CapturingLogger logger = new();
 
@@ -419,8 +419,8 @@ public sealed class RunnerTests : TestBase
             IProjectClassifier projectClassifier = GetSubstitute<IProjectClassifier>();
             projectClassifier.IsUnitTestBase(Arg.Any<IReadOnlyList<SolutionProject>>()).Returns(true);
             ICheckConfiguration checkConfiguration = new CheckConfiguration(
-                preReleaseBuild: false,
-                allowPackageVersionMismatch: false
+                PreReleaseBuild: false,
+                AllowPackageVersionMismatch: false
             );
             CapturingLogger logger = new();
 
@@ -470,7 +470,7 @@ public sealed class RunnerTests : TestBase
         }
 
         services.AddSingleton<IReadOnlyList<SolutionProject>>(
-            [new(fileName: string.Empty, displayName: "InvalidProject")]
+            [new(FileName: string.Empty, DisplayName: "InvalidProject")]
         );
 
         return StripChecksAndBuild(services);

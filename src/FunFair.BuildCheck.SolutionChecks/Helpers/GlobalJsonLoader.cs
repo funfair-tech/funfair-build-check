@@ -54,9 +54,9 @@ public sealed class GlobalJsonLoader : IGlobalJsonLoader
             );
 
             GlobalJsonInfo info = new(
-                sdkVersion: packet?.Sdk?.Version,
-                rollForward: packet?.Sdk?.RollForward,
-                allowPrerelease: packet?.Sdk?.AllowPrerelease
+                SdkVersion: packet?.Sdk?.Version,
+                RollForward: packet?.Sdk?.RollForward,
+                AllowPrerelease: packet?.Sdk?.AllowPrerelease
             );
 
             return new GlobalJsonLoadedResult(info);

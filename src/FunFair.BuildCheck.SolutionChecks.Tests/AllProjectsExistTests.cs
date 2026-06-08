@@ -25,7 +25,7 @@ public sealed class AllProjectsExistTests : TestBase
                 cancellationToken: this.CancellationToken()
             );
 
-            SolutionProject[] projects = [new(fileName: projectFile, displayName: "Sample")];
+            SolutionProject[] projects = [new(FileName: projectFile, DisplayName: "Sample")];
 
             CapturingLogger<AllProjectsExist> logger = new();
             AllProjectsExist check = new(projects: projects, logger: logger);
@@ -52,7 +52,7 @@ public sealed class AllProjectsExistTests : TestBase
         {
             string missingProject = Path.Combine(path1: tempDir, path2: "Missing.csproj");
 
-            SolutionProject[] projects = [new(fileName: missingProject, displayName: "Missing")];
+            SolutionProject[] projects = [new(FileName: missingProject, DisplayName: "Missing")];
 
             CapturingLogger<AllProjectsExist> logger = new();
             AllProjectsExist check = new(projects: projects, logger: logger);

@@ -9,7 +9,7 @@ public sealed class SolutionProjectTests : TestBase
     [Fact]
     public void FileNameIsStoredCorrectly()
     {
-        SolutionProject project = new(fileName: "MyProject.csproj", displayName: "MyProject");
+        SolutionProject project = new(FileName: "MyProject.csproj", DisplayName: "MyProject");
 
         Assert.Equal(expected: "MyProject.csproj", actual: project.FileName);
     }
@@ -17,7 +17,7 @@ public sealed class SolutionProjectTests : TestBase
     [Fact]
     public void DisplayNameIsStoredCorrectly()
     {
-        SolutionProject project = new(fileName: "MyProject.csproj", displayName: "MyProject");
+        SolutionProject project = new(FileName: "MyProject.csproj", DisplayName: "MyProject");
 
         Assert.Equal(expected: "MyProject", actual: project.DisplayName);
     }
