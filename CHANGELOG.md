@@ -8,8 +8,6 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 ## [Unreleased]
 ### Security
 ### Added
-- Check that SuppressTrimAnalysisWarnings is set to false when present
-- Ban WarningsNotAsErrors from being defined in project files
 ### Fixed
 ### Changed
 ### Deprecated
@@ -18,6 +16,11 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 <!--
 Releases that have at least been deployed to staging, BUT NOT necessarily released to live.  Changes should be moved from [Unreleased] into here as they are merged into the appropriate release branch
 -->
+## [474.2.8] - 2026-06-08
+### Added
+- Check that SuppressTrimAnalysisWarnings is set to false when present
+- Ban WarningsNotAsErrors from being defined in project files
+
 ## [474.2.7] - 2026-06-04
 ### Added
 - Increased code coverage to 100% for FunFair.BuildCheck.ProjectChecks
