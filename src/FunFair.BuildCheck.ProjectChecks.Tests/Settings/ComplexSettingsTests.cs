@@ -680,8 +680,8 @@ public sealed class ComplexSettingsTests : TestBase
         );
         ProjectContext project = new(Name: "Test.csproj", Folder: "/test", CsProjXml: doc);
 
-        CapturingLogger<MustEnableStrictMode> logger = new();
-        MustEnableStrictMode check = new(logger: logger);
+        CapturingLogger logger = new();
+        SimplePropertyProjectCheckBase check = CreateSimpleCheck("Features", "strict;flow-analysis", logger);
 
         await check.CheckAsync(project: project, cancellationToken: this.CancellationToken());
 
@@ -695,8 +695,8 @@ public sealed class ComplexSettingsTests : TestBase
         doc.LoadXml("<Project Sdk=\"Microsoft.NET.Sdk\"><PropertyGroup></PropertyGroup></Project>");
         ProjectContext project = new(Name: "Test.csproj", Folder: "/test", CsProjXml: doc);
 
-        CapturingLogger<MustEnableStrictMode> logger = new();
-        MustEnableStrictMode check = new(logger: logger);
+        CapturingLogger logger = new();
+        SimplePropertyProjectCheckBase check = CreateSimpleCheck("Features", "strict;flow-analysis", logger);
 
         await check.CheckAsync(project: project, cancellationToken: this.CancellationToken());
 
@@ -712,11 +712,20 @@ public sealed class ComplexSettingsTests : TestBase
         );
         ProjectContext project = new(Name: "Test.csproj", Folder: "/test", CsProjXml: doc);
 
-        CapturingLogger<MustEnableStrictMode> logger = new();
-        MustEnableStrictMode check = new(logger: logger);
+        CapturingLogger logger = new();
+        SimplePropertyProjectCheckBase check = CreateSimpleCheck("Features", "strict;flow-analysis", logger);
 
         await check.CheckAsync(project: project, cancellationToken: this.CancellationToken());
 
         Assert.Contains(logger.Entries, e => e.Level == LogLevel.Error);
+    }
+
+    private static SimplePropertyProjectCheckBase CreateSimpleCheck(
+        string propertyName,
+        string requiredValue,
+        CapturingLogger logger
+    )
+    {
+        return new(propertyName: propertyName, requiredValue: requiredValue, canCheck: null, logger: logger);
     }
 }

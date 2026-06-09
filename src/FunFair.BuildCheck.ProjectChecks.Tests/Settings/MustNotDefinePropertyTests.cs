@@ -11,116 +11,61 @@ namespace FunFair.BuildCheck.ProjectChecks.Tests.Settings;
 
 public sealed class MustNotDefinePropertyTests : TestBase
 {
-    // ──────────────────────────────────────────────────────────────
-    // MustNotDefineCodeAnalysisRuleSet  (CodeAnalysisRuleSet must not be defined)
-    // ──────────────────────────────────────────────────────────────
-
-    [Fact]
-    public async Task WhenMustNotDefineCodeAnalysisRuleSetPropertyIsAbsentNoErrorIsLoggedAsync()
+    [Theory]
+    [InlineData("CodeAnalysisRuleSet")]
+    [InlineData("IncludeOpenAPIAnalyzers")]
+    [InlineData("WarningsNotAsErrors")]
+    public async Task WhenPropertyIsAbsentNoErrorIsLoggedAsync(string propertyName)
     {
         XmlDocument doc = new();
         doc.LoadXml("<Project Sdk=\"Microsoft.NET.Sdk\"><PropertyGroup></PropertyGroup></Project>");
         ProjectContext project = new(Name: "Test.csproj", Folder: "/test", CsProjXml: doc);
 
-        CapturingLogger<MustNotDefineCodeAnalysisRuleSet> logger = new();
-        MustNotDefineCodeAnalysisRuleSet check = new(logger: logger);
+        CapturingLogger logger = new();
+        MustNotDefinePropertyProjectCheckBase check = new(propertyName: propertyName, logger: logger);
 
         await check.CheckAsync(project: project, cancellationToken: this.CancellationToken());
 
         Assert.DoesNotContain(collection: logger.Entries, filter: e => e.Level == LogLevel.Error);
     }
 
-    [Fact]
-    public async Task WhenMustNotDefineCodeAnalysisRuleSetPropertyIsPresentErrorIsLoggedAsync()
+    [Theory]
+    [InlineData("CodeAnalysisRuleSet", "rules.ruleset")]
+    [InlineData("IncludeOpenAPIAnalyzers", "true")]
+    [InlineData("WarningsNotAsErrors", "CS0618")]
+    public async Task WhenPropertyIsPresentErrorIsLoggedAsync(string propertyName, string value)
     {
         XmlDocument doc = new();
         doc.LoadXml(
-            "<Project Sdk=\"Microsoft.NET.Sdk\"><PropertyGroup><CodeAnalysisRuleSet>rules.ruleset</CodeAnalysisRuleSet></PropertyGroup></Project>"
+            $"<Project Sdk=\"Microsoft.NET.Sdk\"><PropertyGroup><{propertyName}>{value}</{propertyName}></PropertyGroup></Project>"
         );
         ProjectContext project = new(Name: "Test.csproj", Folder: "/test", CsProjXml: doc);
 
-        CapturingLogger<MustNotDefineCodeAnalysisRuleSet> logger = new();
-        MustNotDefineCodeAnalysisRuleSet check = new(logger: logger);
+        CapturingLogger logger = new();
+        MustNotDefinePropertyProjectCheckBase check = new(propertyName: propertyName, logger: logger);
 
         await check.CheckAsync(project: project, cancellationToken: this.CancellationToken());
 
         Assert.Contains(logger.Entries, e => e.Level == LogLevel.Error);
     }
 
-    [Fact]
-    public async Task WhenMustNotDefineCodeAnalysisRuleSetPropertyIsPresentButEmptyErrorIsLoggedAsync()
+    [Theory]
+    [InlineData("CodeAnalysisRuleSet")]
+    [InlineData("IncludeOpenAPIAnalyzers")]
+    [InlineData("WarningsNotAsErrors")]
+    public async Task WhenPropertyIsPresentButEmptyErrorIsLoggedAsync(string propertyName)
     {
         XmlDocument doc = new();
-        doc.LoadXml(
-            "<Project Sdk=\"Microsoft.NET.Sdk\"><PropertyGroup><CodeAnalysisRuleSet /></PropertyGroup></Project>"
-        );
+        doc.LoadXml($"<Project Sdk=\"Microsoft.NET.Sdk\"><PropertyGroup><{propertyName} /></PropertyGroup></Project>");
         ProjectContext project = new(Name: "Test.csproj", Folder: "/test", CsProjXml: doc);
 
-        CapturingLogger<MustNotDefineCodeAnalysisRuleSet> logger = new();
-        MustNotDefineCodeAnalysisRuleSet check = new(logger: logger);
+        CapturingLogger logger = new();
+        MustNotDefinePropertyProjectCheckBase check = new(propertyName: propertyName, logger: logger);
 
         await check.CheckAsync(project: project, cancellationToken: this.CancellationToken());
 
         Assert.Contains(logger.Entries, e => e.Level == LogLevel.Error);
     }
-
-    // ──────────────────────────────────────────────────────────────
-    // MustNotUseOpenApiAnalyzers  (IncludeOpenAPIAnalyzers must not be defined)
-    // ──────────────────────────────────────────────────────────────
-
-    [Fact]
-    public async Task WhenMustNotUseOpenApiAnalyzersPropertyIsAbsentNoErrorIsLoggedAsync()
-    {
-        XmlDocument doc = new();
-        doc.LoadXml("<Project Sdk=\"Microsoft.NET.Sdk\"><PropertyGroup></PropertyGroup></Project>");
-        ProjectContext project = new(Name: "Test.csproj", Folder: "/test", CsProjXml: doc);
-
-        CapturingLogger<MustNotUseOpenApiAnalyzers> logger = new();
-        MustNotUseOpenApiAnalyzers check = new(logger: logger);
-
-        await check.CheckAsync(project: project, cancellationToken: this.CancellationToken());
-
-        Assert.DoesNotContain(collection: logger.Entries, filter: e => e.Level == LogLevel.Error);
-    }
-
-    [Fact]
-    public async Task WhenMustNotUseOpenApiAnalyzersPropertyIsPresentErrorIsLoggedAsync()
-    {
-        XmlDocument doc = new();
-        doc.LoadXml(
-            "<Project Sdk=\"Microsoft.NET.Sdk\"><PropertyGroup><IncludeOpenAPIAnalyzers>true</IncludeOpenAPIAnalyzers></PropertyGroup></Project>"
-        );
-        ProjectContext project = new(Name: "Test.csproj", Folder: "/test", CsProjXml: doc);
-
-        CapturingLogger<MustNotUseOpenApiAnalyzers> logger = new();
-        MustNotUseOpenApiAnalyzers check = new(logger: logger);
-
-        await check.CheckAsync(project: project, cancellationToken: this.CancellationToken());
-
-        Assert.Contains(logger.Entries, e => e.Level == LogLevel.Error);
-    }
-
-    [Fact]
-    public async Task WhenMustNotUseOpenApiAnalyzersPropertyIsPresentButEmptyErrorIsLoggedAsync()
-    {
-        XmlDocument doc = new();
-        doc.LoadXml(
-            "<Project Sdk=\"Microsoft.NET.Sdk\"><PropertyGroup><IncludeOpenAPIAnalyzers /></PropertyGroup></Project>"
-        );
-        ProjectContext project = new(Name: "Test.csproj", Folder: "/test", CsProjXml: doc);
-
-        CapturingLogger<MustNotUseOpenApiAnalyzers> logger = new();
-        MustNotUseOpenApiAnalyzers check = new(logger: logger);
-
-        await check.CheckAsync(project: project, cancellationToken: this.CancellationToken());
-
-        Assert.Contains(logger.Entries, e => e.Level == LogLevel.Error);
-    }
-
-    // ──────────────────────────────────────────────────────────────
-    // ShouldNotRemoveFromCompilation
-    // Logs an error for each <Compile Remove="..." /> item found
-    // ──────────────────────────────────────────────────────────────
 
     [Fact]
     public async Task WhenShouldNotRemoveFromCompilationNoCompileRemoveItemsExistNoErrorIsLoggedAsync()
@@ -153,64 +98,6 @@ public sealed class MustNotDefinePropertyTests : TestBase
 
         Assert.Contains(logger.Entries, e => e.Level == LogLevel.Error);
     }
-
-    // ──────────────────────────────────────────────────────────────
-    // MustNotDefineWarningsNotAsErrors  (WarningsNotAsErrors must not be defined)
-    // ──────────────────────────────────────────────────────────────
-
-    [Fact]
-    public async Task WhenMustNotDefineWarningsNotAsErrorsPropertyIsAbsentNoErrorIsLoggedAsync()
-    {
-        XmlDocument doc = new();
-        doc.LoadXml("<Project Sdk=\"Microsoft.NET.Sdk\"><PropertyGroup></PropertyGroup></Project>");
-        ProjectContext project = new(Name: "Test.csproj", Folder: "/test", CsProjXml: doc);
-
-        CapturingLogger<MustNotDefineWarningsNotAsErrors> logger = new();
-        MustNotDefineWarningsNotAsErrors check = new(logger: logger);
-
-        await check.CheckAsync(project: project, cancellationToken: this.CancellationToken());
-
-        Assert.DoesNotContain(collection: logger.Entries, filter: e => e.Level == LogLevel.Error);
-    }
-
-    [Fact]
-    public async Task WhenMustNotDefineWarningsNotAsErrorsPropertyIsPresentErrorIsLoggedAsync()
-    {
-        XmlDocument doc = new();
-        doc.LoadXml(
-            "<Project Sdk=\"Microsoft.NET.Sdk\"><PropertyGroup><WarningsNotAsErrors>CS0618</WarningsNotAsErrors></PropertyGroup></Project>"
-        );
-        ProjectContext project = new(Name: "Test.csproj", Folder: "/test", CsProjXml: doc);
-
-        CapturingLogger<MustNotDefineWarningsNotAsErrors> logger = new();
-        MustNotDefineWarningsNotAsErrors check = new(logger: logger);
-
-        await check.CheckAsync(project: project, cancellationToken: this.CancellationToken());
-
-        Assert.Contains(logger.Entries, e => e.Level == LogLevel.Error);
-    }
-
-    [Fact]
-    public async Task WhenMustNotDefineWarningsNotAsErrorsPropertyIsPresentButEmptyErrorIsLoggedAsync()
-    {
-        XmlDocument doc = new();
-        doc.LoadXml(
-            "<Project Sdk=\"Microsoft.NET.Sdk\"><PropertyGroup><WarningsNotAsErrors /></PropertyGroup></Project>"
-        );
-        ProjectContext project = new(Name: "Test.csproj", Folder: "/test", CsProjXml: doc);
-
-        CapturingLogger<MustNotDefineWarningsNotAsErrors> logger = new();
-        MustNotDefineWarningsNotAsErrors check = new(logger: logger);
-
-        await check.CheckAsync(project: project, cancellationToken: this.CancellationToken());
-
-        Assert.Contains(logger.Entries, e => e.Level == LogLevel.Error);
-    }
-
-    // ──────────────────────────────────────────────────────────────
-    // ErrorPolicyWarningAsErrors
-    // Requires WarningsAsErrors node and TreatWarningsAsErrors=true
-    // ──────────────────────────────────────────────────────────────
 
     [Fact]
     public async Task WhenErrorPolicyWarningAsErrorsHasCorrectSettingsNoErrorIsLoggedAsync()
@@ -247,7 +134,6 @@ public sealed class MustNotDefinePropertyTests : TestBase
     [Fact]
     public async Task WhenErrorPolicyWarningAsErrorsWarningsAsErrorsNodeIsMissingErrorIsLoggedAsync()
     {
-        // No WarningsAsErrors node at all → CheckNode logs an error
         XmlDocument doc = new();
         doc.LoadXml(
             "<Project Sdk=\"Microsoft.NET.Sdk\"><PropertyGroup><TreatWarningsAsErrors>true</TreatWarningsAsErrors></PropertyGroup></Project>"
@@ -265,7 +151,6 @@ public sealed class MustNotDefinePropertyTests : TestBase
     [Fact]
     public async Task WhenErrorPolicyWarningAsErrorsGlobalSettingWithConditionalGroupsHavingWarningsAsErrorsNoErrorIsLoggedAsync()
     {
-        // Global WarningsAsErrors present, conditional group also has it — no error
         XmlDocument doc = new();
         doc.LoadXml(
             "<Project Sdk=\"Microsoft.NET.Sdk\"><PropertyGroup><WarningsAsErrors /><TreatWarningsAsErrors>true</TreatWarningsAsErrors></PropertyGroup><PropertyGroup Condition=\"'$(Config)'=='Debug'\"><WarningsAsErrors /></PropertyGroup></Project>"
@@ -283,7 +168,6 @@ public sealed class MustNotDefinePropertyTests : TestBase
     [Fact]
     public async Task WhenErrorPolicyWarningAsErrorsConditionalGroupMissingWarningsAsErrorsButGlobalPresentNoErrorIsLoggedAsync()
     {
-        // No global WarningsAsErrors, conditional group is missing it — error for the configuration group
         XmlDocument doc = new();
         doc.LoadXml(
             "<Project Sdk=\"Microsoft.NET.Sdk\"><PropertyGroup><TreatWarningsAsErrors>true</TreatWarningsAsErrors></PropertyGroup><PropertyGroup Condition=\"'$(Config)'=='Debug'\"></PropertyGroup></Project>"

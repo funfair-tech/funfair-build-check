@@ -1,3 +1,5 @@
+using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
 using FunFair.BuildCheck.Interfaces;
@@ -6,17 +8,29 @@ using Microsoft.Extensions.Logging;
 
 namespace FunFair.BuildCheck.ProjectChecks.Settings;
 
-public abstract class SimplePropertyProjectCheckBase : IProjectCheck
+[SuppressMessage(
+    category: "FunFair.CodeAnalysis",
+    checkId: "FFS0012: Classes should be static, sealed or abstract",
+    Justification = "Direct instantiation and subclassing are both required for data-driven property checks."
+)]
+public class SimplePropertyProjectCheckBase : IProjectCheck
 {
-    private readonly ILogger _logger;
+    private readonly Func<ProjectContext, bool>? _canCheckOverride;
+    private readonly ILogger<SimplePropertyProjectCheckBase> _logger;
     private readonly string _propertyName;
     private readonly string _requiredValue;
 
-    protected SimplePropertyProjectCheckBase(string propertyName, string requiredValue, ILogger logger)
+    public SimplePropertyProjectCheckBase(
+        string propertyName,
+        string requiredValue,
+        Func<ProjectContext, bool>? canCheck,
+        ILogger<SimplePropertyProjectCheckBase> logger
+    )
     {
         this._propertyName = propertyName;
         this._requiredValue = requiredValue;
         this._logger = logger;
+        this._canCheckOverride = canCheck;
     }
 
     public ValueTask CheckAsync(ProjectContext project, CancellationToken cancellationToken)
@@ -41,6 +55,6 @@ public abstract class SimplePropertyProjectCheckBase : IProjectCheck
 
     protected virtual bool CanCheck(in ProjectContext project)
     {
-        return true;
+        return this._canCheckOverride?.Invoke(project) ?? true;
     }
 }

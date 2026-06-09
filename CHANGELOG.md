@@ -13,6 +13,8 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 - Named checkConfiguration argument explicitly in CheckRunner.CheckAsync call
 ### Changed
 - SolutionChecks now load and parse global.json once per solution via a shared loader and de-duplicate the GlobalJson checks through a common base class
+- ProjectChecks now cache derived project XML node collections per .csproj to avoid repeated XPath scans during validation
+- ProjectChecks now register trivial property rules through shared data-driven setup and consolidate the mirrored tests into theory-based coverage
 ### Deprecated
 ### Removed
 ### Deployment Changes
