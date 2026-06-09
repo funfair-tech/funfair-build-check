@@ -10,6 +10,7 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 ### Added
 ### Fixed
 - GlobalJsonIsLatest now validates the SDK version independently of the rollForward policy (previously a global.json without rollForward skipped the version check)
+- Named checkConfiguration argument explicitly in CheckRunner.CheckAsync call
 ### Changed
 - SolutionChecks now load and parse global.json once per solution via a shared loader and de-duplicate the GlobalJson checks through a common base class
 ### Deprecated
