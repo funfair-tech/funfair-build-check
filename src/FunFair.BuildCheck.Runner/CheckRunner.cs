@@ -228,7 +228,7 @@ public static class CheckRunner
             string fullPath = Path.Combine(path1: basePath, PathHelpers.ConvertToNative(fileName));
             Console.WriteLine($"    - {fullPath}");
 
-            return new(fileName: fullPath, displayName: displayName);
+            return new(FileName: fullPath, DisplayName: displayName);
         }
     }
 
@@ -278,7 +278,7 @@ public static class CheckRunner
             string fullPath = Path.Combine(path1: basePath, PathHelpers.ConvertToNative(fileName));
             Console.WriteLine($"    - {fullPath}");
 
-            return new(fileName: fullPath, displayName: displayName);
+            return new(FileName: fullPath, DisplayName: displayName);
         }
     }
 

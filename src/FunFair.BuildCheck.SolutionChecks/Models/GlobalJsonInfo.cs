@@ -1,17 +1,6 @@
+using System.Diagnostics;
+
 namespace FunFair.BuildCheck.SolutionChecks.Models;
 
-public sealed class GlobalJsonInfo
-{
-    public GlobalJsonInfo(string? sdkVersion, string? rollForward, bool? allowPrerelease)
-    {
-        this.SdkVersion = sdkVersion;
-        this.RollForward = rollForward;
-        this.AllowPrerelease = allowPrerelease;
-    }
-
-    public string? SdkVersion { get; }
-
-    public string? RollForward { get; }
-
-    public bool? AllowPrerelease { get; }
-}
+[DebuggerDisplay("SdkVersion={SdkVersion}, RollForward={RollForward}, AllowPrerelease={AllowPrerelease}")]
+public sealed record GlobalJsonInfo(string? SdkVersion, string? RollForward, bool? AllowPrerelease);

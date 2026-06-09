@@ -36,7 +36,7 @@ public sealed class NoOrphanedProjectsExistTests : TestBase
                 cancellationToken: this.CancellationToken()
             );
 
-            SolutionProject[] projects = [new(fileName: projectFile, displayName: "Sample")];
+            SolutionProject[] projects = [new(FileName: projectFile, DisplayName: "Sample")];
             CapturingLogger<NoOrphanedProjectsExist> logger = new();
             NoOrphanedProjectsExist check = new(projects: projects, logger: logger);
 
