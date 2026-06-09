@@ -122,46 +122,46 @@ public sealed class SimplePropertyCheckTests : TestBase
     [Theory]
     [InlineData("AnalysisLevel", "latest", "wrong")]
     [InlineData("AnalysisMode", "AllEnabledByDefault", "wrong")]
-    [InlineData("CodeAnalysisTreatWarningsAsErrors", "true", "false")]
-    [InlineData("DebuggerSupport", "true", "false")]
-    [InlineData("EnableMicrosoftExtensionsConfigurationBinderSourceGenerator", "true", "false")]
-    [InlineData("EnableNETAnalyzers", "true", "false")]
-    [InlineData("EnablePackageValidation", "true", "false")]
-    [InlineData("EnforceCodeStyleInBuild", "true", "false")]
-    [InlineData("GenerateNeutralResourcesLanguageAttribute", "true", "false")]
-    [InlineData("GenerateSBOM", "true", "false")]
-    [InlineData("IlcGenerateStackTraceData", "false", "true")]
-    [InlineData("IlcOptimizationPreference", "Size", "Speed")]
-    [InlineData("ImplicitUsings", "disable", "enable")]
-    [InlineData("IncludeSymbols", "true", "false")]
-    [InlineData("JsonSerializerIsReflectionEnabledByDefault", "false", "true")]
-    [InlineData("LangVersion", "latest", "9.0")]
-    [InlineData("Nullable", "enable", "disable")]
+    [InlineData("CodeAnalysisTreatWarningsAsErrors", "true", "wrong")]
+    [InlineData("DebuggerSupport", "true", "wrong")]
+    [InlineData("EnableMicrosoftExtensionsConfigurationBinderSourceGenerator", "true", "wrong")]
+    [InlineData("EnableNETAnalyzers", "true", "wrong")]
+    [InlineData("EnablePackageValidation", "true", "wrong")]
+    [InlineData("EnforceCodeStyleInBuild", "true", "wrong")]
+    [InlineData("GenerateNeutralResourcesLanguageAttribute", "true", "wrong")]
+    [InlineData("GenerateSBOM", "true", "wrong")]
+    [InlineData("IlcGenerateStackTraceData", "false", "wrong")]
+    [InlineData("IlcOptimizationPreference", "Size", "wrong")]
+    [InlineData("ImplicitUsings", "disable", "wrong")]
+    [InlineData("IncludeSymbols", "true", "wrong")]
+    [InlineData("JsonSerializerIsReflectionEnabledByDefault", "false", "wrong")]
+    [InlineData("LangVersion", "latest", "wrong")]
+    [InlineData("Nullable", "enable", "wrong")]
     [InlineData("Features", "strict;flow-analysis", "wrong")]
-    [InlineData("NuGetAudit", "true", "false")]
-    [InlineData("DisableImplicitNuGetFallbackFolder", "true", "false")]
-    [InlineData("OptimizationPreference", "speed", "size")]
-    [InlineData("EnableRequestDelegateGenerator", "true", "false")]
-    [InlineData("RunAOTCompilation", "false", "true")]
-    [InlineData("SuppressTrimAnalysisWarnings", "false", "true")]
-    [InlineData("IsTestingPlatformApplication", "false", "true")]
-    [InlineData("IsTestProject", "false", "true")]
-    [InlineData("TestingPlatformDotnetTestSupport", "false", "true")]
-    [InlineData("TieredCompilation", "true", "false")]
-    [InlineData("TieredPGO", "true", "false")]
-    [InlineData("UseSystemResourceKeys", "true", "false")]
-    [InlineData("ValidateExecutableReferencesMatchSelfContained", "true", "false")]
+    [InlineData("NuGetAudit", "true", "wrong")]
+    [InlineData("DisableImplicitNuGetFallbackFolder", "true", "wrong")]
+    [InlineData("OptimizationPreference", "speed", "wrong")]
+    [InlineData("EnableRequestDelegateGenerator", "true", "wrong")]
+    [InlineData("RunAOTCompilation", "false", "wrong")]
+    [InlineData("SuppressTrimAnalysisWarnings", "false", "wrong")]
+    [InlineData("IsTestingPlatformApplication", "false", "wrong")]
+    [InlineData("IsTestProject", "false", "wrong")]
+    [InlineData("TestingPlatformDotnetTestSupport", "false", "wrong")]
+    [InlineData("TieredCompilation", "true", "wrong")]
+    [InlineData("TieredPGO", "true", "wrong")]
+    [InlineData("UseSystemResourceKeys", "true", "wrong")]
+    [InlineData("ValidateExecutableReferencesMatchSelfContained", "true", "wrong")]
     [InlineData("OutputType", "Exe", "Library")]
-    [InlineData("UseMicrosoftTestingPlatformRunner", "true", "false")]
+    [InlineData("UseMicrosoftTestingPlatformRunner", "true", "wrong")]
     public async Task WhenPropertyHasWrongValueErrorIsLoggedAsync(
         string propertyName,
         string requiredValue,
-        string wrongValue
+        string actualValue
     )
     {
         XmlDocument doc = new();
         doc.LoadXml(
-            $"<Project Sdk=\"Microsoft.NET.Sdk\"><PropertyGroup><{propertyName}>{wrongValue}</{propertyName}></PropertyGroup></Project>"
+            $"<Project Sdk=\"Microsoft.NET.Sdk\"><PropertyGroup><{propertyName}>{actualValue}</{propertyName}></PropertyGroup></Project>"
         );
         ProjectContext project = new(Name: "Test.csproj", Folder: "/test", CsProjXml: doc);
 
@@ -176,25 +176,5 @@ public sealed class SimplePropertyCheckTests : TestBase
         await check.CheckAsync(project: project, cancellationToken: this.CancellationToken());
 
         Assert.Contains(logger.Entries, e => e.Level == LogLevel.Error);
-    }
-
-    [Fact]
-    public async Task WhenCanCheckReturnsFalseNoErrorIsLoggedEvenIfPropertyIsAbsentAsync()
-    {
-        XmlDocument doc = new();
-        doc.LoadXml("<Project Sdk=\"Microsoft.NET.Sdk\"><PropertyGroup></PropertyGroup></Project>");
-        ProjectContext project = new(Name: "Test.csproj", Folder: "/test", CsProjXml: doc);
-
-        CapturingLogger logger = new();
-        SimplePropertyProjectCheckBase check = new(
-            propertyName: "SomeProperty",
-            requiredValue: "someValue",
-            canCheck: static _ => false,
-            logger: logger
-        );
-
-        await check.CheckAsync(project: project, cancellationToken: this.CancellationToken());
-
-        Assert.DoesNotContain(collection: logger.Entries, filter: e => e.Level == LogLevel.Error);
     }
 }

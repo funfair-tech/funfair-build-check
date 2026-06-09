@@ -14,6 +14,8 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 ### Changed
 - SolutionChecks now load and parse global.json once per solution via a shared loader and de-duplicate the GlobalJson checks through a common base class
 - Optimise FunFair.BuildCheck.ProjectChecks: parse each project once and make trivial property checks data-driven
+- ProjectChecks now cache derived project XML node collections per .csproj to avoid repeated XPath scans during validation
+- ProjectChecks now register trivial property rules through shared data-driven setup and consolidate the mirrored tests into theory-based coverage
 - SDK - Updated DotNet SDK to 10.0.301
 ### Deprecated
 ### Removed
