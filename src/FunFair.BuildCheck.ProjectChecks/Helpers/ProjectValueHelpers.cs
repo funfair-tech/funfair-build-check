@@ -74,9 +74,7 @@ internal static class ProjectValueHelpers
 
     public static IEnumerable<PackageReference> ReferencedPackageElements(this ProjectContext project, ILogger logger)
     {
-        XmlNodeList? nodes = project.CsProjXml.SelectNodes(xpath: "/Project/ItemGroup/PackageReference");
-
-        foreach (XmlElement reference in nodes?.OfType<XmlElement>() ?? [])
+        foreach (XmlElement reference in ProjectDataCache.Get(project.CsProjXml).PackageReferenceNodes)
         {
             Dictionary<string, string> attributes = reference
                 .Attributes.OfType<XmlAttribute>()
@@ -133,34 +131,33 @@ internal static class ProjectValueHelpers
             hasGlobalSetting = nodes.OfType<XmlElement>().Any(ElementConfiguration.HasNoParentCondition);
         }
 
-        XmlNodeList? configurationGroups = project.CsProjXml.SelectNodes(xpath: "/Project/PropertyGroup[@Condition]");
+        IReadOnlyList<XmlElement> configurationGroups = ProjectDataCache
+            .Get(project.CsProjXml)
+            .ConditionalPropertyGroups;
 
-        if (configurationGroups is not null)
+        foreach (XmlElement propertyGroup in configurationGroups)
         {
-            foreach (XmlElement propertyGroup in configurationGroups.OfType<XmlElement>())
+            XmlNode? node = propertyGroup.SelectSingleNode(nodePresence);
+
+            if (node is not null)
             {
-                XmlNode? node = propertyGroup.SelectSingleNode(nodePresence);
-
-                if (node is not null)
-                {
-                    continue;
-                }
-
-                if (hasGlobalSetting)
-                {
-                    continue;
-                }
-
-                string configuration = propertyGroup.GetAttribute(name: "Condition");
-                logger.ConfigurationShouldSpecifyNodePrescence(
-                    projectName: project.Name,
-                    configuration: configuration,
-                    nodePresence: nodePresence
-                );
+                continue;
             }
+
+            if (hasGlobalSetting)
+            {
+                continue;
+            }
+
+            string configuration = propertyGroup.GetAttribute(name: "Condition");
+            logger.ConfigurationShouldSpecifyNodePrescence(
+                projectName: project.Name,
+                configuration: configuration,
+                nodePresence: nodePresence
+            );
         }
 
-        if (!hasGlobalSetting && configurationGroups?.Count == 0)
+        if (!hasGlobalSetting && configurationGroups.Count == 0)
         {
             logger.ProjectShouldSpecifyNodePrescence(projectName: project.Name, nodePresence: nodePresence);
         }
@@ -219,9 +216,11 @@ internal static class ProjectValueHelpers
             isRequiredValue: isRequiredValue
         );
 
-        XmlNodeList? configurationGroups = project.CsProjXml.SelectNodes(xpath: "/Project/PropertyGroup[@Condition]");
+        IReadOnlyList<XmlElement> configurationGroups = ProjectDataCache
+            .Get(project.CsProjXml)
+            .ConditionalPropertyGroups;
 
-        if (configurationGroups is not null)
+        if (configurationGroups.Count > 0)
         {
             CheckConditionalSettings(
                 projectName: project.Name,
@@ -234,7 +233,7 @@ internal static class ProjectValueHelpers
             );
         }
 
-        if (!hasGlobalSetting && configurationGroups?.Count == 0)
+        if (!hasGlobalSetting && configurationGroups.Count == 0)
         {
             logger.ProjectShouldSpecifyNodePrescenceAsValue(
                 projectName: project.Name,
@@ -249,12 +248,12 @@ internal static class ProjectValueHelpers
         string nodePresence,
         Func<string, bool> isRequiredValue,
         string requiredValueDisplayText,
-        XmlNodeList configurationGroups,
+        IReadOnlyList<XmlElement> configurationGroups,
         bool hasGlobalSetting,
         ILogger logger
     )
     {
-        foreach (XmlElement propertyGroup in configurationGroups.OfType<XmlElement>())
+        foreach (XmlElement propertyGroup in configurationGroups)
         {
             XmlNode? node = propertyGroup.SelectSingleNode(nodePresence);
 
@@ -383,18 +382,10 @@ internal static class ProjectValueHelpers
 
     public static bool HasProjectImport(in this ProjectContext project, string projectImport)
     {
-        bool found = false;
-        XmlNodeList? imports = project.CsProjXml.SelectNodes("/Project/Import[@Project]");
-
-        if (imports is not null)
-        {
-            found = imports
-                .OfType<XmlElement>()
-                .Select(import => import.GetAttribute(name: "Project"))
-                .Any(candidate => StringComparer.OrdinalIgnoreCase.Equals(x: candidate, y: projectImport));
-        }
-
-        return found;
+        return ProjectDataCache
+            .Get(project.CsProjXml)
+            .ImportNodes.Select(import => import.GetAttribute(name: "Project"))
+            .Any(candidate => StringComparer.OrdinalIgnoreCase.Equals(x: candidate, y: projectImport));
     }
 
     public static string? GetAwsProjectType(in this ProjectContext project)
