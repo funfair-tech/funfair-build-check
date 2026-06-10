@@ -7,12 +7,15 @@ using Microsoft.Extensions.Logging;
 
 namespace FunFair.BuildCheck.ProjectChecks.Settings;
 
-public abstract class MustNotDefinePropertyProjectCheckBase : IProjectCheck
+public sealed class MustNotDefinePropertyProjectCheckBase : IProjectCheck
 {
-    private readonly ILogger _logger;
+    private readonly ILogger<MustNotDefinePropertyProjectCheckBase> _logger;
     private readonly string _propertyName;
 
-    protected MustNotDefinePropertyProjectCheckBase(string propertyName, ILogger logger)
+    public MustNotDefinePropertyProjectCheckBase(
+        string propertyName,
+        ILogger<MustNotDefinePropertyProjectCheckBase> logger
+    )
     {
         this._propertyName = propertyName;
         this._logger = logger;

@@ -668,7 +668,7 @@ public sealed class ComplexSettingsTests : TestBase
     }
 
     // ──────────────────────────────────────────────────────────────
-    // MustEnableStrictMode
+    // Features / MustEnableStrictMode (via SimplePropertyProjectCheckBase)
     // ──────────────────────────────────────────────────────────────
 
     [Fact]
@@ -680,8 +680,13 @@ public sealed class ComplexSettingsTests : TestBase
         );
         ProjectContext project = new(Name: "Test.csproj", Folder: "/test", CsProjXml: doc);
 
-        CapturingLogger<MustEnableStrictMode> logger = new();
-        MustEnableStrictMode check = new(logger: logger);
+        CapturingLogger logger = new();
+        SimplePropertyProjectCheckBase check = new(
+            propertyName: "Features",
+            requiredValue: "strict;flow-analysis",
+            canCheck: null,
+            logger: logger
+        );
 
         await check.CheckAsync(project: project, cancellationToken: this.CancellationToken());
 
@@ -695,8 +700,13 @@ public sealed class ComplexSettingsTests : TestBase
         doc.LoadXml("<Project Sdk=\"Microsoft.NET.Sdk\"><PropertyGroup></PropertyGroup></Project>");
         ProjectContext project = new(Name: "Test.csproj", Folder: "/test", CsProjXml: doc);
 
-        CapturingLogger<MustEnableStrictMode> logger = new();
-        MustEnableStrictMode check = new(logger: logger);
+        CapturingLogger logger = new();
+        SimplePropertyProjectCheckBase check = new(
+            propertyName: "Features",
+            requiredValue: "strict;flow-analysis",
+            canCheck: null,
+            logger: logger
+        );
 
         await check.CheckAsync(project: project, cancellationToken: this.CancellationToken());
 
@@ -712,8 +722,13 @@ public sealed class ComplexSettingsTests : TestBase
         );
         ProjectContext project = new(Name: "Test.csproj", Folder: "/test", CsProjXml: doc);
 
-        CapturingLogger<MustEnableStrictMode> logger = new();
-        MustEnableStrictMode check = new(logger: logger);
+        CapturingLogger logger = new();
+        SimplePropertyProjectCheckBase check = new(
+            propertyName: "Features",
+            requiredValue: "strict;flow-analysis",
+            canCheck: null,
+            logger: logger
+        );
 
         await check.CheckAsync(project: project, cancellationToken: this.CancellationToken());
 

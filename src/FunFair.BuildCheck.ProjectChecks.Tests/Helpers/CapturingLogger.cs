@@ -1,33 +1,11 @@
-using System;
-using System.Collections.Generic;
+using FunFair.BuildCheck.ProjectChecks.Settings;
 using Microsoft.Extensions.Logging;
 
 namespace FunFair.BuildCheck.ProjectChecks.Tests.Helpers;
 
-internal sealed class CapturingLogger<T> : ILogger<T>
-{
-    private readonly List<CapturedLogEntry> _entries = [];
+internal sealed class CapturingLogger
+    : CapturingLoggerBase,
+        ILogger<SimplePropertyProjectCheckBase>,
+        ILogger<MustNotDefinePropertyProjectCheckBase>;
 
-    public IReadOnlyList<CapturedLogEntry> Entries => this._entries;
-
-    IDisposable? ILogger.BeginScope<TState>(TState state)
-    {
-        return null;
-    }
-
-    public bool IsEnabled(LogLevel logLevel)
-    {
-        return true;
-    }
-
-    public void Log<TState>(
-        LogLevel logLevel,
-        EventId eventId,
-        TState state,
-        Exception? exception,
-        Func<TState, Exception?, string> formatter
-    )
-    {
-        this._entries.Add(new(Level: logLevel, EventId: eventId, Message: formatter(arg1: state, arg2: exception)));
-    }
-}
+internal sealed class CapturingLogger<T> : CapturingLoggerBase, ILogger<T>;

@@ -29,7 +29,7 @@ internal static class Setup
     )
     {
         return services
-            .GeneralProjectSettings()
+            .GeneralProjectSettings(repositorySettings)
             .XmlDocumentationProjectSettings()
             .ProjectReferences()
             .ProjectIntegrityChecks()
@@ -80,47 +80,31 @@ internal static class Setup
         checkId: "PH2071: Duplicate code shape",
         Justification = "Registering Analyzers"
     )]
-    private static IServiceCollection GeneralProjectSettings(this IServiceCollection services)
+    private static IServiceCollection GeneralProjectSettings(
+        this IServiceCollection services,
+        IRepositorySettings repositorySettings
+    )
     {
         return services
             .AddProjectCheck<NoDuplicateProjectSettings>()
             .AddProjectCheck<DoesNotUseDotNetCliToolReference>()
             .AddProjectCheck<DoesNotUseRootNamespace>()
-            .AddProjectCheck<GenerateNeutralResourcesLanguageAttributePolicy>()
-            .AddProjectCheck<ImplicitUsingsPolicy>()
-            .AddProjectCheck<LanguagePolicyUseLatestVersion>()
             .AddProjectCheck<LibrariesShouldBePackablePolicy>()
-            .AddProjectCheck<MustEnableNullable>()
             .AddProjectCheck<MustNotDisableUnexpectedWarnings>()
             .AddProjectCheck<MustSpecifyOutputType>()
             .AddProjectCheck<NoPreReleaseNuGetPackages>()
-            .AddProjectCheck<NuGetPolicyDisableImplicitNuGetFallbackFolder>()
             .AddProjectCheck<OnlyExesShouldBePublishablePolicy>()
-            .AddProjectCheck<RunAotCompilationPolicy>()
             .AddProjectCheck<TargetFrameworkIsSetCorrectlyPolicy>()
-            .AddProjectCheck<TieredCompilationPolicy>()
-            .AddProjectCheck<EnableMicrosoftExtensionsConfigurationBinderSourceGeneratorPolicy>()
-            .AddProjectCheck<JsonSerializerIsReflectionEnabledByDefaultPolicy>()
-            .AddProjectCheck<OptimizationPreferencePolicy>()
-            .AddProjectCheck<GenerateSbomPolicy>()
-            .AddProjectCheck<TestHarnessExeProjectsMustSetIsTestProjectToFalse>()
-            .AddProjectCheck<TestHarnessExeProjectsMustSetIsTestingPlatformApplicationToFalse>()
-            .AddProjectCheck<TestHarnessExeProjectsMustSetTestingPlatformDotnetTestSupportToFalse>();
+            .RegisterGeneralTrivialProjectChecks(repositorySettings);
     }
 
     private static IServiceCollection PublishingSettings(this IServiceCollection services)
     {
         return services
-            .AddProjectCheck<DebuggerSupportPolicy>()
-            .AddProjectCheck<IlcGenerateStackTraceDataPolicy>()
-            .AddProjectCheck<IlcOptimizationPreferencePolicy>()
             .AddProjectCheck<PublishableExesMustHavePublishAotSetPolicy>()
             .AddProjectCheck<MustNotSpecifyBothPublishAotAndPublishReadyToRunPolicy>()
             .AddProjectCheck<PublishableExesMustHaveRuntimeIdentifiers>()
-            .AddProjectCheck<PublishableProjectsShouldEnableRequestDelegateGeneratorPolicy>()
-            .AddProjectCheck<TieredPgoPolicy>()
-            .AddProjectCheck<UseSystemResourceKeysPolicy>()
-            .AddProjectCheck<ValidateExecutableReferencesMatchSelfContainedPolicy>();
+            .RegisterPublishingTrivialProjectChecks();
     }
 
     private static IServiceCollection PackagingSettings(this IServiceCollection services)
@@ -128,15 +112,14 @@ internal static class Setup
         return services
             .AddProjectCheck<DescriptionMetadata>()
             .AddProjectCheck<DotNetToolsMustBePublishablePolicy>()
-            .AddProjectCheck<EnablePackageValidationPolicy>()
-            .AddProjectCheck<IncludeSymbolsPolicy>()
             .AddProjectCheck<SymbolPackageFormatPolicy>()
             .AddProjectCheck<ImportCommonProps>()
             .AddProjectCheck<IsTransformWebConfigDisabledShouldBeTrueForWebLibraryProjects>()
             .AddProjectCheck<PackableLibrariesShouldNotDependOnNonPackable>()
             .AddProjectCheck<WarnOnPackingNonPackableProjectMetadata>()
             .AddProjectCheck<PackageTagsMetadata>()
-            .AddProjectCheck<RepositoryUrlMetadata>();
+            .AddProjectCheck<RepositoryUrlMetadata>()
+            .RegisterPackagingTrivialProjectChecks();
     }
 
     [SuppressMessage(
@@ -150,11 +133,6 @@ internal static class Setup
     )
     {
         return services
-            .AddProjectCheck<AnalysisLevelPolicyUseLatestVersion>()
-            .AddProjectCheck<AnalysisModePolicy>()
-            .AddProjectCheck<CodeAnalysisTreatWarningsAsErrorsPolicy>()
-            .AddProjectCheck<EnableNetAnalyzersPolicy>()
-            .AddProjectCheck<EnforceCodeStyleInBuildPolicy>()
             .AddProjectCheck<EnforceExtendedAnalyzerRulesPolicy>()
             .AddProjectCheck<ErrorPolicyWarningAsErrors>()
             .AddProjectCheck<MustHaveAsyncAnalyzerPackage>()
@@ -163,23 +141,18 @@ internal static class Setup
             .AddProjectCheck<MustHaveSecurityCodeScanAnalyzerPackage>()
             .AddProjectCheck<MustHaveSmartAnalyzerPackage>()
             .AddProjectCheck<MustHavePhilipsMaintainabilityAnalyzerPackage>()
-            .AddProjectCheck<MustEnableStrictMode>()
             .AddProjectCheck<MustHaveRoslynatorAnalyzersPackage>()
             .AddProjectCheck<MustHaveSonarAnalyzerPackage>()
             .AddProjectCheck<MustHaveThreadingAnalyzerPackage>()
             .AddProjectCheck<MustHaveToStringWithoutOverrideAnalyzerPackage>()
             .AddProjectCheck<MustNotHaveFxCopAnalyzerPackage>()
-            .AddProjectCheck<MustNotUseOpenApiAnalyzers>()
-            .AddProjectCheck<NuGetAuditPolicy>()
             .AddProjectCheck<NuGetAuditLevelPolicy>()
-            .AddProjectCheck<MustNotDefineCodeAnalysisRuleSet>()
-            .AddProjectCheck<MustNotDefineWarningsNotAsErrors>()
             .AddProjectCheck<ProjectsShouldHaveTrimAnalyzerConfiguredPolicy>()
-            .AddProjectCheck<SuppressTrimAnalysisWarningsMustBeFalsePolicy>()
             .AddProjectCheck<MustHaveMicrosoftSbomTargetsAnalyzerPackage>()
             .AddEnumSourceGeneratorAnalyzerPackage(repositorySettings: repositorySettings)
             .AddUnitTestAnalysers(repositorySettings: repositorySettings)
-            .AddFunFairCodeAnalysisRequirements(repositorySettings: repositorySettings);
+            .AddFunFairCodeAnalysisRequirements(repositorySettings: repositorySettings)
+            .RegisterStaticCodeAnalysisTrivialProjectChecks();
     }
 
     private static IServiceCollection AddFunFairCodeAnalysisRequirements(
@@ -223,8 +196,7 @@ internal static class Setup
             .AddProjectCheck<UsingXUnitV3ExtensibilityMustIncludeAnalyzer>()
             .AddProjectCheck<XUnitV3ProjectsShouldDefineTestingPlatformDotnetTestSupport>()
             .AddProjectCheck<XUnitV3ProjectsShouldDefineIsTestingPlatformApplication>()
-            .AddProjectCheck<XUnitV3ProjectsShouldDefineUseMicrosoftTestingPlatformRunner>()
-            .AddProjectCheck<XUnitV3ProjectsShouldBeAnExecutable>();
+            .RegisterUnitTestTrivialProjectChecks();
     }
 
     private static IServiceCollection AddProjectCheck<
