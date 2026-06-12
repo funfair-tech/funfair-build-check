@@ -14,7 +14,7 @@ namespace FunFair.BuildCheck.ProjectChecks.Tests.Settings;
 public sealed class CanCheckOverrideTests : TestBase
 {
     // ──────────────────────────────────────────────────────────────
-    // XUnitV3ProjectsShouldBeAnExecutable (via factory)
+    // XUnitV3ProjectsShouldBeAnExecutable
     // CanCheck = IsTestProject && ReferencesPackage("xunit.v3")
     // ──────────────────────────────────────────────────────────────
 
@@ -192,7 +192,7 @@ public sealed class CanCheckOverrideTests : TestBase
     }
 
     // ──────────────────────────────────────────────────────────────
-    // XUnitV3ProjectsShouldDefineUseMicrosoftTestingPlatformRunner (via factory)
+    // XUnitV3ProjectsShouldDefineUseMicrosoftTestingPlatformRunner
     // CanCheck = IsTestProject && (xunit.v3 || xunit.v3.extensibility.core)
     // ──────────────────────────────────────────────────────────────
 
@@ -376,7 +376,7 @@ public sealed class CanCheckOverrideTests : TestBase
     }
 
     // ──────────────────────────────────────────────────────────────
-    // JsonSerializerIsReflectionEnabledByDefault (via factory)
+    // JsonSerializerIsReflectionEnabledByDefaultPolicy
     // CanCheck = IsPackable()
     // ──────────────────────────────────────────────────────────────
 
@@ -390,11 +390,7 @@ public sealed class CanCheckOverrideTests : TestBase
         ProjectContext project = new(Name: "Test.csproj", Folder: "/test", CsProjXml: doc);
 
         CapturingLogger logger = new();
-        SimplePropertyProjectCheckBase check = CreateIsPackableCheck(
-            "JsonSerializerIsReflectionEnabledByDefault",
-            "false",
-            logger
-        );
+        SimplePropertyProjectCheckBase check = CreateJsonSerializerIsReflectionEnabledByDefaultCheck(logger);
 
         await check.CheckAsync(project: project, cancellationToken: this.CancellationToken());
 
@@ -411,11 +407,7 @@ public sealed class CanCheckOverrideTests : TestBase
         ProjectContext project = new(Name: "Test.csproj", Folder: "/test", CsProjXml: doc);
 
         CapturingLogger logger = new();
-        SimplePropertyProjectCheckBase check = CreateIsPackableCheck(
-            "JsonSerializerIsReflectionEnabledByDefault",
-            "false",
-            logger
-        );
+        SimplePropertyProjectCheckBase check = CreateJsonSerializerIsReflectionEnabledByDefaultCheck(logger);
 
         await check.CheckAsync(project: project, cancellationToken: this.CancellationToken());
 
@@ -432,11 +424,7 @@ public sealed class CanCheckOverrideTests : TestBase
         ProjectContext project = new(Name: "Test.csproj", Folder: "/test", CsProjXml: doc);
 
         CapturingLogger logger = new();
-        SimplePropertyProjectCheckBase check = CreateIsPackableCheck(
-            "JsonSerializerIsReflectionEnabledByDefault",
-            "false",
-            logger
-        );
+        SimplePropertyProjectCheckBase check = CreateJsonSerializerIsReflectionEnabledByDefaultCheck(logger);
 
         await check.CheckAsync(project: project, cancellationToken: this.CancellationToken());
 
@@ -444,7 +432,7 @@ public sealed class CanCheckOverrideTests : TestBase
     }
 
     // ──────────────────────────────────────────────────────────────
-    // EnableMicrosoftExtensionsConfigurationBinderSourceGenerator (via factory)
+    // EnableMicrosoftExtensionsConfigurationBinderSourceGeneratorPolicy
     // CanCheck = IsPackable()
     // ──────────────────────────────────────────────────────────────
 
@@ -458,9 +446,7 @@ public sealed class CanCheckOverrideTests : TestBase
         ProjectContext project = new(Name: "Test.csproj", Folder: "/test", CsProjXml: doc);
 
         CapturingLogger logger = new();
-        SimplePropertyProjectCheckBase check = CreateIsPackableCheck(
-            "EnableMicrosoftExtensionsConfigurationBinderSourceGenerator",
-            "true",
+        SimplePropertyProjectCheckBase check = CreateEnableMicrosoftExtensionsConfigurationBinderSourceGeneratorCheck(
             logger
         );
 
@@ -479,9 +465,7 @@ public sealed class CanCheckOverrideTests : TestBase
         ProjectContext project = new(Name: "Test.csproj", Folder: "/test", CsProjXml: doc);
 
         CapturingLogger logger = new();
-        SimplePropertyProjectCheckBase check = CreateIsPackableCheck(
-            "EnableMicrosoftExtensionsConfigurationBinderSourceGenerator",
-            "true",
+        SimplePropertyProjectCheckBase check = CreateEnableMicrosoftExtensionsConfigurationBinderSourceGeneratorCheck(
             logger
         );
 
@@ -500,9 +484,7 @@ public sealed class CanCheckOverrideTests : TestBase
         ProjectContext project = new(Name: "Test.csproj", Folder: "/test", CsProjXml: doc);
 
         CapturingLogger logger = new();
-        SimplePropertyProjectCheckBase check = CreateIsPackableCheck(
-            "EnableMicrosoftExtensionsConfigurationBinderSourceGenerator",
-            "true",
+        SimplePropertyProjectCheckBase check = CreateEnableMicrosoftExtensionsConfigurationBinderSourceGeneratorCheck(
             logger
         );
 
@@ -512,7 +494,7 @@ public sealed class CanCheckOverrideTests : TestBase
     }
 
     // ──────────────────────────────────────────────────────────────
-    // EnablePackageValidation (via factory)
+    // EnablePackageValidationPolicy
     // CanCheck = IsPackable()
     // ──────────────────────────────────────────────────────────────
 
@@ -526,7 +508,7 @@ public sealed class CanCheckOverrideTests : TestBase
         ProjectContext project = new(Name: "Test.csproj", Folder: "/test", CsProjXml: doc);
 
         CapturingLogger logger = new();
-        SimplePropertyProjectCheckBase check = CreateIsPackableCheck("EnablePackageValidation", "true", logger);
+        SimplePropertyProjectCheckBase check = CreateEnablePackageValidationCheck(logger);
 
         await check.CheckAsync(project: project, cancellationToken: this.CancellationToken());
 
@@ -543,7 +525,7 @@ public sealed class CanCheckOverrideTests : TestBase
         ProjectContext project = new(Name: "Test.csproj", Folder: "/test", CsProjXml: doc);
 
         CapturingLogger logger = new();
-        SimplePropertyProjectCheckBase check = CreateIsPackableCheck("EnablePackageValidation", "true", logger);
+        SimplePropertyProjectCheckBase check = CreateEnablePackageValidationCheck(logger);
 
         await check.CheckAsync(project: project, cancellationToken: this.CancellationToken());
 
@@ -560,7 +542,7 @@ public sealed class CanCheckOverrideTests : TestBase
         ProjectContext project = new(Name: "Test.csproj", Folder: "/test", CsProjXml: doc);
 
         CapturingLogger logger = new();
-        SimplePropertyProjectCheckBase check = CreateIsPackableCheck("EnablePackageValidation", "true", logger);
+        SimplePropertyProjectCheckBase check = CreateEnablePackageValidationCheck(logger);
 
         await check.CheckAsync(project: project, cancellationToken: this.CancellationToken());
 
@@ -568,7 +550,7 @@ public sealed class CanCheckOverrideTests : TestBase
     }
 
     // ──────────────────────────────────────────────────────────────
-    // GenerateSBOM (via factory)
+    // GenerateSbomPolicy
     // CanCheck = IsPackable()
     // ──────────────────────────────────────────────────────────────
 
@@ -582,7 +564,7 @@ public sealed class CanCheckOverrideTests : TestBase
         ProjectContext project = new(Name: "Test.csproj", Folder: "/test", CsProjXml: doc);
 
         CapturingLogger logger = new();
-        SimplePropertyProjectCheckBase check = CreateIsPackableCheck("GenerateSBOM", "true", logger);
+        SimplePropertyProjectCheckBase check = CreateGenerateSbomCheck(logger);
 
         await check.CheckAsync(project: project, cancellationToken: this.CancellationToken());
 
@@ -599,7 +581,7 @@ public sealed class CanCheckOverrideTests : TestBase
         ProjectContext project = new(Name: "Test.csproj", Folder: "/test", CsProjXml: doc);
 
         CapturingLogger logger = new();
-        SimplePropertyProjectCheckBase check = CreateIsPackableCheck("GenerateSBOM", "true", logger);
+        SimplePropertyProjectCheckBase check = CreateGenerateSbomCheck(logger);
 
         await check.CheckAsync(project: project, cancellationToken: this.CancellationToken());
 
@@ -616,7 +598,7 @@ public sealed class CanCheckOverrideTests : TestBase
         ProjectContext project = new(Name: "Test.csproj", Folder: "/test", CsProjXml: doc);
 
         CapturingLogger logger = new();
-        SimplePropertyProjectCheckBase check = CreateIsPackableCheck("GenerateSBOM", "true", logger);
+        SimplePropertyProjectCheckBase check = CreateGenerateSbomCheck(logger);
 
         await check.CheckAsync(project: project, cancellationToken: this.CancellationToken());
 
@@ -624,7 +606,7 @@ public sealed class CanCheckOverrideTests : TestBase
     }
 
     // ──────────────────────────────────────────────────────────────
-    // IncludeSymbols (via factory)
+    // IncludeSymbolsPolicy
     // CanCheck = IsPackable() && !IsDotNetTool()
     // ──────────────────────────────────────────────────────────────
 
@@ -680,7 +662,7 @@ public sealed class CanCheckOverrideTests : TestBase
     }
 
     // ──────────────────────────────────────────────────────────────
-    // OptimizationPreference (via factory)
+    // OptimizationPreferencePolicy
     // CanCheck = IsPackable()
     // ──────────────────────────────────────────────────────────────
 
@@ -694,7 +676,7 @@ public sealed class CanCheckOverrideTests : TestBase
         ProjectContext project = new(Name: "Test.csproj", Folder: "/test", CsProjXml: doc);
 
         CapturingLogger logger = new();
-        SimplePropertyProjectCheckBase check = CreateIsPackableCheck("OptimizationPreference", "speed", logger);
+        SimplePropertyProjectCheckBase check = CreateOptimizationPreferenceCheck(logger);
 
         await check.CheckAsync(project: project, cancellationToken: this.CancellationToken());
 
@@ -711,7 +693,7 @@ public sealed class CanCheckOverrideTests : TestBase
         ProjectContext project = new(Name: "Test.csproj", Folder: "/test", CsProjXml: doc);
 
         CapturingLogger logger = new();
-        SimplePropertyProjectCheckBase check = CreateIsPackableCheck("OptimizationPreference", "speed", logger);
+        SimplePropertyProjectCheckBase check = CreateOptimizationPreferenceCheck(logger);
 
         await check.CheckAsync(project: project, cancellationToken: this.CancellationToken());
 
@@ -728,7 +710,7 @@ public sealed class CanCheckOverrideTests : TestBase
         ProjectContext project = new(Name: "Test.csproj", Folder: "/test", CsProjXml: doc);
 
         CapturingLogger logger = new();
-        SimplePropertyProjectCheckBase check = CreateIsPackableCheck("OptimizationPreference", "speed", logger);
+        SimplePropertyProjectCheckBase check = CreateOptimizationPreferenceCheck(logger);
 
         await check.CheckAsync(project: project, cancellationToken: this.CancellationToken());
 
@@ -736,7 +718,7 @@ public sealed class CanCheckOverrideTests : TestBase
     }
 
     // ──────────────────────────────────────────────────────────────
-    // TieredCompilation (via factory)
+    // TieredCompilationPolicy
     // CanCheck = IsPublishable()
     // ──────────────────────────────────────────────────────────────
 
@@ -750,7 +732,7 @@ public sealed class CanCheckOverrideTests : TestBase
         ProjectContext project = new(Name: "Test.csproj", Folder: "/test", CsProjXml: doc);
 
         CapturingLogger logger = new();
-        SimplePropertyProjectCheckBase check = CreateIsPublishableCheck("TieredCompilation", "true", logger);
+        SimplePropertyProjectCheckBase check = CreateTieredCompilationCheck(logger);
 
         await check.CheckAsync(project: project, cancellationToken: this.CancellationToken());
 
@@ -767,7 +749,7 @@ public sealed class CanCheckOverrideTests : TestBase
         ProjectContext project = new(Name: "Test.csproj", Folder: "/test", CsProjXml: doc);
 
         CapturingLogger logger = new();
-        SimplePropertyProjectCheckBase check = CreateIsPublishableCheck("TieredCompilation", "true", logger);
+        SimplePropertyProjectCheckBase check = CreateTieredCompilationCheck(logger);
 
         await check.CheckAsync(project: project, cancellationToken: this.CancellationToken());
 
@@ -784,7 +766,7 @@ public sealed class CanCheckOverrideTests : TestBase
         ProjectContext project = new(Name: "Test.csproj", Folder: "/test", CsProjXml: doc);
 
         CapturingLogger logger = new();
-        SimplePropertyProjectCheckBase check = CreateIsPublishableCheck("TieredCompilation", "true", logger);
+        SimplePropertyProjectCheckBase check = CreateTieredCompilationCheck(logger);
 
         await check.CheckAsync(project: project, cancellationToken: this.CancellationToken());
 
@@ -792,7 +774,7 @@ public sealed class CanCheckOverrideTests : TestBase
     }
 
     // ──────────────────────────────────────────────────────────────
-    // ValidateExecutableReferencesMatchSelfContained (via factory)
+    // ValidateExecutableReferencesMatchSelfContainedPolicy
     // CanCheck = IsPublishable()
     // ──────────────────────────────────────────────────────────────
 
@@ -806,11 +788,7 @@ public sealed class CanCheckOverrideTests : TestBase
         ProjectContext project = new(Name: "Test.csproj", Folder: "/test", CsProjXml: doc);
 
         CapturingLogger logger = new();
-        SimplePropertyProjectCheckBase check = CreateIsPublishableCheck(
-            "ValidateExecutableReferencesMatchSelfContained",
-            "true",
-            logger
-        );
+        SimplePropertyProjectCheckBase check = CreateValidateExecutableReferencesMatchSelfContainedCheck(logger);
 
         await check.CheckAsync(project: project, cancellationToken: this.CancellationToken());
 
@@ -827,11 +805,7 @@ public sealed class CanCheckOverrideTests : TestBase
         ProjectContext project = new(Name: "Test.csproj", Folder: "/test", CsProjXml: doc);
 
         CapturingLogger logger = new();
-        SimplePropertyProjectCheckBase check = CreateIsPublishableCheck(
-            "ValidateExecutableReferencesMatchSelfContained",
-            "true",
-            logger
-        );
+        SimplePropertyProjectCheckBase check = CreateValidateExecutableReferencesMatchSelfContainedCheck(logger);
 
         await check.CheckAsync(project: project, cancellationToken: this.CancellationToken());
 
@@ -848,11 +822,7 @@ public sealed class CanCheckOverrideTests : TestBase
         ProjectContext project = new(Name: "Test.csproj", Folder: "/test", CsProjXml: doc);
 
         CapturingLogger logger = new();
-        SimplePropertyProjectCheckBase check = CreateIsPublishableCheck(
-            "ValidateExecutableReferencesMatchSelfContained",
-            "true",
-            logger
-        );
+        SimplePropertyProjectCheckBase check = CreateValidateExecutableReferencesMatchSelfContainedCheck(logger);
 
         await check.CheckAsync(project: project, cancellationToken: this.CancellationToken());
 
@@ -860,7 +830,7 @@ public sealed class CanCheckOverrideTests : TestBase
     }
 
     // ──────────────────────────────────────────────────────────────
-    // Nullable (via factory)
+    // MustEnableNullable
     // CanCheck = repositorySettings.IsNullableGloballyEnforced
     // ──────────────────────────────────────────────────────────────
 
@@ -877,7 +847,7 @@ public sealed class CanCheckOverrideTests : TestBase
         repositorySettings.IsNullableGloballyEnforced.Returns(true);
 
         CapturingLogger logger = new();
-        SimplePropertyProjectCheckBase check = CreateNullableCheck(repositorySettings, logger);
+        SimplePropertyProjectCheckBase check = CreateMustEnableNullableCheck(repositorySettings, logger);
 
         await check.CheckAsync(project: project, cancellationToken: this.CancellationToken());
 
@@ -895,7 +865,7 @@ public sealed class CanCheckOverrideTests : TestBase
         repositorySettings.IsNullableGloballyEnforced.Returns(true);
 
         CapturingLogger logger = new();
-        SimplePropertyProjectCheckBase check = CreateNullableCheck(repositorySettings, logger);
+        SimplePropertyProjectCheckBase check = CreateMustEnableNullableCheck(repositorySettings, logger);
 
         await check.CheckAsync(project: project, cancellationToken: this.CancellationToken());
 
@@ -913,7 +883,7 @@ public sealed class CanCheckOverrideTests : TestBase
         repositorySettings.IsNullableGloballyEnforced.Returns(false);
 
         CapturingLogger logger = new();
-        SimplePropertyProjectCheckBase check = CreateNullableCheck(repositorySettings, logger);
+        SimplePropertyProjectCheckBase check = CreateMustEnableNullableCheck(repositorySettings, logger);
 
         await check.CheckAsync(project: project, cancellationToken: this.CancellationToken());
 
@@ -921,7 +891,7 @@ public sealed class CanCheckOverrideTests : TestBase
     }
 
     // ──────────────────────────────────────────────────────────────
-    // EnableRequestDelegateGenerator (via factory)
+    // PublishableProjectsShouldEnableRequestDelegateGeneratorPolicy
     // CanCheck = OutputType=="Exe" && IsPublishable()
     // ──────────────────────────────────────────────────────────────
 
@@ -935,7 +905,9 @@ public sealed class CanCheckOverrideTests : TestBase
         ProjectContext project = new(Name: "Test.csproj", Folder: "/test", CsProjXml: doc);
 
         CapturingLogger logger = new();
-        SimplePropertyProjectCheckBase check = CreateEnableRequestDelegateGeneratorCheck(logger);
+        SimplePropertyProjectCheckBase check = CreatePublishableProjectsShouldEnableRequestDelegateGeneratorCheck(
+            logger
+        );
 
         await check.CheckAsync(project: project, cancellationToken: this.CancellationToken());
 
@@ -952,7 +924,9 @@ public sealed class CanCheckOverrideTests : TestBase
         ProjectContext project = new(Name: "Test.csproj", Folder: "/test", CsProjXml: doc);
 
         CapturingLogger logger = new();
-        SimplePropertyProjectCheckBase check = CreateEnableRequestDelegateGeneratorCheck(logger);
+        SimplePropertyProjectCheckBase check = CreatePublishableProjectsShouldEnableRequestDelegateGeneratorCheck(
+            logger
+        );
 
         await check.CheckAsync(project: project, cancellationToken: this.CancellationToken());
 
@@ -969,7 +943,9 @@ public sealed class CanCheckOverrideTests : TestBase
         ProjectContext project = new(Name: "Test.csproj", Folder: "/test", CsProjXml: doc);
 
         CapturingLogger logger = new();
-        SimplePropertyProjectCheckBase check = CreateEnableRequestDelegateGeneratorCheck(logger);
+        SimplePropertyProjectCheckBase check = CreatePublishableProjectsShouldEnableRequestDelegateGeneratorCheck(
+            logger
+        );
 
         await check.CheckAsync(project: project, cancellationToken: this.CancellationToken());
 
@@ -977,7 +953,7 @@ public sealed class CanCheckOverrideTests : TestBase
     }
 
     // ──────────────────────────────────────────────────────────────
-    // TestHarness IsTestProject=false (via factory)
+    // TestHarnessExeProjectsMustSetIsTestProjectToFalse
     // CanCheck = name ends with .TestHarness && OutputType==Exe
     // ──────────────────────────────────────────────────────────────
 
@@ -991,7 +967,7 @@ public sealed class CanCheckOverrideTests : TestBase
         ProjectContext project = new(Name: "MyProject.TestHarness", Folder: "/test", CsProjXml: doc);
 
         CapturingLogger logger = new();
-        SimplePropertyProjectCheckBase check = CreateTestHarnessCheck("IsTestProject", "false", logger);
+        SimplePropertyProjectCheckBase check = CreateTestHarnessIsTestProjectCheck(logger);
 
         await check.CheckAsync(project: project, cancellationToken: this.CancellationToken());
 
@@ -1008,7 +984,7 @@ public sealed class CanCheckOverrideTests : TestBase
         ProjectContext project = new(Name: "MyProject.TestHarness", Folder: "/test", CsProjXml: doc);
 
         CapturingLogger logger = new();
-        SimplePropertyProjectCheckBase check = CreateTestHarnessCheck("IsTestProject", "false", logger);
+        SimplePropertyProjectCheckBase check = CreateTestHarnessIsTestProjectCheck(logger);
 
         await check.CheckAsync(project: project, cancellationToken: this.CancellationToken());
 
@@ -1025,7 +1001,7 @@ public sealed class CanCheckOverrideTests : TestBase
         ProjectContext project = new(Name: "MyProject.csproj", Folder: "/test", CsProjXml: doc);
 
         CapturingLogger logger = new();
-        SimplePropertyProjectCheckBase check = CreateTestHarnessCheck("IsTestProject", "false", logger);
+        SimplePropertyProjectCheckBase check = CreateTestHarnessIsTestProjectCheck(logger);
 
         await check.CheckAsync(project: project, cancellationToken: this.CancellationToken());
 
@@ -1042,7 +1018,7 @@ public sealed class CanCheckOverrideTests : TestBase
         ProjectContext project = new(Name: "MyProject.TestHarness", Folder: "/test", CsProjXml: doc);
 
         CapturingLogger logger = new();
-        SimplePropertyProjectCheckBase check = CreateTestHarnessCheck("IsTestProject", "false", logger);
+        SimplePropertyProjectCheckBase check = CreateTestHarnessIsTestProjectCheck(logger);
 
         await check.CheckAsync(project: project, cancellationToken: this.CancellationToken());
 
@@ -1050,7 +1026,8 @@ public sealed class CanCheckOverrideTests : TestBase
     }
 
     // ──────────────────────────────────────────────────────────────
-    // TestHarness TestingPlatformDotnetTestSupport=false (via factory)
+    // TestHarnessExeProjectsMustSetTestingPlatformDotnetTestSupportToFalse
+    // CanCheck = name ends with .TestHarness && OutputType==Exe
     // ──────────────────────────────────────────────────────────────
 
     [Fact]
@@ -1063,11 +1040,7 @@ public sealed class CanCheckOverrideTests : TestBase
         ProjectContext project = new(Name: "MyProject.TestHarness", Folder: "/test", CsProjXml: doc);
 
         CapturingLogger logger = new();
-        SimplePropertyProjectCheckBase check = CreateTestHarnessCheck(
-            "TestingPlatformDotnetTestSupport",
-            "false",
-            logger
-        );
+        SimplePropertyProjectCheckBase check = CreateTestHarnessTestingPlatformDotnetTestSupportCheck(logger);
 
         await check.CheckAsync(project: project, cancellationToken: this.CancellationToken());
 
@@ -1084,11 +1057,7 @@ public sealed class CanCheckOverrideTests : TestBase
         ProjectContext project = new(Name: "MyProject.TestHarness", Folder: "/test", CsProjXml: doc);
 
         CapturingLogger logger = new();
-        SimplePropertyProjectCheckBase check = CreateTestHarnessCheck(
-            "TestingPlatformDotnetTestSupport",
-            "false",
-            logger
-        );
+        SimplePropertyProjectCheckBase check = CreateTestHarnessTestingPlatformDotnetTestSupportCheck(logger);
 
         await check.CheckAsync(project: project, cancellationToken: this.CancellationToken());
 
@@ -1105,11 +1074,7 @@ public sealed class CanCheckOverrideTests : TestBase
         ProjectContext project = new(Name: "MyProject.csproj", Folder: "/test", CsProjXml: doc);
 
         CapturingLogger logger = new();
-        SimplePropertyProjectCheckBase check = CreateTestHarnessCheck(
-            "TestingPlatformDotnetTestSupport",
-            "false",
-            logger
-        );
+        SimplePropertyProjectCheckBase check = CreateTestHarnessTestingPlatformDotnetTestSupportCheck(logger);
 
         await check.CheckAsync(project: project, cancellationToken: this.CancellationToken());
 
@@ -1126,11 +1091,7 @@ public sealed class CanCheckOverrideTests : TestBase
         ProjectContext project = new(Name: "MyProject.TestHarness", Folder: "/test", CsProjXml: doc);
 
         CapturingLogger logger = new();
-        SimplePropertyProjectCheckBase check = CreateTestHarnessCheck(
-            "TestingPlatformDotnetTestSupport",
-            "false",
-            logger
-        );
+        SimplePropertyProjectCheckBase check = CreateTestHarnessTestingPlatformDotnetTestSupportCheck(logger);
 
         await check.CheckAsync(project: project, cancellationToken: this.CancellationToken());
 
@@ -1138,7 +1099,8 @@ public sealed class CanCheckOverrideTests : TestBase
     }
 
     // ──────────────────────────────────────────────────────────────
-    // TestHarness IsTestingPlatformApplication=false (via factory)
+    // TestHarnessExeProjectsMustSetIsTestingPlatformApplicationToFalse
+    // CanCheck = name ends with .TestHarness && OutputType==Exe
     // ──────────────────────────────────────────────────────────────
 
     [Fact]
@@ -1151,7 +1113,7 @@ public sealed class CanCheckOverrideTests : TestBase
         ProjectContext project = new(Name: "MyProject.TestHarness", Folder: "/test", CsProjXml: doc);
 
         CapturingLogger logger = new();
-        SimplePropertyProjectCheckBase check = CreateTestHarnessCheck("IsTestingPlatformApplication", "false", logger);
+        SimplePropertyProjectCheckBase check = CreateTestHarnessIsTestingPlatformApplicationCheck(logger);
 
         await check.CheckAsync(project: project, cancellationToken: this.CancellationToken());
 
@@ -1168,7 +1130,7 @@ public sealed class CanCheckOverrideTests : TestBase
         ProjectContext project = new(Name: "MyProject.TestHarness", Folder: "/test", CsProjXml: doc);
 
         CapturingLogger logger = new();
-        SimplePropertyProjectCheckBase check = CreateTestHarnessCheck("IsTestingPlatformApplication", "false", logger);
+        SimplePropertyProjectCheckBase check = CreateTestHarnessIsTestingPlatformApplicationCheck(logger);
 
         await check.CheckAsync(project: project, cancellationToken: this.CancellationToken());
 
@@ -1185,7 +1147,7 @@ public sealed class CanCheckOverrideTests : TestBase
         ProjectContext project = new(Name: "MyProject", Folder: "/test", CsProjXml: doc);
 
         CapturingLogger logger = new();
-        SimplePropertyProjectCheckBase check = CreateTestHarnessCheck("IsTestingPlatformApplication", "false", logger);
+        SimplePropertyProjectCheckBase check = CreateTestHarnessIsTestingPlatformApplicationCheck(logger);
 
         await check.CheckAsync(project: project, cancellationToken: this.CancellationToken());
 
@@ -1202,7 +1164,7 @@ public sealed class CanCheckOverrideTests : TestBase
         ProjectContext project = new(Name: "MyProject.TestHarness", Folder: "/test", CsProjXml: doc);
 
         CapturingLogger logger = new();
-        SimplePropertyProjectCheckBase check = CreateTestHarnessCheck("IsTestingPlatformApplication", "false", logger);
+        SimplePropertyProjectCheckBase check = CreateTestHarnessIsTestingPlatformApplicationCheck(logger);
 
         await check.CheckAsync(project: project, cancellationToken: this.CancellationToken());
 
@@ -1254,7 +1216,7 @@ public sealed class CanCheckOverrideTests : TestBase
     }
 
     // ──────────────────────────────────────────────────────────────
-    // SuppressTrimAnalysisWarnings (via factory)
+    // SuppressTrimAnalysisWarningsMustBeFalsePolicy
     // CanCheck = project.HasProperty("SuppressTrimAnalysisWarnings")
     // ──────────────────────────────────────────────────────────────
 
@@ -1307,17 +1269,159 @@ public sealed class CanCheckOverrideTests : TestBase
         Assert.Contains(logger.Entries, e => e.Level == LogLevel.Error);
     }
 
-    // ──────────────────────────────────────────────────────────────
-    // Factory helpers
-    // ──────────────────────────────────────────────────────────────
+    private static SimplePropertyProjectCheckBase CreateEnableMicrosoftExtensionsConfigurationBinderSourceGeneratorCheck(
+        CapturingLogger logger
+    )
+    {
+        return CreateSimpleCheck(
+            propertyName: "EnableMicrosoftExtensionsConfigurationBinderSourceGenerator",
+            requiredValue: "true",
+            logger: logger,
+            canCheck: static project => IsPackable(project)
+        );
+    }
+
+    private static SimplePropertyProjectCheckBase CreateEnablePackageValidationCheck(CapturingLogger logger)
+    {
+        return CreateSimpleCheck(
+            propertyName: "EnablePackageValidation",
+            requiredValue: "true",
+            logger: logger,
+            canCheck: static project => IsPackable(project)
+        );
+    }
+
+    private static SimplePropertyProjectCheckBase CreateGenerateSbomCheck(CapturingLogger logger)
+    {
+        return CreateSimpleCheck(
+            propertyName: "GenerateSBOM",
+            requiredValue: "true",
+            logger: logger,
+            canCheck: static project => IsPackable(project)
+        );
+    }
+
+    private static SimplePropertyProjectCheckBase CreateIncludeSymbolsCheck(CapturingLogger logger)
+    {
+        return CreateSimpleCheck(
+            propertyName: "IncludeSymbols",
+            requiredValue: "true",
+            logger: logger,
+            canCheck: static project => IsPackable(project) && !IsDotNetTool(project)
+        );
+    }
+
+    private static SimplePropertyProjectCheckBase CreateJsonSerializerIsReflectionEnabledByDefaultCheck(
+        CapturingLogger logger
+    )
+    {
+        return CreateSimpleCheck(
+            propertyName: "JsonSerializerIsReflectionEnabledByDefault",
+            requiredValue: "false",
+            logger: logger,
+            canCheck: static project => IsPackable(project)
+        );
+    }
+
+    private static SimplePropertyProjectCheckBase CreateMustEnableNullableCheck(
+        IRepositorySettings repositorySettings,
+        CapturingLogger logger
+    )
+    {
+        return CreateSimpleCheck(
+            propertyName: "Nullable",
+            requiredValue: "enable",
+            logger: logger,
+            canCheck: _ => repositorySettings.IsNullableGloballyEnforced
+        );
+    }
+
+    private static SimplePropertyProjectCheckBase CreateOptimizationPreferenceCheck(CapturingLogger logger)
+    {
+        return CreateSimpleCheck(
+            propertyName: "OptimizationPreference",
+            requiredValue: "speed",
+            logger: logger,
+            canCheck: static project => IsPackable(project)
+        );
+    }
+
+    private static SimplePropertyProjectCheckBase CreateTieredCompilationCheck(CapturingLogger logger)
+    {
+        return CreateSimpleCheck(
+            propertyName: "TieredCompilation",
+            requiredValue: "true",
+            logger: logger,
+            canCheck: static project => IsPublishable(project)
+        );
+    }
+
+    private static SimplePropertyProjectCheckBase CreateValidateExecutableReferencesMatchSelfContainedCheck(
+        CapturingLogger logger
+    )
+    {
+        return CreateSimpleCheck(
+            propertyName: "ValidateExecutableReferencesMatchSelfContained",
+            requiredValue: "true",
+            logger: logger,
+            canCheck: static project => IsPublishable(project)
+        );
+    }
+
+    private static SimplePropertyProjectCheckBase CreatePublishableProjectsShouldEnableRequestDelegateGeneratorCheck(
+        CapturingLogger logger
+    )
+    {
+        return CreateSimpleCheck(
+            propertyName: "EnableRequestDelegateGenerator",
+            requiredValue: "true",
+            logger: logger,
+            canCheck: static project =>
+                StringComparer.OrdinalIgnoreCase.Equals(GetOutputType(project), "Exe") && IsPublishable(project)
+        );
+    }
+
+    private static SimplePropertyProjectCheckBase CreateTestHarnessIsTestProjectCheck(CapturingLogger logger)
+    {
+        return CreateSimpleCheck(
+            propertyName: "IsTestProject",
+            requiredValue: "false",
+            logger: logger,
+            canCheck: static project => IsTestHarnessExecutable(project)
+        );
+    }
+
+    private static SimplePropertyProjectCheckBase CreateTestHarnessTestingPlatformDotnetTestSupportCheck(
+        CapturingLogger logger
+    )
+    {
+        return CreateSimpleCheck(
+            propertyName: "TestingPlatformDotnetTestSupport",
+            requiredValue: "false",
+            logger: logger,
+            canCheck: static project => IsTestHarnessExecutable(project)
+        );
+    }
+
+    private static SimplePropertyProjectCheckBase CreateTestHarnessIsTestingPlatformApplicationCheck(
+        CapturingLogger logger
+    )
+    {
+        return CreateSimpleCheck(
+            propertyName: "IsTestingPlatformApplication",
+            requiredValue: "false",
+            logger: logger,
+            canCheck: static project => IsTestHarnessExecutable(project)
+        );
+    }
 
     private static SimplePropertyProjectCheckBase CreateXUnitV3ProjectsShouldBeAnExecutableCheck(CapturingLogger logger)
     {
-        return new SimplePropertyProjectCheckBase(
+        return CreateSimpleCheck(
             propertyName: "OutputType",
             requiredValue: "Exe",
-            canCheck: project => IsTestProject(project) && ReferencesPackage(project, "xunit.v3"),
-            logger: logger
+            logger: logger,
+            canCheck: static project => IsTestProject(project) && ReferencesPackage(project, "xunit.v3")
         );
     }
 
@@ -1325,188 +1429,115 @@ public sealed class CanCheckOverrideTests : TestBase
         CapturingLogger logger
     )
     {
-        return new SimplePropertyProjectCheckBase(
+        return CreateSimpleCheck(
             propertyName: "UseMicrosoftTestingPlatformRunner",
             requiredValue: "true",
-            canCheck: project =>
-                IsTestProject(project)
-                && (
-                    ReferencesPackage(project, "xunit.v3") || ReferencesPackage(project, "xunit.v3.extensibility.core")
-                ),
-            logger: logger
-        );
-    }
-
-    private static SimplePropertyProjectCheckBase CreateIsPackableCheck(
-        string propertyName,
-        string requiredValue,
-        CapturingLogger logger
-    )
-    {
-        return new SimplePropertyProjectCheckBase(
-            propertyName: propertyName,
-            requiredValue: requiredValue,
-            canCheck: static project => IsPackable(project),
-            logger: logger
-        );
-    }
-
-    private static SimplePropertyProjectCheckBase CreateIncludeSymbolsCheck(CapturingLogger logger)
-    {
-        return new SimplePropertyProjectCheckBase(
-            propertyName: "IncludeSymbols",
-            requiredValue: "true",
-            canCheck: static project => IsPackable(project) && !IsDotNetTool(project),
-            logger: logger
-        );
-    }
-
-    private static SimplePropertyProjectCheckBase CreateIsPublishableCheck(
-        string propertyName,
-        string requiredValue,
-        CapturingLogger logger
-    )
-    {
-        return new SimplePropertyProjectCheckBase(
-            propertyName: propertyName,
-            requiredValue: requiredValue,
-            canCheck: static project => IsPublishable(project),
-            logger: logger
-        );
-    }
-
-    private static SimplePropertyProjectCheckBase CreateNullableCheck(
-        IRepositorySettings repositorySettings,
-        CapturingLogger logger
-    )
-    {
-        return new SimplePropertyProjectCheckBase(
-            propertyName: "Nullable",
-            requiredValue: "enable",
-            canCheck: _ => repositorySettings.IsNullableGloballyEnforced,
-            logger: logger
-        );
-    }
-
-    private static SimplePropertyProjectCheckBase CreateEnableRequestDelegateGeneratorCheck(CapturingLogger logger)
-    {
-        return new SimplePropertyProjectCheckBase(
-            propertyName: "EnableRequestDelegateGenerator",
-            requiredValue: "true",
+            logger: logger,
             canCheck: static project =>
-                StringComparer.OrdinalIgnoreCase.Equals(GetOutputType(project), y: "Exe") && IsPublishable(project),
-            logger: logger
-        );
-    }
-
-    private static SimplePropertyProjectCheckBase CreateTestHarnessCheck(
-        string propertyName,
-        string requiredValue,
-        CapturingLogger logger
-    )
-    {
-        return new SimplePropertyProjectCheckBase(
-            propertyName: propertyName,
-            requiredValue: requiredValue,
-            canCheck: static project => IsTestHarnessExecutable(project),
-            logger: logger
+                IsTestProject(project)
+                && (ReferencesPackage(project, "xunit.v3") || ReferencesPackage(project, "xunit.v3.extensibility.core"))
         );
     }
 
     private static SimplePropertyProjectCheckBase CreateSuppressTrimAnalysisWarningsCheck(CapturingLogger logger)
     {
-        return new SimplePropertyProjectCheckBase(
+        return CreateSimpleCheck(
             propertyName: "SuppressTrimAnalysisWarnings",
             requiredValue: "false",
-            canCheck: static project => HasProperty(project, "SuppressTrimAnalysisWarnings"),
-            logger: logger
+            logger: logger,
+            canCheck: static project => HasProperty(project, "SuppressTrimAnalysisWarnings")
         );
     }
 
-    // ──────────────────────────────────────────────────────────────
-    // XPath-based helpers used by factory methods (no ILogger needed)
-    // ──────────────────────────────────────────────────────────────
+    private static SimplePropertyProjectCheckBase CreateSimpleCheck(
+        string propertyName,
+        string requiredValue,
+        CapturingLogger logger,
+        Func<ProjectContext, bool>? canCheck = null
+    )
+    {
+        return new(propertyName: propertyName, requiredValue: requiredValue, canCheck: canCheck, logger: logger);
+    }
+
+    private static string GetOutputType(in ProjectContext project)
+    {
+        XmlNode? node = project.CsProjXml.SelectSingleNode("/Project/PropertyGroup/OutputType");
+
+        return node is null || string.IsNullOrWhiteSpace(node.InnerText) ? "Library" : node.InnerText;
+    }
+
+    private static bool HasProperty(in ProjectContext project, string propertyName)
+    {
+        XmlNode? node = project.CsProjXml.SelectSingleNode("/Project/PropertyGroup/" + propertyName);
+
+        return node is not null && !string.IsNullOrWhiteSpace(node.InnerText);
+    }
+
+    private static bool IsDotNetTool(in ProjectContext project)
+    {
+        return IsTrue(project, "PackAsTool", defaultValue: false);
+    }
+
+    private static bool IsPackable(in ProjectContext project)
+    {
+        return IsTrue(project, "IsPackable", defaultValue: true);
+    }
+
+    private static bool IsPublishable(in ProjectContext project)
+    {
+        return IsTrue(project, "IsPublishable", defaultValue: true);
+    }
+
+    private static bool IsTestHarnessExecutable(in ProjectContext project)
+    {
+        return project.Name.EndsWith(value: ".TestHarness", comparisonType: StringComparison.OrdinalIgnoreCase)
+            && StringComparer.OrdinalIgnoreCase.Equals(GetOutputType(project), "Exe");
+    }
 
     private static bool IsTestProject(in ProjectContext project)
     {
-        return ReferencesPackage(project, "xunit")
-            || ReferencesPackage(project, "xunit.v3")
-            || ReferencesPackage(project, "NSubstitute")
-            || ReferencesPackage(project, "FunFair.Test.Common");
+        return ReferencesPackage(project, "xunit", "xunit.v3", "NSubstitute", "FunFair.Test.Common");
     }
 
-    private static bool ReferencesPackage(in ProjectContext project, string packageName)
+    private static bool IsTrue(in ProjectContext project, string propertyName, bool defaultValue)
     {
-        System.Xml.XmlNodeList? nodes = project.CsProjXml.SelectNodes("/Project/ItemGroup/PackageReference");
+        XmlNode? node = project.CsProjXml.SelectSingleNode("/Project/PropertyGroup/" + propertyName);
+
+        if (node is null || string.IsNullOrWhiteSpace(node.InnerText))
+        {
+            return defaultValue;
+        }
+
+        return StringComparer.OrdinalIgnoreCase.Equals(node.InnerText, "true");
+    }
+
+    private static bool ReferencesPackage(in ProjectContext project, params string[] packageNames)
+    {
+        XmlNodeList? nodes = project.CsProjXml.SelectNodes("/Project/ItemGroup/PackageReference");
 
         if (nodes is null)
         {
             return false;
         }
 
-        foreach (System.Xml.XmlElement node in nodes)
+        foreach (XmlNode node in nodes)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(node.GetAttribute("Include"), y: packageName))
+            if (node is not XmlElement element)
             {
-                return true;
+                continue;
+            }
+
+            string packageName = element.GetAttribute("Include");
+
+            foreach (string candidate in packageNames)
+            {
+                if (StringComparer.OrdinalIgnoreCase.Equals(candidate, packageName))
+                {
+                    return true;
+                }
             }
         }
 
         return false;
-    }
-
-    private static bool IsPackable(in ProjectContext project)
-    {
-        return StringComparer.OrdinalIgnoreCase.Equals(
-            GetStringProperty(project, "/Project/PropertyGroup/IsPackable", "true"),
-            y: "true"
-        );
-    }
-
-    private static bool IsDotNetTool(in ProjectContext project)
-    {
-        System.Xml.XmlNode? node = project.CsProjXml.SelectSingleNode("/Project/PropertyGroup/PackAsTool");
-
-        return node is not null
-            && !string.IsNullOrWhiteSpace(node.InnerText)
-            && StringComparer.OrdinalIgnoreCase.Equals(node.InnerText, y: "True");
-    }
-
-    private static bool IsPublishable(in ProjectContext project)
-    {
-        return StringComparer.OrdinalIgnoreCase.Equals(
-            GetStringProperty(project, "/Project/PropertyGroup/IsPublishable", "true"),
-            y: "true"
-        );
-    }
-
-    private static string GetOutputType(in ProjectContext project)
-    {
-        return GetStringProperty(project, "/Project/PropertyGroup/OutputType", "Library");
-    }
-
-    private static bool IsTestHarnessExecutable(in ProjectContext project)
-    {
-        return project.Name.EndsWith(value: ".TestHarness", comparisonType: StringComparison.OrdinalIgnoreCase)
-            && StringComparer.OrdinalIgnoreCase.Equals(GetOutputType(project), y: "Exe");
-    }
-
-    private static bool HasProperty(in ProjectContext project, string propertyName)
-    {
-        System.Xml.XmlNode? node = project.CsProjXml.SelectSingleNode("/Project/PropertyGroup/" + propertyName);
-
-        return node is not null;
-    }
-
-    private static string GetStringProperty(in ProjectContext project, string path, string defaultValue)
-    {
-        System.Xml.XmlNode? node = project.CsProjXml.SelectSingleNode(path);
-
-        if (node is not null && !string.IsNullOrWhiteSpace(node.InnerText))
-        {
-            return node.InnerText;
-        }
-
-        return defaultValue;
     }
 }

@@ -36,7 +36,7 @@ public sealed class SimplePropertyProjectCheckBase : IProjectCheck
 
     private void DoCheck(in ProjectContext project)
     {
-        if (this._canCheck is null || this._canCheck(project))
+        if (this.CanCheck(project: project))
         {
             ProjectValueHelpers.CheckValue(
                 project: project,
@@ -45,5 +45,10 @@ public sealed class SimplePropertyProjectCheckBase : IProjectCheck
                 logger: this._logger
             );
         }
+    }
+
+    private bool CanCheck(in ProjectContext project)
+    {
+        return this._canCheck?.Invoke(project) ?? true;
     }
 }
