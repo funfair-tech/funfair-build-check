@@ -38,7 +38,11 @@ public sealed class ProjectsShouldHaveTrimAnalyzerConfiguredPolicy : IProjectChe
 
         if (!isTrimAnalyzerTrue && !isTrimAnalyzerFalse)
         {
-            this._logger.ProjectTrimAnalyzerMustBeTrueOrFalse(projectName: project.Name, property: SETTING, value: trimAnalyzer);
+            this._logger.ProjectTrimAnalyzerMustBeTrueOrFalse(
+                projectName: project.Name,
+                property: SETTING,
+                value: trimAnalyzer
+            );
 
             return ValueTask.CompletedTask;
         }
