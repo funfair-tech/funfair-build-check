@@ -16,7 +16,7 @@ public sealed class GlobalJsonIsLatestTests : TestBase
     [Fact]
     public async Task WhenNoDotNetSdkVersionConfiguredSkipsCheckAsync()
     {
-        IRepositorySettings settings = Substitute.For<IRepositorySettings>();
+        IRepositorySettings settings = GetSubstitute<IRepositorySettings>();
         settings.DotNetSdkVersion.Returns((string?)null);
 
         CapturingLogger<GlobalJsonIsLatest> logger = new();
@@ -48,7 +48,7 @@ public sealed class GlobalJsonIsLatestTests : TestBase
 
         try
         {
-            IRepositorySettings settings = Substitute.For<IRepositorySettings>();
+            IRepositorySettings settings = GetSubstitute<IRepositorySettings>();
             settings.DotNetSdkVersion.Returns("9.0.100");
 
             CapturingLogger<GlobalJsonIsLatest> logger = new();
@@ -81,7 +81,7 @@ public sealed class GlobalJsonIsLatestTests : TestBase
             const string sdkVersion = "9.0.100";
             await this.WriteGlobalJsonAsync(tempDir: tempDir, version: sdkVersion, rollForward: "latestPatch");
 
-            IRepositorySettings settings = Substitute.For<IRepositorySettings>();
+            IRepositorySettings settings = GetSubstitute<IRepositorySettings>();
             settings.DotNetSdkVersion.Returns(sdkVersion);
 
             CapturingLogger<GlobalJsonIsLatest> logger = new();
@@ -113,7 +113,7 @@ public sealed class GlobalJsonIsLatestTests : TestBase
         {
             await this.WriteGlobalJsonAsync(tempDir: tempDir, version: "9.0.100", rollForward: "latestPatch");
 
-            IRepositorySettings settings = Substitute.For<IRepositorySettings>();
+            IRepositorySettings settings = GetSubstitute<IRepositorySettings>();
             settings.DotNetSdkVersion.Returns("9.0.200");
 
             CapturingLogger<GlobalJsonIsLatest> logger = new();
@@ -145,7 +145,7 @@ public sealed class GlobalJsonIsLatestTests : TestBase
         {
             await this.WriteGlobalJsonAsync(tempDir: tempDir, version: "9.0.100", rollForward: null);
 
-            IRepositorySettings settings = Substitute.For<IRepositorySettings>();
+            IRepositorySettings settings = GetSubstitute<IRepositorySettings>();
             settings.DotNetSdkVersion.Returns("9.0.100");
 
             CapturingLogger<GlobalJsonIsLatest> logger = new();
@@ -177,7 +177,7 @@ public sealed class GlobalJsonIsLatestTests : TestBase
         {
             await this.WriteGlobalJsonAsync(tempDir: tempDir, version: "9.0.100", rollForward: null);
 
-            IRepositorySettings settings = Substitute.For<IRepositorySettings>();
+            IRepositorySettings settings = GetSubstitute<IRepositorySettings>();
             settings.DotNetSdkVersion.Returns("9.0.200");
 
             CapturingLogger<GlobalJsonIsLatest> logger = new();
@@ -213,7 +213,7 @@ public sealed class GlobalJsonIsLatestTests : TestBase
                 cancellationToken: this.CancellationToken()
             );
 
-            IRepositorySettings settings = Substitute.For<IRepositorySettings>();
+            IRepositorySettings settings = GetSubstitute<IRepositorySettings>();
             settings.DotNetSdkVersion.Returns("9.0.100");
 
             CapturingLogger<GlobalJsonIsLatest> logger = new();
@@ -249,7 +249,7 @@ public sealed class GlobalJsonIsLatestTests : TestBase
                 cancellationToken: this.CancellationToken()
             );
 
-            IRepositorySettings settings = Substitute.For<IRepositorySettings>();
+            IRepositorySettings settings = GetSubstitute<IRepositorySettings>();
             settings.DotNetSdkVersion.Returns("9.0.100");
 
             CapturingLogger<GlobalJsonIsLatest> logger = new();

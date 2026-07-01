@@ -19,7 +19,7 @@ public sealed class RepositorySettingsTests : TestBase
     [Fact]
     public async Task WhenImportCommonPropsProjectImportIsEmptyNoErrorIsLoggedAsync()
     {
-        IRepositorySettings repositorySettings = Substitute.For<IRepositorySettings>();
+        IRepositorySettings repositorySettings = GetSubstitute<IRepositorySettings>();
         repositorySettings.ProjectImport.Returns(string.Empty);
 
         XmlDocument doc = new();
@@ -37,7 +37,7 @@ public sealed class RepositorySettingsTests : TestBase
     [Fact]
     public async Task WhenImportCommonPropsProjectIsNotPackableNoErrorIsLoggedAsync()
     {
-        IRepositorySettings repositorySettings = Substitute.For<IRepositorySettings>();
+        IRepositorySettings repositorySettings = GetSubstitute<IRepositorySettings>();
         repositorySettings.ProjectImport.Returns("$(SolutionDir)common.props");
 
         XmlDocument doc = new();
@@ -58,7 +58,7 @@ public sealed class RepositorySettingsTests : TestBase
     public async Task WhenImportCommonPropsPackableProjectHasImportNoErrorIsLoggedAsync()
     {
         const string importPath = "$(SolutionDir)common.props";
-        IRepositorySettings repositorySettings = Substitute.For<IRepositorySettings>();
+        IRepositorySettings repositorySettings = GetSubstitute<IRepositorySettings>();
         repositorySettings.ProjectImport.Returns(importPath);
 
         XmlDocument doc = new();
@@ -76,7 +76,7 @@ public sealed class RepositorySettingsTests : TestBase
     [Fact]
     public async Task WhenImportCommonPropsPackableProjectMissingImportErrorIsLoggedAsync()
     {
-        IRepositorySettings repositorySettings = Substitute.For<IRepositorySettings>();
+        IRepositorySettings repositorySettings = GetSubstitute<IRepositorySettings>();
         repositorySettings.ProjectImport.Returns("$(SolutionDir)common.props");
 
         XmlDocument doc = new();
@@ -98,7 +98,7 @@ public sealed class RepositorySettingsTests : TestBase
     [Fact]
     public async Task WhenTargetFrameworkIsSetCorrectlyPolicyNoTargetFrameworkConfiguredNoErrorIsLoggedAsync()
     {
-        IRepositorySettings repositorySettings = Substitute.For<IRepositorySettings>();
+        IRepositorySettings repositorySettings = GetSubstitute<IRepositorySettings>();
         repositorySettings.DotnetTargetFramework.Returns((string?)null);
         repositorySettings.IsCodeAnalysisSolution.Returns(false);
 
@@ -117,7 +117,7 @@ public sealed class RepositorySettingsTests : TestBase
     [Fact]
     public async Task WhenTargetFrameworkIsSetCorrectlyPolicySingleFrameworkMatchesNoErrorIsLoggedAsync()
     {
-        IRepositorySettings repositorySettings = Substitute.For<IRepositorySettings>();
+        IRepositorySettings repositorySettings = GetSubstitute<IRepositorySettings>();
         repositorySettings.DotnetTargetFramework.Returns("net10.0");
         repositorySettings.IsCodeAnalysisSolution.Returns(false);
 
@@ -138,7 +138,7 @@ public sealed class RepositorySettingsTests : TestBase
     [Fact]
     public async Task WhenTargetFrameworkIsSetCorrectlyPolicySingleFrameworkMismatchErrorIsLoggedAsync()
     {
-        IRepositorySettings repositorySettings = Substitute.For<IRepositorySettings>();
+        IRepositorySettings repositorySettings = GetSubstitute<IRepositorySettings>();
         repositorySettings.DotnetTargetFramework.Returns("net10.0");
         repositorySettings.IsCodeAnalysisSolution.Returns(false);
 
@@ -159,7 +159,7 @@ public sealed class RepositorySettingsTests : TestBase
     [Fact]
     public async Task WhenTargetFrameworkIsSetCorrectlyPolicyMultipleFrameworksMatchNoErrorIsLoggedAsync()
     {
-        IRepositorySettings repositorySettings = Substitute.For<IRepositorySettings>();
+        IRepositorySettings repositorySettings = GetSubstitute<IRepositorySettings>();
         repositorySettings.DotnetTargetFramework.Returns("net9.0;net10.0");
         repositorySettings.IsCodeAnalysisSolution.Returns(false);
 
@@ -180,7 +180,7 @@ public sealed class RepositorySettingsTests : TestBase
     [Fact]
     public async Task WhenTargetFrameworkIsSetCorrectlyPolicyCodeAnalysisSolutionNonTestProjectRequiresNetStandardNoErrorIsLoggedAsync()
     {
-        IRepositorySettings repositorySettings = Substitute.For<IRepositorySettings>();
+        IRepositorySettings repositorySettings = GetSubstitute<IRepositorySettings>();
         repositorySettings.DotnetTargetFramework.Returns("net10.0");
         repositorySettings.IsCodeAnalysisSolution.Returns(true);
 
@@ -286,7 +286,7 @@ public sealed class RepositorySettingsTests : TestBase
     [Fact]
     public async Task WhenXmlDocumentationFileRequiredPolicyNotRequiredNoErrorIsLoggedAsync()
     {
-        IRepositorySettings repositorySettings = Substitute.For<IRepositorySettings>();
+        IRepositorySettings repositorySettings = GetSubstitute<IRepositorySettings>();
         repositorySettings.XmlDocumentationRequired.Returns(false);
         repositorySettings.IsUnitTestBase.Returns(false);
 
@@ -305,7 +305,7 @@ public sealed class RepositorySettingsTests : TestBase
     [Fact]
     public async Task WhenXmlDocumentationFileRequiredPolicyRequiredAndDocFileCorrectNoErrorIsLoggedAsync()
     {
-        IRepositorySettings repositorySettings = Substitute.For<IRepositorySettings>();
+        IRepositorySettings repositorySettings = GetSubstitute<IRepositorySettings>();
         repositorySettings.XmlDocumentationRequired.Returns(true);
         repositorySettings.IsUnitTestBase.Returns(false);
 
@@ -326,7 +326,7 @@ public sealed class RepositorySettingsTests : TestBase
     [Fact]
     public async Task WhenXmlDocumentationFileRequiredPolicyRequiredAndDocFileMissingErrorIsLoggedAsync()
     {
-        IRepositorySettings repositorySettings = Substitute.For<IRepositorySettings>();
+        IRepositorySettings repositorySettings = GetSubstitute<IRepositorySettings>();
         repositorySettings.XmlDocumentationRequired.Returns(true);
         repositorySettings.IsUnitTestBase.Returns(false);
 
@@ -345,7 +345,7 @@ public sealed class RepositorySettingsTests : TestBase
     [Fact]
     public async Task WhenXmlDocumentationFileRequiredPolicyTestProjectHasDocFileErrorIsLoggedAsync()
     {
-        IRepositorySettings repositorySettings = Substitute.For<IRepositorySettings>();
+        IRepositorySettings repositorySettings = GetSubstitute<IRepositorySettings>();
         repositorySettings.XmlDocumentationRequired.Returns(true);
         repositorySettings.IsUnitTestBase.Returns(false);
 
@@ -416,7 +416,7 @@ public sealed class RepositorySettingsTests : TestBase
     [Fact]
     public async Task WhenXmlDocumentationFileProhibitedPolicyDocumentationIsRequiredNoErrorIsLoggedAsync()
     {
-        IRepositorySettings repositorySettings = Substitute.For<IRepositorySettings>();
+        IRepositorySettings repositorySettings = GetSubstitute<IRepositorySettings>();
         repositorySettings.XmlDocumentationRequired.Returns(true);
 
         XmlDocument doc = new();
@@ -436,7 +436,7 @@ public sealed class RepositorySettingsTests : TestBase
     [Fact]
     public async Task WhenXmlDocumentationFileProhibitedPolicyDocumentationIsNotRequiredAndNoDocFileNoErrorIsLoggedAsync()
     {
-        IRepositorySettings repositorySettings = Substitute.For<IRepositorySettings>();
+        IRepositorySettings repositorySettings = GetSubstitute<IRepositorySettings>();
         repositorySettings.XmlDocumentationRequired.Returns(false);
 
         XmlDocument doc = new();
@@ -454,7 +454,7 @@ public sealed class RepositorySettingsTests : TestBase
     [Fact]
     public async Task WhenXmlDocumentationFileProhibitedPolicyDocumentationIsNotRequiredButDocFileExistsErrorIsLoggedAsync()
     {
-        IRepositorySettings repositorySettings = Substitute.For<IRepositorySettings>();
+        IRepositorySettings repositorySettings = GetSubstitute<IRepositorySettings>();
         repositorySettings.XmlDocumentationRequired.Returns(false);
 
         XmlDocument doc = new();
