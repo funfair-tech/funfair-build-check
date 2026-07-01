@@ -24,7 +24,7 @@ public sealed class PackableLibrariesShouldNotDependOnNonPackableTests : TestBas
         );
         ProjectContext project = new(Name: "Test.csproj", Folder: "/test", CsProjXml: doc);
 
-        IProjectXmlLoader loader = Substitute.For<IProjectXmlLoader>();
+        IProjectXmlLoader loader = GetSubstitute<IProjectXmlLoader>();
         CapturingLogger<PackableLibrariesShouldNotDependOnNonPackable> logger = new();
         PackableLibrariesShouldNotDependOnNonPackable check = new(projectXmlLoader: loader, logger: logger);
 
@@ -42,7 +42,7 @@ public sealed class PackableLibrariesShouldNotDependOnNonPackableTests : TestBas
         );
         ProjectContext project = new(Name: "Test.csproj", Folder: "/test", CsProjXml: doc);
 
-        IProjectXmlLoader loader = Substitute.For<IProjectXmlLoader>();
+        IProjectXmlLoader loader = GetSubstitute<IProjectXmlLoader>();
         CapturingLogger<PackableLibrariesShouldNotDependOnNonPackable> logger = new();
         PackableLibrariesShouldNotDependOnNonPackable check = new(projectXmlLoader: loader, logger: logger);
 
@@ -58,7 +58,7 @@ public sealed class PackableLibrariesShouldNotDependOnNonPackableTests : TestBas
         doc.LoadXml("<Project Sdk=\"Microsoft.NET.Sdk\"><ItemGroup></ItemGroup></Project>");
         ProjectContext project = new(Name: "Test.csproj", Folder: "/test", CsProjXml: doc);
 
-        IProjectXmlLoader loader = Substitute.For<IProjectXmlLoader>();
+        IProjectXmlLoader loader = GetSubstitute<IProjectXmlLoader>();
         CapturingLogger<PackableLibrariesShouldNotDependOnNonPackable> logger = new();
         PackableLibrariesShouldNotDependOnNonPackable check = new(projectXmlLoader: loader, logger: logger);
 
@@ -76,7 +76,7 @@ public sealed class PackableLibrariesShouldNotDependOnNonPackableTests : TestBas
         );
         ProjectContext project = new(Name: "Test.csproj", Folder: "/test", CsProjXml: doc);
 
-        IProjectXmlLoader loader = Substitute.For<IProjectXmlLoader>();
+        IProjectXmlLoader loader = GetSubstitute<IProjectXmlLoader>();
         CapturingLogger<PackableLibrariesShouldNotDependOnNonPackable> logger = new();
         PackableLibrariesShouldNotDependOnNonPackable check = new(projectXmlLoader: loader, logger: logger);
 
@@ -110,7 +110,7 @@ public sealed class PackableLibrariesShouldNotDependOnNonPackableTests : TestBas
             XmlDocument referencedDoc = new();
             referencedDoc.LoadXml("<Project Sdk=\"Microsoft.NET.Sdk\"></Project>");
 
-            IProjectXmlLoader loader = Substitute.For<IProjectXmlLoader>();
+            IProjectXmlLoader loader = GetSubstitute<IProjectXmlLoader>();
             SubstituteExtensions.Returns(
                 loader.LoadAsync(Arg.Any<string>(), Arg.Any<CancellationToken>()),
                 referencedDoc
@@ -156,7 +156,7 @@ public sealed class PackableLibrariesShouldNotDependOnNonPackableTests : TestBas
                 "<Project Sdk=\"Microsoft.NET.Sdk\"><PropertyGroup><IsPackable>false</IsPackable></PropertyGroup></Project>"
             );
 
-            IProjectXmlLoader loader = Substitute.For<IProjectXmlLoader>();
+            IProjectXmlLoader loader = GetSubstitute<IProjectXmlLoader>();
             SubstituteExtensions.Returns(
                 loader.LoadAsync(Arg.Any<string>(), Arg.Any<CancellationToken>()),
                 referencedDoc

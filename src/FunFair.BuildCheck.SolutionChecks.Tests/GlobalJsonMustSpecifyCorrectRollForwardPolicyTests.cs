@@ -16,7 +16,7 @@ public sealed class GlobalJsonMustSpecifyCorrectRollForwardPolicyTests : TestBas
     [Fact]
     public async Task WhenNoDotNetSdkVersionConfiguredSkipsCheckAsync()
     {
-        IRepositorySettings settings = Substitute.For<IRepositorySettings>();
+        IRepositorySettings settings = GetSubstitute<IRepositorySettings>();
         settings.DotNetSdkVersion.Returns((string?)null);
 
         CapturingLogger<GlobalJsonMustSpecifyCorrectRollForwardPolicy> logger = new();
@@ -38,7 +38,7 @@ public sealed class GlobalJsonMustSpecifyCorrectRollForwardPolicyTests : TestBas
 
         try
         {
-            IRepositorySettings settings = Substitute.For<IRepositorySettings>();
+            IRepositorySettings settings = GetSubstitute<IRepositorySettings>();
             settings.DotNetSdkVersion.Returns("9.0.100");
 
             CapturingLogger<GlobalJsonMustSpecifyCorrectRollForwardPolicy> logger = new();
@@ -70,7 +70,7 @@ public sealed class GlobalJsonMustSpecifyCorrectRollForwardPolicyTests : TestBas
         {
             await this.WriteGlobalJsonAsync(tempDir: tempDir, rollForward: "latestPatch");
 
-            IRepositorySettings settings = Substitute.For<IRepositorySettings>();
+            IRepositorySettings settings = GetSubstitute<IRepositorySettings>();
             settings.DotNetSdkVersion.Returns("9.0.100");
 
             CapturingLogger<GlobalJsonMustSpecifyCorrectRollForwardPolicy> logger = new();
@@ -102,7 +102,7 @@ public sealed class GlobalJsonMustSpecifyCorrectRollForwardPolicyTests : TestBas
         {
             await this.WriteGlobalJsonAsync(tempDir: tempDir, rollForward: "major");
 
-            IRepositorySettings settings = Substitute.For<IRepositorySettings>();
+            IRepositorySettings settings = GetSubstitute<IRepositorySettings>();
             settings.DotNetSdkVersion.Returns("9.0.100");
 
             CapturingLogger<GlobalJsonMustSpecifyCorrectRollForwardPolicy> logger = new();
@@ -134,7 +134,7 @@ public sealed class GlobalJsonMustSpecifyCorrectRollForwardPolicyTests : TestBas
         {
             await this.WriteGlobalJsonAsync(tempDir: tempDir, rollForward: null);
 
-            IRepositorySettings settings = Substitute.For<IRepositorySettings>();
+            IRepositorySettings settings = GetSubstitute<IRepositorySettings>();
             settings.DotNetSdkVersion.Returns("9.0.100");
 
             CapturingLogger<GlobalJsonMustSpecifyCorrectRollForwardPolicy> logger = new();
@@ -170,7 +170,7 @@ public sealed class GlobalJsonMustSpecifyCorrectRollForwardPolicyTests : TestBas
                 cancellationToken: this.CancellationToken()
             );
 
-            IRepositorySettings settings = Substitute.For<IRepositorySettings>();
+            IRepositorySettings settings = GetSubstitute<IRepositorySettings>();
             settings.DotNetSdkVersion.Returns("9.0.100");
 
             CapturingLogger<GlobalJsonMustSpecifyCorrectRollForwardPolicy> logger = new();

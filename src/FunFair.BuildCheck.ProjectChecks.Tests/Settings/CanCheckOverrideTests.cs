@@ -881,7 +881,7 @@ public sealed class CanCheckOverrideTests : TestBase
         );
         ProjectContext project = new(Name: "Test.csproj", Folder: "/test", CsProjXml: doc);
 
-        IRepositorySettings repositorySettings = Substitute.For<IRepositorySettings>();
+        IRepositorySettings repositorySettings = GetSubstitute<IRepositorySettings>();
         repositorySettings.IsNullableGloballyEnforced.Returns(true);
 
         CapturingLogger logger = new();
@@ -899,7 +899,7 @@ public sealed class CanCheckOverrideTests : TestBase
         doc.LoadXml("<Project Sdk=\"Microsoft.NET.Sdk\"><PropertyGroup></PropertyGroup></Project>");
         ProjectContext project = new(Name: "Test.csproj", Folder: "/test", CsProjXml: doc);
 
-        IRepositorySettings repositorySettings = Substitute.For<IRepositorySettings>();
+        IRepositorySettings repositorySettings = GetSubstitute<IRepositorySettings>();
         repositorySettings.IsNullableGloballyEnforced.Returns(true);
 
         CapturingLogger logger = new();
@@ -917,7 +917,7 @@ public sealed class CanCheckOverrideTests : TestBase
         doc.LoadXml("<Project Sdk=\"Microsoft.NET.Sdk\"><PropertyGroup></PropertyGroup></Project>");
         ProjectContext project = new(Name: "Test.csproj", Folder: "/test", CsProjXml: doc);
 
-        IRepositorySettings repositorySettings = Substitute.For<IRepositorySettings>();
+        IRepositorySettings repositorySettings = GetSubstitute<IRepositorySettings>();
         repositorySettings.IsNullableGloballyEnforced.Returns(false);
 
         CapturingLogger logger = new();

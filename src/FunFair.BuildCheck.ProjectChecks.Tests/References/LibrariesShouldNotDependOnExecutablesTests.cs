@@ -24,7 +24,7 @@ public sealed class LibrariesShouldNotDependOnExecutablesTests : TestBase
         );
         ProjectContext project = new(Name: "Test.csproj", Folder: "/test", CsProjXml: doc);
 
-        IProjectXmlLoader loader = Substitute.For<IProjectXmlLoader>();
+        IProjectXmlLoader loader = GetSubstitute<IProjectXmlLoader>();
         CapturingLogger<LibrariesShouldNotDependOnExecutables> logger = new();
         LibrariesShouldNotDependOnExecutables check = new(projectXmlLoader: loader, logger: logger);
 
@@ -40,7 +40,7 @@ public sealed class LibrariesShouldNotDependOnExecutablesTests : TestBase
         doc.LoadXml("<Project Sdk=\"Microsoft.NET.Sdk\"><ItemGroup></ItemGroup></Project>");
         ProjectContext project = new(Name: "Test.csproj", Folder: "/test", CsProjXml: doc);
 
-        IProjectXmlLoader loader = Substitute.For<IProjectXmlLoader>();
+        IProjectXmlLoader loader = GetSubstitute<IProjectXmlLoader>();
         CapturingLogger<LibrariesShouldNotDependOnExecutables> logger = new();
         LibrariesShouldNotDependOnExecutables check = new(projectXmlLoader: loader, logger: logger);
 
@@ -58,7 +58,7 @@ public sealed class LibrariesShouldNotDependOnExecutablesTests : TestBase
         );
         ProjectContext project = new(Name: "Test.csproj", Folder: "/test", CsProjXml: doc);
 
-        IProjectXmlLoader loader = Substitute.For<IProjectXmlLoader>();
+        IProjectXmlLoader loader = GetSubstitute<IProjectXmlLoader>();
         CapturingLogger<LibrariesShouldNotDependOnExecutables> logger = new();
         LibrariesShouldNotDependOnExecutables check = new(projectXmlLoader: loader, logger: logger);
 
@@ -94,7 +94,7 @@ public sealed class LibrariesShouldNotDependOnExecutablesTests : TestBase
                 "<Project Sdk=\"Microsoft.NET.Sdk\"><PropertyGroup><OutputType>Exe</OutputType></PropertyGroup></Project>"
             );
 
-            IProjectXmlLoader loader = Substitute.For<IProjectXmlLoader>();
+            IProjectXmlLoader loader = GetSubstitute<IProjectXmlLoader>();
             SubstituteExtensions.Returns(
                 loader.LoadAsync(Arg.Any<string>(), Arg.Any<CancellationToken>()),
                 referencedDoc
@@ -138,7 +138,7 @@ public sealed class LibrariesShouldNotDependOnExecutablesTests : TestBase
             XmlDocument referencedDoc = new();
             referencedDoc.LoadXml("<Project Sdk=\"Microsoft.NET.Sdk\"></Project>");
 
-            IProjectXmlLoader loader = Substitute.For<IProjectXmlLoader>();
+            IProjectXmlLoader loader = GetSubstitute<IProjectXmlLoader>();
             SubstituteExtensions.Returns(
                 loader.LoadAsync(Arg.Any<string>(), Arg.Any<CancellationToken>()),
                 referencedDoc
