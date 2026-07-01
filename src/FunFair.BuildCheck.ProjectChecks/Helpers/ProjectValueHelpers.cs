@@ -121,6 +121,19 @@ internal static class ProjectValueHelpers
         return project.ReferencesAnyOfPackages(packages: PackagesForTestProjectDetection, logger: logger);
     }
 
+    /// <summary>
+    ///     Determines whether the project explicitly opts out of being a test project by setting
+    ///     <c>&lt;IsTestProject&gt;false&lt;/IsTestProject&gt;</c>. This is used to distinguish test
+    ///     support libraries (e.g. <c>*.Mocks</c>, <c>*.Tests.Common</c>) that reference test packages
+    ///     but are not themselves test-runner projects.
+    /// </summary>
+    public static bool IsExplicitlyNotTestProject(in this ProjectContext project)
+    {
+        string? isTestProject = project.GetProperty("IsTestProject");
+
+        return isTestProject is not null && StringComparer.OrdinalIgnoreCase.Equals(x: isTestProject, y: "false");
+    }
+
     public static void CheckNode(in ProjectContext project, string nodePresence, ILogger logger)
     {
         bool hasGlobalSetting = false;

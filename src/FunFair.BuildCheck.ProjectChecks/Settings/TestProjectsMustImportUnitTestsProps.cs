@@ -25,6 +25,11 @@ public sealed class TestProjectsMustImportUnitTestsProps : IProjectCheck
             return ValueTask.CompletedTask;
         }
 
+        if (project.IsExplicitlyNotTestProject())
+        {
+            return ValueTask.CompletedTask;
+        }
+
         if (!project.HasProjectImport(UnitTestsPropsImport))
         {
             this._logger.TestProjectShouldImportUnitTestsProps(

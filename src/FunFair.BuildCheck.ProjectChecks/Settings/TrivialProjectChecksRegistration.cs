@@ -253,7 +253,8 @@ public static class TrivialProjectChecksRegistration
                 RequiredValue: "true",
                 CanCheck: null,
                 LoggerAwareCanCheck: static (project, logger) =>
-                    project.IsTestProject(logger)
+                    !project.IsExplicitlyNotTestProject()
+                    && project.IsTestProject(logger)
                     && (
                         project.ReferencesPackage("xunit.v3", logger)
                         || project.ReferencesPackage("xunit.v3.extensibility.core", logger)
@@ -264,7 +265,9 @@ public static class TrivialProjectChecksRegistration
                 RequiredValue: "Exe",
                 CanCheck: null,
                 LoggerAwareCanCheck: static (project, logger) =>
-                    project.IsTestProject(logger) && project.ReferencesPackage("xunit.v3", logger)
+                    !project.IsExplicitlyNotTestProject()
+                    && project.IsTestProject(logger)
+                    && project.ReferencesPackage("xunit.v3", logger)
             ),
         ];
     }

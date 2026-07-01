@@ -11,6 +11,7 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 ### Fixed
 - GlobalJsonIsLatest now validates the SDK version independently of the rollForward policy (previously a global.json without rollForward skipped the version check)
 - Named checkConfiguration argument explicitly in CheckRunner.CheckAsync call
+- Projects with `<IsTestProject>false</IsTestProject>` no longer require the `UnitTests.props` import or `UseMicrosoftTestingPlatformRunner`/`OutputType=Exe` test-runner properties
 ### Changed
 - SolutionChecks now load and parse global.json once per solution via a shared loader and de-duplicate the GlobalJson checks through a common base class
 - Optimise FunFair.BuildCheck.ProjectChecks: parse each project once and make trivial property checks data-driven
