@@ -8,6 +8,7 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 ## [Unreleased]
 ### Security
 ### Added
+- Ban `<AssemblyAttribute>` items in csproj files (e.g. used to smuggle in `InternalsVisibleToAttribute` or other assembly-level attributes, bypassing the existing InternalsVisibleTo item check)
 ### Fixed
 - GlobalJsonIsLatest now validates the SDK version independently of the rollForward policy (previously a global.json without rollForward skipped the version check)
 - Named checkConfiguration argument explicitly in CheckRunner.CheckAsync call
