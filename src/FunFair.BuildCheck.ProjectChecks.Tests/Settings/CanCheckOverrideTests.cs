@@ -68,6 +68,24 @@ public sealed class CanCheckOverrideTests : TestBase
         Assert.DoesNotContain(collection: logger.Entries, filter: e => e.Level == LogLevel.Error);
     }
 
+    [Fact]
+    public async Task WhenXUnitV3ProjectsShouldBeAnExecutableIsTestProjectFalseCanCheckIsFalseNoErrorIsLoggedAsync()
+    {
+        // IsTestProject=false explicitly → CanCheck returns false even though xunit.v3 is referenced
+        XmlDocument doc = new();
+        doc.LoadXml(
+            "<Project Sdk=\"Microsoft.NET.Sdk\"><PropertyGroup><IsTestProject>false</IsTestProject></PropertyGroup><ItemGroup><PackageReference Include=\"xunit.v3\" Version=\"1.0.0\" /></ItemGroup></Project>"
+        );
+        ProjectContext project = new(Name: "Test.csproj", Folder: "/test", CsProjXml: doc);
+
+        CapturingLogger logger = new();
+        SimplePropertyProjectCheckBase check = CreateXUnitV3ProjectsShouldBeAnExecutableCheck(logger);
+
+        await check.CheckAsync(project: project, cancellationToken: this.CancellationToken());
+
+        Assert.DoesNotContain(collection: logger.Entries, filter: e => e.Level == LogLevel.Error);
+    }
+
     // ──────────────────────────────────────────────────────────────
     // XUnitV3ProjectsShouldDefineTestingPlatformDotnetTestSupport
     // IsTestProject=false → must not define
@@ -240,6 +258,26 @@ public sealed class CanCheckOverrideTests : TestBase
         // Not a test project → CanCheck returns false
         XmlDocument doc = new();
         doc.LoadXml("<Project Sdk=\"Microsoft.NET.Sdk\"><PropertyGroup></PropertyGroup></Project>");
+        ProjectContext project = new(Name: "Test.csproj", Folder: "/test", CsProjXml: doc);
+
+        CapturingLogger logger = new();
+        SimplePropertyProjectCheckBase check = CreateXUnitV3ProjectsShouldDefineUseMicrosoftTestingPlatformRunnerCheck(
+            logger
+        );
+
+        await check.CheckAsync(project: project, cancellationToken: this.CancellationToken());
+
+        Assert.DoesNotContain(collection: logger.Entries, filter: e => e.Level == LogLevel.Error);
+    }
+
+    [Fact]
+    public async Task WhenXUnitV3ProjectsShouldDefineUseMicrosoftTestingPlatformRunnerIsTestProjectFalseCanCheckIsFalseNoErrorIsLoggedAsync()
+    {
+        // IsTestProject=false explicitly → CanCheck returns false even though xunit.v3 is referenced
+        XmlDocument doc = new();
+        doc.LoadXml(
+            "<Project Sdk=\"Microsoft.NET.Sdk\"><PropertyGroup><IsTestProject>false</IsTestProject></PropertyGroup><ItemGroup><PackageReference Include=\"xunit.v3\" Version=\"1.0.0\" /></ItemGroup></Project>"
+        );
         ProjectContext project = new(Name: "Test.csproj", Folder: "/test", CsProjXml: doc);
 
         CapturingLogger logger = new();
@@ -1421,7 +1459,8 @@ public sealed class CanCheckOverrideTests : TestBase
             propertyName: "OutputType",
             requiredValue: "Exe",
             logger: logger,
-            canCheck: static project => IsTestProject(project) && ReferencesPackage(project, "xunit.v3")
+            canCheck: static project =>
+                !IsExplicitlyNotTestProject(project) && IsTestProject(project) && ReferencesPackage(project, "xunit.v3")
         );
     }
 
@@ -1434,7 +1473,8 @@ public sealed class CanCheckOverrideTests : TestBase
             requiredValue: "true",
             logger: logger,
             canCheck: static project =>
-                IsTestProject(project)
+                !IsExplicitlyNotTestProject(project)
+                && IsTestProject(project)
                 && (ReferencesPackage(project, "xunit.v3") || ReferencesPackage(project, "xunit.v3.extensibility.core"))
         );
     }
@@ -1497,6 +1537,13 @@ public sealed class CanCheckOverrideTests : TestBase
     private static bool IsTestProject(in ProjectContext project)
     {
         return ReferencesPackage(project, "xunit", "xunit.v3", "NSubstitute", "FunFair.Test.Common");
+    }
+
+    private static bool IsExplicitlyNotTestProject(in ProjectContext project)
+    {
+        XmlNode? node = project.CsProjXml.SelectSingleNode("/Project/PropertyGroup/IsTestProject");
+
+        return node is not null && StringComparer.OrdinalIgnoreCase.Equals(node.InnerText, "false");
     }
 
     private static bool IsTrue(in ProjectContext project, string propertyName, bool defaultValue)

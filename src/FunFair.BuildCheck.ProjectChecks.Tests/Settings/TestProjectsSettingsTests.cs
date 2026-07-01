@@ -97,4 +97,38 @@ public sealed class TestProjectsSettingsTests : TestBase
 
         Assert.Contains(logger.Entries, e => e.Level == LogLevel.Error);
     }
+
+    [Fact]
+    public async Task WhenIsTestProjectFalseAndMissingImportNoErrorIsLoggedAsync()
+    {
+        XmlDocument doc = new();
+        doc.LoadXml(
+            "<Project Sdk=\"Microsoft.NET.Sdk\"><PropertyGroup><IsTestProject>false</IsTestProject></PropertyGroup><ItemGroup><PackageReference Include=\"FunFair.Test.Common\" Version=\"6.2.4.1830\" /></ItemGroup></Project>"
+        );
+        ProjectContext project = new(Name: "Test.csproj", Folder: "/test", CsProjXml: doc);
+
+        CapturingLogger<TestProjectsMustImportUnitTestsProps> logger = new();
+        TestProjectsMustImportUnitTestsProps check = new(logger: logger);
+
+        await check.CheckAsync(project: project, cancellationToken: this.CancellationToken());
+
+        Assert.DoesNotContain(collection: logger.Entries, filter: e => e.Level == LogLevel.Error);
+    }
+
+    [Fact]
+    public async Task WhenIsTestProjectFalseAndHasImportNoErrorIsLoggedAsync()
+    {
+        XmlDocument doc = new();
+        doc.LoadXml(
+            "<Project Sdk=\"Microsoft.NET.Sdk\"><PropertyGroup><IsTestProject>false</IsTestProject></PropertyGroup><ItemGroup><PackageReference Include=\"FunFair.Test.Common\" Version=\"6.2.4.1830\" /></ItemGroup><Import Project=\"$(SolutionDir)UnitTests.props\" /></Project>"
+        );
+        ProjectContext project = new(Name: "Test.csproj", Folder: "/test", CsProjXml: doc);
+
+        CapturingLogger<TestProjectsMustImportUnitTestsProps> logger = new();
+        TestProjectsMustImportUnitTestsProps check = new(logger: logger);
+
+        await check.CheckAsync(project: project, cancellationToken: this.CancellationToken());
+
+        Assert.DoesNotContain(collection: logger.Entries, filter: e => e.Level == LogLevel.Error);
+    }
 }
