@@ -10,6 +10,7 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 ### Added
 ### Fixed
 ### Changed
+- Test code now consistently uses TestBase.GetSubstitute() instead of a mix of GetSubstitute() and Substitute.For() for creating NSubstitute mocks
 ### Deprecated
 ### Removed
 ### Deployment Changes
