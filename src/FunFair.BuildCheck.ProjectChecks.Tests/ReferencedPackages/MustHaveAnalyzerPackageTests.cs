@@ -205,7 +205,7 @@ public sealed class MustHaveAnalyzerPackageTests : TestBase
     [Fact]
     public async Task WhenMustHaveEnumSourceGeneratorAnalyzerPackageNotRequiredNoErrorIsLoggedAsync()
     {
-        IRepositorySettings repositorySettings = Substitute.For<IRepositorySettings>();
+        IRepositorySettings repositorySettings = GetSubstitute<IRepositorySettings>();
         repositorySettings.MustHaveEnumSourceGeneratorAnalyzerPackage.Returns(false);
 
         XmlDocument doc = new();
@@ -225,7 +225,7 @@ public sealed class MustHaveAnalyzerPackageTests : TestBase
     [Fact]
     public async Task WhenMustHaveEnumSourceGeneratorAnalyzerPackageRequiredAndPresentNoErrorIsLoggedAsync()
     {
-        IRepositorySettings repositorySettings = Substitute.For<IRepositorySettings>();
+        IRepositorySettings repositorySettings = GetSubstitute<IRepositorySettings>();
         repositorySettings.MustHaveEnumSourceGeneratorAnalyzerPackage.Returns(true);
 
         XmlDocument doc = new();
@@ -245,7 +245,7 @@ public sealed class MustHaveAnalyzerPackageTests : TestBase
     [Fact]
     public async Task WhenMustHaveEnumSourceGeneratorAnalyzerPackageRequiredAndMissingErrorIsLoggedAsync()
     {
-        IRepositorySettings repositorySettings = Substitute.For<IRepositorySettings>();
+        IRepositorySettings repositorySettings = GetSubstitute<IRepositorySettings>();
         repositorySettings.MustHaveEnumSourceGeneratorAnalyzerPackage.Returns(true);
 
         XmlDocument doc = new();

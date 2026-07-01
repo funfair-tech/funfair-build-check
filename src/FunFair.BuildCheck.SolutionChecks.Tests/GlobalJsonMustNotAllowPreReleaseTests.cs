@@ -16,7 +16,7 @@ public sealed class GlobalJsonMustNotAllowPreReleaseTests : TestBase
     [Fact]
     public async Task WhenNoDotNetSdkVersionConfiguredSkipsCheckAsync()
     {
-        IRepositorySettings settings = Substitute.For<IRepositorySettings>();
+        IRepositorySettings settings = GetSubstitute<IRepositorySettings>();
         settings.DotNetSdkVersion.Returns((string?)null);
         settings.DotNetAllowPreReleaseSdk.Returns("false");
 
@@ -39,7 +39,7 @@ public sealed class GlobalJsonMustNotAllowPreReleaseTests : TestBase
 
         try
         {
-            IRepositorySettings settings = Substitute.For<IRepositorySettings>();
+            IRepositorySettings settings = GetSubstitute<IRepositorySettings>();
             settings.DotNetSdkVersion.Returns("9.0.100");
             settings.DotNetAllowPreReleaseSdk.Returns("false");
 
@@ -72,7 +72,7 @@ public sealed class GlobalJsonMustNotAllowPreReleaseTests : TestBase
         {
             await this.WriteGlobalJsonAsync(tempDir: tempDir, allowPrerelease: null);
 
-            IRepositorySettings settings = Substitute.For<IRepositorySettings>();
+            IRepositorySettings settings = GetSubstitute<IRepositorySettings>();
             settings.DotNetSdkVersion.Returns("9.0.100");
             settings.DotNetAllowPreReleaseSdk.Returns("false");
 
@@ -105,7 +105,7 @@ public sealed class GlobalJsonMustNotAllowPreReleaseTests : TestBase
         {
             await this.WriteGlobalJsonAsync(tempDir: tempDir, allowPrerelease: false);
 
-            IRepositorySettings settings = Substitute.For<IRepositorySettings>();
+            IRepositorySettings settings = GetSubstitute<IRepositorySettings>();
             settings.DotNetSdkVersion.Returns("9.0.100");
             settings.DotNetAllowPreReleaseSdk.Returns("false");
 
@@ -138,7 +138,7 @@ public sealed class GlobalJsonMustNotAllowPreReleaseTests : TestBase
         {
             await this.WriteGlobalJsonAsync(tempDir: tempDir, allowPrerelease: true);
 
-            IRepositorySettings settings = Substitute.For<IRepositorySettings>();
+            IRepositorySettings settings = GetSubstitute<IRepositorySettings>();
             settings.DotNetSdkVersion.Returns("9.0.100");
             settings.DotNetAllowPreReleaseSdk.Returns("false");
 
@@ -171,7 +171,7 @@ public sealed class GlobalJsonMustNotAllowPreReleaseTests : TestBase
         {
             await this.WriteGlobalJsonAsync(tempDir: tempDir, allowPrerelease: true);
 
-            IRepositorySettings settings = Substitute.For<IRepositorySettings>();
+            IRepositorySettings settings = GetSubstitute<IRepositorySettings>();
             settings.DotNetSdkVersion.Returns("9.0.100");
             settings.DotNetAllowPreReleaseSdk.Returns("true");
 
@@ -208,7 +208,7 @@ public sealed class GlobalJsonMustNotAllowPreReleaseTests : TestBase
                 cancellationToken: this.CancellationToken()
             );
 
-            IRepositorySettings settings = Substitute.For<IRepositorySettings>();
+            IRepositorySettings settings = GetSubstitute<IRepositorySettings>();
             settings.DotNetSdkVersion.Returns("9.0.100");
             settings.DotNetAllowPreReleaseSdk.Returns("false");
 

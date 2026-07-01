@@ -20,10 +20,10 @@ public sealed class RunnerTests : TestBase
     [Fact]
     public Task CheckAsyncThrowsArgumentOutOfRangeExceptionForNonSolutionFileAsync()
     {
-        IFrameworkSettings frameworkSettings = Substitute.For<IFrameworkSettings>();
+        IFrameworkSettings frameworkSettings = GetSubstitute<IFrameworkSettings>();
         frameworkSettings.ProjectImport.Returns(string.Empty);
         frameworkSettings.DotNetAllowPreReleaseSdk.Returns(string.Empty);
-        IProjectClassifier projectClassifier = Substitute.For<IProjectClassifier>();
+        IProjectClassifier projectClassifier = GetSubstitute<IProjectClassifier>();
         ICheckConfiguration checkConfiguration = new CheckConfiguration(
             PreReleaseBuild: false,
             AllowPackageVersionMismatch: false
@@ -122,10 +122,10 @@ public sealed class RunnerTests : TestBase
 
     private async Task<int> RunCheckAsync(string solutionFileName)
     {
-        IFrameworkSettings frameworkSettings = Substitute.For<IFrameworkSettings>();
+        IFrameworkSettings frameworkSettings = GetSubstitute<IFrameworkSettings>();
         frameworkSettings.ProjectImport.Returns(string.Empty);
         frameworkSettings.DotNetAllowPreReleaseSdk.Returns(string.Empty);
-        IProjectClassifier projectClassifier = Substitute.For<IProjectClassifier>();
+        IProjectClassifier projectClassifier = GetSubstitute<IProjectClassifier>();
         ICheckConfiguration checkConfiguration = new CheckConfiguration(
             PreReleaseBuild: false,
             AllowPackageVersionMismatch: false
