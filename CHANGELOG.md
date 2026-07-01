@@ -8,6 +8,16 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 ## [Unreleased]
 ### Security
 ### Added
+### Fixed
+### Changed
+### Deprecated
+### Removed
+### Deployment Changes
+<!--
+Releases that have at least been deployed to staging, BUT NOT necessarily released to live.  Changes should be moved from [Unreleased] into here as they are merged into the appropriate release branch
+-->
+## [474.2.9] - 2026-07-01
+### Added
 - Ban `<AssemblyAttribute>` items in csproj files (e.g. used to smuggle in `InternalsVisibleToAttribute` or other assembly-level attributes, bypassing the existing InternalsVisibleTo item check)
 ### Fixed
 - GlobalJsonIsLatest now validates the SDK version independently of the rollForward policy (previously a global.json without rollForward skipped the version check)
@@ -19,12 +29,7 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 - ProjectChecks now cache derived project XML node collections per .csproj to avoid repeated XPath scans during validation
 - ProjectChecks now register trivial property rules through shared data-driven setup and consolidate the mirrored tests into theory-based coverage
 - SDK - Updated DotNet SDK to 10.0.301
-### Deprecated
-### Removed
-### Deployment Changes
-<!--
-Releases that have at least been deployed to staging, BUT NOT necessarily released to live.  Changes should be moved from [Unreleased] into here as they are merged into the appropriate release branch
--->
+
 ## [474.2.8] - 2026-06-08
 ### Added
 - Check that SuppressTrimAnalysisWarnings is set to false when present
