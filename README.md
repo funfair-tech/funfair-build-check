@@ -3,6 +3,7 @@
 Build checking tool
 
 ## Checks
+
 * All projects referenced in the solution exist on disk
 * All project to project references exist on disk
 
@@ -16,5 +17,3 @@ Build checking tool
 ## Changelog
 
 View [changelog](CHANGELOG.md)
-
-[CHANGELOG]: ./CHANGELOG.md
