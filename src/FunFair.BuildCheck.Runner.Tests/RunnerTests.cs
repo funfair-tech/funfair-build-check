@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -469,9 +469,9 @@ public sealed class RunnerTests : TestBase
             services.Remove(existingProjects);
         }
 
-        services.AddSingleton<IReadOnlyList<SolutionProject>>(
-            [new(FileName: string.Empty, DisplayName: "InvalidProject")]
-        );
+        services.AddSingleton<IReadOnlyList<SolutionProject>>([
+            new(FileName: string.Empty, DisplayName: "InvalidProject"),
+        ]);
 
         return StripChecksAndBuild(services);
     }
