@@ -283,14 +283,11 @@ public static class TrivialProjectChecksRegistration
         }
     }
 
-    private static IServiceCollection AddSimplePropertyCheck(
-        this IServiceCollection services,
-        SimplePropertyCheck registration
-    )
+    private static void AddSimplePropertyCheck(this IServiceCollection services, SimplePropertyCheck registration)
     {
         Console.WriteLine($"* Project Check: {registration.PropertyName}");
 
-        return services.AddSingleton<IProjectCheck>(sp =>
+        services.AddSingleton<IProjectCheck>(sp =>
         {
             ILogger<SimplePropertyProjectCheckBase> logger = sp.GetRequiredService<
                 ILogger<SimplePropertyProjectCheckBase>
@@ -307,14 +304,11 @@ public static class TrivialProjectChecksRegistration
         });
     }
 
-    private static IServiceCollection AddMustNotDefinePropertyCheck(
-        this IServiceCollection services,
-        string propertyName
-    )
+    private static void AddMustNotDefinePropertyCheck(this IServiceCollection services, string propertyName)
     {
         Console.WriteLine($"* Project Check: {propertyName}");
 
-        return services.AddSingleton<IProjectCheck>(sp => new MustNotDefinePropertyProjectCheckBase(
+        services.AddSingleton<IProjectCheck>(sp => new MustNotDefinePropertyProjectCheckBase(
             propertyName: propertyName,
             logger: sp.GetRequiredService<ILogger<MustNotDefinePropertyProjectCheckBase>>()
         ));
