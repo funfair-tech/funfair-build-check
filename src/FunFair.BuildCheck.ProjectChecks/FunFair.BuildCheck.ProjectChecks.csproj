@@ -3,7 +3,6 @@
     <AnalysisLevel>latest</AnalysisLevel>
     <AnalysisMode>AllEnabledByDefault</AnalysisMode>
     <Authors>$(Company)</Authors>
-
     <CodeAnalysisTreatWarningsAsErrors>true</CodeAnalysisTreatWarningsAsErrors>
     <Company>FunFair</Company>
     <DebuggerSupport>true</DebuggerSupport>
@@ -48,7 +47,7 @@
     <ValidateExecutableReferencesMatchSelfContained>true</ValidateExecutableReferencesMatchSelfContained>
     <WarningsAsErrors />
   </PropertyGroup>
-  <Import Project="$(SolutionDir)FunFair.props" Condition="Exists('$(SolutionDir)FunFair.props')"/>
+  <Import Project="$(SolutionDir)FunFair.props" Condition="Exists('$(SolutionDir)FunFair.props')" />
   <ItemGroup>
     <!-- error NU1903: Warning As Error: Package 'System.Private.Uri' 4.3.0 has a known high severity vulnerability -->
     <NuGetAuditSuppress Include="https://github.com/advisories/GHSA-5f2m-466j-3848" />
@@ -67,7 +66,7 @@
     <PackageReference Include="NuGet.Versioning" Version="6.14.0" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="AsyncFixer" Version="1.6.0" PrivateAssets="All" ExcludeAssets="runtime" />
+    <PackageReference Include="AsyncFixer" Version="2.1.0" PrivateAssets="All" ExcludeAssets="runtime" />
     <PackageReference Include="codecracker.CSharp" Version="1.1.0" PrivateAssets="All" ExcludeAssets="runtime" />
     <PackageReference Include="Credfeto.Enumeration.Source.Generation" Version="1.2.127.1366" PrivateAssets="All" ExcludeAssets="runtime" />
     <PackageReference Include="CSharpIsNullAnalyzer" Version="0.1.593" PrivateAssets="all" ExcludeAssets="runtime" />
