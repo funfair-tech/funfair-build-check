@@ -24,6 +24,7 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 - Dependencies - Updated xunit.analyzers to 1.27.0
 - Dependencies - Updated xunit.v3 to 3.2.2
 - Dependencies - Updated FunFair.Test.Source.Generator to 6.3.6.2484
+- Dependencies - Updated Microsoft.Extensions to 10.0.10
 ### Deprecated
 ### Removed
 ### Deployment Changes
