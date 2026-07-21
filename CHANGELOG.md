@@ -23,6 +23,7 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 - Dependencies - Updated Roslynator.Analyzers to 4.15.0
 - Dependencies - Updated xunit.analyzers to 1.27.0
 - Dependencies - Updated xunit.v3 to 3.2.2
+- Dependencies - Updated FunFair.Test to 6.3.6.2484
 - Dependencies - Updated FunFair.Test.Source.Generator to 6.3.6.2484
 - Dependencies - Updated Microsoft.Extensions to 10.0.10
 - Dependencies - Updated Microsoft.NET.Test.Sdk to 18.8.1
